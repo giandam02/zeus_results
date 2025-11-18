@@ -1,0 +1,147 @@
+'solc --version' running
+'solc /sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:21:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function CryptoHill(){ 
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:90:9: Warning: Use of the "var" keyword is deprecated.
+        var challengeHash = sha3(challengeData);
+        ^---------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:33:18: Warning: "sha3" has been deprecated in favour of "keccak256"
+    leaderHash = sha3("09F911029D74E35BD84156C5635688C0");
+                 ^--------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:51:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Begin("Collide the most bits of the leader's hash to replace the leader. Leader will win any bounty at the end of the week.");
+    ^---------------------------------------------------------------------------------------------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:58:20: Warning: "sha3" has been deprecated in favour of "keccak256"
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:58:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:58:20: Warning: The provided argument of type uint256 is not implicitly convertible to expected type bytes memory.
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:74:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Winner("Victory! Game will be reset to end in 1 week (in block time).", leader);
+            ^-----------------------------------------------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:75:25: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            leader.send(this.balance);
+                        ^----------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:75:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            leader.send(this.balance);
+            ^-----------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:76:17: Warning: Invoking events without "emit" prefix is deprecated.
+          }else NoWinner("No winner! Game will be reset to end in 1 week (in block time).");
+                ^-------------------------------------------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:90:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:90:29: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:90:29: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:118:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Leader("New leader! This is their address, and the new hash to collide.", leader, leaderHash);
+        ^-------------------------------------------------------------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:129:9: Warning: Invoking events without "emit" prefix is deprecated.
+        WorldRecord("A record setting collision occcured!", difficultyWorldRecord, msg.sender);
+        ^------------------------------------------------------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:161:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GameOver("The Crypto Hill has ended.");
+        ^------------------------------------^
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function CryptoHill(){ 
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:87:3: Warning: No visibility specified. Defaulting to "public". 
+  function overthrow(string challengeData) returns (bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:133:3: Warning: No visibility specified. Defaulting to "public". 
+  function changeLeaderMessage(string newMessage){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:140:3: Warning: No visibility specified. Defaulting to "public". 
+  function currentLeader() constant returns (address CurrentLeaderAddress){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:143:3: Warning: No visibility specified. Defaulting to "public". 
+  function Difficulty() constant returns (bytes32 XorMustBeLessThan){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:146:3: Warning: No visibility specified. Defaulting to "public". 
+  function LeaderHash() constant returns (bytes32 leadingHash){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:149:3: Warning: No visibility specified. Defaulting to "public". 
+  function LeaderMessage() constant returns (string MessageOfTheDay){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:152:3: Warning: No visibility specified. Defaulting to "public". 
+  function FallenLeaders() constant returns (uint Victors){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:155:3: Warning: No visibility specified. Defaulting to "public". 
+  function GameEnds() constant returns (uint EndingTime){
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol:159:3: Warning: No visibility specified. Defaulting to "public". 
+  function kill(){
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+CryptoHill.checkDate() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#67-85) sends eth to arbitrary user
+	Dangerous calls:
+	- leader.send(this.balance) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#75)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+CryptoHill.checkDate() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#67-85) ignores return value by leader.send(this.balance) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#75)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+CryptoHill.checkDate() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#67-85) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp > (startingTime + gameLength) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#70)
+CryptoHill.overthrow(string) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#87-124) uses timestamp for comparisons
+	Dangerous comparisons:
+	- challengeHash == leaderHash (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#97)
+	- (challengeHash ^ leaderHash) > difficulty (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#101)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Deprecated standard detected leaderHash = sha3()(09F911029D74E35BD84156C5635688C0) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#33):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected leaderHash = sha3()(block.timestamp) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#58):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected challengeHash = sha3()(challengeData) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#90):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function CryptoHill.Difficulty() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#143-145) is not in mixedCase
+Function CryptoHill.LeaderHash() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#146-148) is not in mixedCase
+Function CryptoHill.LeaderMessage() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#149-151) is not in mixedCase
+Function CryptoHill.FallenLeaders() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#152-154) is not in mixedCase
+Function CryptoHill.GameEnds() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#155-157) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in CryptoHill.checkDate() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#67-85):
+	External calls:
+	- leader.send(this.balance) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#75)
+	State variables written after the call(s):
+	- reset() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#81)
+		- difficulty = leaderHash (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#62)
+	- reset() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#81)
+		- fallenLeaders = 0 (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#64)
+	- reset() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#81)
+		- leader = admin (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#63)
+	- reset() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#81)
+		- leaderHash = sha3()(block.timestamp) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#58)
+	- reset() (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#81)
+		- leaderMessage = defaultLeaderMessage (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#61)
+	- startingTime = block.timestamp (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#78)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+overthrow(string) should be declared external:
+	- CryptoHill.overthrow(string) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#87-124)
+changeLeaderMessage(string) should be declared external:
+	- CryptoHill.changeLeaderMessage(string) (../sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol#133-137)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol analyzed (1 contracts with 100 detectors), 17 result(s) found

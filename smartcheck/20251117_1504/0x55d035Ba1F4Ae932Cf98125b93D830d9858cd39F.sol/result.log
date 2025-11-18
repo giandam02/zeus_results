@@ -1,0 +1,76 @@
+'solc --version' running
+'solc /sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:21:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function BalancedPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:32:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:56:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            currentNiceGuy.send(1 ether);
+            ^--------------------------^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:59:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        while (this.balance > 10 ether) {
+               ^----------^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:60:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            persons[payoutIdx].addr.send(10 ether);
+            ^------------------------------------^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:67:19: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        beta.send(this.balance);
+                  ^----------^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:67:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        beta.send(this.balance);
+        ^---------------------^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function BalancedPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:27:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:31:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value != 9 ether) {
+            ^-------^
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol:66:5: Warning: No visibility specified. Defaulting to "public". 
+    function funnel() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+BalancedPonzi.fallback() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#27-63) sends eth to arbitrary user
+	Dangerous calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#56)
+BalancedPonzi.funnel() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#66-68) sends eth to arbitrary user
+	Dangerous calls:
+	- beta.send(this.balance) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+BalancedPonzi.fallback() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#27-63) ignores return value by currentNiceGuy.send(1000000000000000000) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#56)
+BalancedPonzi.fallback() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#27-63) ignores return value by persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#60)
+BalancedPonzi.funnel() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#66-68) ignores return value by beta.send(this.balance) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+BalancedPonzi.fallback() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#27-63) has external calls inside a loop: persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#60)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+BalancedPonzi.fallback() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#27-63) has costly operations inside a loop:
+	- payoutIdx += 1 (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#32):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in BalancedPonzi.fallback() (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#27-63):
+	External calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#56)
+	- persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#60)
+	State variables written after the call(s):
+	- payoutIdx += 1 (../sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x55d035Ba1F4Ae932Cf98125b93D830d9858cd39F.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

@@ -1,0 +1,110 @@
+'solc --version' running
+'solc /sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:20:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:26:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:41:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:55:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:65:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Migrations() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:66:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.value > 0) throw;
+                          ^---^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:72:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:44:13: Warning: Invoking events without "emit" prefix is deprecated.
+            LogOwnerChanged(owner, newOwner);
+            ^------------------------------^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:54:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (!getOwner().send(this.balance)) {
+                             ^----------^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function getOwner()
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:10:5: Warning: No visibility specified. Defaulting to "public". 
+    function setOwner(address newOwner)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:31:5: Warning: No visibility specified. Defaulting to "public". 
+    function getOwner()
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function setOwner(address newOwner)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:52:5: Warning: No visibility specified. Defaulting to "public". 
+    function fixBalance() 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:65:5: Warning: No visibility specified. Defaulting to "public". 
+    function Migrations() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:66:12: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if(msg.value > 0) throw;
+           ^-------^
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:69:5: Warning: No visibility specified. Defaulting to "public". 
+    function setCompleted(uint completed) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:77:5: Warning: No visibility specified. Defaulting to "public". 
+    function setAllowedAccount(address _allowedAccount) fromOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol:81:5: Warning: No visibility specified. Defaulting to "public". 
+    function upgrade(address new_address) fromOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Migrations.setAllowedAccount(address)._allowedAccount (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#77) lacks a zero-check on :
+		- allowedAccount = _allowedAccount (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#78)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Deprecated standard detected THROW (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#41):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#26):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#55):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#66):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#72):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.2 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3.
+It is used by:
+	- ^0.4.2 (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Migrations.setAllowedAccount(address)._allowedAccount (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#77) is not in mixedCase
+Parameter Migrations.upgrade(address).new_address (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#81) is not in mixedCase
+Variable Migrations.last_completed_migration (../sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol#62) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x4a56ebd89b2750bf42ddec1cd3845938983be0d2.sol analyzed (4 contracts with 100 detectors), 11 result(s) found

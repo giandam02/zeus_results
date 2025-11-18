@@ -1,0 +1,201 @@
+'solc --version' running
+'solc /sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:32:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GameRegistry() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:118:65: Warning: This declaration shadows an existing declaration.
+    function getRecordAtIndex(uint rindex) returns(address key, address owner, uint time, string description, string url) {
+                                                                ^-----------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:25:5: The shadowed declaration is here:
+    address owner;
+    ^-----------^
+
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:127:45: Warning: This declaration shadows an existing declaration.
+    function getRecord(address key) returns(address owner, uint time, string description, string url) {
+                                            ^-----------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:25:5: The shadowed declaration is here:
+    address owner;
+    ^-----------^
+
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:119:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Record record = records[keys[rindex]];
+        ^-----------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:128:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Record record = records[key];
+        ^-----------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:42:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        owner.send(valueForRegOwner);
+        ^--------------------------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:48:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            records[keys[k]].owner.send(valueForEachOwner);
+            ^--------------------------------------------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:58:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                msg.sender.send(msg.value);
+                ^------------------------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:103:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                msg.sender.send(msg.value);
+                ^------------------------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:158:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value);
+            ^------------------------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:166:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(value);
+            ^--------------------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:32:5: Warning: No visibility specified. Defaulting to "public". 
+    function GameRegistry() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:36:5: Warning: No visibility specified. Defaulting to "public". 
+    function distributeValue() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:37:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value == 0) {
+            ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:41:52: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        uint valueForRegOwner = (ownerPercentage * msg.value) / 100;
+                                                   ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:43:35: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        uint valueForEachOwner = (msg.value - valueForRegOwner) / numRecords;
+                                  ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function register(address key, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:55:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value < REGISTRATION_COST) {
+            ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:57:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (msg.value > 0) {
+                ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:58:33: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                msg.sender.send(msg.value);
+                                ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:77:5: Warning: No visibility specified. Defaulting to "public". 
+    function update(address key, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:86:5: Warning: No visibility specified. Defaulting to "public". 
+    function unregister(address key) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:98:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address key, address newOwner) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:100:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value < TRANSFER_COST) {
+            ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:102:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (msg.value > 0) {
+                ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:103:33: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                msg.sender.send(msg.value);
+                                ^-------^
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function isRegistered(address key) returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:118:5: Warning: No visibility specified. Defaulting to "public". 
+    function getRecordAtIndex(uint rindex) returns(address key, address owner, uint time, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:127:5: Warning: No visibility specified. Defaulting to "public". 
+    function getRecord(address key) returns(address owner, uint time, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:138:5: Warning: No visibility specified. Defaulting to "public". 
+    function getOwner(address key) returns(address) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:145:5: Warning: No visibility specified. Defaulting to "public". 
+    function getTime(address key) returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:150:5: Warning: No visibility specified. Defaulting to "public". 
+    function getTotalRecords() returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:164:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:114:5: Warning: Function state mutability can be restricted to view
+    function isRegistered(address key) returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:118:5: Warning: Function state mutability can be restricted to view
+    function getRecordAtIndex(uint rindex) returns(address key, address owner, uint time, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:127:5: Warning: Function state mutability can be restricted to view
+    function getRecord(address key) returns(address owner, uint time, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:138:5: Warning: Function state mutability can be restricted to view
+    function getOwner(address key) returns(address) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:145:5: Warning: Function state mutability can be restricted to view
+    function getTime(address key) returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol:150:5: Warning: Function state mutability can be restricted to view
+    function getTotalRecords() returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+GameRegistry.distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#36-50) ignores return value by owner.send(valueForRegOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#42)
+GameRegistry.distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#36-50) ignores return value by records[keys[k]].owner.send(valueForEachOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#48)
+GameRegistry.register(address,string,string) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#53-74) ignores return value by msg.sender.send(msg.value) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#58)
+GameRegistry.transfer(address,address) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#98-111) ignores return value by msg.sender.send(msg.value) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#103)
+GameRegistry.returnValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#156-160) ignores return value by msg.sender.send(msg.value) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#158)
+GameRegistry.withdraw(uint256) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#164-168) ignores return value by msg.sender.send(value) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#166)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+GameRegistry.getRecordAtIndex(uint256).owner (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#118) shadows:
+	- GameRegistry.owner (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#25) (state variable)
+GameRegistry.getRecord(address).owner (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#127) shadows:
+	- GameRegistry.owner (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#25) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+GameRegistry.distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#36-50) has external calls inside a loop: records[keys[k]].owner.send(valueForEachOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#48)
+GameRegistry.distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#36-50) has external calls inside a loop: records[keys[k]].owner.send(valueForEachOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#48)
+	Calls stack containing the loop:
+		GameRegistry.register(address,string,string)
+GameRegistry.distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#36-50) has external calls inside a loop: records[keys[k]].owner.send(valueForEachOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#48)
+	Calls stack containing the loop:
+		GameRegistry.transfer(address,address)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+GameRegistry.returnValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#156-160) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable GameRegistry.REGISTRATION_COST (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#27) is not in mixedCase
+Variable GameRegistry.TRANSFER_COST (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#28) is not in mixedCase
+Variable GameRegistry.VALUE_DISTRIBUTION_KEY_OWNERS (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#29) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in GameRegistry.register(address,string,string) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#53-74):
+	External calls:
+	- distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#62)
+		- owner.send(valueForRegOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#42)
+		- records[keys[k]].owner.send(valueForEachOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#48)
+	State variables written after the call(s):
+	- keys.length ++ (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#67)
+	- keys[keys.length - 1] = key (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#68)
+	- numRecords ++ (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#72)
+	- records[key].time = now (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#64)
+	- records[key].owner = msg.sender (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#65)
+	- records[key].keysIndex = keys.length (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#66)
+	- records[key].description = description (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#69)
+	- records[key].url = url (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#70)
+Reentrancy in GameRegistry.transfer(address,address) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#98-111):
+	External calls:
+	- distributeValue() (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#107)
+		- owner.send(valueForRegOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#42)
+		- records[keys[k]].owner.send(valueForEachOwner) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#48)
+	State variables written after the call(s):
+	- records[key].owner = newOwner (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#109)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+GameRegistry.REGISTRATION_COST (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#27) should be constant 
+GameRegistry.TRANSFER_COST (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#28) should be constant 
+GameRegistry.VALUE_DISTRIBUTION_KEY_OWNERS (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#29) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+register(address,string,string) should be declared external:
+	- GameRegistry.register(address,string,string) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#53-74)
+update(address,string,string) should be declared external:
+	- GameRegistry.update(address,string,string) (../sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol#77-83)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol analyzed (1 contracts with 100 detectors), 24 result(s) found

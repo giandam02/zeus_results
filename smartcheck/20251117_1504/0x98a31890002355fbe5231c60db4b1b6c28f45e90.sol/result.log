@@ -1,0 +1,115 @@
+'solc --version' running
+'solc /sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:17:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SplitterEthToEtc() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:24:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:31:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    throw;
+                    ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:35:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    throw;
+                    ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:37:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    throw;
+                    ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:42:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:47:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:51:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:55:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:15:46: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x2BD2326c993DFaeF84f696526064FF22eba5b362'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+    AmIOnTheFork amIOnTheFork = AmIOnTheFork(0x2bd2326c993dfaef84f696526064ff22eba5b362);
+                                             ^----------------------------------------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:3:5: Warning: No visibility specified. Defaulting to "public". 
+    function forked() constant returns(bool);
+    ^---------------------------------------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function SplitterEthToEtc() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:23:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value < lowLimit)
+            ^-------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:28:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (msg.value <= upLimit) {
+                ^-------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:30:40: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                if (!intermediate.send(msg.value))
+                                       ^-------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:36:38: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                if (!msg.sender.send(msg.value - upLimit))
+                                     ^-------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:41:34: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (!msg.sender.send(msg.value))
+                                 ^-------^
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:46:5: Warning: No visibility specified. Defaulting to "public". 
+    function setIntermediate(address _intermediate) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:50:5: Warning: No visibility specified. Defaulting to "public". 
+    function setUpLimit(uint _limit) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function setLowLimit(uint _limit) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SplitterEthToEtc.fallback() (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#21-44) sends eth to arbitrary user
+	Dangerous calls:
+	- ! intermediate.send(upLimit) (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#34)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+SplitterEthToEtc.setUpLimit(uint256) (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#50-53) should emit an event for: 
+	- upLimit = _limit (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#52) 
+SplitterEthToEtc.setLowLimit(uint256) (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#54-57) should emit an event for: 
+	- lowLimit = _limit (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#56) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+SplitterEthToEtc.setIntermediate(address)._intermediate (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#46) lacks a zero-check on :
+		- intermediate = _intermediate (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#48)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#24):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#31):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#35):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#37):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#42):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#47):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#51):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#55):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SplitterEthToEtc.setIntermediate(address)._intermediate (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#46) is not in mixedCase
+Parameter SplitterEthToEtc.setUpLimit(uint256)._limit (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#50) is not in mixedCase
+Parameter SplitterEthToEtc.setLowLimit(uint256)._limit (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#54) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+SplitterEthToEtc.amIOnTheFork (../sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol#15) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol analyzed (2 contracts with 100 detectors), 18 result(s) found

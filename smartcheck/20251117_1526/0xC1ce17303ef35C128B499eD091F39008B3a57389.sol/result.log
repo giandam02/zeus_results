@@ -1,0 +1,206 @@
+/sb/0xC1ce17303ef35C128B499eD091F39008B3a57389.sol
+jar:file:/usr/local/lib/node_modules/@smartdec/smartcheck/jdeploy-bundle/smartcheck-2.0-jar-with-dependencies.jar!/solidity-rules.xmlruleId: SOLIDITY_ARRAY_LENGTH_MANIPULATION
+patternId: 872bdd
+severity: 1
+line: 93
+column: 12
+content: keys.length--
+
+ruleId: SOLIDITY_ARRAY_LENGTH_MANIPULATION
+patternId: 43ba1c
+severity: 1
+line: 67
+column: 12
+content: keys.length++
+
+ruleId: SOLIDITY_EXTRA_GAS_IN_LOOPS
+patternId: d3j11j
+severity: 1
+line: 47
+column: 8
+content: for(uintk=0;k<numRecords;k++){records[keys[k]].owner.send(valueForEachOwner);}
+
+ruleId: SOLIDITY_MSGVALUE_EQUALS_ZERO
+patternId: 1df89a
+severity: 1
+line: 37
+column: 12
+content: msg.value==0
+
+ruleId: SOLIDITY_PRAGMAS_VERSION
+patternId: 23fc32
+severity: 1
+line: 1
+column: 16
+content: >=
+
+ruleId: SOLIDITY_PRAGMAS_VERSION
+patternId: 23fc32
+severity: 1
+line: 1
+column: 24
+content: <
+
+ruleId: SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA
+patternId: 5616b2
+severity: 1
+line: 22
+column: 14
+content: private
+
+ruleId: SOLIDITY_SHOULD_RETURN_STRUCT
+patternId: 83hf3l
+severity: 1
+line: 118
+column: 50
+content: (addresskey,addressowner,uinttime,stringdescription,stringurl)
+
+ruleId: SOLIDITY_SHOULD_RETURN_STRUCT
+patternId: 83hf3l
+severity: 1
+line: 127
+column: 43
+content: (addressowner,uinttime,stringdescription,stringurl)
+
+ruleId: SOLIDITY_UNCHECKED_CALL
+patternId: f39eed
+severity: 3
+line: 42
+column: 14
+content: send(valueForRegOwner)
+
+ruleId: SOLIDITY_UNCHECKED_CALL
+patternId: f39eed
+severity: 3
+line: 48
+column: 35
+content: send(valueForEachOwner)
+
+ruleId: SOLIDITY_UPGRADE_TO_050
+patternId: 441gim
+severity: 1
+line: 119
+column: 8
+content: Recordrecord=records[keys[rindex]]
+
+ruleId: SOLIDITY_UPGRADE_TO_050
+patternId: 441gim
+severity: 1
+line: 128
+column: 8
+content: Recordrecord=records[key]
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 32
+column: 4
+content: functionGameRegistry(){owner=msg.sender;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 36
+column: 4
+content: functiondistributeValue(){if(msg.value==0){return;}uintownerPercentage=100-VALUE_DISTRIBUTION_KEY_OWNERS;uintvalueForRegOwner=(ownerPercentage*msg.value)/100;owner.send(valueForRegOwner);uintvalueForEachOwner=(msg.value-valueForRegOwner)/numRecords;if(valueForEachOwner<=0){return;}for(uintk=0;k<numRecords;k++){records[keys[k]].owner.send(valueForEachOwner);}}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 53
+column: 4
+content: functionregister(addresskey,stringdescription,stringurl){if(msg.value<REGISTRATION_COST){if(msg.value>0){msg.sender.send(msg.value);}return;}distributeValue();if(records[key].time==0){records[key].time=now;records[key].owner=msg.sender;records[key].keysIndex=keys.length;keys.length++;keys[keys.length-1]=key;records[key].description=description;records[key].url=url;numRecords++;}}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 77
+column: 4
+content: functionupdate(addresskey,stringdescription,stringurl){if(records[key].owner==msg.sender){records[key].description=description;records[key].url=url;}}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 86
+column: 4
+content: functionunregister(addresskey){if(records[key].owner==msg.sender){uintkeysIndex=records[key].keysIndex;deleterecords[key];numRecords--;keys[keysIndex]=keys[keys.length-1];records[keys[keysIndex]].keysIndex=keysIndex;keys.length--;}}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 98
+column: 4
+content: functiontransfer(addresskey,addressnewOwner){if(msg.value<TRANSFER_COST){if(msg.value>0){msg.sender.send(msg.value);}return;}distributeValue();if(records[key].owner==msg.sender){records[key].owner=newOwner;}}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 114
+column: 4
+content: functionisRegistered(addresskey)returns(bool){returnrecords[key].time!=0;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 118
+column: 4
+content: functiongetRecordAtIndex(uintrindex)returns(addresskey,addressowner,uinttime,stringdescription,stringurl){Recordrecord=records[keys[rindex]];key=keys[rindex];owner=record.owner;time=record.time;description=record.description;url=record.url;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 127
+column: 4
+content: functiongetRecord(addresskey)returns(addressowner,uinttime,stringdescription,stringurl){Recordrecord=records[key];owner=record.owner;time=record.time;description=record.description;url=record.url;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 138
+column: 4
+content: functiongetOwner(addresskey)returns(address){returnrecords[key].owner;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 145
+column: 4
+content: functiongetTime(addresskey)returns(uint){returnrecords[key].time;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 150
+column: 4
+content: functiongetTotalRecords()returns(uint){returnnumRecords;}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: 910067
+severity: 1
+line: 164
+column: 4
+content: functionwithdraw(uintvalue){if(msg.sender==owner){msg.sender.send(value);}}
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: b51ce0
+severity: 1
+line: 16
+column: 4
+content: mapping(address=>Record)records;
+
+ruleId: SOLIDITY_VISIBILITY
+patternId: b51ce0
+severity: 1
+line: 25
+column: 4
+content: addressowner;
+
+SOLIDITY_VISIBILITY :15
+SOLIDITY_MSGVALUE_EQUALS_ZERO :1
+SOLIDITY_PRAGMAS_VERSION :2
+SOLIDITY_ARRAY_LENGTH_MANIPULATION :2
+SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA :1
+SOLIDITY_EXTRA_GAS_IN_LOOPS :1
+SOLIDITY_UPGRADE_TO_050 :2
+SOLIDITY_UNCHECKED_CALL :2
+SOLIDITY_SHOULD_RETURN_STRUCT :2

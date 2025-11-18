@@ -1,0 +1,239 @@
+'solc --version' running
+'solc /sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:34:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!safeToAdd(a, b)) throw;
+                              ^---^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:39:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!safeToSubtract(a, b)) throw;
+                                   ^---^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:76:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!msg.sender.call.gas(msg.gas).value(_value)()) throw;
+                                                               ^---^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:98:69: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!safeToSubtract(_allowance[_from][msg.sender], _value)) throw;
+                                                                    ^---^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:100:59: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!transferFrom(_from, msg.sender, _value)) throw;
+                                                          ^---^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:122:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:57:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:66:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Deposit(msg.sender, msg.value);
+        ^----------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:78:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Withdrawal(msg.sender, _value);
+        ^----------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:92:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, _to, _value);
+            ^-------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:106:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(_from, _to, _value);
+            ^--------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:113:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function receiveApproval(address _from, uint256 _value, address _token);
+    ^----------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint256 supply);
+    ^-------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:16:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _owner) constant returns (uint256 balance);
+    ^--------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:18:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:19:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value) returns (bool success);
+    ^-------------------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+    ^----------------------------------------------------------------------------------------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:56:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint256 supply) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:60:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:64:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:65:66: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        _balanceOf[msg.sender] = safeAdd(_balanceOf[msg.sender], msg.value);
+                                                                 ^-------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:66:29: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        Deposit(msg.sender, msg.value);
+                            ^-------^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:69:5: Warning: No visibility specified. Defaulting to "public". 
+    function redeem() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:73:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:76:38: Warning: "msg.gas" has been deprecated in favor of "gasleft()"
+            if (!msg.sender.call.gas(msg.gas).value(_value)()) throw;
+                                     ^-----^
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:82:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _owner) constant returns (uint256 balance) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:86:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:97:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:111:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:125:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:25:5: Warning: Function state mutability can be restricted to pure
+    function safeToAdd(uint a, uint b) internal returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol:29:5: Warning: Function state mutability can be restricted to pure
+    function safeToSubtract(uint a, uint b) internal returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in EthToken.transferFrom(address,address,uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97-109):
+	External calls:
+	- ! transferFrom(_from,msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	External calls sending eth:
+	- ! transferFrom(_from,msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	State variables written after the call(s):
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- _balanceOf[msg.sender] = safeSubtract(_balanceOf[msg.sender],_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#74)
+	EthToken._balanceOf (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#50) can be used in cross function reentrancies:
+	- EthToken.balanceOf(address) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#82-84)
+	- EthToken.deposit() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#64-67)
+	- EthToken.redeem() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#69-71)
+	- EthToken.transfer(address,uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#86-95)
+	- EthToken.transferFrom(address,address,uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97-109)
+	- EthToken.withdraw(uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#73-80)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Reentrancy in EthToken.transferFrom(address,address,uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97-109):
+	External calls:
+	- ! transferFrom(_from,msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	External calls sending eth:
+	- ! transferFrom(_from,msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	Event emitted after the call(s):
+	- Withdrawal(msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#78)
+		- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+Reentrancy in EthToken.withdraw(uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#73-80):
+	External calls:
+	- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	External calls sending eth:
+	- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+	- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	Event emitted after the call(s):
+	- Withdrawal(msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#78)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+EthToken.withdraw(uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#73-80) tries to limit the gas of an external call that controls implicit decoding
+	! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#return-bomb
+
+Deprecated standard detected THROW (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#34):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#39):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76):
+	- Usage of "msg.gas" should be replaced with "gasleft()"
+Deprecated standard detected THROW (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#98):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#122):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in EthToken.withdraw(uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#73-80):
+	- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Contract tokenRecipient (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#7-9) is not in CapWords
+Parameter EthToken.withdraw(uint256)._value (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#73) is not in mixedCase
+Parameter EthToken.balanceOf(address)._owner (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#82) is not in mixedCase
+Parameter EthToken.transfer(address,uint256)._to (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#86) is not in mixedCase
+Parameter EthToken.transfer(address,uint256)._value (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#86) is not in mixedCase
+Parameter EthToken.transferFrom(address,address,uint256)._from (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97) is not in mixedCase
+Parameter EthToken.transferFrom(address,address,uint256)._to (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97) is not in mixedCase
+Parameter EthToken.transferFrom(address,address,uint256)._value (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97) is not in mixedCase
+Parameter EthToken.approve(address,uint256)._spender (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#111) is not in mixedCase
+Parameter EthToken.approve(address,uint256)._value (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#111) is not in mixedCase
+Parameter EthToken.approveAndCall(address,uint256)._spender (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#117) is not in mixedCase
+Parameter EthToken.approveAndCall(address,uint256)._value (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#117) is not in mixedCase
+Parameter EthToken.allowance(address,address)._owner (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#125) is not in mixedCase
+Parameter EthToken.allowance(address,address)._spender (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#125) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in EthToken.transferFrom(address,address,uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#97-109):
+	External calls:
+	- ! transferFrom(_from,msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+	External calls sending eth:
+	- ! transferFrom(_from,msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#100)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+		- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	State variables written after the call(s):
+	- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+		- _balanceOf[msg.sender] = safeSubtract(_balanceOf[msg.sender],_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#74)
+	Event emitted after the call(s):
+	- Withdrawal(msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#78)
+		- withdraw(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#101)
+Reentrancy in EthToken.withdraw(uint256) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#73-80):
+	External calls:
+	- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+	External calls sending eth:
+	- ! msg.sender.send(_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#75)
+	- ! msg.sender.call.gas(msg.gas).value(_value)() (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#76)
+	Event emitted after the call(s):
+	- Withdrawal(msg.sender,_value) (../sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol#78)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x89d64bc7e46bdc49a89652ae9bb167418cbad62e.sol analyzed (4 contracts with 100 detectors), 30 result(s) found

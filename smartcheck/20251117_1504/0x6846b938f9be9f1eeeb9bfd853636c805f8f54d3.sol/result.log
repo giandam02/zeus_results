@@ -1,0 +1,162 @@
+'solc --version' running
+'solc /sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:27:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function RES() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:67:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SwarmRedistribution() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:77:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      if(msg.sender != JohanNygren) throw;
+                                    ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:82:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      if(campaignOpen != true) throw;
+                               ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:115:42: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      if(balanceOf[msg.sender] < _value) throw;
+                                         ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:118:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      if (!msg.sender.send(_value)) throw;
+                                    ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:128:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_to == msg.sender) throw;
+                              ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:131:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;
+                                            ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:132:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;
+                                                      ^---^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:97:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Bought(msg.sender, msg.value);
+      ^---------------------------^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:111:7: Warning: Invoking events without "emit" prefix is deprecated.
+      BoughtViaJohan(msg.sender, msg.value);
+      ^-----------------------------------^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:121:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Sold(msg.sender, _value);
+      ^----------------------^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:160:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, sentAmount);
+        ^-----------------------------------^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:224:21: Warning: Invoking events without "emit" prefix is deprecated.
+        if(isJohan) Swarm(_leaf, swarmTree[i].node, share);
+                    ^------------------------------------^
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:27:5: Warning: No visibility specified. Defaulting to "public". 
+    function RES() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:67:5: Warning: No visibility specified. Defaulting to "public". 
+    function SwarmRedistribution() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:86:5: Warning: No visibility specified. Defaulting to "public". 
+    function changeJohanNygrensAddress(address _newAddress) onlyJohan {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function closeCampaign() onlyJohan {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol:126:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) isOpen {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SwarmRedistribution (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#35-243) contract sets array length with a user-controlled value:
+	- dividendPathways[_to].push(dividendPathway({from:msg.sender,amount:_value,timeStamp:now})) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#139-143)
+SwarmRedistribution (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#35-243) contract sets array length with a user-controlled value:
+	- dividendPathways[msg.sender].push(dividendPathway({from:JohanNygren,amount:msg.value,timeStamp:now})) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#105-109)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+SwarmRedistribution (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#35-243) has incorrect ERC20 function interface:SwarmRedistribution.transfer(address,uint256) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#126-161)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+SwarmRedistribution.doSwarm(address,uint256).isJohan (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#208) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+SwarmRedistribution.changeJohanNygrensAddress(address) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#86-88) should emit an event for: 
+	- JohanNygren = _newAddress (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#87) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+SwarmRedistribution.changeJohanNygrensAddress(address)._newAddress (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#86) lacks a zero-check on :
+		- JohanNygren = _newAddress (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+SwarmRedistribution.iterateThroughSwarm(address,uint256) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#171-194) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timeStamp <= _timeStamp (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#177)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+SwarmRedistribution.transfer(address,uint256) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#126-161) compares to a boolean constant:
+	-swarmRedistribution(_to,taxCollected) == true (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#145)
+SwarmRedistribution.iterateThroughSwarm(address,uint256) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#171-194) compares to a boolean constant:
+	-inSwarmTree[dividendPathways[_node][i].from] == false (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#174)
+SwarmRedistribution.isOpen() (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#81-84) compares to a boolean constant:
+	-campaignOpen != true (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#82)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#115):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#118):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#128):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#131):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#132):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#77):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#82):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- ^0.4.6 (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Struct SwarmRedistribution.dividendPathway (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#40-44) is not in CapWords
+Parameter SwarmRedistribution.changeJohanNygrensAddress(address)._newAddress (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#86) is not in mixedCase
+Parameter SwarmRedistribution.sell(uint256)._value (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#114) is not in mixedCase
+Parameter SwarmRedistribution.transfer(address,uint256)._to (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#126) is not in mixedCase
+Parameter SwarmRedistribution.transfer(address,uint256)._value (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#126) is not in mixedCase
+Parameter SwarmRedistribution.swarmRedistribution(address,uint256)._to (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#163) is not in mixedCase
+Parameter SwarmRedistribution.swarmRedistribution(address,uint256)._taxCollected (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#163) is not in mixedCase
+Parameter SwarmRedistribution.iterateThroughSwarm(address,uint256)._node (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#171) is not in mixedCase
+Parameter SwarmRedistribution.iterateThroughSwarm(address,uint256)._timeStamp (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#171) is not in mixedCase
+Parameter SwarmRedistribution.doSwarm(address,uint256)._leaf (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#196) is not in mixedCase
+Parameter SwarmRedistribution.doSwarm(address,uint256)._taxCollected (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#196) is not in mixedCase
+Variable SwarmRedistribution.JohanNygren (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#37) is not in mixedCase
+Variable SwarmRedistribution.JohanInSwarm (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#63) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in SwarmRedistribution.sell(uint256) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#114-123):
+	External calls:
+	- ! msg.sender.send(_value) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#118)
+	State variables written after the call(s):
+	- totalSupply -= _value (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#120)
+	Event emitted after the call(s):
+	- Sold(msg.sender,_value) (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#121)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Loop condition i < swarmTree.length (../sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol#202) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+/sb/0x6846b938f9be9f1eeeb9bfd853636c805f8f54d3.sol analyzed (2 contracts with 100 detectors), 34 result(s) found

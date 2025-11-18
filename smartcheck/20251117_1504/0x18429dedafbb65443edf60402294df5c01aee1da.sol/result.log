@@ -1,0 +1,188 @@
+'solc --version' running
+'solc /sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:5:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:10:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:72:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:73:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:99:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:100:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:101:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:115:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:122:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!project_wallet.send(this.balance)) throw;
+                                                ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:128:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:60:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:61:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:76:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:105:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:118:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:122:34: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (!project_wallet.send(this.balance)) throw;
+                                 ^----------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:19:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:39:5: Warning: No visibility specified. Defaulting to "public". 
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:52:5: Warning: No visibility specified. Defaulting to "public". 
+    function defineProjectWallet(address target) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:57:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:65:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:71:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:83:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:98:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:109:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newBuyPrice) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:113:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:121:5: Warning: No visibility specified. Defaulting to "public". 
+    function moveFunds() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol:127:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+BuyerToken (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#21-131) has incorrect ERC20 function interface:BuyerToken.transfer(address,uint256) (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#71-77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+owned.transferOwnership(address) (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#14-16) should emit an event for: 
+	- owner = newOwner (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#15) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+BuyerToken.setPrices(uint256) (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#109-111) should emit an event for: 
+	- buyPrice = newBuyPrice (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#110) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+owned.transferOwnership(address).newOwner (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#14) lacks a zero-check on :
+		- owner = newOwner (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#15)
+BuyerToken.defineProjectWallet(address).target (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#52) lacks a zero-check on :
+		- project_wallet = target (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#10):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#72):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#73):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#99):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#100):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#101):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#115):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#122):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#128):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- ^0.4.6 (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#2-17) is not in CapWords
+Contract tokenRecipient (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#19) is not in CapWords
+Parameter BuyerToken.transfer(address,uint256)._to (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#71) is not in mixedCase
+Parameter BuyerToken.transfer(address,uint256)._value (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#71) is not in mixedCase
+Parameter BuyerToken.approve(address,uint256)._spender (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#80) is not in mixedCase
+Parameter BuyerToken.approve(address,uint256)._value (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#80) is not in mixedCase
+Parameter BuyerToken.approveAndCall(address,uint256,bytes)._spender (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#88) is not in mixedCase
+Parameter BuyerToken.approveAndCall(address,uint256,bytes)._value (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#88) is not in mixedCase
+Parameter BuyerToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#88) is not in mixedCase
+Parameter BuyerToken.transferFrom(address,address,uint256)._from (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#98) is not in mixedCase
+Parameter BuyerToken.transferFrom(address,address,uint256)._to (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#98) is not in mixedCase
+Parameter BuyerToken.transferFrom(address,address,uint256)._value (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#98) is not in mixedCase
+Variable BuyerToken.project_wallet (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#29) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+BuyerToken.standard (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#23) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- tokenRecipient.receiveApproval(address,uint256,address,bytes) (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#19)
+token(uint256,string,uint8,string) should be declared external:
+	- BuyerToken.token(uint256,string,uint8,string) (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#39-50)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- BuyerToken.approveAndCall(address,uint256,bytes) (../sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol#88-95)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x18429dedafbb65443edf60402294df5c01aee1da.sol analyzed (3 contracts with 100 detectors), 33 result(s) found

@@ -1,0 +1,266 @@
+'solc --version' running
+'solc /sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:45:1: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+function TheEthereumLottery()
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:54:28: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+  if (msg.sender != owner) throw;
+                           ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:130:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//this implies that if Numbers are present, broadcasted TheRand has to satisfy TheHash
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:193:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:200:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//because you should sort the values yourself
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:233:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:239:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//referrals have at least 50% of the income
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:248:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//throw if player didnt played
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:253:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//this condition checks if the numbers were announced
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:275:15: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+  if(hits==0) throw;
+              ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:284:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:305:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw; //no refund if there was a valid announce
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:308:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//no refund while there is still TIME to announce TheRand
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:312:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//throw if player didnt played or already refunded
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:316:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:120:3: Warning: Invoking events without "emit" prefix is deprecated.
+  NewDrawReadyToPlay(IndexOfCurrentDraw, new_hash, priceofticket, guess4outof4);//event
+  ^---------------------------------------------------------------------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:127:6: Warning: "sha3" has been deprecated in favour of "keccak256"
+  if(sha3(the_rand)
+     ^------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:127:6: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+  if(sha3(the_rand)
+     ^------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:127:6: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+  if(sha3(the_rand)
+     ^------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:133:25: Warning: "sha3" has been deprecated in favour of "keccak256"
+  bytes32 combined_rand=sha3(the_rand, ledger[index].ClosingHash);//from this number we'll calculate WinningNums
+                        ^---------------------------------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:133:25: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+  bytes32 combined_rand=sha3(the_rand, ledger[index].ClosingHash);//from this number we'll calculate WinningNums
+                        ^---------------------------------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:178:3: Warning: Invoking events without "emit" prefix is deprecated.
+  DrawReadyToPayout(index,
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:297:3: Warning: Invoking events without "emit" prefix is deprecated.
+  PlayerWon(win);//event
+  ^------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:325:10: Warning: "sha3" has been deprecated in favour of "keccak256"
+  return sha3(TheRand);
+         ^-----------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:325:10: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+  return sha3(TheRand);
+         ^-----------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:325:10: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+  return sha3(TheRand);
+         ^-----------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:45:1: Warning: No visibility specified. Defaulting to "public". 
+function TheEthereumLottery()
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:87:1: Warning: No visibility specified. Defaulting to "public". 
+function next_draw(bytes32 new_hash,
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:100:5: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+    block.blockhash(block.number-1);//adds noise to the previous draw
+    ^-------------^
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:122:1: Warning: No visibility specified. Defaulting to "public". 
+function announce_therand(uint32 index,
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:183:1: Warning: No visibility specified. Defaulting to "public". 
+function PlayReferred(uint8 MyNum1,
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:210:1: Warning: No visibility specified. Defaulting to "public". 
+function Play(uint8 MyNum1,
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:223:1: Warning: No visibility specified. Defaulting to "public". 
+function Deposit_referral()//this function is not mandatory to become referral
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:228:1: Warning: No visibility specified. Defaulting to "public". 
+function Withdraw_referral()
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:235:1: Warning: No visibility specified. Defaulting to "public". 
+function set_referral_fee(uint8 new_fee)
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:242:1: Warning: No visibility specified. Defaulting to "public". 
+function Withdraw(uint32 DrawIndex)
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:299:1: Warning: No visibility specified. Defaulting to "public". 
+function Refund(uint32 DrawIndex)
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:322:1: Warning: No visibility specified. Defaulting to "public". 
+function CheckHash(bytes32 TheRand)
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:327:1: Warning: No visibility specified. Defaulting to "public". 
+function MyBet(uint8 DrawIndex, address PlayerAddress)
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:332:1: Warning: No visibility specified. Defaulting to "public". 
+function announce(string MSG)
+^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol:322:1: Warning: Function state mutability can be restricted to pure
+function CheckHash(bytes32 TheRand)
+^ (Relevant source part starts here and spans across multiple lines).
+
+
+TheEthereumLottery.Withdraw(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#242-298) performs a multiplication on the result of a division:
+	- referral_ledger[ledger[DrawIndex].bets[msg.sender].referral] += win / 10000 * referral_fee (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#290-291)
+TheEthereumLottery.Withdraw(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#242-298) performs a multiplication on the result of a division:
+	- referral_ledger[owner] += win / 10000 * (100 - referral_fee) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#292-293)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+TheEthereumLottery.announce_therand(uint32,bytes32).Numbers (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#144) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+TheEthereumLottery.set_referral_fee(uint8) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#235-241) should emit an event for: 
+	- referral_fee = new_fee (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#240) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+TheEthereumLottery.Refund(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#299-317) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < ledger[DrawIndex].ExpirationTime (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#307)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+TheEthereumLottery.Withdraw(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#242-298) compares to a boolean constant:
+	-ledger[DrawIndex].bets[msg.sender].can_withdraw == false (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#247)
+TheEthereumLottery.Refund(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#299-317) compares to a boolean constant:
+	-ledger[DrawIndex].bets[msg.sender].can_withdraw == false (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#311)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Deprecated standard detected ledger[IndexOfCurrentDraw].ClosingHash = block.blockhash(block.number - 1) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#97-100):
+	- Usage of "block.blockhash()" should be replaced with "blockhash()"
+Deprecated standard detected sha3()(the_rand) != ledger[index].OpeningHash (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#127-129):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#130):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected combined_rand = sha3()(the_rand,ledger[index].ClosingHash) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#133):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#193):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#200):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#233):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#239):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#248):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#253):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#275):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#284):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#305):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#308):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#312):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#316):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected sha3()(TheRand) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#325):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#54):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.7 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.7 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Struct TheEthereumLottery.bet_t (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#62-66) is not in CapWords
+Struct TheEthereumLottery.ledger_t (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#67-81) is not in CapWords
+Function TheEthereumLottery.next_draw(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#87-121) is not in mixedCase
+Parameter TheEthereumLottery.next_draw(bytes32,uint256,uint256,uint256,uint256,uint256).new_hash (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#87) is not in mixedCase
+Function TheEthereumLottery.announce_therand(uint32,bytes32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#122-181) is not in mixedCase
+Parameter TheEthereumLottery.announce_therand(uint32,bytes32).the_rand (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#123) is not in mixedCase
+Function TheEthereumLottery.PlayReferred(uint8,uint8,uint8,uint8,address) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#183-208) is not in mixedCase
+Parameter TheEthereumLottery.PlayReferred(uint8,uint8,uint8,uint8,address).MyNum1 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#183) is not in mixedCase
+Parameter TheEthereumLottery.PlayReferred(uint8,uint8,uint8,uint8,address).MyNum2 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#184) is not in mixedCase
+Parameter TheEthereumLottery.PlayReferred(uint8,uint8,uint8,uint8,address).MyNum3 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#185) is not in mixedCase
+Parameter TheEthereumLottery.PlayReferred(uint8,uint8,uint8,uint8,address).MyNum4 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#186) is not in mixedCase
+Function TheEthereumLottery.Play(uint8,uint8,uint8,uint8) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#210-222) is not in mixedCase
+Parameter TheEthereumLottery.Play(uint8,uint8,uint8,uint8).MyNum1 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#210) is not in mixedCase
+Parameter TheEthereumLottery.Play(uint8,uint8,uint8,uint8).MyNum2 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#211) is not in mixedCase
+Parameter TheEthereumLottery.Play(uint8,uint8,uint8,uint8).MyNum3 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#212) is not in mixedCase
+Parameter TheEthereumLottery.Play(uint8,uint8,uint8,uint8).MyNum4 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#213) is not in mixedCase
+Function TheEthereumLottery.Deposit_referral() (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#223-227) is not in mixedCase
+Function TheEthereumLottery.Withdraw_referral() (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#228-234) is not in mixedCase
+Function TheEthereumLottery.set_referral_fee(uint8) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#235-241) is not in mixedCase
+Parameter TheEthereumLottery.set_referral_fee(uint8).new_fee (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#235) is not in mixedCase
+Function TheEthereumLottery.Withdraw(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#242-298) is not in mixedCase
+Parameter TheEthereumLottery.Withdraw(uint32).DrawIndex (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#242) is not in mixedCase
+Function TheEthereumLottery.Refund(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#299-317) is not in mixedCase
+Parameter TheEthereumLottery.Refund(uint32).DrawIndex (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#299) is not in mixedCase
+Function TheEthereumLottery.CheckHash(bytes32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#322-326) is not in mixedCase
+Parameter TheEthereumLottery.CheckHash(bytes32).TheRand (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#322) is not in mixedCase
+Function TheEthereumLottery.MyBet(uint8,address) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#327-331) is not in mixedCase
+Parameter TheEthereumLottery.MyBet(uint8,address).DrawIndex (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#327) is not in mixedCase
+Parameter TheEthereumLottery.MyBet(uint8,address).PlayerAddress (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#327) is not in mixedCase
+Parameter TheEthereumLottery.announce(string).MSG (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#332) is not in mixedCase
+Variable TheEthereumLottery.Announcements (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#58) is not in mixedCase
+Variable TheEthereumLottery.IndexOfCurrentDraw (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#59) is not in mixedCase
+Variable TheEthereumLottery.referral_fee (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#60) is not in mixedCase
+Variable TheEthereumLottery.referral_ledger (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#61) is not in mixedCase
+Modifier TheEthereumLottery.OnlyOwner() (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#52-56) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in TheEthereumLottery.Withdraw(uint32) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#242-298):
+	External calls:
+	- ! msg.sender.send(win) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#283)
+	State variables written after the call(s):
+	- referral_ledger[owner] += win / 100 (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#287)
+	- referral_ledger[ledger[DrawIndex].bets[msg.sender].referral] += win / 10000 * referral_fee (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#290-291)
+	- referral_ledger[owner] += win / 10000 * (100 - referral_fee) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#292-293)
+	Event emitted after the call(s):
+	- PlayerWon(win) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#297)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+announce(string) should be declared external:
+	- TheEthereumLottery.announce(string) (../sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol#332-336)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol analyzed (1 contracts with 100 detectors), 64 result(s) found

@@ -1,0 +1,103 @@
+'solc --version' running
+'solc /sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function PixelMap() {creator = msg.sender;}
+    ^-----------------------------------------^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:26:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (location > 3969) {throw;}
+                              ^---^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:32:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:45:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:50:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:57:15: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else {throw;}
+              ^---^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:62:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (tiles[location].owner != msg.sender) {throw;} // Pixel not owned by you!
+                                                  ^---^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:55:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TileUpdated(location);
+            ^-------------------^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:67:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TileUpdated(location);
+            ^-------------------^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function PixelMap() {creator = msg.sender;}
+    ^-----------------------------------------^
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function getTile(uint location) returns (address, string, string, uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:25:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyTile(uint location) payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:61:5: Warning: No visibility specified. Defaulting to "public". 
+    function setTile(uint location, string image, string url, uint price) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol:17:5: Warning: Function state mutability can be restricted to view
+    function getTile(uint location) returns (address, string, string, uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Deprecated standard detected THROW (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#26):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#32):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#45):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#50):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#57):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#62):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.2 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3.
+It is used by:
+	- ^0.4.2 (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in PixelMap.buyTile(uint256) (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#25-58):
+	External calls:
+	- owner.send(price) (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#52)
+	State variables written after the call(s):
+	- tiles[location].owner = msg.sender (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#53)
+	- tiles[location].price = 0 (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#54)
+	Event emitted after the call(s):
+	- TileUpdated(location) (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+PixelMap.buyTile(uint256) (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#25-58) uses literals with too many digits:
+	- price = 2000000000000000000 (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#37)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+setTile(uint256,string,string,uint256) should be declared external:
+	- PixelMap.setTile(uint256,string,string,uint256) (../sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol#61-69)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

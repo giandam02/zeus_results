@@ -1,0 +1,276 @@
+'solc --version' running
+'solc /sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:47:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Etheropt(uint expiration_, string underlying_, uint margin_, uint realityID_, bytes32 factHash_, address ethAddr_, int[] strikes_) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:109:22: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.value>0) throw;
+                     ^---^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:131:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:207:54: Warning: This declaration shadows an existing declaration.
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+                                                     ^---------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:13:3: The shadowed declaration is here:
+  uint public margin;
+  ^----------------^
+
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:79:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Deposit(msg.sender, msg.value, accounts[accountIDs[msg.sender]].capital);
+    ^----------------------------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:86:9: Warning: Return value of low-level calls not used.
+        msg.sender.call.value(amount)();
+        ^-----------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:87:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Withdraw(msg.sender, amount, accounts[accountIDs[msg.sender]].capital);
+        ^--------------------------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:129:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewMarketMaker(msg.sender, server);
+        ^--------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:176:21: Warning: "sha3" has been deprecated in favour of "keccak256"
+      if (ecrecover(sha3(factHash, value), v, r, s) == ethAddr) {
+                    ^-------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:176:21: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      if (ecrecover(sha3(factHash, value), v, r, s) == ethAddr) {
+                    ^-------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:196:13: Warning: Return value of low-level calls not used.
+            accounts[accountID].user.call.value(amountToSend)();
+            ^-------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:197:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Expire(msg.sender, accounts[accountID].user);
+            ^------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:232:77: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(optionID, price, size, orderID, blockExpires) ... 
+     ^------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:232:77: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(optionID, price, size, orderID, blockExpires) ... 
+     ^------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:232:186: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(optionID, price, size, orderID, blockExpires) ... 
+     ^------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:232:186: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(optionID, price, size, orderID, blockExpires) ... 
+     ^------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:240:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    bytes32 hash = sha256(optionID, price, size, orderID, blockExpires);
+                   ^--------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:255:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OrderMatch(msg.sender, matchSize, addr, size, optionID, price);
+      ^------------------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:257:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OrderMatchFailure(msg.sender, matchSize, addr, size, optionID, price);
+      ^-------------------------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:47:3: Warning: No visibility specified. Defaulting to "public". 
+  function Etheropt(uint expiration_, string underlying_, uint margin_, uint realityID_, bytes32 factHash_, address ethAddr_, int[] strikes_) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:62:3: Warning: No visibility specified. Defaulting to "public". 
+  function getAccountID(address user) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:66:3: Warning: No visibility specified. Defaulting to "public". 
+  function getAccount(uint accountID) constant returns(address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:70:3: Warning: No visibility specified. Defaulting to "public". 
+  function addFunds() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:72:55: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+      accounts[accountIDs[msg.sender]].capital += int(msg.value);
+                                                      ^-------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:76:42: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+      accounts[accountID].capital += int(msg.value);
+                                         ^-------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:79:25: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    Deposit(msg.sender, msg.value, accounts[accountIDs[msg.sender]].capital);
+                        ^-------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:82:3: Warning: No visibility specified. Defaulting to "public". 
+  function withdrawFunds(uint amount) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:92:3: Warning: No visibility specified. Defaulting to "public". 
+  function getFunds(address user, bool onlyAvailable) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:104:3: Warning: No visibility specified. Defaulting to "public". 
+  function getFundsAndAvailable(address user) constant returns(int, int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:108:3: Warning: No visibility specified. Defaulting to "public". 
+  function marketMaker(string server) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:109:9: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if (msg.value>0) throw;
+        ^-------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:136:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarketMakers() constant returns(string, string, string, string, string, string) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:144:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarketMakerFunds() constant returns(int, int, int, int, int, int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:152:3: Warning: No visibility specified. Defaulting to "public". 
+  function getOptionChain() constant returns (uint, string, uint, uint, bytes32, address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:156:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarket(address user) constant returns(uint[], int[], int[], int[]) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:174:3: Warning: No visibility specified. Defaulting to "public". 
+  function expire(uint accountID, uint8 v, bytes32 r, bytes32 s, bytes32 value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:207:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:231:3: Warning: No visibility specified. Defaulting to "public". 
+  function orderMatchTest(uint optionID, uint price, int size, uint orderID, uint blockExpires, address addr, address sender, uint value, int matchSize) constant returns(bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:238:3: Warning: No visibility specified. Defaulting to "public". 
+  function orderMatch(uint optionID, uint price, int size, uint orderID, uint blockExpires, address addr, uint8 v, bytes32 r, bytes32 s, int matchSize) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMaxLossAfterTrade(address user, uint optionID, int positionChange, int cashChange) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:311:3: Warning: No visibility specified. Defaulting to "public". 
+  function min(uint a, uint b) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:207:3: Warning: Function state mutability can be restricted to pure
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:274:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        pnl += moneySumAtSettlement(user, optionID, positionChange, settlement);
+               ^--------------------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:291:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        pnl += moneySumAtSettlement(user, optionID, positionChange, settlement);
+               ^--------------------------------------------------------------^
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:300:3: Warning: Function state mutability can be restricted to view
+  function moneySumAtSettlement(address user, uint optionID, int positionChange, uint settlement) internal returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol:311:3: Warning: Function state mutability can be restricted to pure
+  function min(uint a, uint b) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205):
+	External calls:
+	- accounts[accountID].user.call.value(amountToSend)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#196)
+	State variables written after the call(s):
+	- accounts[accountID].capital = 0 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#192)
+	Etheropt.accounts (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#35) can be used in cross function reentrancies:
+	- Etheropt.addFunds() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#70-80)
+	- Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205)
+	- Etheropt.getAccount(uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#66-68)
+	- Etheropt.getFunds(address,bool) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#92-102)
+	- Etheropt.withdrawFunds(uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#82-90)
+	- expired = true (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#201)
+	Etheropt.expired (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#19) can be used in cross function reentrancies:
+	- Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205)
+	- Etheropt.expired (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#19)
+	- Etheropt.getMarket(address) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#156-172)
+	- numPositionsExpired ++ (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#194)
+	Etheropt.numPositionsExpired (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#22) can be used in cross function reentrancies:
+	- Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205)
+	- Etheropt.numPositionsExpired (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#22)
+	- positions[accounts[accountID].user].expired = true (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#190)
+	Etheropt.positions (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#20) can be used in cross function reentrancies:
+	- Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205)
+	- Etheropt.getMarket(address) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#156-172)
+	- Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298)
+	- Etheropt.moneySumAtSettlement(address,uint256,int256,uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#300-309)
+	- Etheropt.orderMatch(uint256,uint256,int256,uint256,uint256,address,uint8,bytes32,bytes32,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#238-259)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Etheropt.withdrawFunds(uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#82-90) ignores return value by msg.sender.call.value(amount)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#86)
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) ignores return value by accounts[accountID].user.call.value(amountToSend)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#196)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-low-level-calls
+
+Etheropt.getMoneyness(int256,uint256,uint256).margin (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#207) shadows:
+	- Etheropt.margin (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#13) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Etheropt.Etheropt(uint256,string,uint256,uint256,bytes32,address,int256[]).ethAddr_ (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#47) lacks a zero-check on :
+		- ethAddr = ethAddr_ (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) has external calls inside a loop: accounts[accountID].user.call.value(amountToSend)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#196)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Variable 'Etheropt.marketMaker(string).i (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#118)' in Etheropt.marketMaker(string) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#108-134) potentially used before declaration: funds = getFunds(marketMakers[i].user,false) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#113)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205):
+	External calls:
+	- accounts[accountID].user.call.value(amountToSend)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#196)
+	Event emitted after the call(s):
+	- Expire(msg.sender,accounts[accountID].user) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#197)
+Reentrancy in Etheropt.withdrawFunds(uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#82-90):
+	External calls:
+	- msg.sender.call.value(amount)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#86)
+	Event emitted after the call(s):
+	- Withdraw(msg.sender,amount,accounts[accountIDs[msg.sender]].capital) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Etheropt.getFunds(address,bool) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#92-102) compares to a boolean constant:
+	-onlyAvailable == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#94)
+Etheropt.getMarket(address) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#156-172) compares to a boolean constant:
+	-expired == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#162)
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) compares to a boolean constant:
+	-positions[accounts[accountID].user].hasPosition == true (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#193)
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) compares to a boolean constant:
+	-positions[accounts[accountID].user].expired == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#184)
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) compares to a boolean constant:
+	-expired == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#175)
+Etheropt.orderMatch(uint256,uint256,int256,uint256,uint256,address,uint8,bytes32,bytes32,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#238-259) compares to a boolean constant:
+	-positions[addr].hasPosition == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#246)
+Etheropt.orderMatch(uint256,uint256,int256,uint256,uint256,address,uint8,bytes32,bytes32,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#238-259) compares to a boolean constant:
+	-positions[msg.sender].hasPosition == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#242)
+Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298) compares to a boolean constant:
+	-positions[user].expired == false && numOptions > 0 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#264)
+Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298) compares to a boolean constant:
+	-pnl < maxLoss || maxLossInitialized == false (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#275)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Etheropt.Etheropt(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#47-60) has costly operations inside a loop:
+	- optionID = numOptions ++ (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#56)
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) has costly operations inside a loop:
+	- numPositionsExpired ++ (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#194)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#109):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#131):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected ecrecover(bytes32,uint8,bytes32,bytes32)(sha3()(factHash,value),v,r,s) == ethAddr (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#176):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected block.number <= blockExpires && ((size > 0 && matchSize < 0 && orderFills[sha3()(optionID,price,size,orderID,blockExpires)] - matchSize <= size) || (size < 0 && matchSize > 0 && orderFills[sha3()(optionID,price,size,orderID,blockExpires)] - matchSize >= size)) && getFunds(addr,false) + getMaxLossAfterTrade(addr,optionID,- matchSize,matchSize * int256(price)) > 0 && getFunds(sender,false) + int256(value) + getMaxLossAfterTrade(sender,optionID,matchSize,- matchSize * int256(price)) > 0 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#232):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in Etheropt.withdrawFunds(uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#82-90):
+	- msg.sender.call.value(amount)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#86)
+Low level call in Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205):
+	- accounts[accountID].user.call.value(amountToSend)() (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#196)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) uses literals with too many digits:
+	- result = positions[accounts[accountID].user].cash / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#185)
+Etheropt.expire(uint256,uint8,bytes32,bytes32,bytes32) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#174-205) uses literals with too many digits:
+	- result += moneyness * positions[accounts[accountID].user].positions[optionID] / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#188)
+Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298) uses literals with too many digits:
+	- pnl = positions[user].cash / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#266)
+Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298) uses literals with too many digits:
+	- pnl += cashChange / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#267)
+Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298) uses literals with too many digits:
+	- pnl = positions[user].cash / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#279)
+Etheropt.getMaxLossAfterTrade(address,uint256,int256,int256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#261-298) uses literals with too many digits:
+	- pnl += cashChange / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#280)
+Etheropt.moneySumAtSettlement(address,uint256,int256,uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#300-309) uses literals with too many digits:
+	- pnl += positions[user].positions[j] * getMoneyness(options[j],settlement,margin) / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#303)
+Etheropt.moneySumAtSettlement(address,uint256,int256,uint256) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#300-309) uses literals with too many digits:
+	- pnl += positionChange * getMoneyness(options[j],settlement,margin) / 1000000000000000000 (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#305)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+marketMaker(string) should be declared external:
+	- Etheropt.marketMaker(string) (../sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol#108-134)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006.sol analyzed (1 contracts with 100 detectors), 37 result(s) found

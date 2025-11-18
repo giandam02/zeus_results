@@ -1,0 +1,118 @@
+'solc --version' running
+'solc /sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:41:5: Warning: Use of the "var" keyword is deprecated.
+				var tic = tickets[senders[i]][0];
+				^-----^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:27:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			msg.sender.send(msg.value-de);
+			^---------------------------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:54:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			senders[addmod(secretSum,0,limit)].send(5000000000000000000);
+			^----------------------------------------------------------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:56:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			address(0x2179987247abA70DC8A5bb0FEaFd4ef4B8F83797).send(200000000000000000);
+			^--------------------------------------------------------------------------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:59:45: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+				senders[addmod(secretSum,0,limit)].send(this.balance - 1000000000000000000);
+				                                        ^----------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:59:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				senders[addmod(secretSum,0,limit)].send(this.balance - 1000000000000000000);
+				^-------------------------------------------------------------------------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyTicket(uint _blindRandom)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:25:6: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if(msg.value != 1000000000000000000){
+		   ^-------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:26:7: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			if(msg.value > de)
+			   ^-------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:27:20: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			msg.sender.send(msg.value-de);
+			                ^-------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:30:6: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if(msg.value == 1000000000000000000){
+		   ^-------^
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol:33:23: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+	            deposit: msg.value
+	                     ^-------^
+
+
+Lottery (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#2-65) contract sets array length with a user-controlled value:
+	- tickets[msg.sender].push(Ticket({pickYourLuckyNumber:_blindRandom,deposit:msg.value})) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#31-34)
+Lottery (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#2-65) contract sets array length with a user-controlled value:
+	- senders.push(msg.sender) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#36)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses a dangerous strict equality:
+	- addmod(uint256,uint256,uint256)(secretSum + now,0,50) == 7 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) ignores return value by msg.sender.send(msg.value - de) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#27)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) ignores return value by senders[addmod(uint256,uint256,uint256)(secretSum,0,limit)].send(5000000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#54)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) ignores return value by address(0x2179987247abA70DC8A5bb0FEaFd4ef4B8F83797).send(200000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#56)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) ignores return value by senders[addmod(uint256,uint256,uint256)(secretSum,0,limit)].send(this.balance - 1000000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses timestamp for comparisons
+	Dangerous comparisons:
+	- addmod(uint256,uint256,uint256)(secretSum + now,0,50) == 7 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) has costly operations inside a loop:
+	- delete tickets[senders[i]] (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#46)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) has costly operations inside a loop:
+	- secretSum = secretSum + secrets[i] (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#51)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Lottery.buyTicket(uint256)._blindRandom (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63):
+	External calls:
+	- msg.sender.send(msg.value - de) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#27)
+	State variables written after the call(s):
+	- count += 1 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#35)
+	- secretSum = 0 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#49)
+	- secretSum = secretSum + secrets[i] (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#51)
+	- secrets.push(tic.pickYourLuckyNumber) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#42)
+	- senders.push(msg.sender) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#36)
+	- tickets[msg.sender].push(Ticket({pickYourLuckyNumber:_blindRandom,deposit:msg.value})) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#31-34)
+	- delete tickets[senders[i]] (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#46)
+Reentrancy in Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63):
+	External calls:
+	- msg.sender.send(msg.value - de) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#27)
+	- senders[addmod(uint256,uint256,uint256)(secretSum,0,limit)].send(5000000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#54)
+	- address(0x2179987247abA70DC8A5bb0FEaFd4ef4B8F83797).send(200000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#56)
+	- senders[addmod(uint256,uint256,uint256)(secretSum,0,limit)].send(this.balance - 1000000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#59)
+	State variables written after the call(s):
+	- count = 0 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#61)
+	- secretSum = 0 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#61)
+	- delete secrets (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#61)
+	- delete senders (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses literals with too many digits:
+	- de = 100000000000000000 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#22)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses literals with too many digits:
+	- msg.value != 1000000000000000000 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#25)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses literals with too many digits:
+	- msg.value == 1000000000000000000 (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#30)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses literals with too many digits:
+	- senders[addmod(uint256,uint256,uint256)(secretSum,0,limit)].send(5000000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#54)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses literals with too many digits:
+	- address(0x2179987247abA70DC8A5bb0FEaFd4ef4B8F83797).send(200000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#56)
+Lottery.buyTicket(uint256) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#20-63) uses literals with too many digits:
+	- senders[addmod(uint256,uint256,uint256)(secretSum,0,limit)].send(this.balance - 1000000000000000000) (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Lottery.limit (../sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x748defc02aa6221Ae4dB129bbE7e6A97537A6f45.sol analyzed (1 contracts with 100 detectors), 22 result(s) found

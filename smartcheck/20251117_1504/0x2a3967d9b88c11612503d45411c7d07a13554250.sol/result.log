@@ -1,0 +1,195 @@
+'solc --version' running
+'solc /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:44:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Market() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:84:22: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.value>0) throw;
+                     ^---^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:105:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:224:11: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+          Option option = optionChains[optionChainID].options[i];
+          ^-----------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:62:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        msg.sender.send(amount);
+        ^---------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:152:21: Warning: "sha3" has been deprecated in favour of "keccak256"
+      if (ecrecover(sha3(optionChains[optionChainID].factHash, value), v, r, s) == optionChains[optionChainID].ethAddr) {
+                    ^-----------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:152:21: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      if (ecrecover(sha3(optionChains[optionChainID].factHash, value), v, r, s) == optionChains[optionChainID].ethAddr) {
+                    ^-----------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:233:77: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:233:77: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:233:201: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:233:201: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:240:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    bytes32 hash = sha256(optionChainID, optionID, price, size, orderID, blockExpires);
+                   ^-----------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:44:3: Warning: No visibility specified. Defaulting to "public". 
+  function Market() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:47:3: Warning: No visibility specified. Defaulting to "public". 
+  function addFunds() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:49:55: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+      accounts[accountIDs[msg.sender]].capital += int(msg.value);
+                                                      ^-------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:53:42: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+      accounts[accountID].capital += int(msg.value);
+                                         ^-------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:58:3: Warning: No visibility specified. Defaulting to "public". 
+  function withdrawFunds(uint amount) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:67:3: Warning: No visibility specified. Defaulting to "public". 
+  function getFunds(address user, bool onlyAvailable) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:79:3: Warning: No visibility specified. Defaulting to "public". 
+  function getFundsAndAvailable(address user) constant returns(int, int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function marketMaker(string server) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:84:9: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if (msg.value>0) throw;
+        ^-------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:110:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarketMakers() constant returns(string, string, string, string, string, string) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:118:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarketMakerFunds() constant returns(int, int, int, int, int, int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:126:3: Warning: No visibility specified. Defaulting to "public". 
+  function getOptionChain(uint optionChainID) constant returns (uint, string, uint, uint, bytes32, address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:130:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarket(address user) constant returns(uint[], int[], int[], int[]) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:150:3: Warning: No visibility specified. Defaulting to "public". 
+  function expire(uint accountID, uint optionChainID, uint8 v, bytes32 r, bytes32 s, bytes32 value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:178:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:202:3: Warning: No visibility specified. Defaulting to "public". 
+  function addOptionChain(uint expiration, string underlying, uint margin, uint realityID, bytes32 factHash, address ethAddr, int[] strikes) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:223:11: Warning: Unused local variable.
+          uint optionID = optionChains[optionChainID].numOptions++;
+          ^-----------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:232:3: Warning: No visibility specified. Defaulting to "public". 
+  function orderMatchTest(uint optionChainID, uint optionID, uint price, int size, uint orderID, uint blockExpires, address addr, address sender, int matchSize) constant returns(bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function orderMatch(uint optionChainID, uint optionID, uint price, int size, uint orderID, uint blockExpires, address addr, uint8 v, bytes32 r, bytes32 s, int matchSize) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:258:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMaxLossAfterTrade(address user, uint optionChainID, uint optionID, int positionChange, int cashChange) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:316:3: Warning: No visibility specified. Defaulting to "public". 
+  function min(uint a, uint b) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:178:3: Warning: Function state mutability can be restricted to pure
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:275:18: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+          pnl += moneySumAtSettlement(user, optionChainID, optionID, positionChange, i, settlement);
+                 ^--------------------------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:294:18: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+          pnl += moneySumAtSettlement(user, optionChainID, optionID, positionChange, i, settlement);
+                 ^--------------------------------------------------------------------------------^
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:305:3: Warning: Function state mutability can be restricted to view
+  function moneySumAtSettlement(address user, uint optionChainID, uint optionID, int positionChange, uint i, uint settlement) internal returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:316:3: Warning: Function state mutability can be restricted to pure
+  function min(uint a, uint b) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) deletes Market.OptionChain (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#12-25) which contains a mapping:
+	-delete optionChains[optionChainID] (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#214)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deletion-on-mapping-containing-a-structure
+
+Market.withdrawFunds(uint256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#58-65) ignores return value by msg.sender.send(amount) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#62)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Variable 'Market.marketMaker(string).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#93)' in Market.marketMaker(string) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#83-108) potentially used before declaration: funds = getFunds(marketMakers[i].user,false) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#88)
+Variable 'Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#207)' in Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) potentially used before declaration: i = 0 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#221)
+Variable 'Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#207)' in Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) potentially used before declaration: i < strikes.length (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#221)
+Variable 'Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#207)' in Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) potentially used before declaration: option = optionChains[optionChainID].options[i] (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#224)
+Variable 'Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#207)' in Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) potentially used before declaration: option.strike = strikes[i] (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#225)
+Variable 'Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#207)' in Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) potentially used before declaration: optionChains[optionChainID].options[i] = option (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#226)
+Variable 'Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]).i (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#207)' in Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) potentially used before declaration: i ++ (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#221)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Market.getFunds(address,bool) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#67-77) compares to a boolean constant:
+	-onlyAvailable == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#69)
+Market.getMarket(address) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#130-148) compares to a boolean constant:
+	-optionChains[uint256(optionChainID)].expired == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#137)
+Market.expire(uint256,uint256,uint8,bytes32,bytes32,bytes32) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#150-176) compares to a boolean constant:
+	-optionChains[optionChainID].positions[accounts[accountID].user].expired == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#160)
+Market.expire(uint256,uint256,uint8,bytes32,bytes32,bytes32) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#150-176) compares to a boolean constant:
+	-optionChains[optionChainID].expired == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#151)
+Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230) compares to a boolean constant:
+	-optionChains[i].expired == true || optionChains[i].numPositions == 0 || optionChains[i].numOptions == 0 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#208)
+Market.orderMatch(uint256,uint256,uint256,int256,uint256,uint256,address,uint8,bytes32,bytes32,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#239-256) compares to a boolean constant:
+	-optionChains[optionChainID].positions[msg.sender].hasPosition == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#242)
+Market.orderMatch(uint256,uint256,uint256,int256,uint256,uint256,address,uint8,bytes32,bytes32,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#239-256) compares to a boolean constant:
+	-optionChains[optionChainID].positions[addr].hasPosition == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#246)
+Market.getMaxLossAfterTrade(address,uint256,uint256,int256,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#258-303) compares to a boolean constant:
+	-optionChains[i].positions[user].expired == false && optionChains[i].numOptions > 0 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#261)
+Market.getMaxLossAfterTrade(address,uint256,uint256,int256,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#258-303) compares to a boolean constant:
+	-pnl < maxLoss || maxLossInitialized == false (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#276)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Deprecated standard detected THROW (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#84):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#105):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected ecrecover(bytes32,uint8,bytes32,bytes32)(sha3()(optionChains[optionChainID].factHash,value),v,r,s) == optionChains[optionChainID].ethAddr (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#152):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected block.number <= blockExpires && ((size > 0 && matchSize < 0 && orderFills[sha3()(optionChainID,optionID,price,size,orderID,blockExpires)] - matchSize <= size) || (size < 0 && matchSize > 0 && orderFills[sha3()(optionChainID,optionID,price,size,orderID,blockExpires)] - matchSize >= size)) && getFunds(addr,false) + getMaxLossAfterTrade(addr,optionChainID,optionID,- matchSize,matchSize * int256(price)) > 0 && getFunds(sender,false) + getMaxLossAfterTrade(sender,optionChainID,optionID,matchSize,- matchSize * int256(price)) > 0 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#233):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Market.expire(uint256,uint256,uint8,bytes32,bytes32,bytes32) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#150-176) uses literals with too many digits:
+	- result = optionChains[optionChainID].positions[accounts[accountID].user].cash / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#161)
+Market.expire(uint256,uint256,uint8,bytes32,bytes32,bytes32) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#150-176) uses literals with too many digits:
+	- result += moneyness * optionChains[optionChainID].positions[accounts[accountID].user].positions[optionID] / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#164)
+Market.getMaxLossAfterTrade(address,uint256,uint256,int256,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#258-303) uses literals with too many digits:
+	- pnl = optionChains[i].positions[user].cash / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#265)
+Market.getMaxLossAfterTrade(address,uint256,uint256,int256,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#258-303) uses literals with too many digits:
+	- pnl += cashChange / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#267)
+Market.getMaxLossAfterTrade(address,uint256,uint256,int256,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#258-303) uses literals with too many digits:
+	- pnl = optionChains[i].positions[user].cash / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#280)
+Market.getMaxLossAfterTrade(address,uint256,uint256,int256,int256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#258-303) uses literals with too many digits:
+	- pnl += cashChange / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#282)
+Market.moneySumAtSettlement(address,uint256,uint256,int256,uint256,uint256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#305-314) uses literals with too many digits:
+	- pnl += optionChains[i].positions[user].positions[j] * getMoneyness(optionChains[i].options[j].strike,settlement,optionChains[i].margin) / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#308)
+Market.moneySumAtSettlement(address,uint256,uint256,int256,uint256,uint256) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#305-314) uses literals with too many digits:
+	- pnl += positionChange * getMoneyness(optionChains[i].options[j].strike,settlement,optionChains[i].margin) / 1000000000000000000 (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#310)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+marketMaker(string) should be declared external:
+	- Market.marketMaker(string) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#83-108)
+addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) should be declared external:
+	- Market.addOptionChain(uint256,string,uint256,uint256,bytes32,address,int256[]) (../sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol#202-230)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol analyzed (1 contracts with 100 detectors), 34 result(s) found

@@ -1,0 +1,62 @@
+'solc --version' running
+'solc /sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:18:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function NoFeePonzi() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:23:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:31:41: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    while (payouts[payoutIndex].yield < this.balance) {
+                                        ^----------^
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:33:7: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+      payouts[payoutIndex].addr.send(payouts[payoutIndex].yield);
+      ^--------------------------------------------------------^
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:18:3: Warning: No visibility specified. Defaulting to "public". 
+  function NoFeePonzi() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:22:10: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if ((msg.value < MIN_VALUE) || (msg.value > MAX_VALUE)) {
+         ^-------^
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:22:37: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if ((msg.value < MIN_VALUE) || (msg.value > MAX_VALUE)) {
+                                    ^-------^
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol:29:34: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    payouts[entryIndex].yield = (msg.value * RET_MUL) / RET_DIV;
+                                 ^-------^
+
+
+NoFeePonzi.fallback() (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#21-36) ignores return value by payouts[payoutIndex].addr.send(payouts[payoutIndex].yield) (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+NoFeePonzi.fallback() (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#21-36) has external calls inside a loop: payouts[payoutIndex].addr.send(payouts[payoutIndex].yield) (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+NoFeePonzi.fallback() (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#21-36) has costly operations inside a loop:
+	- payoutTotal += payouts[payoutIndex].yield (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#32)
+NoFeePonzi.fallback() (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#21-36) has costly operations inside a loop:
+	- payoutIndex += 1 (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#34)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#23):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in NoFeePonzi.fallback() (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#21-36):
+	External calls:
+	- payouts[payoutIndex].addr.send(payouts[payoutIndex].yield) (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#33)
+	State variables written after the call(s):
+	- payoutIndex += 1 (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#34)
+	- payoutTotal += payouts[payoutIndex].yield (../sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol#32)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xf7070fc72e2b92c6309785a39338d7c919a3cf4a.sol analyzed (1 contracts with 100 detectors), 8 result(s) found

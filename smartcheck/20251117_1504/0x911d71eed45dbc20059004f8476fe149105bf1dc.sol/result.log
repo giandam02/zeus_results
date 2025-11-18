@@ -1,0 +1,144 @@
+'solc --version' running
+'solc /sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:11:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function testingToken() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:17:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (balanceOf[msg.sender]<_value) throw;
+		                                  ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:18:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (balanceOf[_to]+_value<balanceOf[_to]) throw;
+		                                          ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:19:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (_value<0) throw;
+		              ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:33:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (!tradeActive[_from]) throw;
+	                             ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:34:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (weiWantedOf[_from]!=msg.value) throw;
+	                                       ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:35:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (balanceOf[_from]<tokensOfferedOf[_from]) throw;
+	                                                 ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:36:57: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (!_from.send((msg.value*(100-ethTaxRate))/100)) throw;
+	                                                       ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:46:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (msg.sender != bank) throw;
+		                        ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:55:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (!msg.sender.send(_wei)) throw;
+		                            ^---^
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function testingToken() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:16:2: Warning: No visibility specified. Defaulting to "public". 
+	function send(address _to, uint256 _value) { //give tokens to someone
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:27:2: Warning: No visibility specified. Defaulting to "public". 
+	function offerTrade(uint256 _weiWanted, uint256 _tokensOffered) { //offer the amt of ether you want and the amt of tokens youd give
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:32:2: Warning: No visibility specified. Defaulting to "public". 
+	function agreeToTrade(address _from) payable { //choose a trade to agree to and execute it
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:50:2: Warning: No visibility specified. Defaulting to "public". 
+	function setTaxes(uint256 _ethTaxRate, uint256 _tokenTaxRate) bankOnly { //the bank can change the tax rates
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:54:2: Warning: No visibility specified. Defaulting to "public". 
+	function extractWei(uint256 _wei) bankOnly { //withdraw money from the contract
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol:57:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferOwnership(address _bank) bankOnly { //change owner
+ ^ (Relevant source part starts here and spans across multiple lines).
+
+
+testingToken.send(address,uint256) (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#16-25) contains a tautology or contradiction:
+	- _value < 0 (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#19)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+testingToken.transferOwnership(address) (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#57-59) should emit an event for: 
+	- bank = _bank (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#58) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+testingToken.setTaxes(uint256,uint256) (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#50-53) should emit an event for: 
+	- ethTaxRate = _ethTaxRate (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#51) 
+	- tokenTaxRate = _tokenTaxRate (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#52) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+testingToken.transferOwnership(address)._bank (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#57) lacks a zero-check on :
+		- bank = _bank (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#17):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#18):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#19):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#33):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#34):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#35):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#36):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#55):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#46):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.8 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.8 (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract testingToken (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#3-61) is not in CapWords
+Parameter testingToken.send(address,uint256)._to (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#16) is not in mixedCase
+Parameter testingToken.send(address,uint256)._value (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#16) is not in mixedCase
+Parameter testingToken.offerTrade(uint256,uint256)._weiWanted (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#27) is not in mixedCase
+Parameter testingToken.offerTrade(uint256,uint256)._tokensOffered (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#27) is not in mixedCase
+Parameter testingToken.agreeToTrade(address)._from (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#32) is not in mixedCase
+Parameter testingToken.setTaxes(uint256,uint256)._ethTaxRate (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#50) is not in mixedCase
+Parameter testingToken.setTaxes(uint256,uint256)._tokenTaxRate (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#50) is not in mixedCase
+Parameter testingToken.extractWei(uint256)._wei (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#54) is not in mixedCase
+Parameter testingToken.transferOwnership(address)._bank (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#57) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in testingToken.agreeToTrade(address) (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#32-43):
+	External calls:
+	- ! _from.send((msg.value * (100 - ethTaxRate)) / 100) (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#36)
+	State variables written after the call(s):
+	- balanceOf[_from] -= tokensOfferedOf[_from] (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#37)
+	- balanceOf[msg.sender] += (tokensOfferedOf[_from] * (100 - tokenTaxRate)) / 100 (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#38)
+	- balanceOf[bank] += (tokensOfferedOf[_from] * tokenTaxRate) / 100 (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#39)
+	- balanceOf[bank] += 1 (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#42)
+	- tradeActive[_from] = false (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#40)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+testingToken.testingToken() (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#11-14) uses literals with too many digits:
+	- balanceOf[msg.sender] = 100000 (../sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol#13)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x911d71eed45dbc20059004f8476fe149105bf1dc.sol analyzed (1 contracts with 100 detectors), 27 result(s) found

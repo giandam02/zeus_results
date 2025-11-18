@@ -1,0 +1,138 @@
+'solc --version' running
+'solc /sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:20:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Matthew(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:36:13: Warning: Use of the "var" keyword is deprecated.
+            var nextStake = this.balance * WINNERTAX_PRECENT/100;  // leave some money for the next round
+            ^-----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:45:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (msg.value < this.balance + DELTA) throw; // you must rise the stake by Delta
+                                                  ^---^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:75:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:36:29: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            var nextStake = this.balance * WINNERTAX_PRECENT/100;  // leave some money for the next round
+                            ^----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:38:40: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+                isSuccess = whale.send(this.balance - nextStake); // pay out the stake
+                                       ^----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:39:46: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            MatthewWon("Matthew won", whale, this.balance, block.number);
+                                             ^----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:39:13: Warning: Invoking events without "emit" prefix is deprecated.
+            MatthewWon("Matthew won", whale, this.balance, block.number);
+            ^----------------------------------------------------------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:45:29: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            if (msg.value < this.balance + DELTA) throw; // you must rise the stake by Delta
+                            ^----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:46:51: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            bool isOtherSuccess = msg.sender.send(this.balance); // give back the old stake
+                                                  ^----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:48:54: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            StakeIncreased("stake increased", whale, this.balance, blockheight);
+                                                     ^----------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:48:13: Warning: Invoking events without "emit" prefix is deprecated.
+            StakeIncreased("stake increased", whale, this.balance, blockheight);
+            ^-----------------------------------------------------------------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function Matthew(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:32:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:46:13: Warning: Unused local variable.
+            bool isOtherSuccess = msg.sender.send(this.balance); // give back the old stake
+            ^-----------------^
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function destroyWhenRoundOver() onlyOwner{
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:58:5: Warning: No visibility specified. Defaulting to "public". 
+    function setNewPeriod(uint _newPeriod) onlyOwner{
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol:62:5: Warning: No visibility specified. Defaulting to "public". 
+    function getPeriod() constant returns (uint){
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Matthew.fallback() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#32-50) sends eth to arbitrary user
+	Dangerous calls:
+	- isSuccess = whale.send(this.balance - nextStake) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#38)
+	- isOtherSuccess = msg.sender.send(this.balance) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#46)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+Matthew.fallback() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#32-50) allows anyone to destruct the contract
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#suicidal
+
+Matthew.setNewPeriod(uint256) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#58-60) should emit an event for: 
+	- newPeriod = _newPeriod (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#59) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Matthew.fallback() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#32-50) compares to a boolean constant:
+	-isSuccess == false (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#37)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Deprecated standard detected THROW (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#45):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#75):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- ^0.4.6 (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Matthew.setNewPeriod(uint256)._newPeriod (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#58) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Redundant expression "period (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#63)" inMatthew (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#7-79)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#redundant-statements
+
+Reentrancy in Matthew.fallback() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#32-50):
+	External calls:
+	- isSuccess = whale.send(this.balance - nextStake) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#38)
+	State variables written after the call(s):
+	- setFacts() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#40)
+		- blockheight = block.number (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#27)
+	- setFacts() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#40)
+		- period = newPeriod (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#26)
+	- setFacts() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#40)
+		- whale = msg.sender (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#28)
+	Event emitted after the call(s):
+	- MatthewWon(Matthew won,whale,this.balance,block.number) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#39)
+Reentrancy in Matthew.fallback() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#32-50):
+	External calls:
+	- isOtherSuccess = msg.sender.send(this.balance) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#46)
+	State variables written after the call(s):
+	- setFacts() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#47)
+		- blockheight = block.number (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#27)
+	- setFacts() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#47)
+		- period = newPeriod (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#26)
+	- setFacts() (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#47)
+		- whale = msg.sender (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#28)
+	Event emitted after the call(s):
+	- StakeIncreased(stake increased,whale,this.balance,blockheight) (../sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol#48)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x40360631db85eddab268dd1b6ffea4377733e125.sol analyzed (1 contracts with 100 detectors), 12 result(s) found
