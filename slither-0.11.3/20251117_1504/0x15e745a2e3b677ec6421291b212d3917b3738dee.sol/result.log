@@ -1,0 +1,60 @@
+'solc --version' running
+'solc /sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:7:75: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(addrs.length != amounts.length || nonce != nonces[msg.sender]) throw;
+                                                                          ^---^
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:11:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if(val < amounts[i]) throw;
+                                 ^---^
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:28:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!msg.sender.send(balance)) throw;
+                                      ^---^
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function send(address[] addrs, uint[] amounts, uint nonce) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:8:20: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        uint val = msg.value;
+                   ^-------^
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:25:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol:31:5: Warning: No visibility specified. Defaulting to "public". 
+    function(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Multisend.send(address[],uint256[],uint256) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#6-23) has external calls inside a loop: ! addrs[i].send(amounts[i]) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#13)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#7):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#11):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#28):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in Multisend.send(address[],uint256[],uint256) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#6-23):
+	External calls:
+	- ! addrs[i].send(amounts[i]) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#13)
+	State variables written after the call(s):
+	- balances[msg.sender] += val (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#20)
+Reentrancy in Multisend.send(address[],uint256[],uint256) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#6-23):
+	External calls:
+	- ! addrs[i].send(amounts[i]) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#13)
+	- ! msg.sender.send(val) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#19)
+	State variables written after the call(s):
+	- nonces[msg.sender] ++ (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#22)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+send(address[],uint256[],uint256) should be declared external:
+	- Multisend.send(address[],uint256[],uint256) (../sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol#6-23)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x15e745a2e3b677ec6421291b212d3917b3738dee.sol analyzed (1 contracts with 100 detectors), 9 result(s) found

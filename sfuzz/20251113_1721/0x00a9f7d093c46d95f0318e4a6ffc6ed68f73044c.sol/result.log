@@ -1,0 +1,1372 @@
+Extract contract AhooleeToken from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extract contract AhooleeTokenPreSale from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extract contract BasicToken from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extract contract Haltable from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extract contract Ownable from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extract contract SafeMath from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extract contract StandardToken from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+Extracted 7 contract(s) from /sb/0x00a9f7d093c46d95f0318e4a6ffc6ed68f73044c.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Ownable.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Ownable.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/Ownable.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/Ownable.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/Ownable.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/Ownable.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/Ownable.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/Ownable.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/Ownable.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/Ownable.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/Ownable.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/Ownable.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/Ownable.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/Ownable.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/Ownable.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/Ownable.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/Ownable.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/Ownable.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/Ownable.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Ownable.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/Ownable.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/Ownable.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/Ownable.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/Ownable.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/Ownable.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/Ownable.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/Ownable.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/Ownable.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/Ownable.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/Ownable.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/Ownable.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/Ownable.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/Ownable.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/Ownable.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Ownable.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/SafeMath.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/SafeMath.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/SafeMath.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/SafeMath.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/SafeMath.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/SafeMath.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/SafeMath.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/SafeMath.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/SafeMath.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/SafeMath.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/SafeMath.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/SafeMath.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/SafeMath.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/SafeMath.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/SafeMath.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/SafeMath.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/SafeMath.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/SafeMath.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/SafeMath.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/SafeMath.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/SafeMath.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/SafeMath.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/SafeMath.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/SafeMath.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/SafeMath.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/SafeMath.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/SafeMath.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/SafeMath.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/SafeMath.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/SafeMath.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/SafeMath.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/SafeMath.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/SafeMath.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/AhooleeToken.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/AhooleeToken.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/AhooleeToken.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/AhooleeToken.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/AhooleeToken.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/AhooleeToken.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/AhooleeToken.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/AhooleeToken.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/AhooleeToken.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/AhooleeToken.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/AhooleeToken.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/AhooleeToken.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/AhooleeToken.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/AhooleeToken.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/AhooleeToken.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/AhooleeToken.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/AhooleeToken.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/AhooleeToken.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/AhooleeToken.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/AhooleeToken.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/AhooleeToken.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/AhooleeToken.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/AhooleeToken.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/AhooleeToken.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/AhooleeToken.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/AhooleeToken.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/AhooleeToken.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/AhooleeToken.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/AhooleeToken.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/AhooleeToken.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/AhooleeToken.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/AhooleeToken.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/AhooleeToken.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeToken.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/AhooleeTokenPreSale.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/AhooleeTokenPreSale.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/AhooleeTokenPreSale.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/AhooleeTokenPreSale.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/AhooleeTokenPreSale.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/AhooleeTokenPreSale.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/AhooleeTokenPreSale.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/AhooleeTokenPreSale.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/AhooleeTokenPreSale.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/AhooleeTokenPreSale.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/AhooleeTokenPreSale.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/AhooleeTokenPreSale.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/AhooleeTokenPreSale.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/AhooleeTokenPreSale.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/AhooleeTokenPreSale.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/AhooleeTokenPreSale.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/AhooleeTokenPreSale.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/AhooleeTokenPreSale.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/AhooleeTokenPreSale.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/AhooleeTokenPreSale.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/AhooleeTokenPreSale.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/AhooleeTokenPreSale.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/AhooleeTokenPreSale.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/AhooleeTokenPreSale.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/AhooleeTokenPreSale.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/AhooleeTokenPreSale.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/AhooleeTokenPreSale.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/AhooleeTokenPreSale.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/AhooleeTokenPreSale.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/AhooleeTokenPreSale.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/AhooleeTokenPreSale.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/AhooleeTokenPreSale.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/AhooleeTokenPreSale.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AhooleeTokenPreSale.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Haltable.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/Haltable.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/Haltable.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/Haltable.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/Haltable.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/Haltable.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/Haltable.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/Haltable.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/Haltable.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/Haltable.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/Haltable.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/Haltable.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/Haltable.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/Haltable.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/Haltable.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/Haltable.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/Haltable.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/Haltable.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Haltable.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/Haltable.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/Haltable.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/Haltable.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/Haltable.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/Haltable.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/Haltable.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/Haltable.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/Haltable.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/Haltable.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/Haltable.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/Haltable.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/Haltable.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/Haltable.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/Haltable.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Haltable.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/StandardToken.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/StandardToken.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/StandardToken.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/StandardToken.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/StandardToken.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/StandardToken.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/StandardToken.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/StandardToken.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/StandardToken.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/StandardToken.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/StandardToken.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/StandardToken.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/StandardToken.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/StandardToken.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/StandardToken.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/StandardToken.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/StandardToken.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/StandardToken.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/StandardToken.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/StandardToken.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/StandardToken.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/StandardToken.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/StandardToken.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/StandardToken.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/StandardToken.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/StandardToken.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/StandardToken.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/StandardToken.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/StandardToken.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/StandardToken.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/StandardToken.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/StandardToken.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/StandardToken.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:127:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/BasicToken.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (halted) throw;
+                ^---^
+contracts/BasicToken.sol:191:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!halted) throw;
+                 ^---^
+contracts/BasicToken.sol:299:8: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       throw;
+       ^---^
+contracts/BasicToken.sol:391:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/BasicToken.sol:435:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/BasicToken.sol:503:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:585:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now < time) throw;
+                        ^---^
+contracts/BasicToken.sol:595:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now > time) throw;
+                        ^---^
+contracts/BasicToken.sol:603:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:653:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 0.01 * 1 ether) throw;
+                                        ^---^
+contracts/BasicToken.sol:663:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (softCapReached) throw;
+                            ^---^
+contracts/BasicToken.sol:665:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (refunded[msg.sender]) throw;
+                                  ^---^
+contracts/BasicToken.sol:671:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balance == 0) throw;
+                          ^---^
+contracts/BasicToken.sol:685:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!msg.sender.send(refund)) throw;
+                                      ^---^
+contracts/BasicToken.sol:699:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!softCapReached) throw;
+                             ^---^
+contracts/BasicToken.sol:701:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!beneficiary.send(collected)) throw;
+                                          ^---^
+contracts/BasicToken.sol:719:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (collected.add(msg.value) > hardCap) throw;
+                                                ^---^
+contracts/BasicToken.sol:735:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (token.balanceOf(msg.sender) + tokens > purchaseLimit) throw;
+                                                                  ^---^
+contracts/BasicToken.sol:675:9: Warning: This declaration shadows an existing declaration.
+        uint refund = balance / price;
+        ^---------^
+contracts/BasicToken.sol:661:5: The shadowed declaration is here:
+    function refund() external onlyAfter(endTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/BasicToken.sol:325:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/BasicToken.sol:407:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/BasicToken.sol:441:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/BasicToken.sol:677:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (refund > this.balance) {
+                     ^----------^
+contracts/BasicToken.sol:679:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            refund = this.balance;
+                     ^----------^
+contracts/BasicToken.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refunded(msg.sender, refund);
+        ^--------------------------^
+contracts/BasicToken.sol:727:13: Warning: Invoking events without "emit" prefix is deprecated.
+            SoftCapReached(softCap);
+            ^---------------------^
+contracts/BasicToken.sol:757:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewContribution(_owner, tokens, msg.value);
+        ^----------------------------------------^
+contracts/BasicToken.sol:763:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(hardCap);
+            ^------------------^
+contracts/BasicToken.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:237:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/BasicToken.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/BasicToken.sol:257:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/BasicToken.sol:259:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/BasicToken.sol:261:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/BasicToken.sol:319:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:341:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:389:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) onlyPayloadSize(3 * 32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:423:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:459:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:503:3: Warning: No visibility specified. Defaulting to "public". 
+  function AhooleeToken() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:603:5: Warning: No visibility specified. Defaulting to "public". 
+    function AhooleeTokenPreSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:651:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable stopInEmergency{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:697:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:13:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:25:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:49:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:69:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:77:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:85:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Ownable
+** Write stats: 0.002693
+** Write stats: 5.00018
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0003
+** Write stats: 25.0019
+** Write stats: 30.0002
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0002
+** Write stats: 50.0001
+** Write stats: 55.0003
+** Write stats: 60.0024
+** Write stats: 65.0204
+** Write stats: 70.0002
+** Write stats: 75.0003
+** Write stats: 80.0083
+** Write stats: 85.0002
+** Write stats: 90.0002
+** Write stats: 95.0003
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.011
+>> Fuzz SafeMath
+** Write stats: 0.001754
+** Write stats: 5.00006
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0002
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0002
+** Write stats: 60.0002
+** Write stats: 65.0002
+** Write stats: 70.0001
+** Write stats: 75.0005
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120
+>> Fuzz AhooleeToken
+** Write stats: 0.008813
+** Write stats: 5.00296
+** Write stats: 10.0052
+** Write stats: 15.0056
+** Write stats: 20.0015
+** Write stats: 25.0064
+** Write stats: 30.0104
+** Write stats: 35.0062
+** Write stats: 40.0105
+** Write stats: 45.029
+** Write stats: 50.001
+** Write stats: 55.0026
+** Write stats: 60.0116
+** Write stats: 65.0064
+** Write stats: 70.0083
+** Write stats: 75.001
+** Write stats: 80.0007
+** Write stats: 85.0024
+** Write stats: 90.0065
+** Write stats: 95.0006
+** Write stats: 100.006
+** Write stats: 105.017
+** Write stats: 110.007
+** Write stats: 115.021
+** Write stats: 120.005
+** Write stats: 120.052
+>> Fuzz AhooleeTokenPreSale
+** Write stats: 0.010412
+** Write stats: 5.00035
+** Write stats: 10.0004
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0001
+** Write stats: 30.0003
+** Write stats: 35.0004
+** Write stats: 40.005
+** Write stats: 45.0004
+** Write stats: 50.0002
+** Write stats: 55.0001
+** Write stats: 60.0003
+** Write stats: 65.0004
+** Write stats: 70.0004
+** Write stats: 75.0003
+** Write stats: 80.0005
+** Write stats: 85.0078
+** Write stats: 90.0007
+** Write stats: 95.0004
+** Write stats: 100.001
+** Write stats: 105.001
+** Write stats: 110.001
+** Write stats: 115
+** Write stats: 120.001
+** Write stats: 120.002
+>> Fuzz Haltable
+** Write stats: 0.002678
+** Write stats: 5.00016
+** Write stats: 10.0003
+** Write stats: 15.0001
+** Write stats: 20.0002
+** Write stats: 25.0001
+** Write stats: 30.0002
+** Write stats: 35.0002
+** Write stats: 40.0003
+** Write stats: 45.0002
+** Write stats: 50.0004
+** Write stats: 55.0003
+** Write stats: 60.0003
+** Write stats: 65.0002
+** Write stats: 70.0001
+** Write stats: 75.0003
+** Write stats: 80.0001
+** Write stats: 85.0004
+** Write stats: 90.0002
+** Write stats: 95.0002
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.006
+>> Fuzz StandardToken
+** Write stats: 0.005915
+** Write stats: 5.00358
+** Write stats: 10.0058
+** Write stats: 15.0029
+** Write stats: 20.0046
+** Write stats: 25.005
+** Write stats: 30.0055
+** Write stats: 35.0091
+** Write stats: 40.0071
+** Write stats: 45.0088
+** Write stats: 50.0025
+** Write stats: 55.0018
+** Write stats: 60.0101
+** Write stats: 65.011
+** Write stats: 70.0041
+** Write stats: 75.0073
+** Write stats: 80.0059
+** Write stats: 85.0006
+** Write stats: 90.0045
+** Write stats: 95.005
+** Write stats: 100.014
+** Write stats: 105.013
+** Write stats: 110.005
+** Write stats: 115.004
+** Write stats: 120.018
+** Write stats: 120.038
+>> Fuzz BasicToken
+** Write stats: 0.003176
+** Write stats: 5.00175
+** Write stats: 10.0021
+** Write stats: 15.0022
+** Write stats: 20.002
+** Write stats: 25.0006
+** Write stats: 30.0009
+** Write stats: 35.0017
+** Write stats: 40.0019
+** Write stats: 45.0053
+** Write stats: 50.0015
+** Write stats: 55.0035
+** Write stats: 60.0049
+** Write stats: 65.0045
+** Write stats: 70.0042
+** Write stats: 75.0029
+** Write stats: 80.0004
+** Write stats: 85.0022
+** Write stats: 90.0019
+** Write stats: 95.0017
+** Write stats: 100.003
+** Write stats: 105.004
+** Write stats: 110.004
+** Write stats: 115.004
+** Write stats: 120
+** Write stats: 120.006

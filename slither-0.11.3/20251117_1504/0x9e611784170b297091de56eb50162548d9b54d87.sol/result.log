@@ -1,0 +1,100 @@
+'solc --version' running
+'solc /sb/0x9e611784170b297091de56eb50162548d9b54d87.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:18:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function Investment(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:19:19: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x7be89DB09b0C1023FD0407B24B98810aE97f61C1'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+		ico = Crowdsale(0x7be89db09b0c1023fd0407b24b98810ae97f61c1);
+		                ^----------------------------------------^
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:54:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		msg.sender.send(balanceOf[msg.sender]);
+		^------------------------------------^
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:4:2: Warning: No visibility specified. Defaulting to "public". 
+	function invest(address receiver) payable{}
+	^-----------------------------------------^
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:4:18: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function invest(address receiver) payable{}
+	                ^--------------^
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:18:2: Warning: No visibility specified. Defaulting to "public". 
+	function Investment(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:23:2: Warning: No visibility specified. Defaulting to "public". 
+	function() payable{
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:31:2: Warning: No visibility specified. Defaulting to "public". 
+	function isInvestor(address who) returns (bool){
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:39:2: Warning: No visibility specified. Defaulting to "public". 
+	function buyTokens(uint from, uint to){
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:53:2: Warning: No visibility specified. Defaulting to "public". 
+	function withdraw(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:58:2: Warning: No visibility specified. Defaulting to "public". 
+	function getNumInvestors() constant returns(uint){
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol:31:2: Warning: Function state mutability can be restricted to view
+	function isInvestor(address who) returns (bool){
+ ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Investment (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#11-63) contract sets array length with a user-controlled value:
+	- investors.push(msg.sender) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#25)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in Investment.buyTokens(uint256,uint256) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#39-50):
+	External calls:
+	- ico.invest.value(amount)(investors[i]) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#47)
+	State variables written after the call(s):
+	- delete balanceOf[investors[i]] (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#46)
+	Investment.balanceOf (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#14) can be used in cross function reentrancies:
+	- Investment.balanceOf (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#14)
+	- Investment.buyTokens(uint256,uint256) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#39-50)
+	- Investment.fallback() (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#23-28)
+	- Investment.withdraw() (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#53-55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Contract locking ether found:
+	Contract Crowdsale (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#3-5) has payable functions:
+	 - Crowdsale.invest(address) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#4)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Investment.withdraw() (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#53-55) ignores return value by msg.sender.send(balanceOf[msg.sender]) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Investment.buyTokens(uint256,uint256) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#39-50) has external calls inside a loop: ico.invest.value(amount)(investors[i]) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#47)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Investment.buyTokens(uint256,uint256) (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#39-50) has costly operations inside a loop:
+	- delete balanceOf[investors[i]] (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#46)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.8 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.8 (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Loop condition i < investors.length (../sb/0x9e611784170b297091de56eb50162548d9b54d87.sol#32) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+/sb/0x9e611784170b297091de56eb50162548d9b54d87.sol analyzed (2 contracts with 100 detectors), 9 result(s) found

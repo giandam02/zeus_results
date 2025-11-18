@@ -1,0 +1,282 @@
+'solc --version' running
+'solc /sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:5:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:10:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:50:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SwapToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:146:50: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[msg.sender] < _value) throw;           // Check if the sender has enough
+                                                 ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:147:65: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[_to] + _value < balanceOfBuyer[_to]) throw; // Check for overflows
+                                                                ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:155:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[msg.sender] < _value) throw;
+                                                  ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:156:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[_to] + _value < balanceOfIssuer[_to]) throw;
+                                                                  ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:207:44: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[this] < amount) throw;               // checks if it has enough to sell
+                                           ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:216:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[this] < amount) throw;
+                                            ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:231:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (creditStatus == false) throw;                       // checks if buyer is eligible for a claim
+                                   ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:232:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                                  ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:237:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to prevent recursion attacks
+            ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:252:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[msg.sender] < amount ) throw;
+                                                   ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:257:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:267:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!project_wallet.send(this.balance)) throw;
+                                                ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:272:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:245:53: Warning: This declaration shadows an existing declaration.
+    function getPremium() private constant returns (uint256 premium) {
+                                                    ^-------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:42:5: The shadowed declaration is here:
+    uint256 public premium;
+    ^--------------------^
+
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:116:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:117:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:124:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:125:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:150:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:159:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:210:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:219:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);
+        ^--------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:239:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);             // executes an event reflecting on the change
+            ^--------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:259:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);
+            ^--------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:267:34: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (!project_wallet.send(this.balance)) throw;
+                                 ^----------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:19:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:50:5: Warning: No visibility specified. Defaulting to "public". 
+    function SwapToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:58:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        uint _startBlock,
+        ^--------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:59:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        uint _endBlock
+        ^------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:106:5: Warning: No visibility specified. Defaulting to "public". 
+    function defineProjectWallet(address target) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:113:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintBuyerToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:121:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintIssuerToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyBuyerToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:137:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyIssuerToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:145:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferBuyer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:154:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferIssue(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:163:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:166:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:171:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:194:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newBuyPrice, uint256 newIssuePrice, uint256 coveragePerToken) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:203:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyBuyerTokens() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:214:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyIssuerTokens() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:223:5: Warning: No visibility specified. Defaulting to "public". 
+    function setCreditStatus(bool _status) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:230:5: Warning: No visibility specified. Defaulting to "public". 
+    function sellBuyerTokens(uint amount) returns (uint revenue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:251:5: Warning: No visibility specified. Defaulting to "public". 
+    function sellIssuerTokens(uint amount) returns (uint revenue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:265:5: Warning: No visibility specified. Defaulting to "public". 
+    function moveFunds() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol:271:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SwapToken.getPremium().premium (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#245) shadows:
+	- SwapToken.premium (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#42) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+owned.transferOwnership(address) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#14-16) should emit an event for: 
+	- owner = newOwner (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#15) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+SwapToken.setPrices(uint256,uint256,uint256) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#194-198) should emit an event for: 
+	- buyPrice = newBuyPrice (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#195) 
+	- issuePrice = newIssuePrice (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#196) 
+	- cPT = coveragePerToken (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#197) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+owned.transferOwnership(address).newOwner (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#14) lacks a zero-check on :
+		- owner = newOwner (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#15)
+SwapToken.SwapToken(string,string,uint8,string,string,uint8,address,uint256,uint256)._collectionFunds (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#57) lacks a zero-check on :
+		- collectionFunds = _collectionFunds (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#67)
+SwapToken.defineProjectWallet(address).target (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#106) lacks a zero-check on :
+		- project_wallet = target (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#107)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+SwapToken.sellBuyerTokens(uint256) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#230-242) compares to a boolean constant:
+	-creditStatus == false (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#231)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#10):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#146):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#147):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#155):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#156):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#207):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#216):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#231):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#232):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#237):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#252):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#257):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#267):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#272):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- ^0.4.6 (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#2-17) is not in CapWords
+Contract tokenRecipient (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#19) is not in CapWords
+Parameter SwapToken.transferBuyer(address,uint256)._to (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#145) is not in mixedCase
+Parameter SwapToken.transferBuyer(address,uint256)._value (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#145) is not in mixedCase
+Parameter SwapToken.transferIssue(address,uint256)._to (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#154) is not in mixedCase
+Parameter SwapToken.transferIssue(address,uint256)._value (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#154) is not in mixedCase
+Parameter SwapToken.approve(address,uint256)._spender (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#163) is not in mixedCase
+Parameter SwapToken.approve(address,uint256)._value (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#163) is not in mixedCase
+Parameter SwapToken.approveAndCall(address,uint256,bytes)._spender (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#171) is not in mixedCase
+Parameter SwapToken.approveAndCall(address,uint256,bytes)._value (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#171) is not in mixedCase
+Parameter SwapToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#171) is not in mixedCase
+Parameter SwapToken.setCreditStatus(bool)._status (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#223) is not in mixedCase
+Variable SwapToken.project_wallet (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#44) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in SwapToken.sellBuyerTokens(uint256) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#230-242):
+	External calls:
+	- ! msg.sender.send(revenue) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#236)
+	Event emitted after the call(s):
+	- Transfer(msg.sender,this,amount) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#239)
+Reentrancy in SwapToken.sellIssuerTokens(uint256) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#251-262):
+	External calls:
+	- ! msg.sender.send(revenue) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#256)
+	Event emitted after the call(s):
+	- Transfer(msg.sender,this,amount) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#259)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+SwapToken.premium (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#42) should be constant 
+SwapToken.standard (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#24) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- tokenRecipient.receiveApproval(address,uint256,address,bytes) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#19)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- SwapToken.approveAndCall(address,uint256,bytes) (../sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol#171-178)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x3a09769f27a6e4b01bc58b1273bcaa8159033ec5.sol analyzed (3 contracts with 100 detectors), 42 result(s) found

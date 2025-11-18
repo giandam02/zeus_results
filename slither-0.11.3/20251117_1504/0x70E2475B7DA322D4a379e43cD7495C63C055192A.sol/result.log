@@ -1,0 +1,50 @@
+'solc --version' running
+'solc /sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:13:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function A() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:18:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:26:25: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    while (p[i].yield < this.balance) {
+                        ^----------^
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:27:7: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+      p[i].c.send(p[i].yield);
+      ^---------------------^
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:13:3: Warning: No visibility specified. Defaulting to "public". 
+  function A() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol:16:3: Warning: No visibility specified. Defaulting to "public". 
+  function() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+A.fallback() (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#16-30) ignores return value by p[i].c.send(p[i].yield) (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+A.fallback() (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#16-30) has external calls inside a loop: p[i].c.send(p[i].yield) (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+A.fallback() (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#16-30) has costly operations inside a loop:
+	- i += 1 (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#28)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#18):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in A.fallback() (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#16-30):
+	External calls:
+	- p[i].c.send(p[i].yield) (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#27)
+	State variables written after the call(s):
+	- i += 1 (../sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol#28)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x70E2475B7DA322D4a379e43cD7495C63C055192A.sol analyzed (1 contracts with 100 detectors), 7 result(s) found

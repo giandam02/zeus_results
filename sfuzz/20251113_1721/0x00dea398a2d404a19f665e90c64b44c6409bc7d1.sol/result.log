@@ -1,0 +1,57 @@
+Extract contract Token from /sb/0x00dea398a2d404a19f665e90c64b44c6409bc7d1.sol
+Extracted 1 contract(s) from /sb/0x00dea398a2d404a19f665e90c64b44c6409bc7d1.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Token.sol:31:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function Token() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:63:2: Warning: Invoking events without "emit" prefix is deprecated.
+	Transfer(msg.sender, _to, _value);
+	^-------------------------------^
+contracts/Token.sol:31:2: Warning: No visibility specified. Defaulting to "public". 
+	function Token() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:47:2: Warning: No visibility specified. Defaulting to "public". 
+	function transfer(address _to, uint256 _value) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:71:2: Warning: No visibility specified. Defaulting to "public". 
+	function () {
+ ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Token
+** Write stats: 0.004508
+** Write stats: 5.00364
+** Write stats: 10.0004
+** Write stats: 15.0043
+** Write stats: 20.0015
+** Write stats: 25.0037
+** Write stats: 30.0058
+** Write stats: 35.0065
+** Write stats: 40.0009
+** Write stats: 45.0087
+** Write stats: 50.0142
+** Write stats: 55.0166
+** Write stats: 60.0022
+** Write stats: 65.0062
+** Write stats: 70.0108
+** Write stats: 75.0184
+** Write stats: 80.0175
+** Write stats: 85.0059
+** Write stats: 90.0017
+** Write stats: 95.009
+** Write stats: 100.007
+** Write stats: 105.013
+** Write stats: 110.009
+** Write stats: 115.006
+** Write stats: 120.002
+** Write stats: 120.029

@@ -1,0 +1,282 @@
+Extract contract Bet0xgame from /sb/0x00005a6d3f88409396844eccef51f87e3c2449f3.sol
+Extract contract Buffer from /sb/0x00005a6d3f88409396844eccef51f87e3c2449f3.sol
+Extract contract CBOR from /sb/0x00005a6d3f88409396844eccef51f87e3c2449f3.sol
+Extract contract usingOraclize from /sb/0x00005a6d3f88409396844eccef51f87e3c2449f3.sol
+Extracted 4 contract(s) from /sb/0x00005a6d3f88409396844eccef51f87e3c2449f3.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Buffer.sol:2607:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Bet0xgame(string _teamOne, string _teamTwo, uint _endsAt, uint _betsCloseAt, string _oraclizeSource) public
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Buffer.sol:1951:50: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        oraclize_randomDS_setCommitment(queryId, keccak256(delay_bytes8_left, args[1], sha256(args[0]), args[2]));
+                                                 ^-------------------------------------------------------------^
+contracts/Buffer.sol:2175:47: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                              ^---------------------------^
+contracts/Buffer.sol:2175:37: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/Buffer.sol:2175:37: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/Buffer.sol:2211:48: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (oraclize_randomDS_args[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)){ //unonce, nbytes and sessionKeyHash match
+                                               ^--------------------------------------------^
+contracts/Buffer.sol:2669:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PlayerJoined(msg.sender, msg.value, _team);
+    ^----------------------------------------^
+contracts/Buffer.sol:2693:5: Warning: Invoking events without "emit" prefix is deprecated.
+    RewardWithdrawn(msg.sender, reward);
+    ^---------------------------------^
+contracts/Buffer.sol:2717:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinningTeamSet(_result);
+    ^---------------------^
+contracts/Buffer.sol:2743:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query not sent, balance too low");
+      ^-------------------------------------------------------^
+contracts/Buffer.sol:2753:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query sent!");
+      ^-----------------------------------^
+contracts/Buffer.sol:2699:57: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function __callback(bytes32 _queryId, string _result, bytes _proof) public
+                                                        ^----------^
+contracts/Buffer.sol:717:5: Warning: Function state mutability can be restricted to pure
+    function __callback(bytes32 myid, string result, bytes proof) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/usingOraclize.sol:2607:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Bet0xgame(string _teamOne, string _teamTwo, uint _endsAt, uint _betsCloseAt, string _oraclizeSource) public
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/usingOraclize.sol:1951:50: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        oraclize_randomDS_setCommitment(queryId, keccak256(delay_bytes8_left, args[1], sha256(args[0]), args[2]));
+                                                 ^-------------------------------------------------------------^
+contracts/usingOraclize.sol:2175:47: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                              ^---------------------------^
+contracts/usingOraclize.sol:2175:37: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/usingOraclize.sol:2175:37: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/usingOraclize.sol:2211:48: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (oraclize_randomDS_args[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)){ //unonce, nbytes and sessionKeyHash match
+                                               ^--------------------------------------------^
+contracts/usingOraclize.sol:2669:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PlayerJoined(msg.sender, msg.value, _team);
+    ^----------------------------------------^
+contracts/usingOraclize.sol:2693:5: Warning: Invoking events without "emit" prefix is deprecated.
+    RewardWithdrawn(msg.sender, reward);
+    ^---------------------------------^
+contracts/usingOraclize.sol:2717:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinningTeamSet(_result);
+    ^---------------------^
+contracts/usingOraclize.sol:2743:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query not sent, balance too low");
+      ^-------------------------------------------------------^
+contracts/usingOraclize.sol:2753:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query sent!");
+      ^-----------------------------------^
+contracts/usingOraclize.sol:2699:57: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function __callback(bytes32 _queryId, string _result, bytes _proof) public
+                                                        ^----------^
+contracts/usingOraclize.sol:717:5: Warning: Function state mutability can be restricted to pure
+    function __callback(bytes32 myid, string result, bytes proof) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CBOR.sol:2607:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Bet0xgame(string _teamOne, string _teamTwo, uint _endsAt, uint _betsCloseAt, string _oraclizeSource) public
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CBOR.sol:1951:50: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        oraclize_randomDS_setCommitment(queryId, keccak256(delay_bytes8_left, args[1], sha256(args[0]), args[2]));
+                                                 ^-------------------------------------------------------------^
+contracts/CBOR.sol:2175:47: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                              ^---------------------------^
+contracts/CBOR.sol:2175:37: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/CBOR.sol:2175:37: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/CBOR.sol:2211:48: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (oraclize_randomDS_args[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)){ //unonce, nbytes and sessionKeyHash match
+                                               ^--------------------------------------------^
+contracts/CBOR.sol:2669:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PlayerJoined(msg.sender, msg.value, _team);
+    ^----------------------------------------^
+contracts/CBOR.sol:2693:5: Warning: Invoking events without "emit" prefix is deprecated.
+    RewardWithdrawn(msg.sender, reward);
+    ^---------------------------------^
+contracts/CBOR.sol:2717:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinningTeamSet(_result);
+    ^---------------------^
+contracts/CBOR.sol:2743:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query not sent, balance too low");
+      ^-------------------------------------------------------^
+contracts/CBOR.sol:2753:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query sent!");
+      ^-----------------------------------^
+contracts/CBOR.sol:2699:57: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function __callback(bytes32 _queryId, string _result, bytes _proof) public
+                                                        ^----------^
+contracts/CBOR.sol:717:5: Warning: Function state mutability can be restricted to pure
+    function __callback(bytes32 myid, string result, bytes proof) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Bet0xgame.sol:2607:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Bet0xgame(string _teamOne, string _teamTwo, uint _endsAt, uint _betsCloseAt, string _oraclizeSource) public
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Bet0xgame.sol:1951:50: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        oraclize_randomDS_setCommitment(queryId, keccak256(delay_bytes8_left, args[1], sha256(args[0]), args[2]));
+                                                 ^-------------------------------------------------------------^
+contracts/Bet0xgame.sol:2175:47: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                              ^---------------------------^
+contracts/Bet0xgame.sol:2175:37: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/Bet0xgame.sol:2175:37: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        if (!(keccak256(keyhash) == keccak256(sha256(context_name, queryId)))) return false;
+                                    ^--------------------------------------^
+contracts/Bet0xgame.sol:2211:48: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (oraclize_randomDS_args[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)){ //unonce, nbytes and sessionKeyHash match
+                                               ^--------------------------------------------^
+contracts/Bet0xgame.sol:2669:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PlayerJoined(msg.sender, msg.value, _team);
+    ^----------------------------------------^
+contracts/Bet0xgame.sol:2693:5: Warning: Invoking events without "emit" prefix is deprecated.
+    RewardWithdrawn(msg.sender, reward);
+    ^---------------------------------^
+contracts/Bet0xgame.sol:2717:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinningTeamSet(_result);
+    ^---------------------^
+contracts/Bet0xgame.sol:2743:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query not sent, balance too low");
+      ^-------------------------------------------------------^
+contracts/Bet0xgame.sol:2753:7: Warning: Invoking events without "emit" prefix is deprecated.
+      OraclizeQuery("Oraclize query sent!");
+      ^-----------------------------------^
+contracts/Bet0xgame.sol:2699:57: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function __callback(bytes32 _queryId, string _result, bytes _proof) public
+                                                        ^----------^
+contracts/Bet0xgame.sol:717:5: Warning: Function state mutability can be restricted to pure
+    function __callback(bytes32 myid, string result, bytes proof) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Buffer
+** Write stats: 0.001663
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0002
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.8418
+** Write stats: 60.0003
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120
+>> Fuzz usingOraclize
+** Write stats: 0.006001
+** Write stats: 5.00005
+** Write stats: 10.0002
+** Write stats: 15.0043
+** Write stats: 20.0002
+** Write stats: 25.0375
+** Write stats: 30.0437
+** Write stats: 35.0004
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0002
+** Write stats: 60.0003
+** Write stats: 65.0001
+** Write stats: 70.0337
+** Write stats: 75.049
+** Write stats: 80.0004
+** Write stats: 85.0595
+** Write stats: 90.0353
+** Write stats: 95.0002
+** Write stats: 100.016
+** Write stats: 105
+** Write stats: 110.001
+** Write stats: 115.007
+** Write stats: 120
+** Write stats: 120.057
+>> Fuzz CBOR
+** Write stats: 0.002132
+** Write stats: 5.00009
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0002
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0002
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.001
+>> Fuzz Bet0xgame
+** Write stats: 0.014104
+** Write stats: 5.00021
+** Write stats: 10.0006
+** Write stats: 15.0004
+** Write stats: 20.0003
+** Write stats: 25.0003
+** Write stats: 30.0001
+** Write stats: 35.0005
+** Write stats: 40.0003
+** Write stats: 45.0117
+** Write stats: 50.0001
+** Write stats: 55.0005
+** Write stats: 60.0002
+** Write stats: 65.0002
+** Write stats: 70.0003
+** Write stats: 75.0003
+** Write stats: 80.0004
+** Write stats: 85.0005
+** Write stats: 90.0002
+** Write stats: 95.0002
+** Write stats: 100
+** Write stats: 105.001
+** Write stats: 110.006
+** Write stats: 115.001
+** Write stats: 120.001
+** Write stats: 120.015

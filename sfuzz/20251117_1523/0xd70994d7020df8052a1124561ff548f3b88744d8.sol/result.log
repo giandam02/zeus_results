@@ -1,0 +1,220 @@
+Extract contract DappReg from /sb/0xd70994d7020df8052a1124561ff548f3b88744d8.sol
+Extract contract Owned from /sb/0xd70994d7020df8052a1124561ff548f3b88744d8.sol
+Extracted 2 contract(s) from /sb/0xd70994d7020df8052a1124561ff548f3b88744d8.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/DappReg.sol:11:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.sender != owner) throw;
+                             ^---^
+contracts/DappReg.sol:34:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.value < fee) throw;
+                         ^---^
+contracts/DappReg.sol:39:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (dapps[_id].owner != msg.sender) throw;
+                                        ^---^
+contracts/DappReg.sol:44:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (dapps[_id].owner != msg.sender && owner != msg.sender) throw;
+                                                               ^---^
+contracts/DappReg.sol:49:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (dapps[_id].id != 0) throw;
+                            ^---^
+contracts/DappReg.sol:120:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/DappReg.sol:70:5: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+    Dapp d = dapps[ids[_index]];
+    ^----^
+contracts/DappReg.sol:77:5: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+    Dapp d = dapps[_id];
+    ^----^
+contracts/DappReg.sol:18:5: Warning: Invoking events without "emit" prefix is deprecated.
+    NewOwner(owner, _new);
+    ^-------------------^
+contracts/DappReg.sol:86:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Registered(_id, msg.sender);
+    ^-------------------------^
+contracts/DappReg.sol:92:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Unregistered(_id);
+    ^---------------^
+contracts/DappReg.sol:103:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MetaChanged(_id, _key, _value);
+    ^----------------------------^
+contracts/DappReg.sol:109:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnerChanged(_id, _owner);
+    ^-----------------------^
+contracts/DappReg.sol:119:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    if (!msg.sender.send(this.balance)) {
+                         ^----------^
+contracts/DappReg.sol:17:3: Warning: No visibility specified. Defaulting to "public". 
+  function setOwner(address _new) only_owner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:64:3: Warning: No visibility specified. Defaulting to "public". 
+  function count() constant returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:69:3: Warning: No visibility specified. Defaulting to "public". 
+  function at(uint _index) constant returns (bytes32 id, address owner) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:76:3: Warning: No visibility specified. Defaulting to "public". 
+  function get(bytes32 _id) constant returns (bytes32 id, address owner) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function register(bytes32 _id) payable when_fee_paid when_id_free(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:90:3: Warning: No visibility specified. Defaulting to "public". 
+  function unregister(bytes32 _id) either_owner(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:96:3: Warning: No visibility specified. Defaulting to "public". 
+  function meta(bytes32 _id, bytes32 _key) constant returns (bytes32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:101:3: Warning: No visibility specified. Defaulting to "public". 
+  function setMeta(bytes32 _id, bytes32 _key, bytes32 _value) only_dapp_owner(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:107:3: Warning: No visibility specified. Defaulting to "public". 
+  function setDappOwner(bytes32 _id, address _owner) only_dapp_owner(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:113:3: Warning: No visibility specified. Defaulting to "public". 
+  function setFee(uint _fee) only_owner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/DappReg.sol:118:3: Warning: No visibility specified. Defaulting to "public". 
+  function drain() only_owner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:11:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.sender != owner) throw;
+                             ^---^
+contracts/Owned.sol:34:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.value < fee) throw;
+                         ^---^
+contracts/Owned.sol:39:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (dapps[_id].owner != msg.sender) throw;
+                                        ^---^
+contracts/Owned.sol:44:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (dapps[_id].owner != msg.sender && owner != msg.sender) throw;
+                                                               ^---^
+contracts/Owned.sol:49:29: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (dapps[_id].id != 0) throw;
+                            ^---^
+contracts/Owned.sol:120:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Owned.sol:70:5: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+    Dapp d = dapps[ids[_index]];
+    ^----^
+contracts/Owned.sol:77:5: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+    Dapp d = dapps[_id];
+    ^----^
+contracts/Owned.sol:18:5: Warning: Invoking events without "emit" prefix is deprecated.
+    NewOwner(owner, _new);
+    ^-------------------^
+contracts/Owned.sol:86:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Registered(_id, msg.sender);
+    ^-------------------------^
+contracts/Owned.sol:92:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Unregistered(_id);
+    ^---------------^
+contracts/Owned.sol:103:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MetaChanged(_id, _key, _value);
+    ^----------------------------^
+contracts/Owned.sol:109:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnerChanged(_id, _owner);
+    ^-----------------------^
+contracts/Owned.sol:119:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    if (!msg.sender.send(this.balance)) {
+                         ^----------^
+contracts/Owned.sol:17:3: Warning: No visibility specified. Defaulting to "public". 
+  function setOwner(address _new) only_owner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:64:3: Warning: No visibility specified. Defaulting to "public". 
+  function count() constant returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:69:3: Warning: No visibility specified. Defaulting to "public". 
+  function at(uint _index) constant returns (bytes32 id, address owner) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:76:3: Warning: No visibility specified. Defaulting to "public". 
+  function get(bytes32 _id) constant returns (bytes32 id, address owner) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function register(bytes32 _id) payable when_fee_paid when_id_free(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:90:3: Warning: No visibility specified. Defaulting to "public". 
+  function unregister(bytes32 _id) either_owner(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:96:3: Warning: No visibility specified. Defaulting to "public". 
+  function meta(bytes32 _id, bytes32 _key) constant returns (bytes32) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:101:3: Warning: No visibility specified. Defaulting to "public". 
+  function setMeta(bytes32 _id, bytes32 _key, bytes32 _value) only_dapp_owner(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:107:3: Warning: No visibility specified. Defaulting to "public". 
+  function setDappOwner(bytes32 _id, address _owner) only_dapp_owner(_id) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:113:3: Warning: No visibility specified. Defaulting to "public". 
+  function setFee(uint _fee) only_owner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:118:3: Warning: No visibility specified. Defaulting to "public". 
+  function drain() only_owner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz DappReg
+** Write stats: 0.016813
+** Write stats: 5.00839
+** Write stats: 10.0188
+** Write stats: 15.0235
+** Write stats: 20.0228
+** Write stats: 25.0091
+** Write stats: 30.0268
+** Write stats: 35.0056
+** Write stats: 40.012
+** Write stats: 45.0189
+** Write stats: 50.0318
+** Write stats: 55.039
+** Write stats: 60.006
+** Write stats: 65.0349
+** Write stats: 70.0064
+** Write stats: 75.0491
+** Write stats: 80.0202
+** Write stats: 85.0052
+** Write stats: 90.0413
+** Write stats: 95.0595
+** Write stats: 100.017
+** Write stats: 105.035
+** Write stats: 110.023
+** Write stats: 115.046
+** Write stats: 120.038
+** Write stats: 120.061
+>> Fuzz Owned
+** Write stats: 0.003072
+** Write stats: 5.00012
+** Write stats: 10.0002
+** Write stats: 15.0003
+** Write stats: 20.0001
+** Write stats: 25.0002
+** Write stats: 30.0001
+** Write stats: 35.0004
+** Write stats: 40.0002
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0005
+** Write stats: 60.0002
+** Write stats: 65.0002
+** Write stats: 70.0003
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0003
+** Write stats: 90.0002
+** Write stats: 95.0003
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.006

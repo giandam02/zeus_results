@@ -1,0 +1,141 @@
+Extract contract Crowdsale from /sb/0x9ffa45c5943a0203ee462c48c8b97064abbe28f3.sol
+Extract contract Investment from /sb/0x9ffa45c5943a0203ee462c48c8b97064abbe28f3.sol
+Extracted 2 contract(s) from /sb/0x9ffa45c5943a0203ee462c48c8b97064abbe28f3.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Investment.sol:21:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function Investment(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:22:19: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x0807a2d6a675E7196a3d9B1910700CaE9795b72A'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+		ico = Crowdsale(0x0807a2d6a675e7196a3d9b1910700cae9795b72a);
+		                ^----------------------------------------^
+contracts/Investment.sol:60:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		msg.sender.send(balanceOf[msg.sender]);
+		^------------------------------------^
+contracts/Investment.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function invest(address receiver) payable{}
+	^-----------------------------------------^
+contracts/Investment.sol:11:18: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function invest(address receiver) payable{}
+	                ^--------------^
+contracts/Investment.sol:21:2: Warning: No visibility specified. Defaulting to "public". 
+	function Investment(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:26:2: Warning: No visibility specified. Defaulting to "public". 
+	function() payable{
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:34:2: Warning: No visibility specified. Defaulting to "public". 
+	function isInvestor(address who) returns (bool){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:44:2: Warning: No visibility specified. Defaulting to "public". 
+	function buyTokens(uint from, uint to){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:59:2: Warning: No visibility specified. Defaulting to "public". 
+	function withdraw(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:64:2: Warning: No visibility specified. Defaulting to "public". 
+	function getNumInvestors() constant returns(uint){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Investment.sol:34:2: Warning: Function state mutability can be restricted to view
+	function isInvestor(address who) returns (bool){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:21:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function Investment(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:22:19: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x0807a2d6a675E7196a3d9B1910700CaE9795b72A'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+		ico = Crowdsale(0x0807a2d6a675e7196a3d9b1910700cae9795b72a);
+		                ^----------------------------------------^
+contracts/Crowdsale.sol:60:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		msg.sender.send(balanceOf[msg.sender]);
+		^------------------------------------^
+contracts/Crowdsale.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function invest(address receiver) payable{}
+	^-----------------------------------------^
+contracts/Crowdsale.sol:11:18: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function invest(address receiver) payable{}
+	                ^--------------^
+contracts/Crowdsale.sol:21:2: Warning: No visibility specified. Defaulting to "public". 
+	function Investment(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:26:2: Warning: No visibility specified. Defaulting to "public". 
+	function() payable{
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:34:2: Warning: No visibility specified. Defaulting to "public". 
+	function isInvestor(address who) returns (bool){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:44:2: Warning: No visibility specified. Defaulting to "public". 
+	function buyTokens(uint from, uint to){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:59:2: Warning: No visibility specified. Defaulting to "public". 
+	function withdraw(){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:64:2: Warning: No visibility specified. Defaulting to "public". 
+	function getNumInvestors() constant returns(uint){
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:34:2: Warning: Function state mutability can be restricted to view
+	function isInvestor(address who) returns (bool){
+ ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Investment
+** Write stats: 0.00504
+** Write stats: 5.00032
+** Write stats: 10.0002
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0003
+** Write stats: 30.0003
+** Write stats: 35.0002
+** Write stats: 40.0002
+** Write stats: 45.0004
+** Write stats: 50.0002
+** Write stats: 55.0003
+** Write stats: 60.0002
+** Write stats: 65.0001
+** Write stats: 70.0002
+** Write stats: 75.0001
+** Write stats: 80.0003
+** Write stats: 85.0141
+** Write stats: 90.0002
+** Write stats: 95.0048
+** Write stats: 100.007
+** Write stats: 105.001
+** Write stats: 110.011
+** Write stats: 115
+** Write stats: 120.002
+** Write stats: 120.018
+>> Fuzz Crowdsale
+** Write stats: 0.002801
+** Write stats: 5.00012
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0008
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0018
+** Write stats: 70.0002
+** Write stats: 75.0003
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0031
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115.007
+** Write stats: 120.005

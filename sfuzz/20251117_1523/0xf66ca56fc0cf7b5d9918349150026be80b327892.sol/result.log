@@ -1,0 +1,366 @@
+Extract contract Crowdsale from /sb/0xf66ca56fc0cf7b5d9918349150026be80b327892.sol
+Extract contract SafeMath from /sb/0xf66ca56fc0cf7b5d9918349150026be80b327892.sol
+Extract contract token from /sb/0xf66ca56fc0cf7b5d9918349150026be80b327892.sol
+Extracted 3 contract(s) from /sb/0xf66ca56fc0cf7b5d9918349150026be80b327892.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Crowdsale.sol:36:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!assertion) throw;
+                    ^---^
+contracts/Crowdsale.sol:74:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Crowdsale( ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:92:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    	if(price > amount) throw;
+    	                   ^---^
+contracts/Crowdsale.sol:94:74: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (crowdsaleClosed||now<start||safeAdd(tokensSold,numTokens)>maxGoal) throw;
+		                                                                       ^---^
+contracts/Crowdsale.sol:95:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(!msWallet.send(amount)) throw;
+		                           ^---^
+contracts/Crowdsale.sol:99:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(!tokenReward.transferFrom(beneficiary, receiver, numTokens)) throw;
+		                                                                ^---^
+contracts/Crowdsale.sol:105:13: Warning: Use of the "var" keyword is deprecated.
+        for(var i = 0; i < deadlines.length; i++)
+            ^---^
+contracts/Crowdsale.sol:35:3: Warning: This declaration shadows a builtin symbol.
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:43:31: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x003230BBE64eccD66f62913679C8966Cf9F41166'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	address public beneficiary = 0x003230bbe64eccd66f62913679c8966cf9f41166;
+	                             ^----------------------------------------^
+contracts/Crowdsale.sol:66:21: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x91EFffB9C6cd3A66474688D0a48AA6ECfe515AA5'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	address msWallet = 0x91efffb9c6cd3a66474688d0a48aa6ecfe515aa5;
+	                   ^----------------------------------------^
+contracts/Crowdsale.sol:75:29: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x5bdf79F1e7431eDb75537d23D3b404EF86F44316'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+        tokenReward = token(0x5bdf79f1e7431edb75537d23d3b404ef86f44316);
+                            ^----------------------------------------^
+contracts/Crowdsale.sol:100:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FundTransfer(receiver, amount, true, amountRaised);
+        ^------------------------------------------------^
+contracts/Crowdsale.sol:105:13: Warning: The type of this variable was inferred as uint8, which can hold values between 0 and 255. This is probably not desired. Use an explicit type to silence this warning.
+        for(var i = 0; i < deadlines.length; i++)
+            ^-------^
+contracts/Crowdsale.sol:118:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(beneficiary, amountRaised);
+            ^------------------------------------^
+contracts/Crowdsale.sol:131:6: Warning: Invoking events without "emit" prefix is deprecated.
+					FundTransfer(msg.sender, amount, false, amountRaised);
+					^---------------------------------------------------^
+contracts/Crowdsale.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	^------------------------------------------------------------------------------------------^
+contracts/Crowdsale.sol:11:24: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                      ^------------^
+contracts/Crowdsale.sol:11:40: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                      ^--------------^
+contracts/Crowdsale.sol:11:58: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                                        ^---------^
+contracts/Crowdsale.sol:11:79: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                                                             ^----------^
+contracts/Crowdsale.sol:12:2: Warning: No visibility specified. Defaulting to "public". 
+	function burn() {}
+	^----------------^
+contracts/Crowdsale.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function Crowdsale( ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:79:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:89:5: Warning: No visibility specified. Defaulting to "public". 
+    function invest(address receiver) payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:104:5: Warning: No visibility specified. Defaulting to "public". 
+    function getPrice() constant returns (uint256 price){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function checkGoalReached() afterDeadline {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:125:2: Warning: No visibility specified. Defaulting to "public". 
+	function safeWithdrawal() afterDeadline {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Crowdsale.sol:11:2: Warning: Function state mutability can be restricted to pure
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	^------------------------------------------------------------------------------------------^
+contracts/Crowdsale.sol:12:2: Warning: Function state mutability can be restricted to pure
+	function burn() {}
+	^----------------^
+contracts/Crowdsale.sol:35:3: Warning: Function state mutability can be restricted to pure
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:36:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!assertion) throw;
+                    ^---^
+contracts/SafeMath.sol:74:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Crowdsale( ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:92:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    	if(price > amount) throw;
+    	                   ^---^
+contracts/SafeMath.sol:94:74: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (crowdsaleClosed||now<start||safeAdd(tokensSold,numTokens)>maxGoal) throw;
+		                                                                       ^---^
+contracts/SafeMath.sol:95:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(!msWallet.send(amount)) throw;
+		                           ^---^
+contracts/SafeMath.sol:99:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(!tokenReward.transferFrom(beneficiary, receiver, numTokens)) throw;
+		                                                                ^---^
+contracts/SafeMath.sol:105:13: Warning: Use of the "var" keyword is deprecated.
+        for(var i = 0; i < deadlines.length; i++)
+            ^---^
+contracts/SafeMath.sol:35:3: Warning: This declaration shadows a builtin symbol.
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:43:31: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x003230BBE64eccD66f62913679C8966Cf9F41166'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	address public beneficiary = 0x003230bbe64eccd66f62913679c8966cf9f41166;
+	                             ^----------------------------------------^
+contracts/SafeMath.sol:66:21: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x91EFffB9C6cd3A66474688D0a48AA6ECfe515AA5'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	address msWallet = 0x91efffb9c6cd3a66474688d0a48aa6ecfe515aa5;
+	                   ^----------------------------------------^
+contracts/SafeMath.sol:75:29: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x5bdf79F1e7431eDb75537d23D3b404EF86F44316'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+        tokenReward = token(0x5bdf79f1e7431edb75537d23d3b404ef86f44316);
+                            ^----------------------------------------^
+contracts/SafeMath.sol:100:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FundTransfer(receiver, amount, true, amountRaised);
+        ^------------------------------------------------^
+contracts/SafeMath.sol:105:13: Warning: The type of this variable was inferred as uint8, which can hold values between 0 and 255. This is probably not desired. Use an explicit type to silence this warning.
+        for(var i = 0; i < deadlines.length; i++)
+            ^-------^
+contracts/SafeMath.sol:118:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(beneficiary, amountRaised);
+            ^------------------------------------^
+contracts/SafeMath.sol:131:6: Warning: Invoking events without "emit" prefix is deprecated.
+					FundTransfer(msg.sender, amount, false, amountRaised);
+					^---------------------------------------------------^
+contracts/SafeMath.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	^------------------------------------------------------------------------------------------^
+contracts/SafeMath.sol:11:24: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                      ^------------^
+contracts/SafeMath.sol:11:40: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                      ^--------------^
+contracts/SafeMath.sol:11:58: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                                        ^---------^
+contracts/SafeMath.sol:11:79: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                                                             ^----------^
+contracts/SafeMath.sol:12:2: Warning: No visibility specified. Defaulting to "public". 
+	function burn() {}
+	^----------------^
+contracts/SafeMath.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function Crowdsale( ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:79:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:89:5: Warning: No visibility specified. Defaulting to "public". 
+    function invest(address receiver) payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:104:5: Warning: No visibility specified. Defaulting to "public". 
+    function getPrice() constant returns (uint256 price){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function checkGoalReached() afterDeadline {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:125:2: Warning: No visibility specified. Defaulting to "public". 
+	function safeWithdrawal() afterDeadline {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:11:2: Warning: Function state mutability can be restricted to pure
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	^------------------------------------------------------------------------------------------^
+contracts/SafeMath.sol:12:2: Warning: Function state mutability can be restricted to pure
+	function burn() {}
+	^----------------^
+contracts/SafeMath.sol:35:3: Warning: Function state mutability can be restricted to pure
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:36:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (!assertion) throw;
+                    ^---^
+contracts/token.sol:74:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Crowdsale( ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:92:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    	if(price > amount) throw;
+    	                   ^---^
+contracts/token.sol:94:74: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (crowdsaleClosed||now<start||safeAdd(tokensSold,numTokens)>maxGoal) throw;
+		                                                                       ^---^
+contracts/token.sol:95:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(!msWallet.send(amount)) throw;
+		                           ^---^
+contracts/token.sol:99:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(!tokenReward.transferFrom(beneficiary, receiver, numTokens)) throw;
+		                                                                ^---^
+contracts/token.sol:105:13: Warning: Use of the "var" keyword is deprecated.
+        for(var i = 0; i < deadlines.length; i++)
+            ^---^
+contracts/token.sol:35:3: Warning: This declaration shadows a builtin symbol.
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:43:31: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x003230BBE64eccD66f62913679C8966Cf9F41166'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	address public beneficiary = 0x003230bbe64eccd66f62913679c8966cf9f41166;
+	                             ^----------------------------------------^
+contracts/token.sol:66:21: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x91EFffB9C6cd3A66474688D0a48AA6ECfe515AA5'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	address msWallet = 0x91efffb9c6cd3a66474688d0a48aa6ecfe515aa5;
+	                   ^----------------------------------------^
+contracts/token.sol:75:29: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x5bdf79F1e7431eDb75537d23D3b404EF86F44316'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+        tokenReward = token(0x5bdf79f1e7431edb75537d23d3b404ef86f44316);
+                            ^----------------------------------------^
+contracts/token.sol:100:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FundTransfer(receiver, amount, true, amountRaised);
+        ^------------------------------------------------^
+contracts/token.sol:105:13: Warning: The type of this variable was inferred as uint8, which can hold values between 0 and 255. This is probably not desired. Use an explicit type to silence this warning.
+        for(var i = 0; i < deadlines.length; i++)
+            ^-------^
+contracts/token.sol:118:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GoalReached(beneficiary, amountRaised);
+            ^------------------------------------^
+contracts/token.sol:131:6: Warning: Invoking events without "emit" prefix is deprecated.
+					FundTransfer(msg.sender, amount, false, amountRaised);
+					^---------------------------------------------------^
+contracts/token.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	^------------------------------------------------------------------------------------------^
+contracts/token.sol:11:24: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                      ^------------^
+contracts/token.sol:11:40: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                      ^--------------^
+contracts/token.sol:11:58: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                                        ^---------^
+contracts/token.sol:11:79: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	                                                                             ^----------^
+contracts/token.sol:12:2: Warning: No visibility specified. Defaulting to "public". 
+	function burn() {}
+	^----------------^
+contracts/token.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function Crowdsale( ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:79:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:89:5: Warning: No visibility specified. Defaulting to "public". 
+    function invest(address receiver) payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:104:5: Warning: No visibility specified. Defaulting to "public". 
+    function getPrice() constant returns (uint256 price){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function checkGoalReached() afterDeadline {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:125:2: Warning: No visibility specified. Defaulting to "public". 
+	function safeWithdrawal() afterDeadline {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:11:2: Warning: Function state mutability can be restricted to pure
+	function transferFrom(address sender, address receiver, uint amount) returns(bool success){}
+	^------------------------------------------------------------------------------------------^
+contracts/token.sol:12:2: Warning: Function state mutability can be restricted to pure
+	function burn() {}
+	^----------------^
+contracts/token.sol:35:3: Warning: Function state mutability can be restricted to pure
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Crowdsale
+** Write stats: 0.006417
+** Write stats: 5.00019
+** Write stats: 10.0005
+** Write stats: 15.0005
+** Write stats: 20.0003
+** Write stats: 25.0004
+** Write stats: 30.0011
+** Write stats: 35.0005
+** Write stats: 40.0007
+** Write stats: 45.0005
+** Write stats: 50.001
+** Write stats: 55.0021
+** Write stats: 60.0024
+** Write stats: 65.0021
+** Write stats: 70.0022
+** Write stats: 75.0019
+** Write stats: 80.0011
+** Write stats: 85.0015
+** Write stats: 90.0007
+** Write stats: 95.0007
+** Write stats: 100.002
+** Write stats: 105.004
+** Write stats: 110.001
+** Write stats: 115.004
+** Write stats: 120.006
+** Write stats: 120.052
+>> Fuzz SafeMath
+** Write stats: 0.001905
+** Write stats: 5.00009
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0004
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.1723
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0006
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0783
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120
+>> Fuzz token
+** Write stats: 0.004006
+** Write stats: 5.00017
+** Write stats: 10.0001
+** Write stats: 15.0048
+** Write stats: 20.0002
+** Write stats: 25.0001
+** Write stats: 30.0003
+** Write stats: 35.0002
+** Write stats: 40.0048
+** Write stats: 45.0001
+** Write stats: 50.0002
+** Write stats: 55.0001
+** Write stats: 60.0079
+** Write stats: 65.0001
+** Write stats: 70.0002
+** Write stats: 75.0038
+** Write stats: 80.0001
+** Write stats: 85.0099
+** Write stats: 90.0001
+** Write stats: 95.0002
+** Write stats: 100
+** Write stats: 105.016
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.006

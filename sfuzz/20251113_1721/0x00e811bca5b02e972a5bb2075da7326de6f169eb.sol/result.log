@@ -1,0 +1,71 @@
+Extract contract Asset from /sb/0x00e811bca5b02e972a5bb2075da7326de6f169eb.sol
+Extract contract Bytes32 from /sb/0x00e811bca5b02e972a5bb2075da7326de6f169eb.sol
+Extract contract ReturnData from /sb/0x00e811bca5b02e972a5bb2075da7326de6f169eb.sol
+Extracted 3 contract(s) from /sb/0x00e811bca5b02e972a5bb2075da7326de6f169eb.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Asset.sol:73:47: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            mstore(0x40, add(returndatastart, returndatasize))
+                                              ^------------^
+contracts/Asset.sol:75:48: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            returndatacopy(returndatastart, 0, returndatasize)
+                                               ^------------^
+contracts/Asset.sol:75:13: Warning: The "returndatacopy" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            returndatacopy(returndatastart, 0, returndatasize)
+            ^------------^
+contracts/Asset.sol:77:62: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            switch _success case 0 { revert(returndatastart, returndatasize) } default { return(returndatastart, returndatasize) }
+                                                             ^------------^
+contracts/Asset.sol:77:114: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            switch _success case 0 { revert(returndatastart, returndatasize) } default { return(returndatastart, returndatasize) }
+                                                                                                                 ^------------^
+contracts/Bytes32.sol:73:47: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            mstore(0x40, add(returndatastart, returndatasize))
+                                              ^------------^
+contracts/Bytes32.sol:75:48: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            returndatacopy(returndatastart, 0, returndatasize)
+                                               ^------------^
+contracts/Bytes32.sol:75:13: Warning: The "returndatacopy" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            returndatacopy(returndatastart, 0, returndatasize)
+            ^------------^
+contracts/Bytes32.sol:77:62: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            switch _success case 0 { revert(returndatastart, returndatasize) } default { return(returndatastart, returndatasize) }
+                                                             ^------------^
+contracts/Bytes32.sol:77:114: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            switch _success case 0 { revert(returndatastart, returndatasize) } default { return(returndatastart, returndatasize) }
+                                                                                                                 ^------------^
+contracts/ReturnData.sol:73:47: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            mstore(0x40, add(returndatastart, returndatasize))
+                                              ^------------^
+contracts/ReturnData.sol:75:48: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            returndatacopy(returndatastart, 0, returndatasize)
+                                               ^------------^
+contracts/ReturnData.sol:75:13: Warning: The "returndatacopy" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            returndatacopy(returndatastart, 0, returndatasize)
+            ^------------^
+contracts/ReturnData.sol:77:62: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            switch _success case 0 { revert(returndatastart, returndatasize) } default { return(returndatastart, returndatasize) }
+                                                             ^------------^
+contracts/ReturnData.sol:77:114: Warning: The "returndatasize" instruction is only available after the Metropolis hard fork. Before that it acts as an invalid instruction.
+            switch _success case 0 { revert(returndatastart, returndatasize) } default { return(returndatastart, returndatasize) }
+                                                                                                                 ^------------^
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.4.15+commit.8b45bddb.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.4.15+commit.8b45bddb.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    25 Aborted                 (core dumped) ./fuzzer --file contracts/Asset.sol.json --name Asset --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 8:    26 Aborted                 (core dumped) ./fuzzer --file contracts/Bytes32.sol.json --name Bytes32 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 9:    27 Aborted                 (core dumped) ./fuzzer --file contracts/ReturnData.sol.json --name ReturnData --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

@@ -1,0 +1,47 @@
+Extract contract ERC20 from /sb/0x0070dcd7ea75d80306ae83530edb6093cad08bb5.sol
+Extract contract Ownable from /sb/0x0070dcd7ea75d80306ae83530edb6093cad08bb5.sol
+Extract contract SKYNET from /sb/0x0070dcd7ea75d80306ae83530edb6093cad08bb5.sol
+Extracted 3 contract(s) from /sb/0x0070dcd7ea75d80306ae83530edb6093cad08bb5.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+Warning: Contract code size is 26091 bytes and exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+   --> contracts/SKYNET.sol:739:1:
+    |
+739 | contract SKYNET is ERC20, Ownable {
+    | ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Contract code size is 26091 bytes and exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+   --> contracts/Ownable.sol:739:1:
+    |
+739 | contract SKYNET is ERC20, Ownable {
+    | ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Contract code size is 26091 bytes and exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+   --> contracts/ERC20.sol:739:1:
+    |
+739 | contract SKYNET is ERC20, Ownable {
+    | ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: Source file requires different compiler version (current compiler is 0.8.11+commit.d7f03943.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/NormalAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.8.11+commit.d7f03943.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/ReentrancyAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    25 Aborted                 (core dumped) ./fuzzer --file contracts/SKYNET.sol.json --name SKYNET --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 8:    26 Aborted                 (core dumped) ./fuzzer --file contracts/Ownable.sol.json --name Ownable --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 9:    27 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20.sol.json --name ERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

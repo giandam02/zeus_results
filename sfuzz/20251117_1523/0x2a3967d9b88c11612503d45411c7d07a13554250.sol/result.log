@@ -1,0 +1,132 @@
+Extract contract Market from /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol
+Extracted 1 contract(s) from /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Market.sol:44:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Market() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:84:22: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if (msg.value>0) throw;
+                     ^---^
+contracts/Market.sol:105:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+contracts/Market.sol:224:11: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+          Option option = optionChains[optionChainID].options[i];
+          ^-----------^
+contracts/Market.sol:62:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        msg.sender.send(amount);
+        ^---------------------^
+contracts/Market.sol:152:21: Warning: "sha3" has been deprecated in favour of "keccak256"
+      if (ecrecover(sha3(optionChains[optionChainID].factHash, value), v, r, s) == optionChains[optionChainID].ethAddr) {
+                    ^-----------------------------------------------^
+contracts/Market.sol:152:21: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      if (ecrecover(sha3(optionChains[optionChainID].factHash, value), v, r, s) == optionChains[optionChainID].ethAddr) {
+                    ^-----------------------------------------------^
+contracts/Market.sol:233:77: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+contracts/Market.sol:233:77: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+contracts/Market.sol:233:201: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+contracts/Market.sol:233:201: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(optionChainID, optionID, price, size, orderID, blockExpires) ... 
+     ^---------------------------------------------------------------^
+contracts/Market.sol:240:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    bytes32 hash = sha256(optionChainID, optionID, price, size, orderID, blockExpires);
+                   ^-----------------------------------------------------------------^
+contracts/Market.sol:44:3: Warning: No visibility specified. Defaulting to "public". 
+  function Market() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:47:3: Warning: No visibility specified. Defaulting to "public". 
+  function addFunds() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:49:55: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+      accounts[accountIDs[msg.sender]].capital += int(msg.value);
+                                                      ^-------^
+contracts/Market.sol:53:42: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+      accounts[accountID].capital += int(msg.value);
+                                         ^-------^
+contracts/Market.sol:58:3: Warning: No visibility specified. Defaulting to "public". 
+  function withdrawFunds(uint amount) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:67:3: Warning: No visibility specified. Defaulting to "public". 
+  function getFunds(address user, bool onlyAvailable) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:79:3: Warning: No visibility specified. Defaulting to "public". 
+  function getFundsAndAvailable(address user) constant returns(int, int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function marketMaker(string server) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:84:9: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if (msg.value>0) throw;
+        ^-------^
+contracts/Market.sol:110:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarketMakers() constant returns(string, string, string, string, string, string) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:118:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarketMakerFunds() constant returns(int, int, int, int, int, int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:126:3: Warning: No visibility specified. Defaulting to "public". 
+  function getOptionChain(uint optionChainID) constant returns (uint, string, uint, uint, bytes32, address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:130:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMarket(address user) constant returns(uint[], int[], int[], int[]) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:150:3: Warning: No visibility specified. Defaulting to "public". 
+  function expire(uint accountID, uint optionChainID, uint8 v, bytes32 r, bytes32 s, bytes32 value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:178:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:202:3: Warning: No visibility specified. Defaulting to "public". 
+  function addOptionChain(uint expiration, string underlying, uint margin, uint realityID, bytes32 factHash, address ethAddr, int[] strikes) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:223:11: Warning: Unused local variable.
+          uint optionID = optionChains[optionChainID].numOptions++;
+          ^-----------^
+contracts/Market.sol:232:3: Warning: No visibility specified. Defaulting to "public". 
+  function orderMatchTest(uint optionChainID, uint optionID, uint price, int size, uint orderID, uint blockExpires, address addr, address sender, int matchSize) constant returns(bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:239:3: Warning: No visibility specified. Defaulting to "public". 
+  function orderMatch(uint optionChainID, uint optionID, uint price, int size, uint orderID, uint blockExpires, address addr, uint8 v, bytes32 r, bytes32 s, int matchSize) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:258:3: Warning: No visibility specified. Defaulting to "public". 
+  function getMaxLossAfterTrade(address user, uint optionChainID, uint optionID, int positionChange, int cashChange) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:316:3: Warning: No visibility specified. Defaulting to "public". 
+  function min(uint a, uint b) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:178:3: Warning: Function state mutability can be restricted to pure
+  function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:275:18: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+          pnl += moneySumAtSettlement(user, optionChainID, optionID, positionChange, i, settlement);
+                 ^--------------------------------------------------------------------------------^
+contracts/Market.sol:294:18: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+          pnl += moneySumAtSettlement(user, optionChainID, optionID, positionChange, i, settlement);
+                 ^--------------------------------------------------------------------------------^
+contracts/Market.sol:305:3: Warning: Function state mutability can be restricted to view
+  function moneySumAtSettlement(address user, uint optionChainID, uint optionID, int positionChange, uint i, uint settlement) internal returns(int) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Market.sol:316:3: Warning: Function state mutability can be restricted to pure
+  function min(uint a, uint b) constant returns(uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Market
+** Write stats: 0.045309
+** Write stats: 3.21854

@@ -1,0 +1,38 @@
+Extract contract Ownable from /sb/0x0009a7a704e2bf19324491dd052f988efea31ba9.sol
+Extract contract SafeERC20 from /sb/0x0009a7a704e2bf19324491dd052f988efea31ba9.sol
+Extract contract SafeMath from /sb/0x0009a7a704e2bf19324491dd052f988efea31ba9.sol
+Extract contract TokenVesting from /sb/0x0009a7a704e2bf19324491dd052f988efea31ba9.sol
+Extracted 4 contract(s) from /sb/0x0009a7a704e2bf19324491dd052f988efea31ba9.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.4.18+commit.9cf6e910.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public".
+  function() payable {
+  ^
+Spanning multiple lines.
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.4.18+commit.9cf6e910.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public".
+  function() payable {
+  ^
+Spanning multiple lines.
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 8:    27 Aborted                 (core dumped) ./fuzzer --file contracts/Ownable.sol.json --name Ownable --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 9:    28 Aborted                 (core dumped) ./fuzzer --file contracts/SafeERC20.sol.json --name SafeERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 10:    29 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    30 Aborted                 (core dumped) ./fuzzer --file contracts/TokenVesting.sol.json --name TokenVesting --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

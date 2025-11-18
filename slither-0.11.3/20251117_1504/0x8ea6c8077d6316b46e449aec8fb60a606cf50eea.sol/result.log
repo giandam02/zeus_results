@@ -1,0 +1,39 @@
+'solc --version' running
+'solc /sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:19:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            if (this.balance > 2 finney) {
+                ^----------^
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:30:21: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                    masterCalculator[to].ethereumAddress.send(2 finney);
+                    ^-------------------------------------------------^
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:17:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value == 1 finney) {
+            ^-------^
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function sqrt(uint x) returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:41:5: Warning: Function state mutability can be restricted to pure
+    function CalculateSqrt(uint x) internal returns (uint y) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol:53:5: Warning: Function state mutability can be restricted to view
+    function sqrt(uint x) returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+squareRootPonzi.fallback() (../sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol#15-38) ignores return value by masterCalculator[to].ethereumAddress.send(2000000000000000) (../sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol#30)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract squareRootPonzi (../sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol#2-62) is not in CapWords
+Function squareRootPonzi.CalculateSqrt(uint256) (../sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol#41-50) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x8ea6c8077d6316b46e449aec8fb60a606cf50eea.sol analyzed (1 contracts with 100 detectors), 5 result(s) found

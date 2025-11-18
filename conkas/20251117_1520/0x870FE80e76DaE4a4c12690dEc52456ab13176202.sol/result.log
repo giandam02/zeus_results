@@ -1,0 +1,66 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:63:19:
+   |
+63 | function totals() constant returns(uint playerCount, uint cur ...
+   |                   ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:78:21:
+   |
+78 | function settings() constant returns(uint minimumDepositInFinneys, uint maximumDepositInFinneys) {
+   |                     ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:83:40:
+   |
+83 |  ... tion playerByAddress(address addr) constant returns(uint entries, uint deposit ...
+   |                                         ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:96:29:
+   |
+96 | function waitingForPayout() constant private returns(uint waiting) {
+   |                             ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:101:34:
+    |
+101 | function entryPayout(uint index) constant private returns(uint payout) {
+    |                                  ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:106:37:
+    |
+106 | function entryPayoutDue(uint index) constant private returns(uint payoutDue) {
+    |                                     ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:112:36:
+    |
+112 | function lineOfPlayers(uint index) constant returns (address addr, uint orderJ ...
+    |                                    ^^^^^^^^
+
+Error: Expected a state variable declaration. If you intended this as a fallback function or a function to handle plain ether transactions, use the "fallback" keyword or the "receive" keyword instead.
+   --> /sb/0x870FE80e76DaE4a4c12690dEc52456ab13176202.sol:128:13:
+    |
+128 | function () {
+    |             ^

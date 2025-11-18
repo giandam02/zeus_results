@@ -1,0 +1,81 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:67:55:
+   |
+67 |   function getFunds(address user, bool onlyAvailable) constant returns(int) {
+   |                                                       ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:79:47:
+   |
+79 |   function getFundsAndAvailable(address user) constant returns(int, int) {
+   |                                               ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:110:30:
+    |
+110 |   function getMarketMakers() constant returns(string, string, string, string, string, string) {
+    |                              ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:118:34:
+    |
+118 |   function getMarketMakerFunds() constant returns(int, int, int, int, int, int) {
+    |                                  ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:126:47:
+    |
+126 |   function getOptionChain(uint optionChainID) constant returns (uint, string, uint, uint, bytes32, address) {
+    |                                               ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:130:36:
+    |
+130 |   function getMarket(address user) constant returns(uint[], int[], int[], int[]) {
+    |                                    ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:178:67:
+    |
+178 |   function getMoneyness(int strike, uint settlement, uint margin) constant returns(int) {
+    |                                                                   ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:232:162:
+    |
+232 |  ... dr, address sender, int matchSize) constant returns(bool) {
+    |                                         ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:258:118:
+    |
+258 |   function getMaxLossAfterTrade(address user, uint optionChainID, uint optionID, int positionChange, int cashChange) constant returns(int) {
+    |                                                                                                                      ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol:316:32:
+    |
+316 |   function min(uint a, uint b) constant returns(uint) {
+    |                                ^^^^^^^^
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> /sb/0x2a3967d9b88c11612503d45411c7d07a13554250.sol

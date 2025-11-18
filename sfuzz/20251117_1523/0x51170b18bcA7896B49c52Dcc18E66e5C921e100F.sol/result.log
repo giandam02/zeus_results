@@ -1,0 +1,63 @@
+Extract contract CrystalDoubler from /sb/0x51170b18bcA7896B49c52Dcc18E66e5C921e100F.sol
+Extracted 1 contract(s) from /sb/0x51170b18bcA7896B49c52Dcc18E66e5C921e100F.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/CrystalDoubler.sol:34:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function CrystalDoubler() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CrystalDoubler.sol:64:7: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+      depositors[nr].EtherAddress.send(payout);                        //send pay out to participant
+      ^--------------------------------------^
+contracts/CrystalDoubler.sol:34:3: Warning: No visibility specified. Defaulting to "public". 
+  function CrystalDoubler() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CrystalDoubler.sol:40:3: Warning: No visibility specified. Defaulting to "public". 
+  function() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CrystalDoubler.sol:46:3: Warning: No visibility specified. Defaulting to "public". 
+  function enter() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CrystalDoubler.sol:47:9: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if (msg.value > 500 finney) {
+        ^-------^
+contracts/CrystalDoubler.sol:49:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    uint Amount=msg.value;
+                ^-------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz CrystalDoubler
+** Write stats: 0.00308
+** Write stats: 5.00016
+** Write stats: 10.0004
+** Write stats: 15.0003
+** Write stats: 20.0024
+** Write stats: 25.0003
+** Write stats: 30.0007
+** Write stats: 35.0005
+** Write stats: 40.0002
+** Write stats: 45.0003
+** Write stats: 50.0002
+** Write stats: 55.0005
+** Write stats: 60.0005
+** Write stats: 65.0567
+** Write stats: 70.0292
+** Write stats: 75.0001
+** Write stats: 80.0004
+** Write stats: 85.0004
+** Write stats: 90.0108
+** Write stats: 95.0003
+** Write stats: 100.001
+** Write stats: 105.012
+** Write stats: 110.025
+** Write stats: 115.008
+** Write stats: 120.007
+** Write stats: 120.044

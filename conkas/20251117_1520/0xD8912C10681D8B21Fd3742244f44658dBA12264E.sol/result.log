@@ -1,0 +1,54 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol:10:28:
+   |
+10 |     function totalSupply() constant returns (uint256 supply) {}
+   |                            ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol:14:40:
+   |
+14 |     function balanceOf(address _owner) constant returns (uint256 balance) {}
+   |                                        ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol:38:58:
+   |
+38 |     function allowance(address _owner, address _spender) constant returns (uint256 remaining) {}
+   |                                                          ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol:72:40:
+   |
+72 |     function balanceOf(address _owner) constant returns (uint256 balance) {
+   |                                        ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol:82:58:
+   |
+82 |     function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+   |                                                          ^^^^^^^^
+
+Error: Expected a state variable declaration. If you intended this as a fallback function or a function to handle plain ether transactions, use the "fallback" keyword or the "receive" keyword instead.
+  --> /sb/0xD8912C10681D8B21Fd3742244f44658dBA12264E.sol:94:17:
+   |
+94 |     function () {
+   |                 ^

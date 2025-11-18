@@ -1,0 +1,154 @@
+Extract contract euroteambet from /sb/0x1F36f2249eC89266Ad4EE4351538148aaEBc72e8.sol
+Extracted 1 contract(s) from /sb/0x1F36f2249eC89266Ad4EE4351538148aaEBc72e8.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/euroteambet.sol:27:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function euroteambet() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:106:5: Warning: Invoking events without "emit" prefix is deprecated.
+				BetFromTransaction(msg.sender, msg.value);
+				^---------------------------------------^
+contracts/euroteambet.sol:109:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				msg.sender.send(msg.value);
+				^------------------------^
+contracts/euroteambet.sol:113:4: Warning: Invoking events without "emit" prefix is deprecated.
+			CollectFromTransaction(msg.sender, msg.value);
+			^-------------------------------------------^
+contracts/euroteambet.sol:116:4: Warning: Invoking events without "emit" prefix is deprecated.
+			BetClosedNoWinningTeam(msg.sender, msg.value);
+			^-------------------------------------------^
+contracts/euroteambet.sol:118:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				msg.sender.send(msg.value);
+				^------------------------^
+contracts/euroteambet.sol:139:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				msg.sender.send(msg.value);
+				^------------------------^
+contracts/euroteambet.sol:163:4: Warning: Invoking events without "emit" prefix is deprecated.
+			BetOnATeam(msg.sender, id, amount);
+			^--------------------------------^
+contracts/euroteambet.sol:170:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				msg.sender.send(msg.value);
+				^------------------------^
+contracts/euroteambet.sol:184:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			msg.sender.send(msg.value);
+			^------------------------^
+contracts/euroteambet.sol:199:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			msg.sender.send(msg.value);
+			^------------------------^
+contracts/euroteambet.sol:203:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			msg.sender.send(earnings);
+			^-----------------------^
+contracts/euroteambet.sol:217:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			msg.sender.send(msg.value);
+			^------------------------^
+contracts/euroteambet.sol:221:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			toSend.send(earnings);
+			^-------------------^
+contracts/euroteambet.sol:232:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		msg.sender.send(msg.value);
+		^------------------------^
+contracts/euroteambet.sol:234:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			creator.send(feeCollected);
+			^------------------------^
+contracts/euroteambet.sol:27:2: Warning: No visibility specified. Defaulting to "public". 
+	function euroteambet() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:103:2: Warning: No visibility specified. Defaulting to "public". 
+	function () {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:105:8: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			if (msg.value >= 100 finney) {
+			    ^-------^
+contracts/euroteambet.sol:106:36: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				BetFromTransaction(msg.sender, msg.value);
+				                               ^-------^
+contracts/euroteambet.sol:107:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				betOnATeam((msg.value % 100 finney) / 1000000000000000);
+				            ^-------^
+contracts/euroteambet.sol:109:21: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				msg.sender.send(msg.value);
+				                ^-------^
+contracts/euroteambet.sol:113:39: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			CollectFromTransaction(msg.sender, msg.value);
+			                                   ^-------^
+contracts/euroteambet.sol:116:39: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			BetClosedNoWinningTeam(msg.sender, msg.value);
+			                                   ^-------^
+contracts/euroteambet.sol:117:7: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			if(msg.value > 0){
+			   ^-------^
+contracts/euroteambet.sol:118:21: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				msg.sender.send(msg.value);
+				                ^-------^
+contracts/euroteambet.sol:132:2: Warning: No visibility specified. Defaulting to "public". 
+	function setWinner(uint teamWinningID) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:138:7: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			if(msg.value > 0){
+			   ^-------^
+contracts/euroteambet.sol:139:21: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				msg.sender.send(msg.value);
+				                ^-------^
+contracts/euroteambet.sol:154:2: Warning: No visibility specified. Defaulting to "public". 
+	function betOnATeam(uint id) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:155:50: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if (startCompetitionTime >= block.timestamp && msg.value >= 100 finney && id >= 1 && id <= 24) {
+		                                               ^-------^
+contracts/euroteambet.sol:157:18: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			uint amount = msg.value;
+			              ^-------^
+contracts/euroteambet.sol:169:7: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			if(msg.value > 0){
+			   ^-------^
+contracts/euroteambet.sol:170:21: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				msg.sender.send(msg.value);
+				                ^-------^
+contracts/euroteambet.sol:182:2: Warning: No visibility specified. Defaulting to "public". 
+	function checkEarnings(address toCheck) returns (uint) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:183:6: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if(msg.value > 0){
+		   ^-------^
+contracts/euroteambet.sol:184:20: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			msg.sender.send(msg.value);
+			                ^-------^
+contracts/euroteambet.sol:197:2: Warning: No visibility specified. Defaulting to "public". 
+	function collectEarnings() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:198:6: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if(msg.value > 0){
+		   ^-------^
+contracts/euroteambet.sol:199:20: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			msg.sender.send(msg.value);
+			                ^-------^
+contracts/euroteambet.sol:215:2: Warning: No visibility specified. Defaulting to "public". 
+	function sendEarnings(address toSend) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:216:6: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if(msg.value > 0){
+		   ^-------^
+contracts/euroteambet.sol:217:20: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			msg.sender.send(msg.value);
+			                ^-------^
+contracts/euroteambet.sol:231:2: Warning: No visibility specified. Defaulting to "public". 
+	function collectFee() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/euroteambet.sol:232:19: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		msg.sender.send(msg.value);
+		                ^-------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz euroteambet
+** Write stats: 0.018669
+** Write stats: 5.09951
+** Write stats: 7.85504

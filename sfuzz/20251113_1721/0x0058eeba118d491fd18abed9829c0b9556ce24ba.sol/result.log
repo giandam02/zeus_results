@@ -1,0 +1,148 @@
+Extract contract GenTokenCoin from /sb/0x0058eeba118d491fd18abed9829c0b9556ce24ba.sol
+Extract contract SafeMath from /sb/0x0058eeba118d491fd18abed9829c0b9556ce24ba.sol
+Extracted 2 contract(s) from /sb/0x0058eeba118d491fd18abed9829c0b9556ce24ba.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SafeMath.sol:237:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GenTokenCoin() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:117:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() public constant returns (uint256 supply);
+    ^--------------------------------------------------------------^
+contracts/SafeMath.sol:121:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Purchase(_to, _amount, _rate);
+        ^---------------------------^
+contracts/SafeMath.sol:333:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0), _to, _tkv);
+        ^-----------------------------^
+contracts/SafeMath.sol:351:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Destroy(eth_black, totalRemaining_1);
+            ^----------------------------------^
+contracts/SafeMath.sol:363:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Destroy(eth_black, totalRemaining_2);
+            ^----------------------------------^
+contracts/SafeMath.sol:375:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Destroy(eth_black, totalRemaining_3);
+            ^----------------------------------^
+contracts/SafeMath.sol:435:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _amount);
+        ^--------------------------------^
+contracts/SafeMath.sol:467:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _amount);
+        ^---------------------------^
+contracts/SafeMath.sol:485:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+contracts/SafeMath.sol:511:32: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint256 etherBalance = this.balance;
+                               ^----------^
+contracts/SafeMath.sol:531:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+contracts/GenTokenCoin.sol:237:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GenTokenCoin() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GenTokenCoin.sol:117:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() public constant returns (uint256 supply);
+    ^--------------------------------------------------------------^
+contracts/GenTokenCoin.sol:121:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GenTokenCoin.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Purchase(_to, _amount, _rate);
+        ^---------------------------^
+contracts/GenTokenCoin.sol:333:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0), _to, _tkv);
+        ^-----------------------------^
+contracts/GenTokenCoin.sol:351:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Destroy(eth_black, totalRemaining_1);
+            ^----------------------------------^
+contracts/GenTokenCoin.sol:363:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Destroy(eth_black, totalRemaining_2);
+            ^----------------------------------^
+contracts/GenTokenCoin.sol:375:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Destroy(eth_black, totalRemaining_3);
+            ^----------------------------------^
+contracts/GenTokenCoin.sol:435:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _amount);
+        ^--------------------------------^
+contracts/GenTokenCoin.sol:467:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _amount);
+        ^---------------------------^
+contracts/GenTokenCoin.sol:485:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+contracts/GenTokenCoin.sol:511:32: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint256 etherBalance = this.balance;
+                               ^----------^
+contracts/GenTokenCoin.sol:531:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz SafeMath
+** Write stats: 0.002841
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0006
+** Write stats: 30.0001
+** Write stats: 35.0006
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0002
+** Write stats: 55.0002
+** Write stats: 60.0005
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0003
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120
+>> Fuzz GenTokenCoin
+** Write stats: 0.017738
+** Write stats: 5.00162
+** Write stats: 10.0026
+** Write stats: 15.0047
+** Write stats: 20.0046
+** Write stats: 25.0048
+** Write stats: 30.0064
+** Write stats: 35.0053
+** Write stats: 40.0084
+** Write stats: 45.0006
+** Write stats: 50.0045
+** Write stats: 55.0063
+** Write stats: 60.0075
+** Write stats: 65.0047
+** Write stats: 70.0023
+** Write stats: 75.0042
+** Write stats: 80.0009
+** Write stats: 85.0083
+** Write stats: 90.001
+** Write stats: 95.0062
+** Write stats: 100.006
+** Write stats: 105.011
+** Write stats: 110
+** Write stats: 115.006
+** Write stats: 120.01
+** Write stats: 120.043

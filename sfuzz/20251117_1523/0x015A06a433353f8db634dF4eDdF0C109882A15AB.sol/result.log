@@ -1,0 +1,84 @@
+Extract contract PixelMap from /sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol
+Extracted 1 contract(s) from /sb/0x015A06a433353f8db634dF4eDdF0C109882A15AB.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/PixelMap.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function PixelMap() {creator = msg.sender;}
+    ^-----------------------------------------^
+contracts/PixelMap.sol:26:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (location > 3969) {throw;}
+                              ^---^
+contracts/PixelMap.sol:32:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/PixelMap.sol:45:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/PixelMap.sol:50:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/PixelMap.sol:57:15: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else {throw;}
+              ^---^
+contracts/PixelMap.sol:62:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (tiles[location].owner != msg.sender) {throw;} // Pixel not owned by you!
+                                                  ^---^
+contracts/PixelMap.sol:55:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TileUpdated(location);
+            ^-------------------^
+contracts/PixelMap.sol:67:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TileUpdated(location);
+            ^-------------------^
+contracts/PixelMap.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function PixelMap() {creator = msg.sender;}
+    ^-----------------------------------------^
+contracts/PixelMap.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function getTile(uint location) returns (address, string, string, uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PixelMap.sol:25:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyTile(uint location) payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PixelMap.sol:61:5: Warning: No visibility specified. Defaulting to "public". 
+    function setTile(uint location, string image, string url, uint price) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PixelMap.sol:17:5: Warning: Function state mutability can be restricted to view
+    function getTile(uint location) returns (address, string, string, uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz PixelMap
+** Write stats: 0.009369
+** Write stats: 5.00018
+** Write stats: 10.0001
+** Write stats: 15.0003
+** Write stats: 20.0004
+** Write stats: 25.0006
+** Write stats: 30.0005
+** Write stats: 35.0003
+** Write stats: 40.0005
+** Write stats: 45.0003
+** Write stats: 50.0005
+** Write stats: 55.0482
+** Write stats: 60.0004
+** Write stats: 65.0002
+** Write stats: 70.0005
+** Write stats: 75.0029
+** Write stats: 80.0751
+** Write stats: 85.0006
+** Write stats: 90.0002
+** Write stats: 95.0005
+** Write stats: 100.002
+** Write stats: 105.04
+** Write stats: 110.001
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.039

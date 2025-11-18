@@ -1,0 +1,117 @@
+Extract contract EtherTopDog from /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol
+Extracted 1 contract(s) from /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/EtherTopDog.sol:89:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function EtherTopDog() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/EtherTopDog.sol:133:4: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+			Underdog thedog = Underdogs[payoutIndex + (linePosition - 1)];
+			^-------------^
+contracts/EtherTopDog.sol:168:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			msg.sender.send(msg.value);
+			^------------------------^
+contracts/EtherTopDog.sol:225:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			Underdogs[luckyDog].addr.send(luckydividend);
+			^------------------------------------------^
+contracts/EtherTopDog.sol:232:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		topDog.send(topdividend);
+		^----------------------^
+contracts/EtherTopDog.sol:264:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			Underdogs[payoutIndex].addr.send(Underdogs[payoutIndex].payout);
+			^-------------------------------------------------------------^
+contracts/EtherTopDog.sol:290:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		topDog.send(dogpayoff);
+		^--------------------^
+contracts/EtherTopDog.sol:295:3: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+		visionDog.send(visionFees);
+		^------------------------^
+contracts/EtherTopDog.sol:420:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			Underdogs[sptr].addr.send(scrapsize);
+			^----------------------------------^
+contracts/EtherTopDog.sol:440:16: Warning: "sha3" has been deprecated in favour of "keccak256"
+		return( uint(sha3(block.blockhash(block.number-1), block.timestamp + seedswitch) ) % max + 1 );
+		             ^-----------------------------------------------------------------^
+contracts/EtherTopDog.sol:440:16: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+		return( uint(sha3(block.blockhash(block.number-1), block.timestamp + seedswitch) ) % max + 1 );
+		             ^-----------------------------------------------------------------^
+contracts/EtherTopDog.sol:89:2: Warning: No visibility specified. Defaulting to "public". 
+	function EtherTopDog() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/EtherTopDog.sol:126:2: Warning: No visibility specified. Defaulting to "public". 
+	function underdogCount() constant returns (uint) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/EtherTopDog.sol:130:2: Warning: No visibility specified. Defaulting to "public". 
+	function underdogInfo(uint linePosition) constant returns (string name, address dogAddress, uint deposit, uint payout, uint scrapBonus) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/EtherTopDog.sol:149:2: Warning: No visibility specified. Defaulting to "public". 
+	function() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/EtherTopDog.sol:154:2: Warning: No visibility specified. Defaulting to "public". 
+	function setName(string DogName) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/EtherTopDog.sol:159:7: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if (msg.value > 0) {
+		    ^-------^
+contracts/EtherTopDog.sol:167:7: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		if (msg.value < 1 ether) {
+		    ^-------^
+contracts/EtherTopDog.sol:168:20: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			msg.sender.send(msg.value);
+			                ^-------^
+contracts/EtherTopDog.sol:179:8: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			if (msg.value >= topDogPrice) {
+			    ^-------^
+contracts/EtherTopDog.sol:181:28: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				buyTopDog(topDogPrice, msg.value - topDogPrice);
+				                       ^-------^
+contracts/EtherTopDog.sol:184:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+				addUnderDog(msg.value);
+				            ^-------^
+contracts/EtherTopDog.sol:195:22: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			bailoutBalance += msg.value;
+			                  ^-------^
+contracts/EtherTopDog.sol:196:21: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+			topDogMinPrice = msg.value * topDogMinMarkup / 100;
+			                 ^-------^
+contracts/EtherTopDog.sol:440:21: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+		return( uint(sha3(block.blockhash(block.number-1), block.timestamp + seedswitch) ) % max + 1 );
+		                  ^-------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz EtherTopDog
+** Write stats: 0.005452
+** Write stats: 5.00116
+** Write stats: 10.0012
+** Write stats: 15.007
+** Write stats: 20.0069
+** Write stats: 25.0046
+** Write stats: 30.0099
+** Write stats: 35.0045
+** Write stats: 40.0048
+** Write stats: 45.0075
+** Write stats: 50.0102
+** Write stats: 55.0119
+** Write stats: 60.0049
+** Write stats: 65.0002
+** Write stats: 70.0164
+** Write stats: 75.0081
+** Write stats: 80.0014
+** Write stats: 85.0067
+** Write stats: 90.0123
+** Write stats: 95.0071
+** Write stats: 100.009
+** Write stats: 105.009
+** Write stats: 110.002
+** Write stats: 115.017
+** Write stats: 120.002
+** Write stats: 120.007

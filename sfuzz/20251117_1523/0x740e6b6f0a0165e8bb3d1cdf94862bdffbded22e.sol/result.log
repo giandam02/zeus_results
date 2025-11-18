@@ -1,0 +1,375 @@
+Extract contract SwapToken from /sb/0x740e6b6f0a0165e8bb3d1cdf94862bdffbded22e.sol
+Extract contract owned from /sb/0x740e6b6f0a0165e8bb3d1cdf94862bdffbded22e.sol
+Extracted 2 contract(s) from /sb/0x740e6b6f0a0165e8bb3d1cdf94862bdffbded22e.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/owned.sol:5:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:10:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/owned.sol:50:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SwapToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:146:50: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[msg.sender] < _value) throw;           // Check if the sender has enough
+                                                 ^---^
+contracts/owned.sol:147:65: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[_to] + _value < balanceOfBuyer[_to]) throw; // Check for overflows
+                                                                ^---^
+contracts/owned.sol:155:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[msg.sender] < _value) throw;
+                                                  ^---^
+contracts/owned.sol:156:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[_to] + _value < balanceOfIssuer[_to]) throw;
+                                                                  ^---^
+contracts/owned.sol:208:44: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[this] < amount) throw;               // checks if it has enough to sell
+                                           ^---^
+contracts/owned.sol:217:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[this] < amount) throw;
+                                            ^---^
+contracts/owned.sol:232:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (creditStatus == false) throw;                       // checks if buyer is eligible for a claim
+                                   ^---^
+contracts/owned.sol:233:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                                  ^---^
+contracts/owned.sol:238:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to prevent recursion attacks
+            ^---^
+contracts/owned.sol:248:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[msg.sender] < amount ) throw;
+                                                   ^---^
+contracts/owned.sol:253:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/owned.sol:263:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!project_wallet.send(this.balance)) throw;
+                                                ^---^
+contracts/owned.sol:268:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+contracts/owned.sol:116:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/owned.sol:117:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/owned.sol:124:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/owned.sol:125:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/owned.sol:150:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/owned.sol:159:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+contracts/owned.sol:211:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+contracts/owned.sol:220:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);
+        ^--------------------------------^
+contracts/owned.sol:240:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);             // executes an event reflecting on the change
+            ^--------------------------------^
+contracts/owned.sol:255:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);
+            ^--------------------------------^
+contracts/owned.sol:263:34: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (!project_wallet.send(this.balance)) throw;
+                                 ^----------^
+contracts/owned.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:19:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+contracts/owned.sol:50:5: Warning: No visibility specified. Defaulting to "public". 
+    function SwapToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:58:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        uint _startBlock,
+        ^--------------^
+contracts/owned.sol:59:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        uint _endBlock
+        ^------------^
+contracts/owned.sol:106:5: Warning: No visibility specified. Defaulting to "public". 
+    function defineProjectWallet(address target) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:113:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintBuyerToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:121:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintIssuerToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyBuyerToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:137:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyIssuerToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:145:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferBuyer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:154:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferIssue(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:163:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:166:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+contracts/owned.sol:171:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:194:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newBuyPrice, uint256 newIssuePrice, uint256 coveragePerToken) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:204:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyBuyerTokens() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:215:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyIssuerTokens() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:224:5: Warning: No visibility specified. Defaulting to "public". 
+    function setCreditStatus(bool _status) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:231:5: Warning: No visibility specified. Defaulting to "public". 
+    function sellBuyerTokens(uint amount) returns (uint revenue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:247:5: Warning: No visibility specified. Defaulting to "public". 
+    function sellIssuerTokens(uint amount) returns (uint revenue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:261:5: Warning: No visibility specified. Defaulting to "public". 
+    function moveFunds() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:267:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:5:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:10:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/SwapToken.sol:50:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SwapToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:146:50: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[msg.sender] < _value) throw;           // Check if the sender has enough
+                                                 ^---^
+contracts/SwapToken.sol:147:65: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[_to] + _value < balanceOfBuyer[_to]) throw; // Check for overflows
+                                                                ^---^
+contracts/SwapToken.sol:155:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[msg.sender] < _value) throw;
+                                                  ^---^
+contracts/SwapToken.sol:156:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[_to] + _value < balanceOfIssuer[_to]) throw;
+                                                                  ^---^
+contracts/SwapToken.sol:208:44: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[this] < amount) throw;               // checks if it has enough to sell
+                                           ^---^
+contracts/SwapToken.sol:217:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[this] < amount) throw;
+                                            ^---^
+contracts/SwapToken.sol:232:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (creditStatus == false) throw;                       // checks if buyer is eligible for a claim
+                                   ^---^
+contracts/SwapToken.sol:233:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfBuyer[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                                  ^---^
+contracts/SwapToken.sol:238:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to prevent recursion attacks
+            ^---^
+contracts/SwapToken.sol:248:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOfIssuer[msg.sender] < amount ) throw;
+                                                   ^---^
+contracts/SwapToken.sol:253:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/SwapToken.sol:263:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!project_wallet.send(this.balance)) throw;
+                                                ^---^
+contracts/SwapToken.sol:268:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+contracts/SwapToken.sol:116:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/SwapToken.sol:117:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/SwapToken.sol:124:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/SwapToken.sol:125:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/SwapToken.sol:150:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/SwapToken.sol:159:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+contracts/SwapToken.sol:211:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+contracts/SwapToken.sol:220:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);
+        ^--------------------------------^
+contracts/SwapToken.sol:240:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);             // executes an event reflecting on the change
+            ^--------------------------------^
+contracts/SwapToken.sol:255:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);
+            ^--------------------------------^
+contracts/SwapToken.sol:263:34: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if (!project_wallet.send(this.balance)) throw;
+                                 ^----------^
+contracts/SwapToken.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:19:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+contracts/SwapToken.sol:50:5: Warning: No visibility specified. Defaulting to "public". 
+    function SwapToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:58:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        uint _startBlock,
+        ^--------------^
+contracts/SwapToken.sol:59:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        uint _endBlock
+        ^------------^
+contracts/SwapToken.sol:106:5: Warning: No visibility specified. Defaulting to "public". 
+    function defineProjectWallet(address target) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:113:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintBuyerToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:121:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintIssuerToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyBuyerToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:137:5: Warning: No visibility specified. Defaulting to "public". 
+    function distroyIssuerToken(uint256 burnAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:145:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferBuyer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:154:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferIssue(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:163:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:166:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+contracts/SwapToken.sol:171:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:194:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newBuyPrice, uint256 newIssuePrice, uint256 coveragePerToken) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:204:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyBuyerTokens() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:215:5: Warning: No visibility specified. Defaulting to "public". 
+    function buyIssuerTokens() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:224:5: Warning: No visibility specified. Defaulting to "public". 
+    function setCreditStatus(bool _status) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:231:5: Warning: No visibility specified. Defaulting to "public". 
+    function sellBuyerTokens(uint amount) returns (uint revenue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:247:5: Warning: No visibility specified. Defaulting to "public". 
+    function sellIssuerTokens(uint amount) returns (uint revenue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:261:5: Warning: No visibility specified. Defaulting to "public". 
+    function moveFunds() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SwapToken.sol:267:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz owned
+** Write stats: 0.002848
+** Write stats: 5.00014
+** Write stats: 10.0002
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0002
+** Write stats: 50.0001
+** Write stats: 55.0002
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0002
+** Write stats: 85.0003
+** Write stats: 90.0001
+** Write stats: 95.0104
+** Write stats: 100.022
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.009
+>> Fuzz SwapToken
+** Write stats: 0.054634
+** Write stats: 5.00409
+** Write stats: 10.0003
+** Write stats: 15.0014
+** Write stats: 20.0032
+** Write stats: 25.1245
+** Write stats: 30.0058
+** Write stats: 35.0002
+** Write stats: 40.0031
+** Write stats: 45.0031
+** Write stats: 50.0125
+** Write stats: 55.2667
+** Write stats: 60.0096
+** Write stats: 65.0081
+** Write stats: 70.0116
+** Write stats: 75.0063
+** Write stats: 80.009
+** Write stats: 85.0064
+** Write stats: 90.2365
+** Write stats: 95.0228
+** Write stats: 100.02
+** Write stats: 105
+** Write stats: 110.021
+** Write stats: 115.03
+** Write stats: 120.029
+** Write stats: 120.332

@@ -1,0 +1,71 @@
+Extract contract ApeBank from /sb/0x00000000454a11ca3a574738c0aab442b62d5d45.sol
+Extract contract TransferHelper from /sb/0x00000000454a11ca3a574738c0aab442b62d5d45.sol
+Extract contract Types from /sb/0x00000000454a11ca3a574738c0aab442b62d5d45.sol
+Extracted 3 contract(s) from /sb/0x00000000454a11ca3a574738c0aab442b62d5d45.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/Types.sol
+
+Warning: This contract has a payable fallback function, but no receive ether function. Consider adding a receive ether function.
+  --> contracts/Types.sol:37:1:
+   |
+37 | contract ApeBank {
+   | ^ (Relevant source part starts here and spans across multiple lines).
+Note: The payable fallback function is defined here.
+   --> contracts/Types.sol:197:5:
+    |
+197 |     fallback() external payable {}
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/TransferHelper.sol
+
+Warning: This contract has a payable fallback function, but no receive ether function. Consider adding a receive ether function.
+  --> contracts/TransferHelper.sol:37:1:
+   |
+37 | contract ApeBank {
+   | ^ (Relevant source part starts here and spans across multiple lines).
+Note: The payable fallback function is defined here.
+   --> contracts/TransferHelper.sol:197:5:
+    |
+197 |     fallback() external payable {}
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/ApeBank.sol
+
+Warning: This contract has a payable fallback function, but no receive ether function. Consider adding a receive ether function.
+  --> contracts/ApeBank.sol:37:1:
+   |
+37 | contract ApeBank {
+   | ^ (Relevant source part starts here and spans across multiple lines).
+Note: The payable fallback function is defined here.
+   --> contracts/ApeBank.sol:197:5:
+    |
+197 |     fallback() external payable {}
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.8.4+commit.c7e474f2.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/NormalAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.8.4+commit.c7e474f2.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/ReentrancyAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    25 Aborted                 (core dumped) ./fuzzer --file contracts/Types.sol.json --name Types --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 8:    26 Aborted                 (core dumped) ./fuzzer --file contracts/TransferHelper.sol.json --name TransferHelper --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 9:    27 Aborted                 (core dumped) ./fuzzer --file contracts/ApeBank.sol.json --name ApeBank --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

@@ -1,0 +1,19 @@
+Extract contract DogePorn from /sb/0x0058de04623950a3c2aa150b58e4fe65a3161487.sol
+Extract contract SafeMath from /sb/0x0058de04623950a3c2aa150b58e4fe65a3161487.sol
+Extracted 2 contract(s) from /sb/0x0058de04623950a3c2aa150b58e4fe65a3161487.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 6:    23 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    24 Aborted                 (core dumped) ./fuzzer --file contracts/DogePorn.sol.json --name DogePorn --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

@@ -1,0 +1,140 @@
+'solc --version' running
+'solc /sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Investment(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:35:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (closed) throw;
+                    ^---^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:36:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 1 ether) throw;
+                                 ^---^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:96:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if(!investors[investorIndex].send(value)) throw; 
+                                                      ^---^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:101:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if(!investors[investorIndex].send(val)) throw;
+                                                    ^---^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:42:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewInvestment(msg.sender, msg.value);
+        ^----------------------------------^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:77:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+             msg.sender.send(this.balance);
+                             ^----------^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:77:14: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+             msg.sender.send(this.balance);
+             ^---------------------------^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:86:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Returned(msg.value);
+        ^-----------------^
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function Investment(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:34:6: Warning: No visibility specified. Defaulting to "public". 
+     function invest() payable{
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:48:6: Warning: No visibility specified. Defaulting to "public". 
+     function() payable{
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:75:6: Warning: No visibility specified. Defaulting to "public". 
+     function withdraw(){
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:84:6: Warning: No visibility specified. Defaulting to "public". 
+     function returnInvestment() payable{
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:111:6: Warning: No visibility specified. Defaulting to "public". 
+     function getNumInvestors() constant returns(uint){
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:116:6: Warning: No visibility specified. Defaulting to "public". 
+     function close(){
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol:122:6: Warning: No visibility specified. Defaulting to "public". 
+     function open(){
+     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Investment (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#2-127) contract sets array length with a user-controlled value:
+	- investors.push(msg.sender) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#38)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Investment.calcReturnValue(uint256,uint256) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#57-70) performs a multiplication on the result of a division:
+	- value / 10 * rates[i] (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#67)
+Investment.calcReturnValue(uint256,uint256) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#57-70) performs a multiplication on the result of a division:
+	- (value - remainingVal) / 10 * rates[i] + calcReturnValue(remainingVal,limits[i + 1]) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#64)
+Investment.calcReturnValue(uint256,uint256) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#57-70) performs a multiplication on the result of a division:
+	- value / 10 * rates[limits.length - 1] (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Investment.calcReturnValue(uint256,uint256) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#57-70) contains a tautology or contradiction:
+	- i >= 0 (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+Investment.withdraw() (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#75-79) ignores return value by msg.sender.send(this.balance) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Deprecated standard detected THROW (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#35):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#36):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#96):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#101):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.7 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.7 (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in Investment.returnInvestment() (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#84-87):
+	External calls:
+	- returnInvestmentRecursive(msg.value) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#85)
+		- ! investors[investorIndex].send(value) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#96)
+		- ! investors[investorIndex].send(val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#101)
+	Event emitted after the call(s):
+	- Returned(msg.value) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#86)
+Reentrancy in Investment.returnInvestmentRecursive(uint256) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#92-109):
+	External calls:
+	- ! investors[investorIndex].send(val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#101)
+	State variables written after the call(s):
+	- investorIndex ++ (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#102)
+Reentrancy in Investment.returnInvestmentRecursive(uint256) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#92-109):
+	External calls:
+	- ! investors[investorIndex].send(val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#101)
+	- returnInvestmentRecursive(value - val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#103)
+		- ! investors[investorIndex].send(value) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#96)
+		- ! investors[investorIndex].send(val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#101)
+	State variables written after the call(s):
+	- returnInvestmentRecursive(value - val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#103)
+		- balances[investors[investorIndex]] -= value (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#95)
+		- balances[investors[investorIndex]] = 0 (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#100)
+	- returnInvestmentRecursive(value - val) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#103)
+		- investorIndex ++ (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#102)
+		- investorIndex ++ (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#106)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Investment.Investment() (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#24-28) uses literals with too many digits:
+	- limits = (0,1000000000000000000000,4000000000000000000000,10000000000000000000000) (../sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xabcdd0dbc5ba15804f5de963bd60491e48c3ef0b.sol analyzed (1 contracts with 100 detectors), 16 result(s) found

@@ -1,0 +1,726 @@
+Extract contract WelfareTokenFund from /sb/0x83b6ad8e37ab7a4f71da533a35271484270ec6c2.sol
+Extract contract mortal from /sb/0x83b6ad8e37ab7a4f71da533a35271484270ec6c2.sol
+Extract contract owned from /sb/0x83b6ad8e37ab7a4f71da533a35271484270ec6c2.sol
+Extract contract token from /sb/0x83b6ad8e37ab7a4f71da533a35271484270ec6c2.sol
+Extracted 4 contract(s) from /sb/0x83b6ad8e37ab7a4f71da533a35271484270ec6c2.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/WelfareTokenFund.sol:8:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/WelfareTokenFund.sol:17:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:22:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/WelfareTokenFund.sol:49:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:64:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/WelfareTokenFund.sol:65:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/WelfareTokenFund.sol:91:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/WelfareTokenFund.sol:92:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/WelfareTokenFund.sol:93:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/WelfareTokenFund.sol:103:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+contracts/WelfareTokenFund.sol:119:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:126:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/WelfareTokenFund.sol:127:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/WelfareTokenFund.sol:128:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[msg.sender]) throw;                // Check if frozen
+                                       ^---^
+contracts/WelfareTokenFund.sol:137:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[_from]) throw;                        // Check if frozen            
+                                  ^---^
+contracts/WelfareTokenFund.sol:138:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/WelfareTokenFund.sol:139:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/WelfareTokenFund.sol:140:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/WelfareTokenFund.sol:167:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+contracts/WelfareTokenFund.sol:174:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                             ^---^
+contracts/WelfareTokenFund.sol:178:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to avoid recursion attacks
+            ^---^
+contracts/WelfareTokenFund.sol:68:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/WelfareTokenFund.sol:97:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/WelfareTokenFund.sol:131:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/WelfareTokenFund.sol:144:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/WelfareTokenFund.sol:151:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/WelfareTokenFund.sol:152:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/WelfareTokenFund.sol:157:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FrozenFunds(target, freeze);
+        ^-------------------------^
+contracts/WelfareTokenFund.sol:170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+contracts/WelfareTokenFund.sol:180:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);            // executes an event reflecting on the change
+            ^--------------------------------^
+contracts/WelfareTokenFund.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/WelfareTokenFund.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() { if (msg.sender == owner) selfdestruct(owner); }
+    ^---------------------------------------------------------------^
+contracts/WelfareTokenFund.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:26:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:31:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+contracts/WelfareTokenFund.sol:49:5: Warning: No visibility specified. Defaulting to "public". 
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:72:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:75:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+contracts/WelfareTokenFund.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:119:5: Warning: No visibility specified. Defaulting to "public". 
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:125:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:148:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:155:5: Warning: No visibility specified. Defaulting to "public". 
+    function freezeAccount(address target, bool freeze) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:165:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WelfareTokenFund.sol:173:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:8:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/owned.sol:17:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:22:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/owned.sol:49:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:64:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/owned.sol:65:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/owned.sol:91:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/owned.sol:92:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/owned.sol:93:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/owned.sol:103:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+contracts/owned.sol:119:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:126:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/owned.sol:127:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/owned.sol:128:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[msg.sender]) throw;                // Check if frozen
+                                       ^---^
+contracts/owned.sol:137:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[_from]) throw;                        // Check if frozen            
+                                  ^---^
+contracts/owned.sol:138:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/owned.sol:139:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/owned.sol:140:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/owned.sol:167:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+contracts/owned.sol:174:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                             ^---^
+contracts/owned.sol:178:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to avoid recursion attacks
+            ^---^
+contracts/owned.sol:68:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/owned.sol:97:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/owned.sol:131:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/owned.sol:144:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/owned.sol:151:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/owned.sol:152:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/owned.sol:157:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FrozenFunds(target, freeze);
+        ^-------------------------^
+contracts/owned.sol:170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+contracts/owned.sol:180:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);            // executes an event reflecting on the change
+            ^--------------------------------^
+contracts/owned.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/owned.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() { if (msg.sender == owner) selfdestruct(owner); }
+    ^---------------------------------------------------------------^
+contracts/owned.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:26:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:31:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+contracts/owned.sol:49:5: Warning: No visibility specified. Defaulting to "public". 
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:72:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:75:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+contracts/owned.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:119:5: Warning: No visibility specified. Defaulting to "public". 
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:125:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:148:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:155:5: Warning: No visibility specified. Defaulting to "public". 
+    function freezeAccount(address target, bool freeze) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:165:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:173:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:8:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/token.sol:17:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:22:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/token.sol:49:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:64:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/token.sol:65:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/token.sol:91:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/token.sol:92:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/token.sol:93:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/token.sol:103:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+contracts/token.sol:119:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:126:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/token.sol:127:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/token.sol:128:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[msg.sender]) throw;                // Check if frozen
+                                       ^---^
+contracts/token.sol:137:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[_from]) throw;                        // Check if frozen            
+                                  ^---^
+contracts/token.sol:138:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/token.sol:139:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/token.sol:140:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/token.sol:167:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+contracts/token.sol:174:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                             ^---^
+contracts/token.sol:178:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to avoid recursion attacks
+            ^---^
+contracts/token.sol:68:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/token.sol:97:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/token.sol:131:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/token.sol:144:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/token.sol:151:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/token.sol:152:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/token.sol:157:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FrozenFunds(target, freeze);
+        ^-------------------------^
+contracts/token.sol:170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+contracts/token.sol:180:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);            // executes an event reflecting on the change
+            ^--------------------------------^
+contracts/token.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/token.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() { if (msg.sender == owner) selfdestruct(owner); }
+    ^---------------------------------------------------------------^
+contracts/token.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:26:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:31:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+contracts/token.sol:49:5: Warning: No visibility specified. Defaulting to "public". 
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:72:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:75:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+contracts/token.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:119:5: Warning: No visibility specified. Defaulting to "public". 
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:125:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:148:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:155:5: Warning: No visibility specified. Defaulting to "public". 
+    function freezeAccount(address target, bool freeze) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:165:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/token.sol:173:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:8:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/mortal.sol:17:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:22:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/mortal.sol:49:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:64:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/mortal.sol:65:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/mortal.sol:91:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/mortal.sol:92:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/mortal.sol:93:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/mortal.sol:103:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+contracts/mortal.sol:119:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:126:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+contracts/mortal.sol:127:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+contracts/mortal.sol:128:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[msg.sender]) throw;                // Check if frozen
+                                       ^---^
+contracts/mortal.sol:137:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[_from]) throw;                        // Check if frozen            
+                                  ^---^
+contracts/mortal.sol:138:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+contracts/mortal.sol:139:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+contracts/mortal.sol:140:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+contracts/mortal.sol:167:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+contracts/mortal.sol:174:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                             ^---^
+contracts/mortal.sol:178:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to avoid recursion attacks
+            ^---^
+contracts/mortal.sol:68:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/mortal.sol:97:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/mortal.sol:131:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+contracts/mortal.sol:144:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/mortal.sol:151:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+contracts/mortal.sol:152:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+contracts/mortal.sol:157:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FrozenFunds(target, freeze);
+        ^-------------------------^
+contracts/mortal.sol:170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+contracts/mortal.sol:180:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);            // executes an event reflecting on the change
+            ^--------------------------------^
+contracts/mortal.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function mortal() { owner = msg.sender; }
+    ^---------------------------------------^
+contracts/mortal.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() { if (msg.sender == owner) selfdestruct(owner); }
+    ^---------------------------------------------------------------^
+contracts/mortal.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:26:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:31:27: Warning: No visibility specified. Defaulting to "public". 
+contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }
+                          ^----------------------------------------------------------------------------------------^
+contracts/mortal.sol:49:5: Warning: No visibility specified. Defaulting to "public". 
+    function token(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:72:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:75:9: Warning: Unused local variable.
+        tokenRecipient spender = tokenRecipient(_spender);
+        ^--------------------^
+contracts/mortal.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:119:5: Warning: No visibility specified. Defaulting to "public". 
+    function WelfareTokenFund() token (1000000000, "Welfare Token Fund", 3, "WTF") {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:125:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:148:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintToken(address target, uint256 mintedAmount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:155:5: Warning: No visibility specified. Defaulting to "public". 
+    function freezeAccount(address target, bool freeze) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:165:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/mortal.sol:173:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz WelfareTokenFund
+** Write stats: 0.032616
+** Write stats: 5.00091
+** Write stats: 10.001
+** Write stats: 15.0035
+** Write stats: 20.0014
+** Write stats: 25.008
+** Write stats: 30.0097
+** Write stats: 35.0191
+** Write stats: 40.0126
+** Write stats: 45.0275
+** Write stats: 50.0261
+** Write stats: 55.0072
+** Write stats: 60.0086
+** Write stats: 65.0008
+** Write stats: 70.0095
+** Write stats: 75.0087
+** Write stats: 80.0028
+** Write stats: 85.0076
+** Write stats: 90.0093
+** Write stats: 95.0101
+** Write stats: 100.023
+** Write stats: 105.027
+** Write stats: 110.004
+** Write stats: 115.012
+** Write stats: 120.027
+** Write stats: 120.146
+>> Fuzz owned
+** Write stats: 0.003221
+** Write stats: 5.00022
+** Write stats: 10.0002
+** Write stats: 15.0002
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0002
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0864
+** Write stats: 50.0002
+** Write stats: 55.0002
+** Write stats: 60.0001
+** Write stats: 65.0172
+** Write stats: 70.0003
+** Write stats: 75.0002
+** Write stats: 80.0219
+** Write stats: 85.0146
+** Write stats: 90.0001
+** Write stats: 95.0004
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.002
+>> Fuzz token
+** Write stats: 0.02438
+** Write stats: 5.11565
+** Write stats: 10.0002
+** Write stats: 15.0028
+** Write stats: 20.0043
+** Write stats: 25.0058
+** Write stats: 30.005
+** Write stats: 35.0089
+** Write stats: 40.0027
+** Write stats: 45.0094
+** Write stats: 50.0087
+** Write stats: 55.0121
+** Write stats: 60.0124
+** Write stats: 65.0087
+** Write stats: 70.0105
+** Write stats: 75.005
+** Write stats: 80.0047
+** Write stats: 85.0034
+** Write stats: 90.0095
+** Write stats: 95.0102
+** Write stats: 100.013
+** Write stats: 105.007
+** Write stats: 110
+** Write stats: 115.002
+** Write stats: 120.003
+** Write stats: 120.021
+>> Fuzz mortal
+** Write stats: 0.002111
+** Write stats: 5.00022
+** Write stats: 10.0002
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0002
+** Write stats: 80.0003
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.001

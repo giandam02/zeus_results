@@ -1,0 +1,35 @@
+Extract contract Address from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+Extract contract LPTokenWrapper from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+Extract contract Math from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+Extract contract SafeERC20 from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+Extract contract SafeMath from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+Extract contract YearnRewards from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+Extracted 6 contract(s) from /sb/0x0001fb050fe7312791bf6475b96569d83f695c9f.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 10:    31 Aborted                 (core dumped) ./fuzzer --file contracts/SafeERC20.sol.json --name SafeERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    32 Aborted                 (core dumped) ./fuzzer --file contracts/Math.sol.json --name Math --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    33 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    34 Aborted                 (core dumped) ./fuzzer --file contracts/YearnRewards.sol.json --name YearnRewards --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 14:    35 Aborted                 (core dumped) ./fuzzer --file contracts/Address.sol.json --name Address --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 15:    36 Aborted                 (core dumped) ./fuzzer --file contracts/LPTokenWrapper.sol.json --name LPTokenWrapper --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

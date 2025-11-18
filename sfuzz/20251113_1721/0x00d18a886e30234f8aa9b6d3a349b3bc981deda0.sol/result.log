@@ -1,0 +1,676 @@
+Extract contract ERC20 from /sb/0x00d18a886e30234f8aa9b6d3a349b3bc981deda0.sol
+Extract contract PresalePool from /sb/0x00d18a886e30234f8aa9b6d3a349b3bc981deda0.sol
+Extract contract SafeMath from /sb/0x00d18a886e30234f8aa9b6d3a349b3bc981deda0.sol
+Extract contract WhiteList from /sb/0x00d18a886e30234f8aa9b6d3a349b3bc981deda0.sol
+Extracted 4 contract(s) from /sb/0x00d18a886e30234f8aa9b6d3a349b3bc981deda0.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ERC20.sol:291:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function PresalePool(address receiverAddr, uint[] capAmounts, uint fee) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20.sol:349:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/ERC20.sol:395:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/ERC20.sol:441:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[receiver];
+    ^---^
+contracts/ERC20.sol:449:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/ERC20.sol:601:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/ERC20.sol:717:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/ERC20.sol:741:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/ERC20.sol:745:7: Warning: Use of the "var" keyword is deprecated.
+      var level = whitelistContract.checkMemberLevel(addr);
+      ^-------^
+contracts/ERC20.sol:783:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/ERC20.sol:835:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/ERC20.sol:837:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/ERC20.sol:961:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];    
+    ^---^
+contracts/ERC20.sol:347:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= contributionCaps[0]);
+             ^----------^
+contracts/ERC20.sol:359:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributorBalanceChanged(msg.sender, newBalance);
+    ^-----------------------------------------------^
+contracts/ERC20.sol:377:5: Warning: Invoking events without "emit" prefix is deprecated.
+    EthRefundReceived(msg.sender, msg.value);
+    ^--------------------------------------^
+contracts/ERC20.sol:407:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(msg.sender, 0);
+      ^--------------------------------------^
+contracts/ERC20.sol:471:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EthRefunded(receiver,ethAmount);
+        ^-----------------------------^
+contracts/ERC20.sol:495:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensWithdrawn(receiver,tokenAmount);
+        ^-----------------------------------^
+contracts/ERC20.sol:581:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, 0);
+      ^--------------------------------^
+contracts/ERC20.sol:617:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, capAmount);
+      ^----------------------------------------^
+contracts/ERC20.sol:635:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= cap && contributionCaps[0] >= cap);
+             ^----------^
+contracts/ERC20.sol:695:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (amount >= this.balance);
+                       ^----------^
+contracts/ERC20.sol:765:43: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      remaining = contributionCaps[0].sub(this.balance);
+                                          ^----------^
+contracts/ERC20.sol:773:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return (contributionCaps[0],this.balance,remaining);
+                                ^----------^
+contracts/ERC20.sol:817:35: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                  ^----------^
+contracts/ERC20.sol:817:98: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                                                                                 ^----------^
+contracts/ERC20.sol:901:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ReceiverAddressSet(addr);
+    ^----------------------^
+contracts/ERC20.sol:923:63: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (contributionMin <= amountInWei && amountInWei <= this.balance);
+                                                              ^----------^
+contracts/ERC20.sol:925:20: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    finalBalance = this.balance;
+                   ^----------^
+contracts/ERC20.sol:929:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    ethRefundAmount.push(this.balance);
+                         ^----------^
+contracts/ERC20.sol:933:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PoolSubmitted(receiverAddress, amountInWei);
+    ^-----------------------------------------^
+contracts/ERC20.sol:989:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ERC223Received (from, value);
+    ^--------------------------^
+contracts/ERC20.sol:59:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/ERC20.sol:59:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                     ^------------^
+contracts/ERC20.sol:59:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                                                       ^-------------^
+contracts/ERC20.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/ERC20.sol:61:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                    ^---------^
+contracts/ERC20.sol:61:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                 ^------------^
+contracts/ERC20.sol:61:59: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                                          ^----------^
+contracts/ERC20.sol:71:31: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+   function checkMemberLevel (address addr) view public returns (uint) {}
+                              ^----------^
+contracts/ERC20.sol:927:58: Warning: "msg.gas" has been deprecated in favor of "gasleft()"
+    require (receiverAddress.call.value(amountInWei).gas(msg.gas.sub(5000))());
+                                                         ^-----^
+contracts/ERC20.sol:987:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function tokenFallback (address from, uint value, bytes data) public {
+                                                    ^--------^
+contracts/ERC20.sol:59:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/ERC20.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/ERC20.sol:71:4: Warning: Function state mutability can be restricted to pure
+   function checkMemberLevel (address addr) view public returns (uint) {}
+   ^--------------------------------------------------------------------^
+contracts/SafeMath.sol:291:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function PresalePool(address receiverAddr, uint[] capAmounts, uint fee) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:349:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/SafeMath.sol:395:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/SafeMath.sol:441:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[receiver];
+    ^---^
+contracts/SafeMath.sol:449:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/SafeMath.sol:601:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/SafeMath.sol:717:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/SafeMath.sol:741:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/SafeMath.sol:745:7: Warning: Use of the "var" keyword is deprecated.
+      var level = whitelistContract.checkMemberLevel(addr);
+      ^-------^
+contracts/SafeMath.sol:783:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/SafeMath.sol:835:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/SafeMath.sol:837:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/SafeMath.sol:961:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];    
+    ^---^
+contracts/SafeMath.sol:347:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= contributionCaps[0]);
+             ^----------^
+contracts/SafeMath.sol:359:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributorBalanceChanged(msg.sender, newBalance);
+    ^-----------------------------------------------^
+contracts/SafeMath.sol:377:5: Warning: Invoking events without "emit" prefix is deprecated.
+    EthRefundReceived(msg.sender, msg.value);
+    ^--------------------------------------^
+contracts/SafeMath.sol:407:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(msg.sender, 0);
+      ^--------------------------------------^
+contracts/SafeMath.sol:471:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EthRefunded(receiver,ethAmount);
+        ^-----------------------------^
+contracts/SafeMath.sol:495:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensWithdrawn(receiver,tokenAmount);
+        ^-----------------------------------^
+contracts/SafeMath.sol:581:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, 0);
+      ^--------------------------------^
+contracts/SafeMath.sol:617:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, capAmount);
+      ^----------------------------------------^
+contracts/SafeMath.sol:635:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= cap && contributionCaps[0] >= cap);
+             ^----------^
+contracts/SafeMath.sol:695:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (amount >= this.balance);
+                       ^----------^
+contracts/SafeMath.sol:765:43: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      remaining = contributionCaps[0].sub(this.balance);
+                                          ^----------^
+contracts/SafeMath.sol:773:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return (contributionCaps[0],this.balance,remaining);
+                                ^----------^
+contracts/SafeMath.sol:817:35: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                  ^----------^
+contracts/SafeMath.sol:817:98: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                                                                                 ^----------^
+contracts/SafeMath.sol:901:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ReceiverAddressSet(addr);
+    ^----------------------^
+contracts/SafeMath.sol:923:63: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (contributionMin <= amountInWei && amountInWei <= this.balance);
+                                                              ^----------^
+contracts/SafeMath.sol:925:20: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    finalBalance = this.balance;
+                   ^----------^
+contracts/SafeMath.sol:929:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    ethRefundAmount.push(this.balance);
+                         ^----------^
+contracts/SafeMath.sol:933:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PoolSubmitted(receiverAddress, amountInWei);
+    ^-----------------------------------------^
+contracts/SafeMath.sol:989:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ERC223Received (from, value);
+    ^--------------------------^
+contracts/SafeMath.sol:59:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/SafeMath.sol:59:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                     ^------------^
+contracts/SafeMath.sol:59:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                                                       ^-------------^
+contracts/SafeMath.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/SafeMath.sol:61:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                    ^---------^
+contracts/SafeMath.sol:61:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                 ^------------^
+contracts/SafeMath.sol:61:59: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                                          ^----------^
+contracts/SafeMath.sol:71:31: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+   function checkMemberLevel (address addr) view public returns (uint) {}
+                              ^----------^
+contracts/SafeMath.sol:927:58: Warning: "msg.gas" has been deprecated in favor of "gasleft()"
+    require (receiverAddress.call.value(amountInWei).gas(msg.gas.sub(5000))());
+                                                         ^-----^
+contracts/SafeMath.sol:987:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function tokenFallback (address from, uint value, bytes data) public {
+                                                    ^--------^
+contracts/SafeMath.sol:59:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/SafeMath.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/SafeMath.sol:71:4: Warning: Function state mutability can be restricted to pure
+   function checkMemberLevel (address addr) view public returns (uint) {}
+   ^--------------------------------------------------------------------^
+contracts/PresalePool.sol:291:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function PresalePool(address receiverAddr, uint[] capAmounts, uint fee) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PresalePool.sol:349:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/PresalePool.sol:395:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/PresalePool.sol:441:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[receiver];
+    ^---^
+contracts/PresalePool.sol:449:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/PresalePool.sol:601:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/PresalePool.sol:717:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/PresalePool.sol:741:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/PresalePool.sol:745:7: Warning: Use of the "var" keyword is deprecated.
+      var level = whitelistContract.checkMemberLevel(addr);
+      ^-------^
+contracts/PresalePool.sol:783:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/PresalePool.sol:835:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/PresalePool.sol:837:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/PresalePool.sol:961:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];    
+    ^---^
+contracts/PresalePool.sol:347:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= contributionCaps[0]);
+             ^----------^
+contracts/PresalePool.sol:359:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributorBalanceChanged(msg.sender, newBalance);
+    ^-----------------------------------------------^
+contracts/PresalePool.sol:377:5: Warning: Invoking events without "emit" prefix is deprecated.
+    EthRefundReceived(msg.sender, msg.value);
+    ^--------------------------------------^
+contracts/PresalePool.sol:407:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(msg.sender, 0);
+      ^--------------------------------------^
+contracts/PresalePool.sol:471:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EthRefunded(receiver,ethAmount);
+        ^-----------------------------^
+contracts/PresalePool.sol:495:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensWithdrawn(receiver,tokenAmount);
+        ^-----------------------------------^
+contracts/PresalePool.sol:581:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, 0);
+      ^--------------------------------^
+contracts/PresalePool.sol:617:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, capAmount);
+      ^----------------------------------------^
+contracts/PresalePool.sol:635:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= cap && contributionCaps[0] >= cap);
+             ^----------^
+contracts/PresalePool.sol:695:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (amount >= this.balance);
+                       ^----------^
+contracts/PresalePool.sol:765:43: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      remaining = contributionCaps[0].sub(this.balance);
+                                          ^----------^
+contracts/PresalePool.sol:773:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return (contributionCaps[0],this.balance,remaining);
+                                ^----------^
+contracts/PresalePool.sol:817:35: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                  ^----------^
+contracts/PresalePool.sol:817:98: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                                                                                 ^----------^
+contracts/PresalePool.sol:901:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ReceiverAddressSet(addr);
+    ^----------------------^
+contracts/PresalePool.sol:923:63: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (contributionMin <= amountInWei && amountInWei <= this.balance);
+                                                              ^----------^
+contracts/PresalePool.sol:925:20: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    finalBalance = this.balance;
+                   ^----------^
+contracts/PresalePool.sol:929:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    ethRefundAmount.push(this.balance);
+                         ^----------^
+contracts/PresalePool.sol:933:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PoolSubmitted(receiverAddress, amountInWei);
+    ^-----------------------------------------^
+contracts/PresalePool.sol:989:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ERC223Received (from, value);
+    ^--------------------------^
+contracts/PresalePool.sol:59:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/PresalePool.sol:59:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                     ^------------^
+contracts/PresalePool.sol:59:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                                                       ^-------------^
+contracts/PresalePool.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/PresalePool.sol:61:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                    ^---------^
+contracts/PresalePool.sol:61:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                 ^------------^
+contracts/PresalePool.sol:61:59: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                                          ^----------^
+contracts/PresalePool.sol:71:31: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+   function checkMemberLevel (address addr) view public returns (uint) {}
+                              ^----------^
+contracts/PresalePool.sol:927:58: Warning: "msg.gas" has been deprecated in favor of "gasleft()"
+    require (receiverAddress.call.value(amountInWei).gas(msg.gas.sub(5000))());
+                                                         ^-----^
+contracts/PresalePool.sol:987:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function tokenFallback (address from, uint value, bytes data) public {
+                                                    ^--------^
+contracts/PresalePool.sol:59:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/PresalePool.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/PresalePool.sol:71:4: Warning: Function state mutability can be restricted to pure
+   function checkMemberLevel (address addr) view public returns (uint) {}
+   ^--------------------------------------------------------------------^
+contracts/WhiteList.sol:291:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function PresalePool(address receiverAddr, uint[] capAmounts, uint fee) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WhiteList.sol:349:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/WhiteList.sol:395:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[msg.sender];
+    ^---^
+contracts/WhiteList.sol:441:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[receiver];
+    ^---^
+contracts/WhiteList.sol:449:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/WhiteList.sol:601:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/WhiteList.sol:717:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/WhiteList.sol:741:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/WhiteList.sol:745:7: Warning: Use of the "var" keyword is deprecated.
+      var level = whitelistContract.checkMemberLevel(addr);
+      ^-------^
+contracts/WhiteList.sol:783:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/WhiteList.sol:835:5: Warning: Use of the "var" keyword is deprecated.
+    var c = whitelist[addr];
+    ^---^
+contracts/WhiteList.sol:837:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];
+    ^---^
+contracts/WhiteList.sol:961:5: Warning: Use of the "var" keyword is deprecated.
+    var d = distributionMap[tokenAddr];    
+    ^---^
+contracts/WhiteList.sol:347:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= contributionCaps[0]);
+             ^----------^
+contracts/WhiteList.sol:359:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributorBalanceChanged(msg.sender, newBalance);
+    ^-----------------------------------------------^
+contracts/WhiteList.sol:377:5: Warning: Invoking events without "emit" prefix is deprecated.
+    EthRefundReceived(msg.sender, msg.value);
+    ^--------------------------------------^
+contracts/WhiteList.sol:407:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(msg.sender, 0);
+      ^--------------------------------------^
+contracts/WhiteList.sol:471:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EthRefunded(receiver,ethAmount);
+        ^-----------------------------^
+contracts/WhiteList.sol:495:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensWithdrawn(receiver,tokenAmount);
+        ^-----------------------------------^
+contracts/WhiteList.sol:581:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, 0);
+      ^--------------------------------^
+contracts/WhiteList.sol:617:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ContributorBalanceChanged(addr, capAmount);
+      ^----------------------------------------^
+contracts/WhiteList.sol:635:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (this.balance <= cap && contributionCaps[0] >= cap);
+             ^----------^
+contracts/WhiteList.sol:695:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (amount >= this.balance);
+                       ^----------^
+contracts/WhiteList.sol:765:43: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      remaining = contributionCaps[0].sub(this.balance);
+                                          ^----------^
+contracts/WhiteList.sol:773:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return (contributionCaps[0],this.balance,remaining);
+                                ^----------^
+contracts/WhiteList.sol:817:35: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                  ^----------^
+contracts/WhiteList.sol:817:98: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      if (contributionCaps[0].sub(this.balance) < remaining) remaining = contributionCaps[0].sub(this.balance);
+                                                                                                 ^----------^
+contracts/WhiteList.sol:901:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ReceiverAddressSet(addr);
+    ^----------------------^
+contracts/WhiteList.sol:923:63: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require (contributionMin <= amountInWei && amountInWei <= this.balance);
+                                                              ^----------^
+contracts/WhiteList.sol:925:20: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    finalBalance = this.balance;
+                   ^----------^
+contracts/WhiteList.sol:929:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    ethRefundAmount.push(this.balance);
+                         ^----------^
+contracts/WhiteList.sol:933:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PoolSubmitted(receiverAddress, amountInWei);
+    ^-----------------------------------------^
+contracts/WhiteList.sol:989:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ERC223Received (from, value);
+    ^--------------------------^
+contracts/WhiteList.sol:59:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/WhiteList.sol:59:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                     ^------------^
+contracts/WhiteList.sol:59:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+                                                       ^-------------^
+contracts/WhiteList.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/WhiteList.sol:61:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                    ^---------^
+contracts/WhiteList.sol:61:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                 ^------------^
+contracts/WhiteList.sol:61:59: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+                                                          ^----------^
+contracts/WhiteList.sol:71:31: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+   function checkMemberLevel (address addr) view public returns (uint) {}
+                              ^----------^
+contracts/WhiteList.sol:927:58: Warning: "msg.gas" has been deprecated in favor of "gasleft()"
+    require (receiverAddress.call.value(amountInWei).gas(msg.gas.sub(5000))());
+                                                         ^-----^
+contracts/WhiteList.sol:987:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function tokenFallback (address from, uint value, bytes data) public {
+                                                    ^--------^
+contracts/WhiteList.sol:59:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance) {}
+  ^----------------------------------------------------------------------^
+contracts/WhiteList.sol:61:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) returns (bool success) {}
+  ^----------------------------------------------------------------------^
+contracts/WhiteList.sol:71:4: Warning: Function state mutability can be restricted to pure
+   function checkMemberLevel (address addr) view public returns (uint) {}
+   ^--------------------------------------------------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz ERC20
+** Write stats: 0.00278
+** Write stats: 5.00008
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0097
+** Write stats: 30.0001
+** Write stats: 35.0105
+** Write stats: 40.0002
+** Write stats: 45.0003
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0002
+** Write stats: 70.0041
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.01
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100.013
+** Write stats: 105.005
+** Write stats: 110.018
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.01
+>> Fuzz SafeMath
+** Write stats: 0.001671
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0002
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.001
+>> Fuzz PresalePool
+** Write stats: 0.031992
+** Write stats: 5.00282
+** Write stats: 10.0264
+** Write stats: 15.0135
+** Write stats: 20.0126
+** Write stats: 25.0344
+** Write stats: 30.0034
+** Write stats: 35.0257
+** Write stats: 40.0865
+** Write stats: 45.0403
+** Write stats: 50.0197
+** Write stats: 55.0468
+** Write stats: 60.0424
+** Write stats: 65.0384
+** Write stats: 70.0063
+** Write stats: 75.0593
+** Write stats: 80.0632
+** Write stats: 85.0536
+** Write stats: 90.005
+** Write stats: 95.0144
+** Write stats: 100.046
+** Write stats: 105.056
+** Write stats: 110.078
+** Write stats: 115.047
+** Write stats: 120.168
+>> Fuzz WhiteList
+** Write stats: 0.00178
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.9066
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.9716
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 115.209
+** Write stats: 120
+** Write stats: 120.001

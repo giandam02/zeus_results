@@ -1,0 +1,114 @@
+Extract contract testingToken from /sb/0xbFb0Cfd13dbB56c2dbf69EAe33255f0EF1fC7955.sol
+Extracted 1 contract(s) from /sb/0xbFb0Cfd13dbB56c2dbf69EAe33255f0EF1fC7955.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/testingToken.sol:19:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function testingToken() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:74:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (!tradeActive[_from]) throw;
+	                             ^---^
+contracts/testingToken.sol:75:41: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (weiWantedOf[_from]!=msg.value) throw;
+	                                       ^---^
+contracts/testingToken.sol:76:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (balanceOf[_from]<tokensOfferedOf[_from]) throw;
+	                                                 ^---^
+contracts/testingToken.sol:77:57: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (!_from.send((msg.value*(100-ethTaxRate))/100)) throw;
+	                                                       ^---^
+contracts/testingToken.sol:88:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (msg.sender != bank) throw;
+		                        ^---^
+contracts/testingToken.sol:97:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (!msg.sender.send(_wei)) throw;
+		                            ^---^
+contracts/testingToken.sol:104:6: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    throw;
+	    ^---^
+contracts/testingToken.sol:39:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Transfer(msg.sender,_to,_value);
+		^-----------------------------^
+contracts/testingToken.sol:55:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Transfer(_from,_to,_value);
+		^------------------------^
+contracts/testingToken.sol:61:6: Warning: Invoking events without "emit" prefix is deprecated.
+	    Approval(msg.sender,_spender,_value);
+	    ^----------------------------------^
+contracts/testingToken.sol:82:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Transfer(_from,msg.sender,tokensOfferedOf[_from]);
+		^-----------------------------------------------^
+contracts/testingToken.sol:19:2: Warning: No visibility specified. Defaulting to "public". 
+	function testingToken() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:26:2: Warning: No visibility specified. Defaulting to "public". 
+	function balanceOf(address _owner) constant returns (uint256 balance) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:30:2: Warning: No visibility specified. Defaulting to "public". 
+	function transfer(address _to, uint256 _value) returns (bool success) { //give tokens to someone
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:44:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:59:2: Warning: No visibility specified. Defaulting to "public". 
+	function approve(address _spender, uint256 _value) returns (bool success) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:64:2: Warning: No visibility specified. Defaulting to "public". 
+	function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:68:2: Warning: No visibility specified. Defaulting to "public". 
+	function offerTrade(uint256 _weiWanted, uint256 _tokensOffered) { //offer the amt of ether you want and the amt of tokens youd give
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:73:2: Warning: No visibility specified. Defaulting to "public". 
+	function agreeToTrade(address _from) payable { //choose a trade to agree to and execute it
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:92:2: Warning: No visibility specified. Defaulting to "public". 
+	function setTaxes(uint256 _ethTaxRate, uint256 _tokenTaxRate) bankOnly { //the bank can change the tax rates
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:96:2: Warning: No visibility specified. Defaulting to "public". 
+	function extractWei(uint256 _wei) bankOnly { //withdraw money from the contract
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:99:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferOwnership(address _bank) bankOnly { //change owner
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/testingToken.sol:103:2: Warning: No visibility specified. Defaulting to "public". 
+	function () {
+ ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz testingToken
+** Write stats: 0.027857
+** Write stats: 5.00026
+** Write stats: 10.0037
+** Write stats: 15.0166
+** Write stats: 20.0251
+** Write stats: 25.007
+** Write stats: 30.0211
+** Write stats: 35.032
+** Write stats: 40.0176
+** Write stats: 45.0307
+** Write stats: 50.037
+** Write stats: 55.0277
+** Write stats: 60.0167
+** Write stats: 65.0393
+** Write stats: 70.0375
+** Write stats: 75.0067
+** Write stats: 80.0095
+** Write stats: 85.0373
+** Write stats: 90.0046
+** Write stats: 95.0153
+** Write stats: 100.038
+** Write stats: 105.025
+** Write stats: 110.005
+** Write stats: 115.037
+** Write stats: 120.037
+** Write stats: 120.088

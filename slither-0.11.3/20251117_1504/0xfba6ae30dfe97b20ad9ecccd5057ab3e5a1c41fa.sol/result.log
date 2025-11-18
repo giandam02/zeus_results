@@ -1,0 +1,82 @@
+'solc --version' running
+'solc /sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function NiceGuyTax() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:35:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:34:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value);
+            ^------------------------^
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:40:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        currentNiceGuy.send(1 ether);
+        ^--------------------------^
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:72:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        while (this.balance > 9 ether) {
+               ^----------^
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:73:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            investors[payoutIndex].addr.send(10 ether);
+            ^----------------------------------------^
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function NiceGuyTax() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:30:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:33:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value != 9 ether) {
+            ^-------^
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol:34:29: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            msg.sender.send(msg.value);
+                            ^-------^
+
+
+NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76) sends eth to arbitrary user
+	Dangerous calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#40)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76) ignores return value by msg.sender.send(msg.value) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#34)
+NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76) ignores return value by currentNiceGuy.send(1000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#40)
+NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76) ignores return value by investors[payoutIndex].addr.send(10000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#73)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76) has external calls inside a loop: investors[payoutIndex].addr.send(10000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#73)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76) has costly operations inside a loop:
+	- payoutIndex += 1 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#74)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#35):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76):
+	External calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#40)
+	State variables written after the call(s):
+	- currentNiceGuy = niceGuys[currentNiceGuyIndex].addr (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#57)
+	- currentNiceGuyIndex += 1 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#58)
+	- investorIndex += 1 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#64)
+	- investorIndex = 0 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#67)
+	- investors.length += 1 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#45)
+	- investors[index].addr = msg.sender (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#46)
+	- niceGuys.length += 1 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#52)
+	- niceGuys[niceGuyIndex].addr = msg.sender (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#53)
+Reentrancy in NiceGuyTax.fallback() (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#30-76):
+	External calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#40)
+	- investors[payoutIndex].addr.send(10000000000000000000) (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#73)
+	State variables written after the call(s):
+	- payoutIndex += 1 (../sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol#74)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xfba6ae30dfe97b20ad9ecccd5057ab3e5a1c41fa.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

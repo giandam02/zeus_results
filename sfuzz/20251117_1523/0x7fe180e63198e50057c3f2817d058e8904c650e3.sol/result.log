@@ -1,0 +1,69 @@
+Extract contract Conference from /sb/0x7fe180e63198e50057c3f2817d058e8904c650e3.sol
+Extracted 1 contract(s) from /sb/0x7fe180e63198e50057c3f2817d058e8904c650e3.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Conference.sol:13:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function Conference() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Conference.sol:21:4: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			throw; // throw ensures funds will be returned
+			^---^
+contracts/Conference.sol:25:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Deposit(msg.sender, msg.value);
+		^----------------------------^
+contracts/Conference.sol:39:5: Warning: Invoking events without "emit" prefix is deprecated.
+				Refund(recipient, amount);
+				^-----------------------^
+contracts/Conference.sol:49:4: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+			suicide(organizer);
+			^----------------^
+contracts/Conference.sol:13:2: Warning: No visibility specified. Defaulting to "public". 
+	function Conference() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Conference.sol:23:33: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		registrantsPaid[msg.sender] = msg.value;
+		                              ^-------^
+contracts/Conference.sol:25:23: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+		Deposit(msg.sender, msg.value);
+		                    ^-------^
+contracts/Conference.sol:47:2: Warning: No visibility specified. Defaulting to "public". 
+	function destroy() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Conference
+** Write stats: 0.005014
+** Write stats: 5.00014
+** Write stats: 10.0004
+** Write stats: 15.0002
+** Write stats: 20.011
+** Write stats: 25.0003
+** Write stats: 30.0002
+** Write stats: 35.0003
+** Write stats: 40.0004
+** Write stats: 45.0003
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0003
+** Write stats: 65.0002
+** Write stats: 70.0047
+** Write stats: 75.0004
+** Write stats: 80.0004
+** Write stats: 85.0113
+** Write stats: 90.0002
+** Write stats: 95.0002
+** Write stats: 100.021
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.01

@@ -1,0 +1,440 @@
+Extract contract Owned from /sb/0x9ae98746EB8a0aeEe5fF2b6B15875313a986f103.sol
+Extract contract ProofOfSMS from /sb/0x9ae98746EB8a0aeEe5fF2b6B15875313a986f103.sol
+Extract contract SimpleCertifier from /sb/0x9ae98746EB8a0aeEe5fF2b6B15875313a986f103.sol
+Extracted 3 contract(s) from /sb/0x9ae98746EB8a0aeEe5fF2b6B15875313a986f103.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SimpleCertifier.sol:88:4: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			throw;
+			^---^
+contracts/SimpleCertifier.sol:11:47: Warning: Invoking events without "emit" prefix is deprecated.
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	                                             ^-------------------^
+contracts/SimpleCertifier.sol:36:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Confirmed(_who);
+		^-------------^
+contracts/SimpleCertifier.sol:40:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Revoked(_who);
+		^-----------^
+contracts/SimpleCertifier.sol:65:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Requested(msg.sender);
+		^-------------------^
+contracts/SimpleCertifier.sol:70:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Puzzled(_who, _puzzle);
+		^--------------------^
+contracts/SimpleCertifier.sol:74:30: Warning: "sha3" has been deprecated in favour of "keccak256"
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/SimpleCertifier.sol:74:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/SimpleCertifier.sol:74:30: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/SimpleCertifier.sol:78:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Confirmed(msg.sender);
+		^-------------------^
+contracts/SimpleCertifier.sol:87:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+		if (!msg.sender.send(this.balance))
+		                     ^----------^
+contracts/SimpleCertifier.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	^---------------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:19:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool);
+	^-------------------------------------------------------^
+contracts/SimpleCertifier.sol:20:2: Warning: No visibility specified. Defaulting to "public". 
+	function get(address _who, string _field) constant returns (bytes32) {}
+	^---------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:20:15: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function get(address _who, string _field) constant returns (bytes32) {}
+	             ^----------^
+contracts/SimpleCertifier.sol:20:29: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function get(address _who, string _field) constant returns (bytes32) {}
+	                           ^-----------^
+contracts/SimpleCertifier.sol:21:2: Warning: No visibility specified. Defaulting to "public". 
+	function getAddress(address _who, string _field) constant returns (address) {}
+	^----------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:21:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getAddress(address _who, string _field) constant returns (address) {}
+	                    ^----------^
+contracts/SimpleCertifier.sol:21:36: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getAddress(address _who, string _field) constant returns (address) {}
+	                                  ^-----------^
+contracts/SimpleCertifier.sol:22:2: Warning: No visibility specified. Defaulting to "public". 
+	function getUint(address _who, string _field) constant returns (uint) {}
+	^----------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:22:19: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getUint(address _who, string _field) constant returns (uint) {}
+	                 ^----------^
+contracts/SimpleCertifier.sol:22:33: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getUint(address _who, string _field) constant returns (uint) {}
+	                               ^-----------^
+contracts/SimpleCertifier.sol:34:2: Warning: No visibility specified. Defaulting to "public". 
+	function certify(address _who) only_delegate {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:38:2: Warning: No visibility specified. Defaulting to "public". 
+	function revoke(address _who) only_delegate only_certified(_who) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:42:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool) { return certs[_who].active; }
+	^-------------------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:43:2: Warning: No visibility specified. Defaulting to "public". 
+	function get(address _who, string _field) constant returns (bytes32) { return certs[_who].meta[_field]; }
+	^-------------------------------------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:44:2: Warning: No visibility specified. Defaulting to "public". 
+	function getAddress(address _who, string _field) constant returns (address) { return address(certs[_who].meta[_field]); }
+	^-----------------------------------------------------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:45:2: Warning: No visibility specified. Defaulting to "public". 
+	function getUint(address _who, string _field) constant returns (uint) { return uint(certs[_who].meta[_field]); }
+	^--------------------------------------------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:46:2: Warning: No visibility specified. Defaulting to "public". 
+	function setDelegate(address _new) only_owner { delegate = _new; }
+	^----------------------------------------------------------------^
+contracts/SimpleCertifier.sol:62:2: Warning: No visibility specified. Defaulting to "public". 
+	function request() payable when_fee_paid {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:68:2: Warning: No visibility specified. Defaulting to "public". 
+	function puzzle(address _who, bytes32 _puzzle) only_delegate {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:73:2: Warning: No visibility specified. Defaulting to "public". 
+	function confirm(bytes32 _code) returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:82:2: Warning: No visibility specified. Defaulting to "public". 
+	function setFee(uint _new) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:86:2: Warning: No visibility specified. Defaulting to "public". 
+	function drain() only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:91:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SimpleCertifier.sol:20:2: Warning: Function state mutability can be restricted to pure
+	function get(address _who, string _field) constant returns (bytes32) {}
+	^---------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:21:2: Warning: Function state mutability can be restricted to pure
+	function getAddress(address _who, string _field) constant returns (address) {}
+	^----------------------------------------------------------------------------^
+contracts/SimpleCertifier.sol:22:2: Warning: Function state mutability can be restricted to pure
+	function getUint(address _who, string _field) constant returns (uint) {}
+	^----------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:88:4: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			throw;
+			^---^
+contracts/ProofOfSMS.sol:11:47: Warning: Invoking events without "emit" prefix is deprecated.
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	                                             ^-------------------^
+contracts/ProofOfSMS.sol:36:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Confirmed(_who);
+		^-------------^
+contracts/ProofOfSMS.sol:40:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Revoked(_who);
+		^-----------^
+contracts/ProofOfSMS.sol:65:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Requested(msg.sender);
+		^-------------------^
+contracts/ProofOfSMS.sol:70:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Puzzled(_who, _puzzle);
+		^--------------------^
+contracts/ProofOfSMS.sol:74:30: Warning: "sha3" has been deprecated in favour of "keccak256"
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/ProofOfSMS.sol:74:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/ProofOfSMS.sol:74:30: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/ProofOfSMS.sol:78:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Confirmed(msg.sender);
+		^-------------------^
+contracts/ProofOfSMS.sol:87:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+		if (!msg.sender.send(this.balance))
+		                     ^----------^
+contracts/ProofOfSMS.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	^---------------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:19:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool);
+	^-------------------------------------------------------^
+contracts/ProofOfSMS.sol:20:2: Warning: No visibility specified. Defaulting to "public". 
+	function get(address _who, string _field) constant returns (bytes32) {}
+	^---------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:20:15: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function get(address _who, string _field) constant returns (bytes32) {}
+	             ^----------^
+contracts/ProofOfSMS.sol:20:29: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function get(address _who, string _field) constant returns (bytes32) {}
+	                           ^-----------^
+contracts/ProofOfSMS.sol:21:2: Warning: No visibility specified. Defaulting to "public". 
+	function getAddress(address _who, string _field) constant returns (address) {}
+	^----------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:21:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getAddress(address _who, string _field) constant returns (address) {}
+	                    ^----------^
+contracts/ProofOfSMS.sol:21:36: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getAddress(address _who, string _field) constant returns (address) {}
+	                                  ^-----------^
+contracts/ProofOfSMS.sol:22:2: Warning: No visibility specified. Defaulting to "public". 
+	function getUint(address _who, string _field) constant returns (uint) {}
+	^----------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:22:19: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getUint(address _who, string _field) constant returns (uint) {}
+	                 ^----------^
+contracts/ProofOfSMS.sol:22:33: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getUint(address _who, string _field) constant returns (uint) {}
+	                               ^-----------^
+contracts/ProofOfSMS.sol:34:2: Warning: No visibility specified. Defaulting to "public". 
+	function certify(address _who) only_delegate {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:38:2: Warning: No visibility specified. Defaulting to "public". 
+	function revoke(address _who) only_delegate only_certified(_who) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:42:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool) { return certs[_who].active; }
+	^-------------------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:43:2: Warning: No visibility specified. Defaulting to "public". 
+	function get(address _who, string _field) constant returns (bytes32) { return certs[_who].meta[_field]; }
+	^-------------------------------------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:44:2: Warning: No visibility specified. Defaulting to "public". 
+	function getAddress(address _who, string _field) constant returns (address) { return address(certs[_who].meta[_field]); }
+	^-----------------------------------------------------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:45:2: Warning: No visibility specified. Defaulting to "public". 
+	function getUint(address _who, string _field) constant returns (uint) { return uint(certs[_who].meta[_field]); }
+	^--------------------------------------------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:46:2: Warning: No visibility specified. Defaulting to "public". 
+	function setDelegate(address _new) only_owner { delegate = _new; }
+	^----------------------------------------------------------------^
+contracts/ProofOfSMS.sol:62:2: Warning: No visibility specified. Defaulting to "public". 
+	function request() payable when_fee_paid {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:68:2: Warning: No visibility specified. Defaulting to "public". 
+	function puzzle(address _who, bytes32 _puzzle) only_delegate {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:73:2: Warning: No visibility specified. Defaulting to "public". 
+	function confirm(bytes32 _code) returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:82:2: Warning: No visibility specified. Defaulting to "public". 
+	function setFee(uint _new) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:86:2: Warning: No visibility specified. Defaulting to "public". 
+	function drain() only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:91:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ProofOfSMS.sol:20:2: Warning: Function state mutability can be restricted to pure
+	function get(address _who, string _field) constant returns (bytes32) {}
+	^---------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:21:2: Warning: Function state mutability can be restricted to pure
+	function getAddress(address _who, string _field) constant returns (address) {}
+	^----------------------------------------------------------------------------^
+contracts/ProofOfSMS.sol:22:2: Warning: Function state mutability can be restricted to pure
+	function getUint(address _who, string _field) constant returns (uint) {}
+	^----------------------------------------------------------------------^
+contracts/Owned.sol:88:4: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			throw;
+			^---^
+contracts/Owned.sol:11:47: Warning: Invoking events without "emit" prefix is deprecated.
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	                                             ^-------------------^
+contracts/Owned.sol:36:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Confirmed(_who);
+		^-------------^
+contracts/Owned.sol:40:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Revoked(_who);
+		^-----------^
+contracts/Owned.sol:65:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Requested(msg.sender);
+		^-------------------^
+contracts/Owned.sol:70:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Puzzled(_who, _puzzle);
+		^--------------------^
+contracts/Owned.sol:74:30: Warning: "sha3" has been deprecated in favour of "keccak256"
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/Owned.sol:74:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/Owned.sol:74:30: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+		if (puzzles[msg.sender] != sha3(_code))
+		                           ^---------^
+contracts/Owned.sol:78:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Confirmed(msg.sender);
+		^-------------------^
+contracts/Owned.sol:87:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+		if (!msg.sender.send(this.balance))
+		                     ^----------^
+contracts/Owned.sol:11:2: Warning: No visibility specified. Defaulting to "public". 
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	^---------------------------------------------------------------------------------^
+contracts/Owned.sol:19:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool);
+	^-------------------------------------------------------^
+contracts/Owned.sol:20:2: Warning: No visibility specified. Defaulting to "public". 
+	function get(address _who, string _field) constant returns (bytes32) {}
+	^---------------------------------------------------------------------^
+contracts/Owned.sol:20:15: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function get(address _who, string _field) constant returns (bytes32) {}
+	             ^----------^
+contracts/Owned.sol:20:29: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function get(address _who, string _field) constant returns (bytes32) {}
+	                           ^-----------^
+contracts/Owned.sol:21:2: Warning: No visibility specified. Defaulting to "public". 
+	function getAddress(address _who, string _field) constant returns (address) {}
+	^----------------------------------------------------------------------------^
+contracts/Owned.sol:21:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getAddress(address _who, string _field) constant returns (address) {}
+	                    ^----------^
+contracts/Owned.sol:21:36: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getAddress(address _who, string _field) constant returns (address) {}
+	                                  ^-----------^
+contracts/Owned.sol:22:2: Warning: No visibility specified. Defaulting to "public". 
+	function getUint(address _who, string _field) constant returns (uint) {}
+	^----------------------------------------------------------------------^
+contracts/Owned.sol:22:19: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getUint(address _who, string _field) constant returns (uint) {}
+	                 ^----------^
+contracts/Owned.sol:22:33: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+	function getUint(address _who, string _field) constant returns (uint) {}
+	                               ^-----------^
+contracts/Owned.sol:34:2: Warning: No visibility specified. Defaulting to "public". 
+	function certify(address _who) only_delegate {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:38:2: Warning: No visibility specified. Defaulting to "public". 
+	function revoke(address _who) only_delegate only_certified(_who) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:42:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool) { return certs[_who].active; }
+	^-------------------------------------------------------------------------------------^
+contracts/Owned.sol:43:2: Warning: No visibility specified. Defaulting to "public". 
+	function get(address _who, string _field) constant returns (bytes32) { return certs[_who].meta[_field]; }
+	^-------------------------------------------------------------------------------------------------------^
+contracts/Owned.sol:44:2: Warning: No visibility specified. Defaulting to "public". 
+	function getAddress(address _who, string _field) constant returns (address) { return address(certs[_who].meta[_field]); }
+	^-----------------------------------------------------------------------------------------------------------------------^
+contracts/Owned.sol:45:2: Warning: No visibility specified. Defaulting to "public". 
+	function getUint(address _who, string _field) constant returns (uint) { return uint(certs[_who].meta[_field]); }
+	^--------------------------------------------------------------------------------------------------------------^
+contracts/Owned.sol:46:2: Warning: No visibility specified. Defaulting to "public". 
+	function setDelegate(address _new) only_owner { delegate = _new; }
+	^----------------------------------------------------------------^
+contracts/Owned.sol:62:2: Warning: No visibility specified. Defaulting to "public". 
+	function request() payable when_fee_paid {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:68:2: Warning: No visibility specified. Defaulting to "public". 
+	function puzzle(address _who, bytes32 _puzzle) only_delegate {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:73:2: Warning: No visibility specified. Defaulting to "public". 
+	function confirm(bytes32 _code) returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:82:2: Warning: No visibility specified. Defaulting to "public". 
+	function setFee(uint _new) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:86:2: Warning: No visibility specified. Defaulting to "public". 
+	function drain() only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:91:2: Warning: No visibility specified. Defaulting to "public". 
+	function certified(address _who) constant returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:20:2: Warning: Function state mutability can be restricted to pure
+	function get(address _who, string _field) constant returns (bytes32) {}
+	^---------------------------------------------------------------------^
+contracts/Owned.sol:21:2: Warning: Function state mutability can be restricted to pure
+	function getAddress(address _who, string _field) constant returns (address) {}
+	^----------------------------------------------------------------------------^
+contracts/Owned.sol:22:2: Warning: Function state mutability can be restricted to pure
+	function getUint(address _who, string _field) constant returns (uint) {}
+	^----------------------------------------------------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz SimpleCertifier
+** Write stats: 0.006134
+** Write stats: 5.00446
+** Write stats: 10.0005
+** Write stats: 15.0016
+** Write stats: 20.0007
+** Write stats: 25.0016
+** Write stats: 30.0063
+** Write stats: 35.0005
+** Write stats: 40.0043
+** Write stats: 45.0018
+** Write stats: 50.0004
+** Write stats: 55.0053
+** Write stats: 60.0044
+** Write stats: 65.0024
+** Write stats: 70.0048
+** Write stats: 75.0023
+** Write stats: 80.0013
+** Write stats: 85.0036
+** Write stats: 90.0046
+** Write stats: 95.0002
+** Write stats: 100.001
+** Write stats: 105.009
+** Write stats: 110.006
+** Write stats: 115.003
+** Write stats: 120.007
+** Write stats: 120.034
+>> Fuzz ProofOfSMS
+** Write stats: 0.010265
+** Write stats: 5.00061
+** Write stats: 10.0009
+** Write stats: 15.0001
+** Write stats: 20.0057
+** Write stats: 25.0025
+** Write stats: 30.0106
+** Write stats: 35.0032
+** Write stats: 40.0043
+** Write stats: 45.0123
+** Write stats: 50.0032
+** Write stats: 55.0101
+** Write stats: 60.0116
+** Write stats: 65.0134
+** Write stats: 70.0091
+** Write stats: 75.0086
+** Write stats: 80.0005
+** Write stats: 85.016
+** Write stats: 90.0009
+** Write stats: 95.0165
+** Write stats: 100.006
+** Write stats: 105.013
+** Write stats: 110.015
+** Write stats: 115
+** Write stats: 120.01
+** Write stats: 120.043
+>> Fuzz Owned
+** Write stats: 0.003112
+** Write stats: 5.00007
+** Write stats: 10.0002
+** Write stats: 15.0001
+** Write stats: 20.0002
+** Write stats: 25.0001
+** Write stats: 30.0002
+** Write stats: 35.0002
+** Write stats: 40.0112
+** Write stats: 45.0002
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0002
+** Write stats: 75.0001
+** Write stats: 80.0005
+** Write stats: 85.0001
+** Write stats: 90.0002
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.014

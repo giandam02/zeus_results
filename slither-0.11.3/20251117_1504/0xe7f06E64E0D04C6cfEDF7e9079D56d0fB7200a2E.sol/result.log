@@ -1,0 +1,62 @@
+'solc --version' running
+'solc /sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol:
+/sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol:54:7: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+      depositors[index].EtherAddress.send(payment);                        //send pay out to investor
+      ^------------------------------------------^
+/sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol:31:3: Warning: No visibility specified. Defaulting to "public". 
+  function() { enter(); }
+  ^---------------------^
+/sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol:35:3: Warning: No visibility specified. Defaulting to "public". 
+  function enter() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol:36:9: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    if (msg.value > 2 ether) {
+        ^-------^
+/sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol:38:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    uint Amount=msg.value;								//set amount to how much the investor deposited
+                ^-------^
+
+
+MultiplyX10.enter() (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#35-64) ignores return value by depositors[index].EtherAddress.send(payment) (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+MultiplyX10.enter() (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#35-64) has external calls inside a loop: depositors[index].EtherAddress.send(payment) (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#54)
+	Calls stack containing the loop:
+		MultiplyX10.fallback()
+MultiplyX10.enter() (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#35-64) has external calls inside a loop: depositors[index].EtherAddress.send(payment) (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+MultiplyX10.enter() (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#35-64) has costly operations inside a loop:
+	- Balance -= depositors[index].Amount * Multiplier (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#55)
+MultiplyX10.enter() (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#35-64) has costly operations inside a loop:
+	- Total_Paid_Out += depositors[index].Amount * Multiplier (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#56)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable MultiplyX10.Total_Investors (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#22) is not in mixedCase
+Variable MultiplyX10.Balance (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#23) is not in mixedCase
+Variable MultiplyX10.Total_Deposited (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#24) is not in mixedCase
+Variable MultiplyX10.Total_Paid_Out (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#25) is not in mixedCase
+Variable MultiplyX10.Multiplier (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#26) is not in mixedCase
+Variable MultiplyX10.Message (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#27) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in MultiplyX10.enter() (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#35-64):
+	External calls:
+	- depositors[index].EtherAddress.send(payment) (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#54)
+	State variables written after the call(s):
+	- Balance -= depositors[index].Amount * Multiplier (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#55)
+	- Total_Paid_Out += depositors[index].Amount * Multiplier (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#56)
+	- depositors[index].Amount = 0 (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#57)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+MultiplyX10.Message (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#27) should be constant 
+MultiplyX10.Multiplier (../sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol#26) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xe7f06E64E0D04C6cfEDF7e9079D56d0fB7200a2E.sol analyzed (1 contracts with 100 detectors), 16 result(s) found

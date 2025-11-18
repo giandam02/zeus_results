@@ -1,0 +1,186 @@
+Extract contract PPBC_Ether_Claim from /sb/0xAA93338eF3B64A50Dcfb2EbA57A1eb4Ad59D955b.sol
+Extracted 1 contract(s) from /sb/0xAA93338eF3B64A50Dcfb2EbA57A1eb4Ad59D955b.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/PPBC_Ether_Claim.sol:23:6: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+     function PPBC_Ether_Claim(){
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:49:63: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+          if (redeemed[sha3(password)] || deposits_refunded ) throw; 
+                                                              ^---^
+contracts/PPBC_Ether_Claim.sol:63:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (deposits_refunded) throw; // already refunded
+                                   ^---^
+contracts/PPBC_Ether_Claim.sol:64:58: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                                         ^---^
+contracts/PPBC_Ether_Claim.sol:72:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    if (!receiver.send(50 ether)) throw; // refund deposit, or throw in case of any error
+                                                  ^---^
+contracts/PPBC_Ether_Claim.sol:77:18: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            else throw;
+                 ^---^
+contracts/PPBC_Ether_Claim.sol:84:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!deposits_refunded) throw; // first step 1 (refund_deposits) has to be called
+                                    ^---^
+contracts/PPBC_Ether_Claim.sol:85:58: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                                         ^---^
+contracts/PPBC_Ether_Claim.sol:95:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    if (!receiver.send(refund_amount)) throw; // refund deposit, or throw in case of any error
+                                                       ^---^
+contracts/PPBC_Ether_Claim.sol:46:59: Warning: "sha3" has been deprecated in favour of "keccak256"
+ ... sha3(password) ... 
+     ^------------^
+contracts/PPBC_Ether_Claim.sol:46:59: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... sha3(password) ... 
+     ^------------^
+contracts/PPBC_Ether_Claim.sol:46:59: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+ ... sha3(password) ... 
+     ^------------^
+contracts/PPBC_Ether_Claim.sol:49:24: Warning: "sha3" has been deprecated in favour of "keccak256"
+          if (redeemed[sha3(password)] || deposits_refunded ) throw; 
+                       ^------------^
+contracts/PPBC_Ether_Claim.sol:49:24: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+          if (redeemed[sha3(password)] || deposits_refunded ) throw; 
+                       ^------------^
+contracts/PPBC_Ether_Claim.sol:49:24: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+          if (redeemed[sha3(password)] || deposits_refunded ) throw; 
+                       ^------------^
+contracts/PPBC_Ether_Claim.sol:53:20: Warning: "sha3" has been deprecated in favour of "keccak256"
+          redeemed[sha3(password)] = true;
+                   ^------------^
+contracts/PPBC_Ether_Claim.sol:53:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+          redeemed[sha3(password)] = true;
+                   ^------------^
+contracts/PPBC_Ether_Claim.sol:53:20: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+          redeemed[sha3(password)] = true;
+                   ^------------^
+contracts/PPBC_Ether_Claim.sol:54:23: Warning: "sha3" has been deprecated in favour of "keccak256"
+          who_claimed[sha3(password)] = msg.sender;
+                      ^------------^
+contracts/PPBC_Ether_Claim.sol:54:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+          who_claimed[sha3(password)] = msg.sender;
+                      ^------------^
+contracts/PPBC_Ether_Claim.sol:54:23: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+          who_claimed[sha3(password)] = msg.sender;
+                      ^------------^
+contracts/PPBC_Ether_Claim.sol:55:30: Warning: "sha3" has been deprecated in favour of "keccak256"
+          valid_voucher_code[sha3(password)] += 50 ether;  // add the deposit paid to the claim
+                             ^------------^
+contracts/PPBC_Ether_Claim.sol:55:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+          valid_voucher_code[sha3(password)] += 50 ether;  // add the deposit paid to the claim
+                             ^------------^
+contracts/PPBC_Ether_Claim.sol:55:30: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+          valid_voucher_code[sha3(password)] += 50 ether;  // add the deposit paid to the claim
+                             ^------------^
+contracts/PPBC_Ether_Claim.sol:56:35: Warning: "sha3" has been deprecated in favour of "keccak256"
+          claimers[num_claimed] = sha3(password);    
+                                  ^------------^
+contracts/PPBC_Ether_Claim.sol:56:35: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+          claimers[num_claimed] = sha3(password);    
+                                  ^------------^
+contracts/PPBC_Ether_Claim.sol:56:35: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+          claimers[num_claimed] = sha3(password);    
+                                  ^------------^
+contracts/PPBC_Ether_Claim.sol:64:36: Warning: "sha3" has been deprecated in favour of "keccak256"
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                   ^------------^
+contracts/PPBC_Ether_Claim.sol:64:36: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                   ^------------^
+contracts/PPBC_Ether_Claim.sol:64:36: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                   ^------------^
+contracts/PPBC_Ether_Claim.sol:85:36: Warning: "sha3" has been deprecated in favour of "keccak256"
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                   ^------------^
+contracts/PPBC_Ether_Claim.sol:85:36: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                   ^------------^
+contracts/PPBC_Ether_Claim.sol:85:36: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+            if (valid_voucher_code[sha3(password)] == 0) throw; 
+                                   ^------------^
+contracts/PPBC_Ether_Claim.sol:94:21: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+                if (this.balance >= refund_amount){
+                    ^----------^
+contracts/PPBC_Ether_Claim.sol:111:33: Warning: "sha3" has been deprecated in favour of "keccak256"
+         if (valid_voucher_code[sha3(password)] == 0) 
+                                ^------------^
+contracts/PPBC_Ether_Claim.sol:111:33: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+         if (valid_voucher_code[sha3(password)] == 0) 
+                                ^------------^
+contracts/PPBC_Ether_Claim.sol:111:33: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+         if (valid_voucher_code[sha3(password)] == 0) 
+                                ^------------^
+contracts/PPBC_Ether_Claim.sol:113:26: Warning: "sha3" has been deprecated in favour of "keccak256"
+         return redeemed[sha3(password)];
+                         ^------------^
+contracts/PPBC_Ether_Claim.sol:113:26: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+         return redeemed[sha3(password)];
+                         ^------------^
+contracts/PPBC_Ether_Claim.sol:113:26: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+         return redeemed[sha3(password)];
+                         ^------------^
+contracts/PPBC_Ether_Claim.sol:23:6: Warning: No visibility specified. Defaulting to "public". 
+     function PPBC_Ether_Claim(){
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:44:6: Warning: No visibility specified. Defaulting to "public". 
+     function register_claim(string password) payable {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:62:6: Warning: No visibility specified. Defaulting to "public". 
+     function refund_deposits(string password){ //anyone with a code can call this
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:83:6: Warning: No visibility specified. Defaulting to "public". 
+     function refund_claims(string password){ //anyone with a code can call this
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:105:6: Warning: No visibility specified. Defaulting to "public". 
+     function end_redeem_period(){ 
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:110:6: Warning: No visibility specified. Defaulting to "public". 
+     function check_redeemed(string password) returns (bool){
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/PPBC_Ether_Claim.sol:116:6: Warning: No visibility specified. Defaulting to "public". 
+     function () payable {} // fill claim pool
+     ^--------------------^
+contracts/PPBC_Ether_Claim.sol:110:6: Warning: Function state mutability can be restricted to view
+     function check_redeemed(string password) returns (bool){
+     ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz PPBC_Ether_Claim
+** Write stats: 0.009272
+** Write stats: 5.00106
+** Write stats: 10.0005
+** Write stats: 15.0001
+** Write stats: 20.001
+** Write stats: 25.0002
+** Write stats: 30.0239
+** Write stats: 35.0459
+** Write stats: 40.0537
+** Write stats: 45.0007
+** Write stats: 50.0001
+** Write stats: 55.0269
+** Write stats: 60.0007
+** Write stats: 65.0004
+** Write stats: 70.0014
+** Write stats: 75.0004
+** Write stats: 80.0002
+** Write stats: 85.0112
+** Write stats: 90.0016
+** Write stats: 95.0003
+** Write stats: 100.001
+** Write stats: 105.001
+** Write stats: 110.588
+** Write stats: 115.001
+** Write stats: 120.001
+** Write stats: 120.061

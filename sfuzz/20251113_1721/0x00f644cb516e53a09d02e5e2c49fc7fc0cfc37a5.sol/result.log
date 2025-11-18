@@ -1,0 +1,113 @@
+Extract contract ERC20 from /sb/0x00f644cb516e53a09d02e5e2c49fc7fc0cfc37a5.sol
+Extract contract SafeMath from /sb/0x00f644cb516e53a09d02e5e2c49fc7fc0cfc37a5.sol
+Extracted 2 contract(s) from /sb/0x00f644cb516e53a09d02e5e2c49fc7fc0cfc37a5.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+Warning: This declaration shadows an existing declaration.
+   --> contracts/ERC20.sol:223:15:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |               ^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/ERC20.sol:247:3:
+    |
+247 |   function name() public view returns(string memory) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/ERC20.sol:223:35:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |                                   ^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/ERC20.sol:261:3:
+    |
+261 |   function symbol() public view returns(string memory) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/ERC20.sol:223:57:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |                                                         ^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/ERC20.sol:275:3:
+    |
+275 |   function decimals() public view returns(uint8) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/ERC20.sol:223:74:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |                                                                          ^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/ERC20.sol:289:3:
+    |
+289 |   function totalSupply() public view override(IERC20) returns (uint256) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/SafeMath.sol:223:15:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |               ^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/SafeMath.sol:247:3:
+    |
+247 |   function name() public view returns(string memory) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/SafeMath.sol:223:35:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |                                   ^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/SafeMath.sol:261:3:
+    |
+261 |   function symbol() public view returns(string memory) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/SafeMath.sol:223:57:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |                                                         ^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/SafeMath.sol:275:3:
+    |
+275 |   function decimals() public view returns(uint8) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+   --> contracts/SafeMath.sol:223:74:
+    |
+223 |   constructor(string memory name, string memory symbol, uint8  decimals, uint256  totalSupply) {
+    |                                                                          ^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> contracts/SafeMath.sol:289:3:
+    |
+289 |   function totalSupply() public view override(IERC20) returns (uint256) {
+    |   ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: Source file requires different compiler version (current compiler is 0.7.6+commit.7338295f.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/NormalAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.7.6+commit.7338295f.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/ReentrancyAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 6:    23 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20.sol.json --name ERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    24 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

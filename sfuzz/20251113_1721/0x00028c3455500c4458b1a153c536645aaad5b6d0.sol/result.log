@@ -1,0 +1,393 @@
+Extract contract Forwarder from /sb/0x00028c3455500c4458b1a153c536645aaad5b6d0.sol
+Extract contract WalletSimple from /sb/0x00028c3455500c4458b1a153c536645aaad5b6d0.sol
+Extracted 2 contract(s) from /sb/0x00028c3455500c4458b1a153c536645aaad5b6d0.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Forwarder.sol:59:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Forwarder() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:77:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:97:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:119:5: Warning: Use of the "var" keyword is deprecated.
+    var forwarderAddress = address(this);
+    ^------------------^
+contracts/Forwarder.sol:121:5: Warning: Use of the "var" keyword is deprecated.
+    var forwarderBalance = instance.balanceOf(forwarderAddress);
+    ^------------------^
+contracts/Forwarder.sol:131:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:153:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:237:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:263:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function WalletSimple(address[] allowedSigners) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:269:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:343:5: Warning: Use of the "var" keyword is deprecated.
+    var operationHash = sha3("ETHER", toAddress, value, data, expireTime, sequenceId);
+    ^---------------^
+contracts/Forwarder.sol:347:5: Warning: Use of the "var" keyword is deprecated.
+    var otherSigner = verifyMultiSig(toAddress, operationHash, signature, expireTime, sequenceId);
+    ^-------------^
+contracts/Forwarder.sol:357:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:395:5: Warning: Use of the "var" keyword is deprecated.
+    var operationHash = sha3("ERC20", toAddress, value, tokenContractAddress, expireTime, sequenceId);
+    ^---------------^
+contracts/Forwarder.sol:399:5: Warning: Use of the "var" keyword is deprecated.
+    var otherSigner = verifyMultiSig(toAddress, operationHash, signature, expireTime, sequenceId);
+    ^-------------^
+contracts/Forwarder.sol:407:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+contracts/Forwarder.sol:463:5: Warning: Use of the "var" keyword is deprecated.
+    var otherSigner = recoverAddressFromSignature(operationHash, signature);
+    ^-------------^
+contracts/Forwarder.sol:473:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:483:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:499:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:507:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:581:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:639:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+contracts/Forwarder.sol:657:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:667:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/Forwarder.sol:101:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ForwarderDeposited(msg.sender, msg.value, msg.data);
+    ^-------------------------------------------------^
+contracts/Forwarder.sol:135:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokensFlushed(tokenContractAddress, forwarderBalance);
+    ^---------------------------------------------------^
+contracts/Forwarder.sol:151:35: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    if (!parentAddress.call.value(this.balance)())
+                                  ^----------^
+contracts/Forwarder.sol:291:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Deposited(msg.sender, msg.value, msg.data);
+      ^----------------------------------------^
+contracts/Forwarder.sol:343:25: Warning: "sha3" has been deprecated in favour of "keccak256"
+    var operationHash = sha3("ETHER", toAddress, value, data, expireTime, sequenceId);
+                        ^-----------------------------------------------------------^
+contracts/Forwarder.sol:343:25: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    var operationHash = sha3("ETHER", toAddress, value, data, expireTime, sequenceId);
+                        ^-----------------------------------------------------------^
+contracts/Forwarder.sol:361:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transacted(msg.sender, otherSigner, operationHash, toAddress, value, data);
+    ^------------------------------------------------------------------------^
+contracts/Forwarder.sol:395:25: Warning: "sha3" has been deprecated in favour of "keccak256"
+    var operationHash = sha3("ERC20", toAddress, value, tokenContractAddress, expireTime, sequenceId);
+                        ^---------------------------------------------------------------------------^
+contracts/Forwarder.sol:395:25: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    var operationHash = sha3("ERC20", toAddress, value, tokenContractAddress, expireTime, sequenceId);
+                        ^---------------------------------------------------------------------------^
+contracts/Forwarder.sol:411:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenTransacted(msg.sender, otherSigner, operationHash, toAddress, value, tokenContractAddress);
+    ^---------------------------------------------------------------------------------------------^
+contracts/Forwarder.sol:529:5: Warning: Invoking events without "emit" prefix is deprecated.
+    SafeModeActivated(msg.sender);
+    ^---------------------------^
+contracts/Forwarder.sol:17:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) returns (bool success);
+  ^--------------------------------------------------------------------^
+contracts/Forwarder.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance);
+  ^--------------------------------------------------------------------^
+contracts/Forwarder.sol:59:3: Warning: No visibility specified. Defaulting to "public". 
+  function Forwarder() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:93:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function flushTokens(address tokenContractAddress) onlyParent {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:149:3: Warning: No visibility specified. Defaulting to "public". 
+  function flush() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:263:3: Warning: No visibility specified. Defaulting to "public". 
+  function WalletSimple(address[] allowedSigners) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:285:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:307:3: Warning: No visibility specified. Defaulting to "public". 
+  function createForwarder() onlysigner returns (address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:339:3: Warning: No visibility specified. Defaulting to "public". 
+  function sendMultiSig(address toAddress, uint value, bytes data, uint expireTime, uint sequenceId, bytes signature) onlysigner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:391:3: Warning: No visibility specified. Defaulting to "public". 
+  function sendMultiSigToken(address toAddress, uint value, address tokenContractAddress, uint expireTime, uint sequenceId, bytes signature) onlysigner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:429:3: Warning: No visibility specified. Defaulting to "public". 
+  function flushForwarderTokens(address forwarderAddress, address tokenContractAddress) onlysigner {    
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:525:3: Warning: No visibility specified. Defaulting to "public". 
+  function activateSafeMode() onlysigner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:545:3: Warning: No visibility specified. Defaulting to "public". 
+  function isSigner(address signer) returns (bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:685:3: Warning: No visibility specified. Defaulting to "public". 
+  function getNextSequenceId() returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:545:3: Warning: Function state mutability can be restricted to view
+  function isSigner(address signer) returns (bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:577:3: Warning: Function state mutability can be restricted to pure
+  function recoverAddressFromSignature(bytes32 operationHash, bytes signature) private returns (address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Forwarder.sol:685:3: Warning: Function state mutability can be restricted to view
+  function getNextSequenceId() returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:59:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Forwarder() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:77:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:97:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:119:5: Warning: Use of the "var" keyword is deprecated.
+    var forwarderAddress = address(this);
+    ^------------------^
+contracts/WalletSimple.sol:121:5: Warning: Use of the "var" keyword is deprecated.
+    var forwarderBalance = instance.balanceOf(forwarderAddress);
+    ^------------------^
+contracts/WalletSimple.sol:131:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:153:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:237:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:263:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function WalletSimple(address[] allowedSigners) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:269:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:343:5: Warning: Use of the "var" keyword is deprecated.
+    var operationHash = sha3("ETHER", toAddress, value, data, expireTime, sequenceId);
+    ^---------------^
+contracts/WalletSimple.sol:347:5: Warning: Use of the "var" keyword is deprecated.
+    var otherSigner = verifyMultiSig(toAddress, operationHash, signature, expireTime, sequenceId);
+    ^-------------^
+contracts/WalletSimple.sol:357:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:395:5: Warning: Use of the "var" keyword is deprecated.
+    var operationHash = sha3("ERC20", toAddress, value, tokenContractAddress, expireTime, sequenceId);
+    ^---------------^
+contracts/WalletSimple.sol:399:5: Warning: Use of the "var" keyword is deprecated.
+    var otherSigner = verifyMultiSig(toAddress, operationHash, signature, expireTime, sequenceId);
+    ^-------------^
+contracts/WalletSimple.sol:407:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+contracts/WalletSimple.sol:463:5: Warning: Use of the "var" keyword is deprecated.
+    var otherSigner = recoverAddressFromSignature(operationHash, signature);
+    ^-------------^
+contracts/WalletSimple.sol:473:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:483:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:499:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:507:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:581:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:639:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+contracts/WalletSimple.sol:657:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:667:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+contracts/WalletSimple.sol:101:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ForwarderDeposited(msg.sender, msg.value, msg.data);
+    ^-------------------------------------------------^
+contracts/WalletSimple.sol:135:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokensFlushed(tokenContractAddress, forwarderBalance);
+    ^---------------------------------------------------^
+contracts/WalletSimple.sol:151:35: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    if (!parentAddress.call.value(this.balance)())
+                                  ^----------^
+contracts/WalletSimple.sol:291:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Deposited(msg.sender, msg.value, msg.data);
+      ^----------------------------------------^
+contracts/WalletSimple.sol:343:25: Warning: "sha3" has been deprecated in favour of "keccak256"
+    var operationHash = sha3("ETHER", toAddress, value, data, expireTime, sequenceId);
+                        ^-----------------------------------------------------------^
+contracts/WalletSimple.sol:343:25: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    var operationHash = sha3("ETHER", toAddress, value, data, expireTime, sequenceId);
+                        ^-----------------------------------------------------------^
+contracts/WalletSimple.sol:361:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transacted(msg.sender, otherSigner, operationHash, toAddress, value, data);
+    ^------------------------------------------------------------------------^
+contracts/WalletSimple.sol:395:25: Warning: "sha3" has been deprecated in favour of "keccak256"
+    var operationHash = sha3("ERC20", toAddress, value, tokenContractAddress, expireTime, sequenceId);
+                        ^---------------------------------------------------------------------------^
+contracts/WalletSimple.sol:395:25: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    var operationHash = sha3("ERC20", toAddress, value, tokenContractAddress, expireTime, sequenceId);
+                        ^---------------------------------------------------------------------------^
+contracts/WalletSimple.sol:411:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenTransacted(msg.sender, otherSigner, operationHash, toAddress, value, tokenContractAddress);
+    ^---------------------------------------------------------------------------------------------^
+contracts/WalletSimple.sol:529:5: Warning: Invoking events without "emit" prefix is deprecated.
+    SafeModeActivated(msg.sender);
+    ^---------------------------^
+contracts/WalletSimple.sol:17:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) returns (bool success);
+  ^--------------------------------------------------------------------^
+contracts/WalletSimple.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance);
+  ^--------------------------------------------------------------------^
+contracts/WalletSimple.sol:59:3: Warning: No visibility specified. Defaulting to "public". 
+  function Forwarder() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:93:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:115:3: Warning: No visibility specified. Defaulting to "public". 
+  function flushTokens(address tokenContractAddress) onlyParent {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:149:3: Warning: No visibility specified. Defaulting to "public". 
+  function flush() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:263:3: Warning: No visibility specified. Defaulting to "public". 
+  function WalletSimple(address[] allowedSigners) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:285:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:307:3: Warning: No visibility specified. Defaulting to "public". 
+  function createForwarder() onlysigner returns (address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:339:3: Warning: No visibility specified. Defaulting to "public". 
+  function sendMultiSig(address toAddress, uint value, bytes data, uint expireTime, uint sequenceId, bytes signature) onlysigner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:391:3: Warning: No visibility specified. Defaulting to "public". 
+  function sendMultiSigToken(address toAddress, uint value, address tokenContractAddress, uint expireTime, uint sequenceId, bytes signature) onlysigner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:429:3: Warning: No visibility specified. Defaulting to "public". 
+  function flushForwarderTokens(address forwarderAddress, address tokenContractAddress) onlysigner {    
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:525:3: Warning: No visibility specified. Defaulting to "public". 
+  function activateSafeMode() onlysigner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:545:3: Warning: No visibility specified. Defaulting to "public". 
+  function isSigner(address signer) returns (bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:685:3: Warning: No visibility specified. Defaulting to "public". 
+  function getNextSequenceId() returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:545:3: Warning: Function state mutability can be restricted to view
+  function isSigner(address signer) returns (bool) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:577:3: Warning: Function state mutability can be restricted to pure
+  function recoverAddressFromSignature(bytes32 operationHash, bytes signature) private returns (address) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/WalletSimple.sol:685:3: Warning: Function state mutability can be restricted to view
+  function getNextSequenceId() returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Forwarder
+** Write stats: 0.005423
+** Write stats: 5.00061
+** Write stats: 10.0136
+** Write stats: 15.0003
+** Write stats: 20.0006
+** Write stats: 25.0003
+** Write stats: 30.0119
+** Write stats: 35.0155
+** Write stats: 40.0026
+** Write stats: 45.0366
+** Write stats: 50.0121
+** Write stats: 55.0388
+** Write stats: 60.0218
+** Write stats: 70.0248
+** Write stats: 75.0416
+** Write stats: 80.0524
+** Write stats: 85.0159
+** Write stats: 90.0365
+** Write stats: 95.019
+** Write stats: 100.043
+** Write stats: 105.62
+** Write stats: 110.033
+** Write stats: 115.038
+** Write stats: 120.032
+** Write stats: 121.117
+>> Fuzz WalletSimple
+** Write stats: 0.023623
+** Write stats: 5.00579
+** Write stats: 10.0004
+** Write stats: 15.0037
+** Write stats: 20.012
+** Write stats: 25.0189
+** Write stats: 30.014
+** Write stats: 35.0117
+** Write stats: 40.0293
+** Write stats: 45.0018
+** Write stats: 50.0149
+** Write stats: 55.0047
+** Write stats: 60.027
+** Write stats: 65.0237
+** Write stats: 70.0247
+** Write stats: 75.0121
+** Write stats: 80.0096
+** Write stats: 85.0488
+** Write stats: 90.0192
+** Write stats: 95.0231
+** Write stats: 100.014
+** Write stats: 105.006
+** Write stats: 110.004
+** Write stats: 115.032
+** Write stats: 120.025
+** Write stats: 120.505

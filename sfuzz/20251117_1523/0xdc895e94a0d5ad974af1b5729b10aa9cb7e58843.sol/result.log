@@ -1,0 +1,73 @@
+Extract contract /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol:41:5: from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+cp: cannot create regular file '/home/contracts//sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol:41:5:.sol': No such file or directory
+Extract contract ParserError: from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract Expected from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract ';' from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract but from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract got from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract '}' from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract }
+ from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extract contract ^ from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+Extracted 9 contract(s) from /sb/0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/got.sol:41:5: Error: Expected ';' but got '}'
+    }
+    ^
+contracts/ParserError:.sol:41:5: Error: Expected ';' but got '}'
+    }
+    ^
+contracts/Expected.sol:41:5: Error: Expected ';' but got '}'
+    }
+    ^
+""contracts/}.sol"" is not found
+contracts/but.sol:41:5: Error: Expected ';' but got '}'
+    }
+    ^
+""contracts/;.sol"" is not found
+contracts/}
+.sol:41:5: Error: Expected ';' but got '}'
+    }
+    ^
+contracts/^.sol:41:5: Error: Expected ';' but got '}'
+    }
+    ^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/got.sol.json(1): expected value
+./fuzzMe: line 12:    36 Aborted                 (core dumped) ./fuzzer --file contracts/got.sol.json --name got --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/ParserError:.sol.json(1): expected value
+./fuzzMe: line 13:    37 Aborted                 (core dumped) ./fuzzer --file contracts/ParserError:.sol.json --name ParserError: --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/Expected.sol.json(1): expected value
+./fuzzMe: line 14:    38 Aborted                 (core dumped) ./fuzzer --file contracts/Expected.sol.json --name Expected --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/}.sol.json(1): expected value
+./fuzzMe: line 15:    39 Aborted                 (core dumped) ./fuzzer --file contracts/'}'.sol.json --name '}' --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/but.sol.json(1): expected value
+./fuzzMe: line 16:    40 Aborted                 (core dumped) ./fuzzer --file contracts/but.sol.json --name but --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/;.sol.json(1): expected value
+./fuzzMe: line 17:    41 Aborted                 (core dumped) ./fuzzer --file contracts/';'.sol.json --name ';' --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/}
+.sol.json(1): expected value
+./fuzzMe: line 18:    42 Aborted                 (core dumped) ./fuzzer --file contracts/}
+.sol.json --name }
+ --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/^.sol.json(1): expected value
+./fuzzMe: line 19:    43 Aborted                 (core dumped) ./fuzzer --file contracts/^.sol.json --name ^ --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

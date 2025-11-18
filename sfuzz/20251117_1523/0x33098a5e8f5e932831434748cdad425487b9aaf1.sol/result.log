@@ -1,0 +1,557 @@
+Extract contract Comission from /sb/0x33098a5e8f5e932831434748cdad425487b9aaf1.sol
+Extract contract CreatorInvoice from /sb/0x33098a5e8f5e932831434748cdad425487b9aaf1.sol
+Extract contract Invoice from /sb/0x33098a5e8f5e932831434748cdad425487b9aaf1.sol
+Extract contract Mortal from /sb/0x33098a5e8f5e932831434748cdad425487b9aaf1.sol
+Extract contract Owned from /sb/0x33098a5e8f5e932831434748cdad425487b9aaf1.sol
+Extracted 5 contract(s) from /sb/0x33098a5e8f5e932831434748cdad425487b9aaf1.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Invoice.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Invoice.sol:26:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    modifier onlyOwner { if (msg.sender != owner) throw; _; }
+                                                  ^---^
+contracts/Invoice.sol:53:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:65:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 100) throw;
+                             ^---^
+contracts/Invoice.sol:67:9: Warning: Use of the "var" keyword is deprecated.
+        var tax = msg.value * taxPerc / 100; 
+        ^-----^
+contracts/Invoice.sol:68:9: Warning: Use of the "var" keyword is deprecated.
+        var refill = bytes4(sha3("refill(bytes32)")); 
+        ^--------^
+contracts/Invoice.sol:71:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           ) throw;
+             ^---^
+contracts/Invoice.sol:92:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:107:63: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!comission.process.value(value)(beneficiary)) throw;
+                                                              ^---^
+contracts/Invoice.sol:117:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           || closeBlock != 0) throw;
+                               ^---^
+contracts/Invoice.sol:138:5: Warning: This declaration shadows a builtin symbol.
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:38:7: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+    { suicide(owner); }
+      ^------------^
+contracts/Invoice.sol:68:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var refill = bytes4(sha3("refill(bytes32)")); 
+                            ^---------------------^
+contracts/Invoice.sol:122:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PaymentReceived();
+        ^---------------^
+contracts/Invoice.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Invoice.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function delegate(address _owner) onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function process(bytes32 _destination) payable returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:105:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:132:5: Warning: No visibility specified. Defaulting to "public". 
+    function create(address _comission, string _description, bytes32 _beneficiary, uint256 _value) returns (Invoice)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:135:5: Warning: No visibility specified. Defaulting to "public". 
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:138:5: Warning: No visibility specified. Defaulting to "public". 
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:135:5: Warning: Function state mutability can be restricted to pure
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Invoice.sol:138:5: Warning: Function state mutability can be restricted to pure
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Owned.sol:26:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    modifier onlyOwner { if (msg.sender != owner) throw; _; }
+                                                  ^---^
+contracts/Owned.sol:53:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:65:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 100) throw;
+                             ^---^
+contracts/Owned.sol:67:9: Warning: Use of the "var" keyword is deprecated.
+        var tax = msg.value * taxPerc / 100; 
+        ^-----^
+contracts/Owned.sol:68:9: Warning: Use of the "var" keyword is deprecated.
+        var refill = bytes4(sha3("refill(bytes32)")); 
+        ^--------^
+contracts/Owned.sol:71:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           ) throw;
+             ^---^
+contracts/Owned.sol:92:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:107:63: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!comission.process.value(value)(beneficiary)) throw;
+                                                              ^---^
+contracts/Owned.sol:117:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           || closeBlock != 0) throw;
+                               ^---^
+contracts/Owned.sol:138:5: Warning: This declaration shadows a builtin symbol.
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:38:7: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+    { suicide(owner); }
+      ^------------^
+contracts/Owned.sol:68:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var refill = bytes4(sha3("refill(bytes32)")); 
+                            ^---------------------^
+contracts/Owned.sol:122:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PaymentReceived();
+        ^---------------^
+contracts/Owned.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Owned.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function delegate(address _owner) onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function process(bytes32 _destination) payable returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:105:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:132:5: Warning: No visibility specified. Defaulting to "public". 
+    function create(address _comission, string _description, bytes32 _beneficiary, uint256 _value) returns (Invoice)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:135:5: Warning: No visibility specified. Defaulting to "public". 
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:138:5: Warning: No visibility specified. Defaulting to "public". 
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:135:5: Warning: Function state mutability can be restricted to pure
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:138:5: Warning: Function state mutability can be restricted to pure
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Comission.sol:26:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    modifier onlyOwner { if (msg.sender != owner) throw; _; }
+                                                  ^---^
+contracts/Comission.sol:53:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:65:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 100) throw;
+                             ^---^
+contracts/Comission.sol:67:9: Warning: Use of the "var" keyword is deprecated.
+        var tax = msg.value * taxPerc / 100; 
+        ^-----^
+contracts/Comission.sol:68:9: Warning: Use of the "var" keyword is deprecated.
+        var refill = bytes4(sha3("refill(bytes32)")); 
+        ^--------^
+contracts/Comission.sol:71:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           ) throw;
+             ^---^
+contracts/Comission.sol:92:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:107:63: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!comission.process.value(value)(beneficiary)) throw;
+                                                              ^---^
+contracts/Comission.sol:117:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           || closeBlock != 0) throw;
+                               ^---^
+contracts/Comission.sol:138:5: Warning: This declaration shadows a builtin symbol.
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:38:7: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+    { suicide(owner); }
+      ^------------^
+contracts/Comission.sol:68:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var refill = bytes4(sha3("refill(bytes32)")); 
+                            ^---------------------^
+contracts/Comission.sol:122:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PaymentReceived();
+        ^---------------^
+contracts/Comission.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Comission.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function delegate(address _owner) onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function process(bytes32 _destination) payable returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:105:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:132:5: Warning: No visibility specified. Defaulting to "public". 
+    function create(address _comission, string _description, bytes32 _beneficiary, uint256 _value) returns (Invoice)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:135:5: Warning: No visibility specified. Defaulting to "public". 
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:138:5: Warning: No visibility specified. Defaulting to "public". 
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:135:5: Warning: Function state mutability can be restricted to pure
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Comission.sol:138:5: Warning: Function state mutability can be restricted to pure
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Mortal.sol:26:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    modifier onlyOwner { if (msg.sender != owner) throw; _; }
+                                                  ^---^
+contracts/Mortal.sol:53:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:65:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 100) throw;
+                             ^---^
+contracts/Mortal.sol:67:9: Warning: Use of the "var" keyword is deprecated.
+        var tax = msg.value * taxPerc / 100; 
+        ^-----^
+contracts/Mortal.sol:68:9: Warning: Use of the "var" keyword is deprecated.
+        var refill = bytes4(sha3("refill(bytes32)")); 
+        ^--------^
+contracts/Mortal.sol:71:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           ) throw;
+             ^---^
+contracts/Mortal.sol:92:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:107:63: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!comission.process.value(value)(beneficiary)) throw;
+                                                              ^---^
+contracts/Mortal.sol:117:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           || closeBlock != 0) throw;
+                               ^---^
+contracts/Mortal.sol:138:5: Warning: This declaration shadows a builtin symbol.
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:38:7: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+    { suicide(owner); }
+      ^------------^
+contracts/Mortal.sol:68:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var refill = bytes4(sha3("refill(bytes32)")); 
+                            ^---------------------^
+contracts/Mortal.sol:122:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PaymentReceived();
+        ^---------------^
+contracts/Mortal.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/Mortal.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function delegate(address _owner) onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function process(bytes32 _destination) payable returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:105:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:132:5: Warning: No visibility specified. Defaulting to "public". 
+    function create(address _comission, string _description, bytes32 _beneficiary, uint256 _value) returns (Invoice)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:135:5: Warning: No visibility specified. Defaulting to "public". 
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:138:5: Warning: No visibility specified. Defaulting to "public". 
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:135:5: Warning: Function state mutability can be restricted to pure
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Mortal.sol:138:5: Warning: Function state mutability can be restricted to pure
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/CreatorInvoice.sol:26:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    modifier onlyOwner { if (msg.sender != owner) throw; _; }
+                                                  ^---^
+contracts/CreatorInvoice.sol:53:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:65:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.value < 100) throw;
+                             ^---^
+contracts/CreatorInvoice.sol:67:9: Warning: Use of the "var" keyword is deprecated.
+        var tax = msg.value * taxPerc / 100; 
+        ^-----^
+contracts/CreatorInvoice.sol:68:9: Warning: Use of the "var" keyword is deprecated.
+        var refill = bytes4(sha3("refill(bytes32)")); 
+        ^--------^
+contracts/CreatorInvoice.sol:71:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           ) throw;
+             ^---^
+contracts/CreatorInvoice.sol:92:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:107:63: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!comission.process.value(value)(beneficiary)) throw;
+                                                              ^---^
+contracts/CreatorInvoice.sol:117:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+           || closeBlock != 0) throw;
+                               ^---^
+contracts/CreatorInvoice.sol:138:5: Warning: This declaration shadows a builtin symbol.
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:38:7: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+    { suicide(owner); }
+      ^------------^
+contracts/CreatorInvoice.sol:68:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var refill = bytes4(sha3("refill(bytes32)")); 
+                            ^---------------------^
+contracts/CreatorInvoice.sol:122:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PaymentReceived();
+        ^---------------^
+contracts/CreatorInvoice.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() { owner = msg.sender; }
+    ^--------------------------------------^
+contracts/CreatorInvoice.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function delegate(address _owner) onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() onlyOwner
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:53:5: Warning: No visibility specified. Defaulting to "public". 
+    function Comission(address _ledger, bytes32 _taxman, uint _taxPerc) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function process(bytes32 _destination) payable returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function Invoice(address _comission,
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:105:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:132:5: Warning: No visibility specified. Defaulting to "public". 
+    function create(address _comission, string _description, bytes32 _beneficiary, uint256 _value) returns (Invoice)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:135:5: Warning: No visibility specified. Defaulting to "public". 
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:138:5: Warning: No visibility specified. Defaulting to "public". 
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:135:5: Warning: Function state mutability can be restricted to pure
+    function version() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CreatorInvoice.sol:138:5: Warning: Function state mutability can be restricted to pure
+    function abi() constant returns (string)
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Invoice
+** Write stats: 0.006974
+** Write stats: 5.00025
+** Write stats: 10.0002
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0003
+** Write stats: 30.0025
+** Write stats: 35.0003
+** Write stats: 40.0002
+** Write stats: 45.0003
+** Write stats: 50.0003
+** Write stats: 55.0002
+** Write stats: 60.0002
+** Write stats: 65.0008
+** Write stats: 70.0005
+** Write stats: 75.0002
+** Write stats: 80.0003
+** Write stats: 85.0003
+** Write stats: 90.0002
+** Write stats: 95.0005
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.005
+>> Fuzz Owned
+** Write stats: 0.00297
+** Write stats: 5.00012
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0003
+** Write stats: 30.0002
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0018
+** Write stats: 50.0002
+** Write stats: 55.0071
+** Write stats: 60.0003
+** Write stats: 65.0003
+** Write stats: 70.0005
+** Write stats: 75.0003
+** Write stats: 80.0002
+** Write stats: 85.006
+** Write stats: 90.0141
+** Write stats: 95.0003
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115.003
+** Write stats: 120.011
+>> Fuzz Comission
+** Write stats: 0.005997
+** Write stats: 5.0002
+** Write stats: 10.0003
+** Write stats: 15.0005
+** Write stats: 20.0002
+** Write stats: 25.0128
+** Write stats: 30.0003
+** Write stats: 35.0005
+** Write stats: 40.0005
+** Write stats: 45.0002
+** Write stats: 50.0005
+** Write stats: 55.0004
+** Write stats: 60.0005
+** Write stats: 65.0031
+** Write stats: 70.0002
+** Write stats: 75.0002
+** Write stats: 80.0091
+** Write stats: 85.0003
+** Write stats: 90.0002
+** Write stats: 95.0003
+** Write stats: 100.008
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.001
+** Write stats: 120.018
+>> Fuzz Mortal
+** Write stats: 0.00317
+** Write stats: 5.00019
+** Write stats: 10.0003
+** Write stats: 15.0003
+** Write stats: 20.0001
+** Write stats: 25.0108
+** Write stats: 30.0003
+** Write stats: 35.0167
+** Write stats: 40.0001
+** Write stats: 45.0002
+** Write stats: 50.0004
+** Write stats: 55.0003
+** Write stats: 60.0004
+** Write stats: 65.0002
+** Write stats: 70.0002
+** Write stats: 75.0003
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0003
+** Write stats: 95.0002
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.011
+>> Fuzz CreatorInvoice
+** Write stats: 0.007029
+** Write stats: 5.00012
+** Write stats: 10.0008
+** Write stats: 15.0003
+** Write stats: 20.0003
+** Write stats: 25.0002
+** Write stats: 30.0001
+** Write stats: 35.0007
+** Write stats: 40.0003
+** Write stats: 45.0004
+** Write stats: 50.0007
+** Write stats: 55.0006
+** Write stats: 60.0002
+** Write stats: 65.0005
+** Write stats: 70.0003
+** Write stats: 75.0003
+** Write stats: 80.001
+** Write stats: 85.0002
+** Write stats: 90.0007
+** Write stats: 95.0006
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110.001
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.002

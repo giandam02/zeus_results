@@ -1,0 +1,76 @@
+'solc --version' running
+'solc /sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Lottery() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:20:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:36:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:43:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender != organizer) { throw; }
+                                      ^---^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:52:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender != organizer) { throw; }
+                                      ^---^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:46:13: Warning: Invoking events without "emit" prefix is deprecated.
+            GetBet(bets[i].betAmount, bets[i].blockNumber, bets[i].won);
+            ^---------------------------------------------------------^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:54:9: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+        suicide(organizer);
+        ^----------------^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Lottery() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:19:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function makeBet() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:30:23: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        bets.push(Bet(msg.value, block.number, won));
+                      ^-------^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:34:33: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if(!msg.sender.send(msg.value)) {
+                                ^-------^
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:42:5: Warning: No visibility specified. Defaulting to "public". 
+    function getBets() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol:51:5: Warning: No visibility specified. Defaulting to "public". 
+    function destroy() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Lottery (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#2-57) contract sets array length with a user-controlled value:
+	- bets.push(Bet(msg.value,block.number,won)) (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#30)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Lottery.makeBet() (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#24-39) uses a dangerous strict equality:
+	- won = (block.number % 2) == 0 (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Deprecated standard detected THROW (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#20):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#36):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#43):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#52):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected suicide(address)(organizer) (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#54):
+	- Usage of "suicide()" should be replaced with "selfdestruct()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Loop condition i < bets.length (../sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol#45) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+/sb/0x80ddae5251047d6ceb29765f38fed1c0013004b7.sol analyzed (1 contracts with 100 detectors), 10 result(s) found

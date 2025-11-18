@@ -1,0 +1,37 @@
+Extract contract Store from /sb/0xd6ec04c0f9587cb822c315f662954af8c2174d66.sol
+Extracted 1 contract(s) from /sb/0xd6ec04c0f9587cb822c315f662954af8c2174d66.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Store.sol:7:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Store(address[] _owners) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Store.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function Store(address[] _owners) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Store.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Store.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function payout() returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Store
+** Write stats: 0.010458
+** Write stats: 5.04819
+** Write stats: 10.058
+** Write stats: 15.0783
+** Write stats: 20.0713
+** Write stats: 25.0656
+** Write stats: 30.0898
+** Write stats: 35.0613
+** Write stats: 48.0194

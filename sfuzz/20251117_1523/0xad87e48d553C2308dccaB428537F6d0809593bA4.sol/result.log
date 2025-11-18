@@ -1,0 +1,100 @@
+Extract contract GameRegistry from /sb/0xad87e48d553C2308dccaB428537F6d0809593bA4.sol
+Extracted 1 contract(s) from /sb/0xad87e48d553C2308dccaB428537F6d0809593bA4.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/GameRegistry.sol:32:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GameRegistry() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameRegistry.sol:126:62: Warning: This declaration shadows an existing declaration.
+    function getRecord(address key) private constant returns(address owner, uint time, string description, string url) {
+                                                             ^-----------^
+contracts/GameRegistry.sol:25:5: The shadowed declaration is here:
+    address private owner;
+    ^-------------------^
+
+contracts/GameRegistry.sol:38:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Record record = records[keys[rindex]];
+        ^-----------^
+contracts/GameRegistry.sol:127:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Record record = records[key];
+        ^-----------^
+contracts/GameRegistry.sol:58:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        owner.send(valueForRegOwner);
+        ^--------------------------^
+contracts/GameRegistry.sol:64:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            records[keys[k]].owner.send(valueForEachOwner);
+            ^--------------------------------------------^
+contracts/GameRegistry.sol:74:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                msg.sender.send(msg.value);
+                ^------------------------^
+contracts/GameRegistry.sol:152:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(value);
+            ^--------------------^
+contracts/GameRegistry.sol:166:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value);
+            ^------------------------^
+contracts/GameRegistry.sol:32:5: Warning: No visibility specified. Defaulting to "public". 
+    function GameRegistry() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameRegistry.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function theGames(uint rindex) constant returns(address contractAddress, string description, string url, address submittedBy, uint time) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameRegistry.sol:69:5: Warning: No visibility specified. Defaulting to "public". 
+    function addGame(address key, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameRegistry.sol:71:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value < REGISTRATION_COST) {
+            ^-------^
+contracts/GameRegistry.sol:73:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (msg.value > 0) {
+                ^-------^
+contracts/GameRegistry.sol:74:33: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                msg.sender.send(msg.value);
+                                ^-------^
+contracts/GameRegistry.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function () { distributeValue(); }
+    ^--------------------------------^
+contracts/GameRegistry.sol:95:5: Warning: No visibility specified. Defaulting to "public". 
+    function update(address key, string description, string url) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameRegistry.sol:150:5: Warning: No visibility specified. Defaulting to "public". 
+    function maintain(uint value, uint cost) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz GameRegistry
+** Write stats: 0.00848
+** Write stats: 5.00369
+** Write stats: 10.0087
+** Write stats: 15.0027
+** Write stats: 20.0053
+** Write stats: 25.0125
+** Write stats: 30.0063
+** Write stats: 35.0179
+** Write stats: 40.0244
+** Write stats: 45.0066
+** Write stats: 50.0457
+** Write stats: 55.0293
+** Write stats: 60.0242
+** Write stats: 65.0503
+** Write stats: 70.0065
+** Write stats: 75.0415
+** Write stats: 80.0303
+** Write stats: 85.0286
+** Write stats: 90.0253
+** Write stats: 95.0495
+** Write stats: 100.023
+** Write stats: 105.013
+** Write stats: 110.018
+** Write stats: 115.039
+** Write stats: 120.033
+** Write stats: 120.034

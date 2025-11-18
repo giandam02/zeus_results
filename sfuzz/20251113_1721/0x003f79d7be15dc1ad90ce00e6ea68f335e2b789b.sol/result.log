@@ -1,0 +1,95 @@
+Extract contract TzTToken from /sb/0x003f79d7be15dc1ad90ce00e6ea68f335e2b789b.sol
+Extracted 1 contract(s) from /sb/0x003f79d7be15dc1ad90ce00e6ea68f335e2b789b.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/TzTToken.sol:55:6: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+     function TzTToken() {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:7:47: Warning: This declaration shadows an existing declaration.
+     function totalSupply() constant returns (uint256 totalSupply);
+                                              ^-----------------^
+contracts/TzTToken.sol:7:6: The shadowed declaration is here:
+     function totalSupply() constant returns (uint256 totalSupply);
+     ^------------------------------------------------------------^
+
+contracts/TzTToken.sol:99:47: Warning: This declaration shadows an existing declaration.
+     function totalSupply() constant returns (uint256 totalSupply) {
+                                              ^-----------------^
+contracts/TzTToken.sol:99:6: The shadowed declaration is here:
+     function totalSupply() constant returns (uint256 totalSupply) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/TzTToken.sol:85:10: Warning: Invoking events without "emit" prefix is deprecated.
+         Transfer(owner, addresses[i], _value * 10**8);
+         ^-------------------------------------------^
+contracts/TzTToken.sol:129:14: Warning: Invoking events without "emit" prefix is deprecated.
+             Transfer(msg.sender, _to, _amount);
+             ^--------------------------------^
+contracts/TzTToken.sol:169:14: Warning: Invoking events without "emit" prefix is deprecated.
+             Transfer(_from, _to, _amount);
+             ^---------------------------^
+contracts/TzTToken.sol:187:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _amount);
+        ^-------------------------------------^
+contracts/TzTToken.sol:7:6: Warning: No visibility specified. Defaulting to "public". 
+     function totalSupply() constant returns (uint256 totalSupply);
+     ^------------------------------------------------------------^
+contracts/TzTToken.sol:9:6: Warning: No visibility specified. Defaulting to "public". 
+     function balanceOf(address _owner) constant returns (uint256 balance);
+     ^--------------------------------------------------------------------^
+contracts/TzTToken.sol:11:6: Warning: No visibility specified. Defaulting to "public". 
+     function transfer(address _to, uint256 _value) returns (bool success);
+     ^--------------------------------------------------------------------^
+contracts/TzTToken.sol:13:6: Warning: No visibility specified. Defaulting to "public". 
+     function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+     ^---------------------------------------------------------------------------------------^
+contracts/TzTToken.sol:15:6: Warning: No visibility specified. Defaulting to "public". 
+     function approve(address _spender, uint256 _value) returns (bool success);
+     ^------------------------------------------------------------------------^
+contracts/TzTToken.sol:17:6: Warning: No visibility specified. Defaulting to "public". 
+     function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+     ^----------------------------------------------------------------------------------------^
+contracts/TzTToken.sol:55:6: Warning: No visibility specified. Defaulting to "public". 
+     function TzTToken() {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:77:6: Warning: No visibility specified. Defaulting to "public". 
+     function distributeToken(address[] addresses, uint256 _value) onlyOwner {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:99:6: Warning: No visibility specified. Defaulting to "public". 
+     function totalSupply() constant returns (uint256 totalSupply) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:109:6: Warning: No visibility specified. Defaulting to "public". 
+     function balanceOf(address _owner) constant returns (uint256 balance) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:117:6: Warning: No visibility specified. Defaulting to "public". 
+     function transfer(address _to, uint256 _amount) returns (bool success) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:145:6: Warning: No visibility specified. Defaulting to "public". 
+     function transferFrom(
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:183:6: Warning: No visibility specified. Defaulting to "public". 
+     function approve(address _spender, uint256 _amount) returns (bool success) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TzTToken.sol:195:6: Warning: No visibility specified. Defaulting to "public". 
+     function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz TzTToken
+** Write stats: 0.016497
+** Write stats: 5.00834
+** Write stats: 10.01
+** Write stats: 15.0033
+** Write stats: 20.0298
+** Write stats: 25.0449
+** Write stats: 30.0548
+** Write stats: 90.7419

@@ -1,0 +1,102 @@
+Extract contract Address from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract Counters from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract ERC721 from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract ERC721Base from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract ERC721Burnable from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract ERC721Enumerable from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract HasContractURI from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract HasTokenURI from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract MintableOwnableToken from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract Roles from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract SafeMath from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract StringLibrary from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extract contract UintLibrary from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+Extracted 13 contract(s) from /sb/0x00435b3107fb8e981c43ecb11de6aa1e74d62d73.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SafeMath.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/MintableOwnableToken.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/ERC721Burnable.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/StringLibrary.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/ERC721Enumerable.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/HasContractURI.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/Roles.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/ERC721Base.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/ERC721.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/Counters.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/HasTokenURI.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/Address.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+contracts/UintLibrary.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 17:    45 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 18:    46 Aborted                 (core dumped) ./fuzzer --file contracts/MintableOwnableToken.sol.json --name MintableOwnableToken --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 19:    47 Aborted                 (core dumped) ./fuzzer --file contracts/ERC721Burnable.sol.json --name ERC721Burnable --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 20:    48 Aborted                 (core dumped) ./fuzzer --file contracts/StringLibrary.sol.json --name StringLibrary --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 21:    49 Aborted                 (core dumped) ./fuzzer --file contracts/ERC721Enumerable.sol.json --name ERC721Enumerable --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 22:    50 Aborted                 (core dumped) ./fuzzer --file contracts/HasContractURI.sol.json --name HasContractURI --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 23:    51 Aborted                 (core dumped) ./fuzzer --file contracts/Roles.sol.json --name Roles --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 24:    52 Aborted                 (core dumped) ./fuzzer --file contracts/ERC721Base.sol.json --name ERC721Base --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 25:    53 Aborted                 (core dumped) ./fuzzer --file contracts/ERC721.sol.json --name ERC721 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 26:    54 Aborted                 (core dumped) ./fuzzer --file contracts/Counters.sol.json --name Counters --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 27:    55 Aborted                 (core dumped) ./fuzzer --file contracts/HasTokenURI.sol.json --name HasTokenURI --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 28:    56 Aborted                 (core dumped) ./fuzzer --file contracts/Address.sol.json --name Address --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 29:    57 Aborted                 (core dumped) ./fuzzer --file contracts/UintLibrary.sol.json --name UintLibrary --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

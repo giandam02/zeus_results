@@ -1,0 +1,60 @@
+Extract contract CloneFactory from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extract contract InitialReporterFactory from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extract contract Initializable from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extract contract Market from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extract contract Order from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extract contract Reporting from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extract contract SafeMathUint256 from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+Extracted 7 contract(s) from /sb/0x0031a73aaf36aea3bdfb85d4a1377d757bc5aea2.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Reporting.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+contracts/Initializable.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+contracts/CloneFactory.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+contracts/Order.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+contracts/InitialReporterFactory.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+contracts/Market.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+contracts/SafeMathUint256.sol:4837:9: Warning: Unused local variable.
+        uint256 _numOutcomes = numOutcomes;
+        ^------------------^
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.15+commit.6a57276f.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.15+commit.6a57276f.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    33 Aborted                 (core dumped) ./fuzzer --file contracts/Reporting.sol.json --name Reporting --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    34 Aborted                 (core dumped) ./fuzzer --file contracts/Initializable.sol.json --name Initializable --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    35 Aborted                 (core dumped) ./fuzzer --file contracts/CloneFactory.sol.json --name CloneFactory --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 14:    36 Aborted                 (core dumped) ./fuzzer --file contracts/Order.sol.json --name Order --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 15:    37 Aborted                 (core dumped) ./fuzzer --file contracts/InitialReporterFactory.sol.json --name InitialReporterFactory --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 16:    38 Aborted                 (core dumped) ./fuzzer --file contracts/Market.sol.json --name Market --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 17:    39 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMathUint256.sol.json --name SafeMathUint256 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

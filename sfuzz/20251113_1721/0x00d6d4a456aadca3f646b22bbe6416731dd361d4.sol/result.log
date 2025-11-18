@@ -1,0 +1,129 @@
+Extract contract Address from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extract contract ERC20 from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extract contract EnumerableSet from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extract contract FerrariToken from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extract contract MasterChef from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extract contract SafeERC20 from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extract contract SafeMath from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+Extracted 7 contract(s) from /sb/0x00d6d4a456aadca3f646b22bbe6416731dd361d4.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/ERC20.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/ERC20.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/EnumerableSet.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/EnumerableSet.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/SafeERC20.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/SafeERC20.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/SafeMath.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/SafeMath.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/FerrariToken.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/FerrariToken.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/MasterChef.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/MasterChef.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Documentation tag on non-public state variables will be disallowed in 0.7.0. You will need to use the @dev tag explicitly.
+    --> contracts/Address.sol:2289:5:
+     |
+2289 |     /// @notice A record of each accounts delegate
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: Function state mutability can be restricted to pure
+    --> contracts/Address.sol:3029:5:
+     |
+3029 |     function getMultiplier(uint256 _from, uint256 _to) public view returns (uint256) {
+     |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: Source file requires different compiler version (current compiler is 0.6.12+commit.27d51765.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/NormalAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.6.12+commit.27d51765.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/ReentrancyAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    33 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20.sol.json --name ERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    34 Aborted                 (core dumped) ./fuzzer --file contracts/EnumerableSet.sol.json --name EnumerableSet --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    35 Aborted                 (core dumped) ./fuzzer --file contracts/SafeERC20.sol.json --name SafeERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 14:    36 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 15:    37 Aborted                 (core dumped) ./fuzzer --file contracts/FerrariToken.sol.json --name FerrariToken --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 16:    38 Aborted                 (core dumped) ./fuzzer --file contracts/MasterChef.sol.json --name MasterChef --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 17:    39 Aborted                 (core dumped) ./fuzzer --file contracts/Address.sol.json --name Address --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

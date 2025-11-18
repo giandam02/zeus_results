@@ -1,0 +1,57 @@
+Extract contract TokenERC20 from /sb/0x00178e3995d1b8ed8ac51486e21d67aa2d513e2e.sol
+Extracted 1 contract(s) from /sb/0x00178e3995d1b8ed8ac51486e21d67aa2d513e2e.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/TokenERC20.sol:37:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenERC20(uint256 initialSupply, string tokenName, string tokenSymbol) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenERC20.sol:5:28: Warning: Functions in interfaces should be declared external.
+interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
+                           ^-----------------------------------------------------------------------------------------------^
+contracts/TokenERC20.sol:67:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/TokenERC20.sol:133:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(msg.sender, _value);
+        ^----------------------^
+contracts/TokenERC20.sol:153:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(_from, _value);
+        ^-----------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz TokenERC20
+** Write stats: 0.02295
+** Write stats: 5.00184
+** Write stats: 10.0108
+** Write stats: 15.01
+** Write stats: 20.0046
+** Write stats: 25.0071
+** Write stats: 30.0017
+** Write stats: 35.0049
+** Write stats: 40.0016
+** Write stats: 45.0084
+** Write stats: 50.0161
+** Write stats: 55.002
+** Write stats: 60.0029
+** Write stats: 65.0068
+** Write stats: 70.0017
+** Write stats: 75.0156
+** Write stats: 80.0096
+** Write stats: 85.0084
+** Write stats: 90.0036
+** Write stats: 95.0025
+** Write stats: 100.005
+** Write stats: 105.014
+** Write stats: 110.008
+** Write stats: 115.005
+** Write stats: 120.012
+** Write stats: 120.012

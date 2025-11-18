@@ -1,0 +1,141 @@
+Extract contract JackPot from /sb/0x6CaFdC06177F6f4B4B4638c987397b07Cd948aed.sol
+Extracted 1 contract(s) from /sb/0x6CaFdC06177F6f4B4B4638c987397b07Cd948aed.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/JackPot.sol:47:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function JackPot() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:65:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(value < minAmount) throw;
+                              ^---^
+contracts/JackPot.sol:84:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(msg.sender != host) throw;
+		                       ^---^
+contracts/JackPot.sol:110:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if(msg.sender != host) throw;
+		                       ^---^
+contracts/JackPot.sol:147:32: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender != host) throw;
+                               ^---^
+contracts/JackPot.sol:49:14: Warning: "sha3" has been deprecated in favour of "keccak256"
+		seedHash = sha3('aaaa');
+		           ^----------^
+contracts/JackPot.sol:79:12: Warning: "sha3" has been deprecated in favour of "keccak256"
+		random = sha3(random, block.blockhash(block.number - 1));		
+		         ^---------------------------------------------^
+contracts/JackPot.sol:79:12: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+		random = sha3(random, block.blockhash(block.number - 1));		
+		         ^---------------------------------------------^
+contracts/JackPot.sol:85:7: Warning: "sha3" has been deprecated in favour of "keccak256"
+		if (sha3(seed) == seedHash) {
+		    ^--------^
+contracts/JackPot.sol:85:7: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+		if (sha3(seed) == seedHash) {
+		    ^--------^
+contracts/JackPot.sol:85:7: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+		if (sha3(seed) == seedHash) {
+		    ^--------^
+contracts/JackPot.sol:88:15: Warning: "sha3" has been deprecated in favour of "keccak256"
+			seedHash = sha3(newSeed);
+			           ^-----------^
+contracts/JackPot.sol:88:15: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+			seedHash = sha3(newSeed);
+			           ^-----------^
+contracts/JackPot.sol:88:15: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+			seedHash = sha3(newSeed);
+			           ^-----------^
+contracts/JackPot.sol:93:14: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+			host.send(this.balance / 100);
+			          ^----------^
+contracts/JackPot.sol:93:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			host.send(this.balance / 100);
+			^---------------------------^
+contracts/JackPot.sol:95:21: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+			uint amountWon = this.balance; 
+			                 ^----------^
+contracts/JackPot.sol:98:36: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+			contributors[winner_index].send(this.balance);
+			                                ^----------^
+contracts/JackPot.sol:98:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			contributors[winner_index].send(this.balance);
+			^-------------------------------------------^
+contracts/JackPot.sol:117:32: Warning: "sha3" has been deprecated in favour of "keccak256"
+        uint semirandom = uint(sha3(random, seed)) % this.balance;
+                               ^----------------^
+contracts/JackPot.sol:117:32: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        uint semirandom = uint(sha3(random, seed)) % this.balance;
+                               ^----------------^
+contracts/JackPot.sol:117:54: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint semirandom = uint(sha3(random, seed)) % this.balance;
+                                                     ^----------^
+contracts/JackPot.sol:151:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            contributors[i].send(contributions[i]);
+            ^------------------------------------^
+contracts/JackPot.sol:32:2: Warning: No visibility specified. Defaulting to "public". 
+	function getContributions(address addr) constant returns (uint) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:47:2: Warning: No visibility specified. Defaulting to "public". 
+	function JackPot() {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:55:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:59:5: Warning: No visibility specified. Defaulting to "public". 
+    function addToContribution() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:60:32: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        addValueToContribution(msg.value);
+                               ^-------^
+contracts/JackPot.sol:79:25: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+		random = sha3(random, block.blockhash(block.number - 1));		
+		                      ^-------------^
+contracts/JackPot.sol:83:2: Warning: No visibility specified. Defaulting to "public". 
+	function drawPot(string seed, string newSeed) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:109:2: Warning: No visibility specified. Defaulting to "public". 
+	function setDrawDate(uint _newDraw) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:146:5: Warning: No visibility specified. Defaulting to "public". 
+    function destroy() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/JackPot.sol:115:5: Warning: Function state mutability can be restricted to view
+    function selectWinner(string seed) internal returns (uint winner_index) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz JackPot
+** Write stats: 0.007207
+** Write stats: 5.00039
+** Write stats: 10.0004
+** Write stats: 15.0004
+** Write stats: 20.0007
+** Write stats: 25.0008
+** Write stats: 30.0006
+** Write stats: 35.0002
+** Write stats: 40.0007
+** Write stats: 45.0121
+** Write stats: 50.0003
+** Write stats: 55.0002
+** Write stats: 60.0004
+** Write stats: 65.0005
+** Write stats: 70.2935
+** Write stats: 75.0002
+** Write stats: 80.0003
+** Write stats: 85.0185
+** Write stats: 90.0001
+** Write stats: 95.0007
+** Write stats: 100.001
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.008

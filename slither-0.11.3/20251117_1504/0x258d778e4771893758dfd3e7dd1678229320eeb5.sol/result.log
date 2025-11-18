@@ -1,0 +1,66 @@
+'solc --version' running
+'solc /sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:21:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ResetPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:29:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:55:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        currentNiceGuy.send(1 ether);
+        ^--------------------------^
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:57:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        while (this.balance >= 10 ether) {
+               ^----------^
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:58:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            persons[payoutIdx].addr.send(10 ether);
+            ^------------------------------------^
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function ResetPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:26:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol:28:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value != 9 ether) {
+            ^-------^
+
+
+ResetPonzi.fallback() (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#26-61) sends eth to arbitrary user
+	Dangerous calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ResetPonzi.fallback() (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#26-61) ignores return value by currentNiceGuy.send(1000000000000000000) (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#55)
+ResetPonzi.fallback() (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#26-61) ignores return value by persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+ResetPonzi.fallback() (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#26-61) has external calls inside a loop: persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+ResetPonzi.fallback() (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#26-61) has costly operations inside a loop:
+	- payoutIdx += 1 (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#29):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in ResetPonzi.fallback() (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#26-61):
+	External calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#55)
+	- persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#58)
+	State variables written after the call(s):
+	- payoutIdx += 1 (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ResetPonzi.beta (../sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol#19) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x258d778e4771893758dfd3e7dd1678229320eeb5.sol analyzed (1 contracts with 100 detectors), 10 result(s) found

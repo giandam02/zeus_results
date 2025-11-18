@@ -1,0 +1,312 @@
+Extract contract Exchange from /sb/0x0016d34783efcb7a693903e60fbe4c9c0d98f583.sol
+Extracted 1 contract(s) from /sb/0x0016d34783efcb7a693903e60fbe4c9c0d98f583.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/Exchange.sol:43:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!assertion) throw;
+                        ^---^
+contracts/Exchange.sol:185:57: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner && !admins[msg.sender]) throw;
+                                                        ^---^
+contracts/Exchange.sol:197:44: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!futuresContracts[msg.sender]) throw;
+                                           ^---^
+contracts/Exchange.sol:207:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+contracts/Exchange.sol:363:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (expiry > 1000000) throw;
+                              ^---^
+contracts/Exchange.sol:379:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Exchange(address feeAccount_, uint256 makerFee_, uint256 takerFee_, uint256 inactivityReleasePeriod_) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:417:24: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (destroyed) throw;
+                       ^---^
+contracts/Exchange.sol:545:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!futuresContractAllowed(msg.sender, user)) throw;
+                                                       ^---^
+contracts/Exchange.sol:557:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != fistFuturesContract) throw;
+                                               ^---^
+contracts/Exchange.sol:573:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != fistFuturesContract) throw;
+                                               ^---^
+contracts/Exchange.sol:585:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != fistFuturesContract) throw;
+                                               ^---^
+contracts/Exchange.sol:597:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != fistFuturesContract) throw;
+                                               ^---^
+contracts/Exchange.sol:609:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != fistFuturesContract) throw;
+                                               ^---^
+contracts/Exchange.sol:657:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (availableBalanceOf(token, user) < amount) throw; 
+                                                      ^---^
+contracts/Exchange.sol:725:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!Token(token).transferFrom(msg.sender, this, amount)) throw; // attempts to transfer the token to this contract, if fails throws an error
+                                                                  ^---^
+contracts/Exchange.sol:751:67: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!Token(token).transferFrom(msg.sender, this, amount)) throw; // attempts to transfer the token to this contract, if fails throws an error
+                                                                  ^---^
+contracts/Exchange.sol:765:61: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (availableBalanceOf(token, msg.sender) < amount) throw;
+                                                            ^---^
+contracts/Exchange.sol:777:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!msg.sender.send(amount)) throw; // send ETH
+                                          ^---^
+contracts/Exchange.sol:781:61: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Token(token).transfer(msg.sender, amount)) throw; // Send token
+                                                            ^---^
+contracts/Exchange.sol:793:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!destroyed) throw;
+                        ^---^
+contracts/Exchange.sol:795:65: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (safeAdd(destroyBlock, destroyDelay) > block.number) throw; // destroy delay not yet passed
+                                                                ^---^
+contracts/Exchange.sol:801:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!msg.sender.send(amount)) throw; // send ETH
+                                          ^---^
+contracts/Exchange.sol:805:61: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Token(token).transfer(msg.sender, amount)) throw; // Send token
+                                                            ^---^
+contracts/Exchange.sol:817:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!futuresContracts[futuresContract]) throw;
+                                                ^---^
+contracts/Exchange.sol:833:49: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!futuresContracts[futuresContract]) throw;
+                                                ^---^
+contracts/Exchange.sol:837:94: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (ecrecover(keccak256("\x19Ethereum Signed Message:\n32", hash), v, r, s) != user) throw; // checks that the provided signature is valid
+                                                                                             ^---^
+contracts/Exchange.sol:873:30: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (withdrawn[hash]) throw; // checks if the withdrawal was already executed, if true, throws an error
+                             ^---^
+contracts/Exchange.sol:877:94: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (ecrecover(keccak256("\x19Ethereum Signed Message:\n32", hash), v, r, s) != user) throw; // checks that the provided signature is valid
+                                                                                             ^---^
+contracts/Exchange.sol:887:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (availableBalanceOf(token, user) < amount) throw; // checks that user has enough balance
+                                                      ^---^
+contracts/Exchange.sol:911:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!user.send(amount)) throw; // sends ETH
+                                    ^---^
+contracts/Exchange.sol:915:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Token(token).transfer(user, amount)) throw; // sends tokens
+                                                      ^---^
+contracts/Exchange.sol:41:5: Warning: This declaration shadows a builtin symbol.
+    function assert(bool assertion) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:125:9: Warning: Invoking events without "emit" prefix is deprecated.
+        SetOwner(owner, newOwner);
+        ^-----------------------^
+contracts/Exchange.sol:835:24: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 hash = keccak256(this, 'allow', futuresContract, user); 
+                       ^---------------------------------------------^
+contracts/Exchange.sol:837:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (ecrecover(keccak256("\x19Ethereum Signed Message:\n32", hash), v, r, s) != user) throw; // checks that the provided signature is valid
+                      ^-------------------------------------------------^
+contracts/Exchange.sol:871:24: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 hash = keccak256(this, token, amount, user, nonce); // creates the hash for the withdrawal request
+                       ^-----------------------------------------^
+contracts/Exchange.sol:877:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (ecrecover(keccak256("\x19Ethereum Signed Message:\n32", hash), v, r, s) != user) throw; // checks that the provided signature is valid
+                      ^-------------------------------------------------^
+contracts/Exchange.sol:1173:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... keccak256(this, tradeAddresses[0], tradeValues[0], tradeAddresses[1], tradeValues[1], tradeValues[2], tradeAddresses[2]) ... 
+     ^----------------------------------------------------------------------------------------------------------------------^
+contracts/Exchange.sol:1175:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+ ... keccak256(this, tradeAddresses[3], tradeValues[3], tradeAddresses[4], tradeValues[4], tradeValues[5], tradeAddresses[5]) ... 
+     ^----------------------------------------------------------------------------------------------------------------------^
+contracts/Exchange.sol:1183:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (ecrecover(keccak256("\x19Ethereum Signed Message:\n32", t.makerOrderHash), v[0], rs[0], rs[1]) != t.maker)
+                      ^-------------------------------------------------------------^
+contracts/Exchange.sol:1197:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (ecrecover(keccak256("\x19Ethereum Signed Message:\n32", t.takerOrderHash), v[1], rs[2], rs[3]) != t.taker)
+                      ^-------------------------------------------------------------^
+contracts/Exchange.sol:1651:29: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 orderHash = keccak256(
+                            ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:1659:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        require(ecrecover(keccak256("\x19Ethereum Signed Message:\n32", orderHash), v[0], rs[0], rs[1]) == cancelAddresses[2]);
+                          ^------------------------------------------------------^
+contracts/Exchange.sol:1665:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 cancelHash = keccak256(this, orderHash, cancelAddresses[3], cancelValues[3]);
+                             ^-------------------------------------------------------------^
+contracts/Exchange.sol:1667:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        require(ecrecover(keccak256("\x19Ethereum Signed Message:\n32", cancelHash), v[1], rs[2], rs[3]) == cancelAddresses[3]);
+                          ^-------------------------------------------------------^
+contracts/Exchange.sol:25:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+contracts/Exchange.sol:27:5: Warning: No visibility specified. Defaulting to "public". 
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);
+    ^-------------------------------------------------------------------------------------------------^
+contracts/Exchange.sol:29:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+contracts/Exchange.sol:31:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+contracts/Exchange.sol:41:5: Warning: No visibility specified. Defaulting to "public". 
+    function assert(bool assertion) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:51:5: Warning: No visibility specified. Defaulting to "public". 
+    function safeMul(uint a, uint b) returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:65:5: Warning: No visibility specified. Defaulting to "public". 
+    function safeSub(uint a, uint b) returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:77:5: Warning: No visibility specified. Defaulting to "public". 
+    function safeAdd(uint a, uint b) returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:123:5: Warning: No visibility specified. Defaulting to "public". 
+    function setOwner(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:135:5: Warning: No visibility specified. Defaulting to "public". 
+    function getOwner() returns (address out) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:145:5: Warning: No visibility specified. Defaulting to "public". 
+    function setAdmin(address admin, bool isAdmin) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:157:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFuturesContract(address futuresContract, bool isFuturesContract) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:361:5: Warning: No visibility specified. Defaulting to "public". 
+    function setInactivityReleasePeriod(uint256 expiry) onlyOwner returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:379:5: Warning: No visibility specified. Defaulting to "public". 
+    function Exchange(address feeAccount_, uint256 makerFee_, uint256 takerFee_, uint256 inactivityReleasePeriod_) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:397:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFees(uint256 makerFee_, uint256 takerFee_) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:415:5: Warning: No visibility specified. Defaulting to "public". 
+    function destroyContract() onlyOwner returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:481:5: Warning: No visibility specified. Defaulting to "public". 
+    function decodeBalanceAndReserve (address token, address user) returns (uint256[2])
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:499:5: Warning: No visibility specified. Defaulting to "public". 
+    function futuresContractAllowed (address futuresContract, address user) returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:519:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address token, address user) view returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:543:5: Warning: No visibility specified. Defaulting to "public". 
+    function setReserve(address token, address user, uint256 amount) onlyFuturesContract returns (bool success) { 
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:555:5: Warning: No visibility specified. Defaulting to "public". 
+    function setBalance(address token, address user, uint256 amount) onlyFuturesContract returns (bool success)     {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:569:5: Warning: No visibility specified. Defaulting to "public". 
+    function subBalanceAddReserve(address token, address user, uint256 subBalance, uint256 addReserve) onlyFuturesContract returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:581:5: Warning: No visibility specified. Defaulting to "public". 
+    function addBalanceSubReserve(address token, address user, uint256 addBalance, uint256 subReserve) onlyFuturesContract returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:593:5: Warning: No visibility specified. Defaulting to "public". 
+    function addBalanceAddReserve(address token, address user, uint256 addBalance, uint256 addReserve) onlyFuturesContract returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:605:5: Warning: No visibility specified. Defaulting to "public". 
+    function subBalanceSubReserve(address token, address user, uint256 subBalance, uint256 subReserve) onlyFuturesContract returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:619:5: Warning: No visibility specified. Defaulting to "public". 
+    function availableBalanceOf(address token, address user) view returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:629:5: Warning: No visibility specified. Defaulting to "public". 
+    function getInactivityReleasePeriod() view returns (uint256)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:669:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:689:5: Warning: No visibility specified. Defaulting to "public". 
+    function depositForUser(address user) payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:709:5: Warning: No visibility specified. Defaulting to "public". 
+    function depositToken(address token, uint128 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:735:5: Warning: No visibility specified. Defaulting to "public". 
+    function depositTokenForUser(address token, uint128 amount, address user) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:759:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(address token, uint256 amount) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:759:63: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function withdraw(address token, uint256 amount) returns (bool success) {
+                                                              ^----------^
+contracts/Exchange.sol:791:5: Warning: No visibility specified. Defaulting to "public". 
+    function releaseFundsAfterDestroy(address token, uint256 amount) onlyOwner returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:791:89: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function releaseFundsAfterDestroy(address token, uint256 amount) onlyOwner returns (bool success) {
+                                                                                        ^----------^
+contracts/Exchange.sol:813:5: Warning: No visibility specified. Defaulting to "public". 
+    function userAllowFuturesContract(address futuresContract)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:829:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowFuturesContractForUser(address futuresContract, address user, uint8 v, bytes32 r, bytes32 s) onlyAdmin
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:851:5: Warning: No visibility specified. Defaulting to "public". 
+    function adminWithdraw(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:869:26: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    ) onlyAdmin returns (bool success) {
+                         ^----------^
+contracts/Exchange.sol:927:5: Warning: No visibility specified. Defaulting to "public". 
+    function batchAdminWithdraw(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:981:5: Warning: No visibility specified. Defaulting to "public". 
+    function getMakerTakerBalances(address token, address maker, address taker) view returns (uint256[4])
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:1001:5: Warning: No visibility specified. Defaulting to "public". 
+    function getUserBalances(address token, address user) view returns (uint256[2])
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:1083:5: Warning: No visibility specified. Defaulting to "public". 
+    function trade(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:1549:5: Warning: No visibility specified. Defaulting to "public". 
+    function batchOrderTrade(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:1585:5: Warning: No visibility specified. Defaulting to "public". 
+    function cancelOrder(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:41:5: Warning: Function state mutability can be restricted to pure
+    function assert(bool assertion) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:135:5: Warning: Function state mutability can be restricted to view
+    function getOwner() returns (address out) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:481:5: Warning: Function state mutability can be restricted to view
+    function decodeBalanceAndReserve (address token, address user) returns (uint256[2])
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:499:5: Warning: Function state mutability can be restricted to view
+    function futuresContractAllowed (address futuresContract, address user) returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Exchange.sol:523:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        return decodeBalanceAndReserve(token, user)[0];
+               ^----------------------------------^
+contracts/Exchange.sol:535:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        return decodeBalanceAndReserve(token, user)[1];
+               ^----------------------------------^
+contracts/Exchange.sol:621:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        return safeSub(balanceOf(token, user), getReserve(token, user));
+               ^------------------------------------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz Exchange
+** Write stats: 0.105894
+** Write stats: 5.0242
+** Write stats: 10.0619
+** Write stats: 15.1367
+** Write stats: 18.5347

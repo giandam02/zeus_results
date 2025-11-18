@@ -1,0 +1,35 @@
+Extract contract Address from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+Extract contract AdminUpgradeabilityProxy from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+Extract contract AdminableProxy from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+Extract contract ExitHandler from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+Extract contract ExitHandlerProxy from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+Extract contract UpgradeabilityProxy from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+Extracted 6 contract(s) from /sb/0x0036192587fd788b75829fbf79be7f06e4f23b21.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+assets/NormalAttacker.sol:3:1: Error: Source file requires different compiler version (current compiler is 0.5.2+commit.1df8f40c.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+contract NormalAttacker {
+^------^
+assets/ReentrancyAttacker.sol:3:1: Error: Source file requires different compiler version (current compiler is 0.5.2+commit.1df8f40c.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+contract ReentrancyAttacker {
+^------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 10:    31 Aborted                 (core dumped) ./fuzzer --file contracts/ExitHandlerProxy.sol.json --name ExitHandlerProxy --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    32 Aborted                 (core dumped) ./fuzzer --file contracts/ExitHandler.sol.json --name ExitHandler --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    33 Aborted                 (core dumped) ./fuzzer --file contracts/AdminableProxy.sol.json --name AdminableProxy --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    34 Aborted                 (core dumped) ./fuzzer --file contracts/AdminUpgradeabilityProxy.sol.json --name AdminUpgradeabilityProxy --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 14:    35 Aborted                 (core dumped) ./fuzzer --file contracts/Address.sol.json --name Address --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 15:    36 Aborted                 (core dumped) ./fuzzer --file contracts/UpgradeabilityProxy.sol.json --name UpgradeabilityProxy --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

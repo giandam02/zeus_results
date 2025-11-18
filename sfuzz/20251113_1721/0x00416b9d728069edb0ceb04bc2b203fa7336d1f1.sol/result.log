@@ -1,0 +1,318 @@
+Extract contract AversafeSeedCrowdsale from /sb/0x00416b9d728069edb0ceb04bc2b203fa7336d1f1.sol
+Extract contract Owned from /sb/0x00416b9d728069edb0ceb04bc2b203fa7336d1f1.sol
+Extract contract ReentrancyHandlingContract from /sb/0x00416b9d728069edb0ceb04bc2b203fa7336d1f1.sol
+Extract contract SeedCrowdsaleContract from /sb/0x00416b9d728069edb0ceb04bc2b203fa7336d1f1.sol
+Extracted 4 contract(s) from /sb/0x00416b9d728069edb0ceb04bc2b203fa7336d1f1.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ReentrancyHandlingContract.sol:71:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ReentrancyHandlingContract.sol:735:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ReentrancyHandlingContract.sol:103:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerUpdate(owner, newOwner);
+        ^--------------------------^
+contracts/ReentrancyHandlingContract.sol:291:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MaxCapReached(block.timestamp);                                           // Close the crowdsale
+      ^----------------------------^
+contracts/ReentrancyHandlingContract.sol:293:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CrowdsaleEnded(block.timestamp);                                          // Raise event
+      ^-----------------------------^
+contracts/ReentrancyHandlingContract.sol:307:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleStarted(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/ReentrancyHandlingContract.sol:319:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleUnlimitedStarted(block.timestamp);                               // Raise event
+        ^--------------------------------------^
+contracts/ReentrancyHandlingContract.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CrowdsaleEnded(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/ReentrancyHandlingContract.sol:443:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MinCapReached(block.timestamp);
+      ^----------------------------^
+contracts/ReentrancyHandlingContract.sol:467:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributionMade(msg.sender, contributionAmount);                           // Raise event about contribution
+    ^----------------------------------------------^
+contracts/ReentrancyHandlingContract.sol:513:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);
+            ^----------^
+contracts/ReentrancyHandlingContract.sol:519:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    pendingEthWithdrawal = this.balance;
+                           ^----------^
+contracts/ReentrancyHandlingContract.sol:601:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ErrorSendingETH(currentParticipantAddress, contribution);             // If there is an issue raise event for manual recovery
+          ^------------------------------------------------------^
+contracts/ReentrancyHandlingContract.sol:625:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);                                                 // Check if there are any eth to claim
+            ^----------^
+contracts/ReentrancyHandlingContract.sol:631:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    multisigAddress.transfer(this.balance);                                     // Withdraw to multisig for manual processing
+                             ^----------^
+contracts/ReentrancyHandlingContract.sol:735:3: Warning: No visibility specified. Defaulting to "public". 
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SeedCrowdsaleContract.sol:71:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SeedCrowdsaleContract.sol:735:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SeedCrowdsaleContract.sol:103:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerUpdate(owner, newOwner);
+        ^--------------------------^
+contracts/SeedCrowdsaleContract.sol:291:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MaxCapReached(block.timestamp);                                           // Close the crowdsale
+      ^----------------------------^
+contracts/SeedCrowdsaleContract.sol:293:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CrowdsaleEnded(block.timestamp);                                          // Raise event
+      ^-----------------------------^
+contracts/SeedCrowdsaleContract.sol:307:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleStarted(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/SeedCrowdsaleContract.sol:319:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleUnlimitedStarted(block.timestamp);                               // Raise event
+        ^--------------------------------------^
+contracts/SeedCrowdsaleContract.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CrowdsaleEnded(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/SeedCrowdsaleContract.sol:443:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MinCapReached(block.timestamp);
+      ^----------------------------^
+contracts/SeedCrowdsaleContract.sol:467:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributionMade(msg.sender, contributionAmount);                           // Raise event about contribution
+    ^----------------------------------------------^
+contracts/SeedCrowdsaleContract.sol:513:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);
+            ^----------^
+contracts/SeedCrowdsaleContract.sol:519:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    pendingEthWithdrawal = this.balance;
+                           ^----------^
+contracts/SeedCrowdsaleContract.sol:601:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ErrorSendingETH(currentParticipantAddress, contribution);             // If there is an issue raise event for manual recovery
+          ^------------------------------------------------------^
+contracts/SeedCrowdsaleContract.sol:625:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);                                                 // Check if there are any eth to claim
+            ^----------^
+contracts/SeedCrowdsaleContract.sol:631:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    multisigAddress.transfer(this.balance);                                     // Withdraw to multisig for manual processing
+                             ^----------^
+contracts/SeedCrowdsaleContract.sol:735:3: Warning: No visibility specified. Defaulting to "public". 
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AversafeSeedCrowdsale.sol:71:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AversafeSeedCrowdsale.sol:735:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/AversafeSeedCrowdsale.sol:103:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerUpdate(owner, newOwner);
+        ^--------------------------^
+contracts/AversafeSeedCrowdsale.sol:291:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MaxCapReached(block.timestamp);                                           // Close the crowdsale
+      ^----------------------------^
+contracts/AversafeSeedCrowdsale.sol:293:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CrowdsaleEnded(block.timestamp);                                          // Raise event
+      ^-----------------------------^
+contracts/AversafeSeedCrowdsale.sol:307:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleStarted(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/AversafeSeedCrowdsale.sol:319:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleUnlimitedStarted(block.timestamp);                               // Raise event
+        ^--------------------------------------^
+contracts/AversafeSeedCrowdsale.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CrowdsaleEnded(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/AversafeSeedCrowdsale.sol:443:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MinCapReached(block.timestamp);
+      ^----------------------------^
+contracts/AversafeSeedCrowdsale.sol:467:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributionMade(msg.sender, contributionAmount);                           // Raise event about contribution
+    ^----------------------------------------------^
+contracts/AversafeSeedCrowdsale.sol:513:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);
+            ^----------^
+contracts/AversafeSeedCrowdsale.sol:519:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    pendingEthWithdrawal = this.balance;
+                           ^----------^
+contracts/AversafeSeedCrowdsale.sol:601:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ErrorSendingETH(currentParticipantAddress, contribution);             // If there is an issue raise event for manual recovery
+          ^------------------------------------------------------^
+contracts/AversafeSeedCrowdsale.sol:625:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);                                                 // Check if there are any eth to claim
+            ^----------^
+contracts/AversafeSeedCrowdsale.sol:631:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    multisigAddress.transfer(this.balance);                                     // Withdraw to multisig for manual processing
+                             ^----------^
+contracts/AversafeSeedCrowdsale.sol:735:3: Warning: No visibility specified. Defaulting to "public". 
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:71:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:735:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:103:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerUpdate(owner, newOwner);
+        ^--------------------------^
+contracts/Owned.sol:291:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MaxCapReached(block.timestamp);                                           // Close the crowdsale
+      ^----------------------------^
+contracts/Owned.sol:293:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CrowdsaleEnded(block.timestamp);                                          // Raise event
+      ^-----------------------------^
+contracts/Owned.sol:307:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleStarted(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/Owned.sol:319:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PresaleUnlimitedStarted(block.timestamp);                               // Raise event
+        ^--------------------------------------^
+contracts/Owned.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CrowdsaleEnded(block.timestamp);                                        // Raise event
+        ^-----------------------------^
+contracts/Owned.sol:443:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MinCapReached(block.timestamp);
+      ^----------------------------^
+contracts/Owned.sol:467:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContributionMade(msg.sender, contributionAmount);                           // Raise event about contribution
+    ^----------------------------------------------^
+contracts/Owned.sol:513:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);
+            ^----------^
+contracts/Owned.sol:519:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    pendingEthWithdrawal = this.balance;
+                           ^----------^
+contracts/Owned.sol:601:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ErrorSendingETH(currentParticipantAddress, contribution);             // If there is an issue raise event for manual recovery
+          ^------------------------------------------------------^
+contracts/Owned.sol:625:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance != 0);                                                 // Check if there are any eth to claim
+            ^----------^
+contracts/Owned.sol:631:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    multisigAddress.transfer(this.balance);                                     // Withdraw to multisig for manual processing
+                             ^----------^
+contracts/Owned.sol:735:3: Warning: No visibility specified. Defaulting to "public". 
+  function AversafeSeedCrowdsale() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz ReentrancyHandlingContract
+** Write stats: 0.001468
+** Write stats: 5.00026
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0003
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110.001
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120
+>> Fuzz SeedCrowdsaleContract
+** Write stats: 0.013138
+** Write stats: 5.00074
+** Write stats: 10.0012
+** Write stats: 15.0009
+** Write stats: 20.0006
+** Write stats: 25.0011
+** Write stats: 30.0008
+** Write stats: 35.0277
+** Write stats: 40.001
+** Write stats: 45.0008
+** Write stats: 50.0016
+** Write stats: 55.0004
+** Write stats: 60.0014
+** Write stats: 65.0005
+** Write stats: 70.0014
+** Write stats: 75.0009
+** Write stats: 80.0006
+** Write stats: 85.0013
+** Write stats: 90.0011
+** Write stats: 95.0017
+** Write stats: 100.001
+** Write stats: 105.002
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.001
+** Write stats: 120.01
+>> Fuzz AversafeSeedCrowdsale
+** Write stats: 0.013633
+** Write stats: 5.00052
+** Write stats: 10.0018
+** Write stats: 15.0018
+** Write stats: 20.0013
+** Write stats: 25.0001
+** Write stats: 30.0009
+** Write stats: 35.0003
+** Write stats: 40.0009
+** Write stats: 45.0018
+** Write stats: 50.0007
+** Write stats: 55.0006
+** Write stats: 60.0012
+** Write stats: 65.0016
+** Write stats: 70.0014
+** Write stats: 75.0011
+** Write stats: 80.0017
+** Write stats: 85.0017
+** Write stats: 90.0015
+** Write stats: 95.0003
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110.002
+** Write stats: 115.001
+** Write stats: 120.002
+** Write stats: 120.012
+>> Fuzz Owned
+** Write stats: 0.003462
+** Write stats: 5.00007
+** Write stats: 10.0002
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0047
+** Write stats: 30.0003
+** Write stats: 35.0004
+** Write stats: 40.0002
+** Write stats: 45.0001
+** Write stats: 50.0002
+** Write stats: 55.0001
+** Write stats: 60.0002
+** Write stats: 65.0002
+** Write stats: 70.0005
+** Write stats: 75.0001
+** Write stats: 80.0004
+** Write stats: 85.0001
+** Write stats: 90.0002
+** Write stats: 95.0001
+** Write stats: 100.004
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.008

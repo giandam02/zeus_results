@@ -1,0 +1,170 @@
+'solc --version' running
+'solc /sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:29:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TheGame() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:130:29: Warning: This declaration shadows an existing declaration.
+    function new_mainPlayer(address new_mainPlayer) {
+                            ^--------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:130:5: The shadowed declaration is here:
+    function new_mainPlayer(address new_mainPlayer) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:144:30: Warning: This declaration shadows an existing declaration.
+    function newfirst_player(address newfirst_player) {
+                             ^---------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:144:5: The shadowed declaration is here:
+    function newfirst_player(address newfirst_player) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:42:13: Error: Operator < not compatible with types uint256 and rational_const 1 / 2000000000000000000
+        if (amount < 1 / 2 ether) {
+            ^------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:43:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value);
+            ^------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:48:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value - 25 ether);
+            ^-----------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:58:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 1].send(jackpot);
+                ^---------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:61:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 1].send(jackpot * 70 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:62:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 2].send(jackpot * 30 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:65:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 1].send(jackpot * 70 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:66:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 2].send(jackpot * 20 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:67:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 3].send(jackpot * 10 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:85:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            first_player.send(amount * 3 / 100);
+            ^---------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:103:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            first_player.send(amount * 3 / 100);
+            ^---------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:109:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[lastPlayerPaid].send(playersAmounts[lastPlayerPaid]);
+                ^-------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:124:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            mainPlayer.send(address(this).balance);
+            ^------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:139:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            mainPlayer.send(collectedFee);
+            ^---------------------------^
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 581, in _run_solc
+    ret: Dict = json.loads(stdout)
+                ~~~~~~~~~~^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/local/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/bin/slither", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 776, in main
+    main_impl(all_detector_classes=detectors, all_printer_classes=printers)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 882, in main_impl
+    ) = process_all(filename, args, detector_classes, printer_classes)
+        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 96, in process_all
+    compilations = compile_all(target, **vars(args))
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/crytic_compile.py", line 722, in compile_all
+    compilations.append(CryticCompile(target, **kwargs))
+                        ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/crytic_compile.py", line 211, in __init__
+    self._compile(**kwargs)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/crytic_compile.py", line 633, in _compile
+    self._platform.compile(self, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 150, in compile
+    targets_json = _get_targets_json(compilation_unit, self._target, **kwargs)
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 279, in _get_targets_json
+    return _run_solc(
+        compilation_unit,
+    ...<6 lines>...
+        force_legacy_json=force_legacy_json,
+    )
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 585, in _run_solc
+    raise InvalidCompilation(f"Invalid solc compilation {stderr}")
+crytic_compile.platform.exceptions.InvalidCompilation: Invalid solc compilation /sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:29:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TheGame() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:130:29: Warning: This declaration shadows an existing declaration.
+    function new_mainPlayer(address new_mainPlayer) {
+                            ^--------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:130:5: The shadowed declaration is here:
+    function new_mainPlayer(address new_mainPlayer) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:144:30: Warning: This declaration shadows an existing declaration.
+    function newfirst_player(address newfirst_player) {
+                             ^---------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:144:5: The shadowed declaration is here:
+    function newfirst_player(address newfirst_player) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:42:13: Error: Operator < not compatible with types uint256 and rational_const 1 / 2000000000000000000
+        if (amount < 1 / 2 ether) {
+            ^------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:43:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value);
+            ^------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:48:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value - 25 ether);
+            ^-----------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:58:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 1].send(jackpot);
+                ^---------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:61:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 1].send(jackpot * 70 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:62:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 2].send(jackpot * 30 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:65:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 1].send(jackpot * 70 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:66:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 2].send(jackpot * 20 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:67:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[playersAddresses.length - 3].send(jackpot * 10 / 100);
+                ^--------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:85:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            first_player.send(amount * 3 / 100);
+            ^---------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:103:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            first_player.send(amount * 3 / 100);
+            ^---------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:109:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                playersAddresses[lastPlayerPaid].send(playersAmounts[lastPlayerPaid]);
+                ^-------------------------------------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:124:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            mainPlayer.send(address(this).balance);
+            ^------------------------------------^
+/sb/0xb5aff01f3e820735fac9abb594dc9993cb9e5bd2.sol:139:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            mainPlayer.send(collectedFee);
+            ^---------------------------^
+

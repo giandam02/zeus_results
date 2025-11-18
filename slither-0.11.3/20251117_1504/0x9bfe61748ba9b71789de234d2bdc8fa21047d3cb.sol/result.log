@@ -1,0 +1,159 @@
+'solc --version' running
+'solc /sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:36:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SimpleMixer(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:107:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    	    if( ! msg.sender.send(msg.value) ) throw; // send money back
+    	                                       ^---^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:168:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    	    if( ! msg.sender.send(msg.value) ) throw; // send money back
+    	                                       ^---^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:232:54: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if( ! msg.sender.send(withdrawedValue) ) throw;
+                                                     ^---^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:245:54: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if( ! msg.sender.send(withdrawedValue) ) throw;
+                                                     ^---^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:80:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Deal deal = _deals[dealId];        
+        ^-------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:137:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Deal deal = _deals[dealId];
+        ^-------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:189:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Deal deal = _deals[dealId];
+        ^-------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:42:10: Warning: Invoking events without "emit" prefix is deprecated.
+        	NewDeal( msg.sender,
+         ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:66:6: Warning: Invoking events without "emit" prefix is deprecated.
+    	NewDeal( msg.sender,
+     ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:106:10: Warning: Invoking events without "emit" prefix is deprecated.
+    	    Claim( msg.sender, dealId, false, error );
+    	    ^---------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:116:6: Warning: Invoking events without "emit" prefix is deprecated.
+	    Claim( msg.sender, dealId, true, "all good" );
+	    ^-------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:118:48: Warning: Invoking events without "emit" prefix is deprecated.
+	    if( deal.numClaims == deal.minNumClaims ) EnoughClaims( dealId );
+	                                              ^--------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:167:10: Warning: Invoking events without "emit" prefix is deprecated.
+    	    Deposit( msg.sender, dealId, msg.value, false, error );
+    	    ^----------------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:178:10: Warning: Invoking events without "emit" prefix is deprecated.
+    	    DealFullyFunded( dealId );
+    	    ^-----------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:181:6: Warning: Invoking events without "emit" prefix is deprecated.
+    	Deposit( msg.sender, dealId, msg.value, true, "all good" );
+    	^--------------------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:207:10: Warning: Invoking events without "emit" prefix is deprecated.
+    	    Withdraw( msg.sender, dealId, 0, false, false, error );
+    	    ^----------------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:219:17: Warning: Invoking events without "emit" prefix is deprecated.
+ ... Withdraw( msg.sender, dealId, 0, publicWithdraw, false, "address made no deposit. Note that this should be called with the public address" ) ... 
+     ^------------------------------------------------------------------------------------------------------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:237:17: Warning: Invoking events without "emit" prefix is deprecated.
+ ... Withdraw( msg.sender, dealId, 0, publicWithdraw, false, "address made no claims. Note that this should be called with the secret address" ) ... 
+     ^-----------------------------------------------------------------------------------------------------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:248:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Withdraw( msg.sender, dealId, withdrawedValue, publicWithdraw, true, "all good" );
+        ^-------------------------------------------------------------------------------^
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:36:5: Warning: No visibility specified. Defaulting to "public". 
+    function SimpleMixer(){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:39:5: Warning: No visibility specified. Defaulting to "public". 
+    function newDeal( uint _depositDurationInHours, uint _claimDurationInHours, uint _claimUnitValueInWei, uint _claimDepositInWei, uint _minNumClaims ) returns(ReturnValue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:79:5: Warning: No visibility specified. Defaulting to "public". 
+    function makeClaim( uint dealId ) payable returns(ReturnValue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:123:5: Warning: No visibility specified. Defaulting to "public". 
+    function makeDeposit( uint dealId ) payable returns(ReturnValue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:185:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw( uint dealId ) returns(ReturnValue){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol:254:5: Warning: No visibility specified. Defaulting to "public". 
+    function dealStatus(uint _dealId) constant returns(uint[4]){
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SimpleMixer.withdraw(uint256) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#185-250) performs a multiplication on the result of a division:
+	- userEffectiveNumDeposits = depositValue / deal.claimValueInWei (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#225)
+	- userExtraBalance = userEffectiveNumDeposits * extraBalance / effectiveNumDeposits (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#227)
+SimpleMixer.withdraw(uint256) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#185-250) performs a multiplication on the result of a division:
+	- userEffectiveNumDeposits = depositValue / deal.claimValueInWei (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#225)
+	- withdrawedValue = depositValue + deal.claimDepositInWei * userEffectiveNumDeposits + (userExtraBalance / 2) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#231)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+SimpleMixer.withdraw(uint256).error (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#188) is a local variable never initialized
+SimpleMixer.makeDeposit(uint256).error (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#125) is a local variable never initialized
+SimpleMixer.makeClaim(uint256).error (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#82) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+SimpleMixer.makeClaim(uint256) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#79-121) uses timestamp for comparisons
+	Dangerous comparisons:
+	- deal.startTime + deal.claimDurationInSec < now (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#89)
+SimpleMixer.makeDeposit(uint256) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#123-183) uses timestamp for comparisons
+	Dangerous comparisons:
+	- deal.startTime + deal.claimDurationInSec > now (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#138)
+	- deal.startTime + deal.claimDurationInSec + deal.depositDurationInSec < now (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#143)
+SimpleMixer.withdraw(uint256) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#185-250) uses timestamp for comparisons
+	Dangerous comparisons:
+	- deal.startTime + deal.claimDurationInSec > now (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#192)
+	- deal.startTime + deal.depositDurationInSec + deal.claimDurationInSec > now (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#199)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Deprecated standard detected THROW (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#107):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#168):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#232):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#245):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.2 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3.
+It is used by:
+	- ^0.4.2 (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SimpleMixer.newDeal(uint256,uint256,uint256,uint256,uint256)._depositDurationInHours (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#39) is not in mixedCase
+Parameter SimpleMixer.newDeal(uint256,uint256,uint256,uint256,uint256)._claimDurationInHours (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#39) is not in mixedCase
+Parameter SimpleMixer.newDeal(uint256,uint256,uint256,uint256,uint256)._claimUnitValueInWei (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#39) is not in mixedCase
+Parameter SimpleMixer.newDeal(uint256,uint256,uint256,uint256,uint256)._claimDepositInWei (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#39) is not in mixedCase
+Parameter SimpleMixer.newDeal(uint256,uint256,uint256,uint256,uint256)._minNumClaims (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#39) is not in mixedCase
+Parameter SimpleMixer.dealStatus(uint256)._dealId (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#254) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in SimpleMixer.withdraw(uint256) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#185-250):
+	External calls:
+	- ! msg.sender.send(withdrawedValue) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#232)
+	- ! msg.sender.send(withdrawedValue) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#245)
+	Event emitted after the call(s):
+	- Withdraw(msg.sender,dealId,withdrawedValue,publicWithdraw,true,all good) (../sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol#248)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x9bfe61748ba9b71789de234d2bdc8fa21047d3cb.sol analyzed (1 contracts with 100 detectors), 21 result(s) found

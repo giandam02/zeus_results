@@ -1,0 +1,28 @@
+Extract contract /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol:42:64: from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+cp: cannot create regular file '/home/contracts//sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol:42:64:.sol': No such file or directory
+Extract contract ParserError: from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract Expected from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract ';' from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract but from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract got from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract '}' from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract modifier from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract onlyOwnerAllowed() from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract {if from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract (tx.origin from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract != from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract owner) from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract throw; from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract _}
+ from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extract contract ^ from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+Extracted 16 contract(s) from /sb/0x63dd6f40007731eb7e70a7ae43b55c0fb2090c99.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/modifier.sol:42:64: Error: Expected ';' but got '}'
+  modifier onlyOwnerAllowed() {if (tx.origin != owner) throw; _}
+                                                               ^
+./fuzzMe: line 3: syntax error near unexpected token `)'
+./fuzzMe: line 3: `solc --combined-json abi,bin,bin-runtime,srcmap,srcmap-runtime contracts/owner).sol > contracts/owner).sol.json'

@@ -1,0 +1,165 @@
+Extract contract TheEthereumLottery from /sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol
+Extracted 1 contract(s) from /sb/0x9473bc8bb575ffc15cb2179cd9398bdf5730bf55.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/TheEthereumLottery.sol:45:1: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+function TheEthereumLottery()
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:54:28: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+  if (msg.sender != owner) throw;
+                           ^---^
+contracts/TheEthereumLottery.sol:130:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//this implies that if Numbers are present, broadcasted TheRand has to satisfy TheHash
+    ^---^
+contracts/TheEthereumLottery.sol:193:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+contracts/TheEthereumLottery.sol:200:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//because you should sort the values yourself
+    ^---^
+contracts/TheEthereumLottery.sol:233:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+contracts/TheEthereumLottery.sol:239:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//referrals have at least 50% of the income
+    ^---^
+contracts/TheEthereumLottery.sol:248:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//throw if player didnt played
+    ^---^
+contracts/TheEthereumLottery.sol:253:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//this condition checks if the numbers were announced
+    ^---^
+contracts/TheEthereumLottery.sol:275:15: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+  if(hits==0) throw;
+              ^---^
+contracts/TheEthereumLottery.sol:284:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+contracts/TheEthereumLottery.sol:305:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw; //no refund if there was a valid announce
+    ^---^
+contracts/TheEthereumLottery.sol:308:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//no refund while there is still TIME to announce TheRand
+    ^---^
+contracts/TheEthereumLottery.sol:312:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;//throw if player didnt played or already refunded
+    ^---^
+contracts/TheEthereumLottery.sol:316:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+contracts/TheEthereumLottery.sol:120:3: Warning: Invoking events without "emit" prefix is deprecated.
+  NewDrawReadyToPlay(IndexOfCurrentDraw, new_hash, priceofticket, guess4outof4);//event
+  ^---------------------------------------------------------------------------^
+contracts/TheEthereumLottery.sol:127:6: Warning: "sha3" has been deprecated in favour of "keccak256"
+  if(sha3(the_rand)
+     ^------------^
+contracts/TheEthereumLottery.sol:127:6: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+  if(sha3(the_rand)
+     ^------------^
+contracts/TheEthereumLottery.sol:127:6: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+  if(sha3(the_rand)
+     ^------------^
+contracts/TheEthereumLottery.sol:133:25: Warning: "sha3" has been deprecated in favour of "keccak256"
+  bytes32 combined_rand=sha3(the_rand, ledger[index].ClosingHash);//from this number we'll calculate WinningNums
+                        ^---------------------------------------^
+contracts/TheEthereumLottery.sol:133:25: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+  bytes32 combined_rand=sha3(the_rand, ledger[index].ClosingHash);//from this number we'll calculate WinningNums
+                        ^---------------------------------------^
+contracts/TheEthereumLottery.sol:178:3: Warning: Invoking events without "emit" prefix is deprecated.
+  DrawReadyToPayout(index,
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:297:3: Warning: Invoking events without "emit" prefix is deprecated.
+  PlayerWon(win);//event
+  ^------------^
+contracts/TheEthereumLottery.sol:325:10: Warning: "sha3" has been deprecated in favour of "keccak256"
+  return sha3(TheRand);
+         ^-----------^
+contracts/TheEthereumLottery.sol:325:10: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+  return sha3(TheRand);
+         ^-----------^
+contracts/TheEthereumLottery.sol:325:10: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+  return sha3(TheRand);
+         ^-----------^
+contracts/TheEthereumLottery.sol:45:1: Warning: No visibility specified. Defaulting to "public". 
+function TheEthereumLottery()
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:87:1: Warning: No visibility specified. Defaulting to "public". 
+function next_draw(bytes32 new_hash,
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:100:5: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+    block.blockhash(block.number-1);//adds noise to the previous draw
+    ^-------------^
+contracts/TheEthereumLottery.sol:122:1: Warning: No visibility specified. Defaulting to "public". 
+function announce_therand(uint32 index,
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:183:1: Warning: No visibility specified. Defaulting to "public". 
+function PlayReferred(uint8 MyNum1,
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:210:1: Warning: No visibility specified. Defaulting to "public". 
+function Play(uint8 MyNum1,
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:223:1: Warning: No visibility specified. Defaulting to "public". 
+function Deposit_referral()//this function is not mandatory to become referral
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:228:1: Warning: No visibility specified. Defaulting to "public". 
+function Withdraw_referral()
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:235:1: Warning: No visibility specified. Defaulting to "public". 
+function set_referral_fee(uint8 new_fee)
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:242:1: Warning: No visibility specified. Defaulting to "public". 
+function Withdraw(uint32 DrawIndex)
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:299:1: Warning: No visibility specified. Defaulting to "public". 
+function Refund(uint32 DrawIndex)
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:322:1: Warning: No visibility specified. Defaulting to "public". 
+function CheckHash(bytes32 TheRand)
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:327:1: Warning: No visibility specified. Defaulting to "public". 
+function MyBet(uint8 DrawIndex, address PlayerAddress)
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:332:1: Warning: No visibility specified. Defaulting to "public". 
+function announce(string MSG)
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TheEthereumLottery.sol:322:1: Warning: Function state mutability can be restricted to pure
+function CheckHash(bytes32 TheRand)
+^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz TheEthereumLottery
+** Write stats: 0.038591
+** Write stats: 5.00341
+** Write stats: 10.0005
+** Write stats: 15.0055
+** Write stats: 20.0032
+** Write stats: 25.0611
+** Write stats: 30.0058
+** Write stats: 35.0013
+** Write stats: 40.0141
+** Write stats: 45.0006
+** Write stats: 50.0049
+** Write stats: 55.0019
+** Write stats: 60.0137
+** Write stats: 65.0031
+** Write stats: 70.0042
+** Write stats: 75.001
+** Write stats: 80.0022
+** Write stats: 85.005
+** Write stats: 90.0155
+** Write stats: 95.0091
+** Write stats: 100.014
+** Write stats: 105.012
+** Write stats: 110.011
+** Write stats: 115.012
+** Write stats: 120
+** Write stats: 120.092

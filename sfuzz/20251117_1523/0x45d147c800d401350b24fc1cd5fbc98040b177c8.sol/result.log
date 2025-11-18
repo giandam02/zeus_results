@@ -1,0 +1,752 @@
+Extract contract NinjaToken from /sb/0x45d147c800d401350b24fc1cd5fbc98040b177c8.sol
+Extract contract StandardToken from /sb/0x45d147c800d401350b24fc1cd5fbc98040b177c8.sol
+Extract contract Token from /sb/0x45d147c800d401350b24fc1cd5fbc98040b177c8.sol
+Extracted 3 contract(s) from /sb/0x45d147c800d401350b24fc1cd5fbc98040b177c8.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/NinjaToken.sol:85:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function NinjaToken(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:91:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=admin) throw;
+                              ^---^
+contracts/NinjaToken.sol:97:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/NinjaToken.sol:103:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/NinjaToken.sol:110:89: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(fundingLock||block.number<startBlock||block.number>startBlock+blockDuration) throw;
+                                                                                        ^---^
+contracts/NinjaToken.sol:111:128: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(balances[msg.sender]>balances[msg.sender]+msg.value*fundingExchangeRate || msg.value>msg.value*fundingExchangeRate) throw;
+                                                                                                                               ^---^
+contracts/NinjaToken.sol:112:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!fundingAccount.call.value(msg.value)()) throw;
+                                                    ^---^
+contracts/NinjaToken.sol:118:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/NinjaToken.sol:124:100: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(balances[msg.sender]>balances[msg.sender]+msg.value*price || msg.value>msg.value*price) throw;
+                                                                                                   ^---^
+contracts/NinjaToken.sol:125:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!fundingAccount.call.value(msg.value)()) throw;
+                                                    ^---^
+contracts/NinjaToken.sol:132:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(transferLock) throw;
+                         ^---^
+contracts/NinjaToken.sol:137:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(transferLock) throw;
+                         ^---^
+contracts/NinjaToken.sol:8:43: Warning: This declaration shadows an existing declaration.
+  function totalSupply() constant returns(uint256 totalSupply){}
+                                          ^-----------------^
+contracts/NinjaToken.sol:8:3: The shadowed declaration is here:
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+
+contracts/NinjaToken.sol:61:72: Warning: This declaration shadows an existing declaration.
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+                                                                       ^---------------^
+contracts/NinjaToken.sol:61:3: The shadowed declaration is here:
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/NinjaToken.sol:32:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(msg.sender,_to,_value);
+      ^-----------------------------^
+contracts/NinjaToken.sol:44:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(_from,_to,_value);
+      ^------------------------^
+contracts/NinjaToken.sol:53:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender,_spender,_value);
+    ^----------------------------------^
+contracts/NinjaToken.sol:114:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Funding(msg.sender,msg.value);
+        ^---------------------------^
+contracts/NinjaToken.sol:128:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Buy(msg.sender,msg.value);
+        ^-----------------------^
+contracts/NinjaToken.sol:8:3: Warning: No visibility specified. Defaulting to "public". 
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+contracts/NinjaToken.sol:8:43: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function totalSupply() constant returns(uint256 totalSupply){}
+                                          ^-----------------^
+contracts/NinjaToken.sol:10:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+  ^---------------------------------------------------------------------^
+contracts/NinjaToken.sol:10:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+                     ^------------^
+contracts/NinjaToken.sol:10:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+                                                       ^-------------^
+contracts/NinjaToken.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+  ^-----------------------------------------------------------------------------^
+contracts/NinjaToken.sol:12:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                    ^---------^
+contracts/NinjaToken.sol:12:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                                 ^------------^
+contracts/NinjaToken.sol:12:67: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                                                                  ^----------^
+contracts/NinjaToken.sol:14:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+  ^-------------------------------------------------------------------------------------------------^
+contracts/NinjaToken.sol:14:25: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                        ^-----------^
+contracts/NinjaToken.sol:14:40: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                       ^---------^
+contracts/NinjaToken.sol:14:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                                    ^------------^
+contracts/NinjaToken.sol:14:87: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                                                                      ^----------^
+contracts/NinjaToken.sol:16:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+  ^---------------------------------------------------------------------------------^
+contracts/NinjaToken.sol:16:20: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                   ^--------------^
+contracts/NinjaToken.sol:16:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                                     ^------------^
+contracts/NinjaToken.sol:16:71: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                                                                      ^----------^
+contracts/NinjaToken.sol:18:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+  ^-------------------------------------------------------------------------------------^
+contracts/NinjaToken.sol:18:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                     ^------------^
+contracts/NinjaToken.sol:18:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                                     ^-----------^
+contracts/NinjaToken.sol:18:70: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                                                                     ^---------------^
+contracts/NinjaToken.sol:28:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value)constant returns(bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:39:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value)constant returns(bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:51:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value)constant returns (bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:57:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:85:5: Warning: No visibility specified. Defaulting to "public". 
+    function NinjaToken(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function changeFunder(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:96:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundingLock(bool _fundinglock,address _fundingAccount){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundingEnv(uint _startBlock, uint _blockDuration,uint _fundingExchangeRate){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:109:5: Warning: No visibility specified. Defaulting to "public". 
+    function funding() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrice(uint _price,bool _transferLock){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:123:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy(string _commit) payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value)constant returns(bool success){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value)constant returns(bool success){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NinjaToken.sol:8:3: Warning: Function state mutability can be restricted to pure
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+contracts/NinjaToken.sol:10:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+  ^---------------------------------------------------------------------^
+contracts/NinjaToken.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+  ^-----------------------------------------------------------------------------^
+contracts/NinjaToken.sol:14:3: Warning: Function state mutability can be restricted to pure
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+  ^-------------------------------------------------------------------------------------------------^
+contracts/NinjaToken.sol:16:3: Warning: Function state mutability can be restricted to pure
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+  ^---------------------------------------------------------------------------------^
+contracts/NinjaToken.sol:18:3: Warning: Function state mutability can be restricted to pure
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+  ^-------------------------------------------------------------------------------------^
+contracts/NinjaToken.sol:30:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[msg.sender] -= _value;
+      ^------------------^
+contracts/NinjaToken.sol:31:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_to] +=_value;
+      ^-----------^
+contracts/NinjaToken.sol:32:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      Transfer(msg.sender,_to,_value);
+      ^-----------------------------^
+contracts/NinjaToken.sol:41:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_from]-=_value;
+      ^-------------^
+contracts/NinjaToken.sol:42:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      allowed[_from][msg.sender]-=_value;
+      ^------------------------^
+contracts/NinjaToken.sol:43:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_to]-=_value;
+      ^-----------^
+contracts/NinjaToken.sol:44:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      Transfer(_from,_to,_value);
+      ^------------------------^
+contracts/NinjaToken.sol:52:5: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+    allowed[msg.sender][_spender]=_value;
+    ^---------------------------^
+contracts/NinjaToken.sol:53:5: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+    Approval(msg.sender,_spender,_value);
+    ^----------------------------------^
+contracts/Token.sol:85:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function NinjaToken(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:91:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=admin) throw;
+                              ^---^
+contracts/Token.sol:97:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/Token.sol:103:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/Token.sol:110:89: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(fundingLock||block.number<startBlock||block.number>startBlock+blockDuration) throw;
+                                                                                        ^---^
+contracts/Token.sol:111:128: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(balances[msg.sender]>balances[msg.sender]+msg.value*fundingExchangeRate || msg.value>msg.value*fundingExchangeRate) throw;
+                                                                                                                               ^---^
+contracts/Token.sol:112:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!fundingAccount.call.value(msg.value)()) throw;
+                                                    ^---^
+contracts/Token.sol:118:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/Token.sol:124:100: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(balances[msg.sender]>balances[msg.sender]+msg.value*price || msg.value>msg.value*price) throw;
+                                                                                                   ^---^
+contracts/Token.sol:125:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!fundingAccount.call.value(msg.value)()) throw;
+                                                    ^---^
+contracts/Token.sol:132:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(transferLock) throw;
+                         ^---^
+contracts/Token.sol:137:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(transferLock) throw;
+                         ^---^
+contracts/Token.sol:8:43: Warning: This declaration shadows an existing declaration.
+  function totalSupply() constant returns(uint256 totalSupply){}
+                                          ^-----------------^
+contracts/Token.sol:8:3: The shadowed declaration is here:
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+
+contracts/Token.sol:61:72: Warning: This declaration shadows an existing declaration.
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+                                                                       ^---------------^
+contracts/Token.sol:61:3: The shadowed declaration is here:
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Token.sol:32:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(msg.sender,_to,_value);
+      ^-----------------------------^
+contracts/Token.sol:44:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(_from,_to,_value);
+      ^------------------------^
+contracts/Token.sol:53:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender,_spender,_value);
+    ^----------------------------------^
+contracts/Token.sol:114:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Funding(msg.sender,msg.value);
+        ^---------------------------^
+contracts/Token.sol:128:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Buy(msg.sender,msg.value);
+        ^-----------------------^
+contracts/Token.sol:8:3: Warning: No visibility specified. Defaulting to "public". 
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+contracts/Token.sol:8:43: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function totalSupply() constant returns(uint256 totalSupply){}
+                                          ^-----------------^
+contracts/Token.sol:10:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+  ^---------------------------------------------------------------------^
+contracts/Token.sol:10:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+                     ^------------^
+contracts/Token.sol:10:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+                                                       ^-------------^
+contracts/Token.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+  ^-----------------------------------------------------------------------------^
+contracts/Token.sol:12:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                    ^---------^
+contracts/Token.sol:12:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                                 ^------------^
+contracts/Token.sol:12:67: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                                                                  ^----------^
+contracts/Token.sol:14:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+  ^-------------------------------------------------------------------------------------------------^
+contracts/Token.sol:14:25: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                        ^-----------^
+contracts/Token.sol:14:40: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                       ^---------^
+contracts/Token.sol:14:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                                    ^------------^
+contracts/Token.sol:14:87: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                                                                      ^----------^
+contracts/Token.sol:16:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+  ^---------------------------------------------------------------------------------^
+contracts/Token.sol:16:20: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                   ^--------------^
+contracts/Token.sol:16:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                                     ^------------^
+contracts/Token.sol:16:71: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                                                                      ^----------^
+contracts/Token.sol:18:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+  ^-------------------------------------------------------------------------------------^
+contracts/Token.sol:18:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                     ^------------^
+contracts/Token.sol:18:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                                     ^-----------^
+contracts/Token.sol:18:70: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                                                                     ^---------------^
+contracts/Token.sol:28:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value)constant returns(bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:39:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value)constant returns(bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:51:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value)constant returns (bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:57:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:85:5: Warning: No visibility specified. Defaulting to "public". 
+    function NinjaToken(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function changeFunder(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:96:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundingLock(bool _fundinglock,address _fundingAccount){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundingEnv(uint _startBlock, uint _blockDuration,uint _fundingExchangeRate){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:109:5: Warning: No visibility specified. Defaulting to "public". 
+    function funding() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrice(uint _price,bool _transferLock){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:123:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy(string _commit) payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value)constant returns(bool success){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value)constant returns(bool success){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Token.sol:8:3: Warning: Function state mutability can be restricted to pure
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+contracts/Token.sol:10:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+  ^---------------------------------------------------------------------^
+contracts/Token.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+  ^-----------------------------------------------------------------------------^
+contracts/Token.sol:14:3: Warning: Function state mutability can be restricted to pure
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+  ^-------------------------------------------------------------------------------------------------^
+contracts/Token.sol:16:3: Warning: Function state mutability can be restricted to pure
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+  ^---------------------------------------------------------------------------------^
+contracts/Token.sol:18:3: Warning: Function state mutability can be restricted to pure
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+  ^-------------------------------------------------------------------------------------^
+contracts/Token.sol:30:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[msg.sender] -= _value;
+      ^------------------^
+contracts/Token.sol:31:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_to] +=_value;
+      ^-----------^
+contracts/Token.sol:32:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      Transfer(msg.sender,_to,_value);
+      ^-----------------------------^
+contracts/Token.sol:41:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_from]-=_value;
+      ^-------------^
+contracts/Token.sol:42:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      allowed[_from][msg.sender]-=_value;
+      ^------------------------^
+contracts/Token.sol:43:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_to]-=_value;
+      ^-----------^
+contracts/Token.sol:44:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      Transfer(_from,_to,_value);
+      ^------------------------^
+contracts/Token.sol:52:5: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+    allowed[msg.sender][_spender]=_value;
+    ^---------------------------^
+contracts/Token.sol:53:5: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+    Approval(msg.sender,_spender,_value);
+    ^----------------------------------^
+contracts/StandardToken.sol:85:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function NinjaToken(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:91:31: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=admin) throw;
+                              ^---^
+contracts/StandardToken.sol:97:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/StandardToken.sol:103:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/StandardToken.sol:110:89: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(fundingLock||block.number<startBlock||block.number>startBlock+blockDuration) throw;
+                                                                                        ^---^
+contracts/StandardToken.sol:111:128: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(balances[msg.sender]>balances[msg.sender]+msg.value*fundingExchangeRate || msg.value>msg.value*fundingExchangeRate) throw;
+                                                                                                                               ^---^
+contracts/StandardToken.sol:112:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!fundingAccount.call.value(msg.value)()) throw;
+                                                    ^---^
+contracts/StandardToken.sol:118:33: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(msg.sender!=founder) throw;
+                                ^---^
+contracts/StandardToken.sol:124:100: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(balances[msg.sender]>balances[msg.sender]+msg.value*price || msg.value>msg.value*price) throw;
+                                                                                                   ^---^
+contracts/StandardToken.sol:125:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!fundingAccount.call.value(msg.value)()) throw;
+                                                    ^---^
+contracts/StandardToken.sol:132:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(transferLock) throw;
+                         ^---^
+contracts/StandardToken.sol:137:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(transferLock) throw;
+                         ^---^
+contracts/StandardToken.sol:8:43: Warning: This declaration shadows an existing declaration.
+  function totalSupply() constant returns(uint256 totalSupply){}
+                                          ^-----------------^
+contracts/StandardToken.sol:8:3: The shadowed declaration is here:
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+
+contracts/StandardToken.sol:61:72: Warning: This declaration shadows an existing declaration.
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+                                                                       ^---------------^
+contracts/StandardToken.sol:61:3: The shadowed declaration is here:
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/StandardToken.sol:32:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(msg.sender,_to,_value);
+      ^-----------------------------^
+contracts/StandardToken.sol:44:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(_from,_to,_value);
+      ^------------------------^
+contracts/StandardToken.sol:53:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender,_spender,_value);
+    ^----------------------------------^
+contracts/StandardToken.sol:114:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Funding(msg.sender,msg.value);
+        ^---------------------------^
+contracts/StandardToken.sol:128:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Buy(msg.sender,msg.value);
+        ^-----------------------^
+contracts/StandardToken.sol:8:3: Warning: No visibility specified. Defaulting to "public". 
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+contracts/StandardToken.sol:8:43: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function totalSupply() constant returns(uint256 totalSupply){}
+                                          ^-----------------^
+contracts/StandardToken.sol:10:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+  ^---------------------------------------------------------------------^
+contracts/StandardToken.sol:10:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+                     ^------------^
+contracts/StandardToken.sol:10:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+                                                       ^-------------^
+contracts/StandardToken.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+  ^-----------------------------------------------------------------------------^
+contracts/StandardToken.sol:12:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                    ^---------^
+contracts/StandardToken.sol:12:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                                 ^------------^
+contracts/StandardToken.sol:12:67: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+                                                                  ^----------^
+contracts/StandardToken.sol:14:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+  ^-------------------------------------------------------------------------------------------------^
+contracts/StandardToken.sol:14:25: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                        ^-----------^
+contracts/StandardToken.sol:14:40: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                       ^---------^
+contracts/StandardToken.sol:14:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                                    ^------------^
+contracts/StandardToken.sol:14:87: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+                                                                                      ^----------^
+contracts/StandardToken.sol:16:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+  ^---------------------------------------------------------------------------------^
+contracts/StandardToken.sol:16:20: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                   ^--------------^
+contracts/StandardToken.sol:16:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                                     ^------------^
+contracts/StandardToken.sol:16:71: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+                                                                      ^----------^
+contracts/StandardToken.sol:18:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+  ^-------------------------------------------------------------------------------------^
+contracts/StandardToken.sol:18:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                     ^------------^
+contracts/StandardToken.sol:18:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                                     ^-----------^
+contracts/StandardToken.sol:18:70: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+                                                                     ^---------------^
+contracts/StandardToken.sol:28:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value)constant returns(bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:39:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value)constant returns(bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:51:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value)constant returns (bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:57:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _onwer,address _spender) constant returns(uint256 allowance){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:85:5: Warning: No visibility specified. Defaulting to "public". 
+    function NinjaToken(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:90:5: Warning: No visibility specified. Defaulting to "public". 
+    function changeFunder(address _founder,address _admin){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:96:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundingLock(bool _fundinglock,address _fundingAccount){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundingEnv(uint _startBlock, uint _blockDuration,uint _fundingExchangeRate){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:109:5: Warning: No visibility specified. Defaulting to "public". 
+    function funding() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function setPrice(uint _price,bool _transferLock){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:123:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy(string _commit) payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value)constant returns(bool success){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:136:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value)constant returns(bool success){
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:8:3: Warning: Function state mutability can be restricted to pure
+  function totalSupply() constant returns(uint256 totalSupply){}
+  ^------------------------------------------------------------^
+contracts/StandardToken.sol:10:3: Warning: Function state mutability can be restricted to pure
+  function balanceOf(address _owner) constant returns (uint256 balance){}
+  ^---------------------------------------------------------------------^
+contracts/StandardToken.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) constant returns(bool success){}
+  ^-----------------------------------------------------------------------------^
+contracts/StandardToken.sol:14:3: Warning: Function state mutability can be restricted to pure
+  function transferFrom(address _from, address _to, uint256 _value) constant returns (bool success){}
+  ^-------------------------------------------------------------------------------------------------^
+contracts/StandardToken.sol:16:3: Warning: Function state mutability can be restricted to pure
+  function approve(address _spender, uint256 _value) constant returns(bool success){}
+  ^---------------------------------------------------------------------------------^
+contracts/StandardToken.sol:18:3: Warning: Function state mutability can be restricted to pure
+  function allowance(address _owner, uint _spender) constant returns(uint256 remaining){}
+  ^-------------------------------------------------------------------------------------^
+contracts/StandardToken.sol:30:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[msg.sender] -= _value;
+      ^------------------^
+contracts/StandardToken.sol:31:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_to] +=_value;
+      ^-----------^
+contracts/StandardToken.sol:32:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      Transfer(msg.sender,_to,_value);
+      ^-----------------------------^
+contracts/StandardToken.sol:41:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_from]-=_value;
+      ^-------------^
+contracts/StandardToken.sol:42:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      allowed[_from][msg.sender]-=_value;
+      ^------------------------^
+contracts/StandardToken.sol:43:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      balances[_to]-=_value;
+      ^-----------^
+contracts/StandardToken.sol:44:7: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+      Transfer(_from,_to,_value);
+      ^------------------------^
+contracts/StandardToken.sol:52:5: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+    allowed[msg.sender][_spender]=_value;
+    ^---------------------------^
+contracts/StandardToken.sol:53:5: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+    Approval(msg.sender,_spender,_value);
+    ^----------------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz NinjaToken
+** Write stats: 0.030166
+** Write stats: 5.00452
+** Write stats: 10.0109
+** Write stats: 15.0074
+** Write stats: 20.0011
+** Write stats: 25.0059
+** Write stats: 30.0121
+** Write stats: 35.0032
+** Write stats: 40.0202
+** Write stats: 45.015
+** Write stats: 50.0229
+** Write stats: 55.0189
+** Write stats: 60.0078
+** Write stats: 65.0092
+** Write stats: 70.009
+** Write stats: 75.0162
+** Write stats: 80.0042
+** Write stats: 85.027
+** Write stats: 90.0155
+** Write stats: 95.0221
+** Write stats: 100.01
+** Write stats: 105.009
+** Write stats: 110.015
+** Write stats: 115.009
+** Write stats: 120.003
+** Write stats: 120.044
+>> Fuzz Token
+** Write stats: 0.030774
+** Write stats: 5.00126
+** Write stats: 10.0074
+** Write stats: 15.0077
+** Write stats: 20.0204
+** Write stats: 25.0055
+** Write stats: 30.0128
+** Write stats: 35.0113
+** Write stats: 40.0201
+** Write stats: 45.0037
+** Write stats: 50.0017
+** Write stats: 55.0123
+** Write stats: 60.0198
+** Write stats: 65.0052
+** Write stats: 70.0062
+** Write stats: 75.0329
+** Write stats: 80.0092
+** Write stats: 85.006
+** Write stats: 90.0164
+** Write stats: 95.0167
+** Write stats: 100.028
+** Write stats: 105.028
+** Write stats: 110.002
+** Write stats: 115.024
+** Write stats: 120.014
+** Write stats: 120.145
+>> Fuzz StandardToken
+** Write stats: 0.002757
+** Write stats: 5.0002
+** Write stats: 10.0001
+** Write stats: 15.0002
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0002
+** Write stats: 50.0005
+** Write stats: 55.0002
+** Write stats: 60.0002
+** Write stats: 65.0002
+** Write stats: 70.0002
+** Write stats: 75.0003
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0005
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115.453
+** Write stats: 120
+** Write stats: 120.001

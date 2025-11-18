@@ -1,0 +1,269 @@
+'solc --version' running
+'solc /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:29:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:54:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:127:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(change)) throw;
+                                             ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:131:70: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transfer(msg.sender,order * units)) throw;
+                                                                     ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:135:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else throw;  // return user funds if the contract is not selling
+             ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:150:83: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transferFrom(msg.sender, address(this), amount)) throw;
+                                                                                  ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:153:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(order * buyPrice)) throw;
+                                                       ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:185:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_buyPrice > _sellPrice) throw; // must make profit on spread
+                                   ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:186:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_units == 0) throw;              // can't sell zero units
+                        ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:196:9: Warning: Use of the "var" keyword is deprecated.
+        var bookid = sha3(_asset,_units);
+        ^--------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:211:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether to the factory
+        ^---^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:70:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:82:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:89:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:96:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:104:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:110:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(this.balance >= _value) {
+           ^----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:113:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:133:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:142:31: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            uint256 can_buy = this.balance / buyPrice;  // token lots contract can buy
+                              ^----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:155:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:196:22: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:196:22: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:204:13: Warning: Invoking events without "emit" prefix is deprecated.
+            NewBook(bookid, _asset, _units);
+            ^-----------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:207:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TradeListing(bookid,msg.sender,trader);
+        ^------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint supply);
+    ^----------------------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf( address who ) constant returns (uint value);
+    ^--------------------------------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address owner, address spender) constant returns (uint _allowance);
+    ^------------------------------------------------------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer( address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:12:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom( address from, address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address spender, uint value) returns (bool ok);
+    ^--------------------------------------------------------------^
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function activate (
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:93:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawAsset(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:101:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawToken(address _token, uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:108:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:140:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:176:5: Warning: No visibility specified. Defaulting to "public". 
+    function createTradeContract(       
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol:210:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TokenTrader.buy() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#117-136) performs a multiplication on the result of a division:
+	- order = msg.value / sellPrice (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#120)
+	- ! ERC20(asset).transfer(msg.sender,order * units) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#131)
+TokenTrader.buy() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#117-136) performs a multiplication on the result of a division:
+	- can_sell = ERC20(asset).balanceOf(address(this)) / units (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#121)
+	- change = msg.value - (can_sell * sellPrice) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#125)
+TokenTrader.sell(uint256) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#140-157) performs a multiplication on the result of a division:
+	- order = amount / units (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#143)
+	- ! msg.sender.send(order * buyPrice) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#153)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+owned.transferOwnership(address) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#33-35) should emit an event for: 
+	- owner = newOwner (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#34) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+owned.transferOwnership(address).newOwner (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#33) lacks a zero-check on :
+		- owner = newOwner (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#34)
+TokenTrader.TokenTrader(address,uint256,uint256,uint256,bool,bool)._asset (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#55) lacks a zero-check on :
+		- asset = _asset (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#63)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#176-208):
+	External calls:
+	- TokenTrader(trader).transferOwnership(msg.sender) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#200)
+	State variables written after the call(s):
+	- pairExits[bookid] = true (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#203)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TokenTrader.buy() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#117-136):
+	External calls:
+	- can_sell = ERC20(asset).balanceOf(address(this)) / units (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#121)
+	- ! ERC20(asset).transfer(msg.sender,order * units) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#131)
+	External calls sending eth:
+	- ! msg.sender.send(change) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#127)
+	Event emitted after the call(s):
+	- UpdateEvent() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#133)
+Reentrancy in TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#176-208):
+	External calls:
+	- TokenTrader(trader).transferOwnership(msg.sender) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#200)
+	Event emitted after the call(s):
+	- NewBook(bookid,_asset,_units) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#204)
+	- TradeListing(bookid,msg.sender,trader) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#207)
+Reentrancy in TokenTrader.sell(uint256) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#140-157):
+	External calls:
+	- ! ERC20(asset).transferFrom(msg.sender,address(this),amount) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#150)
+	External calls sending eth:
+	- ! msg.sender.send(order * buyPrice) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#153)
+	Event emitted after the call(s):
+	- UpdateEvent() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#176-208) compares to a boolean constant:
+	-pairExits[bookid] == false (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#202)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#29):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#127):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#131):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#135):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#150):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#153):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#185):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#186):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected bookid = sha3()(_asset,_units) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#196):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#211):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3
+	- LibrariesNotCallableFromPayableFunctions.
+It is used by:
+	- ^0.4.0 (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#21-36) is not in CapWords
+Parameter TokenTrader.activate(bool,bool)._sellsTokens (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#75) is not in mixedCase
+Parameter TokenTrader.activate(bool,bool)._buysTokens (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#76) is not in mixedCase
+Parameter TokenTrader.withdrawAsset(uint256)._value (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#93) is not in mixedCase
+Parameter TokenTrader.withdrawToken(address,uint256)._token (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#101) is not in mixedCase
+Parameter TokenTrader.withdrawToken(address,uint256)._value (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#101) is not in mixedCase
+Parameter TokenTrader.withdraw(uint256)._value (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#108) is not in mixedCase
+Parameter TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool)._asset (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#177) is not in mixedCase
+Parameter TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool)._buyPrice (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#178) is not in mixedCase
+Parameter TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool)._sellPrice (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#179) is not in mixedCase
+Parameter TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool)._units (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#180) is not in mixedCase
+Parameter TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool)._sellsTokens (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#181) is not in mixedCase
+Parameter TokenTraderFactory.createTradeContract(address,uint256,uint256,uint256,bool,bool)._buysTokens (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#182) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in TokenTrader.buy() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#117-136):
+	External calls:
+	- ! msg.sender.send(change) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#127)
+	Event emitted after the call(s):
+	- UpdateEvent() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#133)
+Reentrancy in TokenTrader.sell(uint256) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#140-157):
+	External calls:
+	- ! msg.sender.send(order * buyPrice) (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#153)
+	Event emitted after the call(s):
+	- UpdateEvent() (../sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol analyzed (7 contracts with 100 detectors), 38 result(s) found

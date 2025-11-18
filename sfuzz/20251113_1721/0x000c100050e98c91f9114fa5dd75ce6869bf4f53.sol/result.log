@@ -1,0 +1,39 @@
+Extract contract C10Token from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extract contract ERC20 from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extract contract ERC20Burnable from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extract contract InvictusWhitelist from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extract contract Roles from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extract contract SafeMath from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extract contract WhitelistedRole from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+Extracted 7 contract(s) from /sb/0x000c100050e98c91f9114fa5dd75ce6869bf4f53.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    33 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20.sol.json --name ERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    34 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    35 Aborted                 (core dumped) ./fuzzer --file contracts/InvictusWhitelist.sol.json --name InvictusWhitelist --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 14:    36 Aborted                 (core dumped) ./fuzzer --file contracts/C10Token.sol.json --name C10Token --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 15:    37 Aborted                 (core dumped) ./fuzzer --file contracts/Roles.sol.json --name Roles --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 16:    38 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20Burnable.sol.json --name ERC20Burnable --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 17:    39 Aborted                 (core dumped) ./fuzzer --file contracts/WhitelistedRole.sol.json --name WhitelistedRole --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

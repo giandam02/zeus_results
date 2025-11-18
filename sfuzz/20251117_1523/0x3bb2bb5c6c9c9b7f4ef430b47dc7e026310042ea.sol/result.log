@@ -1,0 +1,30 @@
+Extract contract /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol:7:62: from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+cp: cannot create regular file '/home/contracts//sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol:7:62:.sol': No such file or directory
+Extract contract ParserError: from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract Expected from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract ';' from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract but from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract got from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract '}' from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract modifier from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract only_owner from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract { from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract if from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract (msg.sender from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract != from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract owner) from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract return; from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract _ from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract }
+ from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extract contract ^ from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+Extracted 18 contract(s) from /sb/0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/modifier.sol:7:62: Error: Expected ';' but got '}'
+    modifier only_owner { if (msg.sender != owner) return; _ }
+                                                             ^
+./fuzzMe: line 3: syntax error near unexpected token `)'
+./fuzzMe: line 3: `solc --combined-json abi,bin,bin-runtime,srcmap,srcmap-runtime contracts/owner).sol > contracts/owner).sol.json'

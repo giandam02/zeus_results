@@ -1,0 +1,70 @@
+Extract contract /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol:42:26: from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+cp: cannot create regular file '/home/contracts//sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol:42:26:.sol': No such file or directory
+Extract contract ParserError: from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extract contract Unexpected from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extract contract trailing from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extract contract comma. from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extract contract hand: from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extract contract inHand,
+ from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extract contract ^ from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+Extracted 8 contract(s) from /sb/0xAc504e2a9c870A48de521ed513B251B1f7116Dd9.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ParserError:.sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+contracts/Unexpected.sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+contracts/inHand,
+.sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+contracts/comma..sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+contracts/hand:.sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+contracts/trailing.sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+contracts/^.sol:42:26: Error: Unexpected trailing comma.
+	            hand: inHand,
+	                        ^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/ParserError:.sol.json(1): expected value
+./fuzzMe: line 11:    34 Aborted                 (core dumped) ./fuzzer --file contracts/ParserError:.sol.json --name ParserError: --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/Unexpected.sol.json(1): expected value
+./fuzzMe: line 12:    35 Aborted                 (core dumped) ./fuzzer --file contracts/Unexpected.sol.json --name Unexpected --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/inHand,
+.sol.json(1): expected value
+./fuzzMe: line 13:    36 Aborted                 (core dumped) ./fuzzer --file contracts/inHand,
+.sol.json --name inHand,
+ --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/comma..sol.json(1): expected value
+./fuzzMe: line 14:    37 Aborted                 (core dumped) ./fuzzer --file contracts/comma..sol.json --name comma --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/hand:.sol.json(1): expected value
+./fuzzMe: line 15:    38 Aborted                 (core dumped) ./fuzzer --file contracts/hand:.sol.json --name hand: --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/trailing.sol.json(1): expected value
+./fuzzMe: line 16:    39 Aborted                 (core dumped) ./fuzzer --file contracts/trailing.sol.json --name trailing --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  contracts/^.sol.json(1): expected value
+./fuzzMe: line 17:    40 Aborted                 (core dumped) ./fuzzer --file contracts/^.sol.json --name ^ --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

@@ -1,0 +1,66 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:95:39:
+   |
+95 | 	function underdogPayoutFund() public constant returns (uint balance) {
+   | 	                                     ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:99:39:
+   |
+99 | 	function nextUnderdogPayout() public constant returns (uint) {
+   | 	                                     ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:106:41:
+    |
+106 | 	function underdogPayoutMarkup() public constant returns (uint) {
+    | 	                                       ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:110:31:
+    |
+110 | 	function topDogInfo() public constant returns (string name, uint strength) {
+    | 	                             ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:118:33:
+    |
+118 | 	function luckyDogInfo() public constant returns (string name) {
+    | 	                               ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:126:27:
+    |
+126 | 	function underdogCount() constant returns (uint) {
+    | 	                         ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:130:43:
+    |
+130 | 	function underdogInfo(uint linePosition) constant returns (string name, address dogAddress, uint deposit, uint payout, uint scrapBonus) {
+    | 	                                         ^^^^^^^^
+
+Error: Expected a state variable declaration. If you intended this as a fallback function or a function to handle plain ether transactions, use the "fallback" keyword or the "receive" keyword instead.
+   --> /sb/0xf4cae4aec9b4d7682f8cee4d9a273ba063e71366.sol:149:13:
+    |
+149 | 	function() {
+    | 	           ^

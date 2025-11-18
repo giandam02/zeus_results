@@ -1,0 +1,148 @@
+'solc --version' running
+'solc /sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:6:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:11:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:24:9: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+        function CampaignBeneficiary() {
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:28:54: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Resilience.call(setBeneficiarySig)) throw;
+                                                     ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:32:42: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if(msg.sender != Resilience) throw;
+                                         ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:38:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call.value(msg.value)(buySig)) throw;
+                                                               ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:41:75: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call(transferSig, msg.sender, msg.value)) throw;
+                                                                          ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:46:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call(sellSig, _value)) throw;
+                                                       ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:50:47: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!msg.sender.send(_value)) throw;
+                                              ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:55:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Resilience.call(closeCampaignSig)) throw;
+                                                    ^---^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:27:47: Warning: "sha3" has been deprecated in favour of "keccak256"
+            bytes4 setBeneficiarySig = bytes4(sha3("setBeneficiary()"));
+                                              ^----------------------^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:37:40: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 buySig = bytes4(sha3("buy()"));
+                                       ^-----------^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:40:45: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 transferSig = bytes4(sha3("transfer(address,uint256)"));
+                                            ^-------------------------------^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:45:41: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 sellSig = bytes4(sha3("sell(uint256)"));
+                                        ^-------------------^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:54:46: Warning: "sha3" has been deprecated in favour of "keccak256"
+            bytes4 closeCampaignSig = bytes4(sha3("closeCampaign()"));
+                                             ^---------------------^
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:24:9: Warning: No visibility specified. Defaulting to "public". 
+        function CampaignBeneficiary() {
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:31:9: Warning: No visibility specified. Defaulting to "public". 
+        function() payable {
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:44:9: Warning: No visibility specified. Defaulting to "public". 
+        function sell(uint256 _value) onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:49:9: Warning: No visibility specified. Defaulting to "public". 
+        function withdraw(uint256 _value) onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol:53:9: Warning: No visibility specified. Defaulting to "public". 
+        function closeCampaign() onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+
+
+owned.transferOwnership(address) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#15-17) should emit an event for: 
+	- owner = newOwner (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#16) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+owned.transferOwnership(address).newOwner (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#15) lacks a zero-check on :
+		- owner = newOwner (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#16)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#11):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected setBeneficiarySig = bytes4(sha3()(setBeneficiary())) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#27):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#28):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#32):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected buySig = bytes4(sha3()(buy())) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#37):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#38):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected transferSig = bytes4(sha3()(transfer(address,uint256))) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#40):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#41):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected sellSig = bytes4(sha3()(sell(uint256))) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#45):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#46):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#50):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected closeCampaignSig = bytes4(sha3()(closeCampaign())) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#54):
+	- Usage of "sha3()" should be replaced with "keccak256()"
+Deprecated standard detected THROW (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#55):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- ^0.4.6 (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in CampaignBeneficiary.CampaignBeneficiary() (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#24-29):
+	- ! Resilience.call(setBeneficiarySig) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#28)
+Low level call in CampaignBeneficiary.simulatePathwayFromBeneficiary() (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#35-42):
+	- ! Resilience.call.value(msg.value)(buySig) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#38)
+	- ! Resilience.call(transferSig,msg.sender,msg.value) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#41)
+Low level call in CampaignBeneficiary.sell(uint256) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#44-47):
+	- ! Resilience.call(sellSig,_value) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#46)
+Low level call in CampaignBeneficiary.closeCampaign() (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#53-56):
+	- ! Resilience.call(closeCampaignSig) (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Contract owned (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#3-18) is not in CapWords
+Parameter CampaignBeneficiary.sell(uint256)._value (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#44) is not in mixedCase
+Parameter CampaignBeneficiary.withdraw(uint256)._value (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#49) is not in mixedCase
+Variable CampaignBeneficiary.Resilience (../sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol#22) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol analyzed (2 contracts with 100 detectors), 25 result(s) found

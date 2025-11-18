@@ -1,0 +1,144 @@
+Extract contract GameOfThrones from /sb/0x9497043f4CD9450867479f3Fd873d80d9321094C.sol
+Extracted 1 contract(s) from /sb/0x9497043f4CD9450867479f3Fd873d80d9321094C.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/GameOfThrones.sol:34:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GameOfThrones() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameOfThrones.sol:158:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/GameOfThrones.sol:181:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+contracts/GameOfThrones.sol:51:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value);
+            ^------------------------^
+contracts/GameOfThrones.sol:56:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value - 100 ether);
+            ^------------------------------------^
+contracts/GameOfThrones.sol:66:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 95 / 100);
+                ^------------------------------------------------------------------------^
+contracts/GameOfThrones.sol:69:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 60 / 100);
+                ^------------------------------------------------------------------------^
+contracts/GameOfThrones.sol:70:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 35 / 100);
+                ^------------------------------------------------------------------------^
+contracts/GameOfThrones.sol:73:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[citizensAddresses.length - 1].send(piggyBank * 50 / 100);
+                ^------------------------------------------------------------------------^
+contracts/GameOfThrones.sol:74:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[citizensAddresses.length - 2].send(piggyBank * 30 / 100);
+                ^------------------------------------------------------------------------^
+contracts/GameOfThrones.sol:75:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[citizensAddresses.length - 3].send(piggyBank * 15 / 100);
+                ^------------------------------------------------------------------------^
+contracts/GameOfThrones.sol:101:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                citizensAddresses[lastCitizenPaid].send(citizensAmounts[lastCitizenPaid]);
+                ^-----------------------------------------------------------------------^
+contracts/GameOfThrones.sol:132:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            madKing.send(kingBank);
+            ^--------------------^
+contracts/GameOfThrones.sol:134:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                madKing.send(kingCost * 40 / 100);
+                ^-------------------------------^
+contracts/GameOfThrones.sol:138:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                madKing.send(piggyBank);
+                ^---------------------^
+contracts/GameOfThrones.sol:151:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            jester.send(jesterBank);
+            ^---------------------^
+contracts/GameOfThrones.sol:155:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(msg.value - amount);
+            ^---------------------------------^
+contracts/GameOfThrones.sol:172:17: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                madKing.send(kingBank);
+                ^--------------------^
+contracts/GameOfThrones.sol:189:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            trueGods.send(godBank);
+            ^--------------------^
+contracts/GameOfThrones.sol:195:11: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+          trueGods.send(godBank);
+          ^--------------------^
+contracts/GameOfThrones.sol:202:11: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+          madKing.send(kingBank);
+          ^--------------------^
+contracts/GameOfThrones.sol:209:11: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+          jester.send(jesterBank);
+          ^---------------------^
+contracts/GameOfThrones.sol:34:5: Warning: No visibility specified. Defaulting to "public". 
+    function GameOfThrones() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameOfThrones.sol:47:5: Warning: No visibility specified. Defaulting to "public". 
+    function protectKingdom() returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameOfThrones.sol:48:23: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        uint amount = msg.value;
+                      ^-------^
+contracts/GameOfThrones.sol:51:29: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            msg.sender.send(msg.value);
+                            ^-------^
+contracts/GameOfThrones.sol:56:29: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            msg.sender.send(msg.value - 100 ether);
+                            ^-------^
+contracts/GameOfThrones.sol:130:5: Warning: No visibility specified. Defaulting to "public". 
+    function abdicate() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameOfThrones.sol:147:5: Warning: No visibility specified. Defaulting to "public". 
+    function murder() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameOfThrones.sol:149:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value >= amount && msg.sender != jester) {
+            ^-------^
+contracts/GameOfThrones.sol:155:29: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            msg.sender.send(msg.value - amount);
+                            ^-------^
+contracts/GameOfThrones.sol:163:5: Warning: No visibility specified. Defaulting to "public". 
+    function usurpation() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/GameOfThrones.sol:164:23: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        uint amount = msg.value;
+                      ^-------^
+contracts/GameOfThrones.sol:187:5: Warning: No visibility specified. Defaulting to "public". 
+    function collectFee() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz GameOfThrones
+** Write stats: 0.006719
+** Write stats: 5.00022
+** Write stats: 10.0009
+** Write stats: 15.0011
+** Write stats: 20.0029
+** Write stats: 25.0002
+** Write stats: 30.001
+** Write stats: 35.001
+** Write stats: 40.001
+** Write stats: 45.0005
+** Write stats: 50.0012
+** Write stats: 55.0009
+** Write stats: 60.0006
+** Write stats: 65.0009
+** Write stats: 70.0007
+** Write stats: 75.0005
+** Write stats: 80.0002
+** Write stats: 85.0005
+** Write stats: 90.0012
+** Write stats: 95.0004
+** Write stats: 100.002
+** Write stats: 105.001
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.002
+** Write stats: 120.024

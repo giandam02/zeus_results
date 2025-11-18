@@ -1,0 +1,110 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol
+
+Error: Functions are not allowed to have the same name as the contract. If you intend this to be a constructor, use "constructor(...) { ... }" to define it.
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:4:5:
+  |
+4 |     function RNG() { }
+  |     ^^^^^^^^^^^^^^^^^^
+
+Error: No visibility specified. Did you intend to add "public"?
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:4:5:
+  |
+4 |     function RNG() { }
+  |     ^^^^^^^^^^^^^^^^^^
+
+Error: No visibility specified. Did you intend to add "public"?
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:5:5:
+  |
+5 |     function RandomNumber() returns(uint) {
+  |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: No visibility specified. Did you intend to add "public"?
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:8:5:
+  |
+8 |     function RandomNumberFromSeed(uint seed) returns(uint) {
+  |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: No visibility specified. Did you intend to add "public"?
+  --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:16:5:
+   |
+16 |     function Guess(uint _guess) returns (bool) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+  --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:18:49:
+   |
+18 |             if (!msg.sender.send(this.balance)) throw;
+   |                                                 ^^^^^
+
+Warning: This declaration shadows an existing declaration.
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:4:5:
+  |
+4 |     function RNG() { }
+  |     ^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:1:32:
+  |
+1 | pragma solidity >=0.4.0 <0.9.0;contract RNG {
+  |                                ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: "sha3" has been deprecated in favour of "keccak256".
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:6:42:
+  |
+6 |         return RandomNumberFromSeed(uint(sha3(block.number))^uint(sha3(now))^uint(msg.sender)^uint(tx.origin));
+  |                                          ^^^^
+
+Error: Invalid type for argument in function call. Invalid implicit conversion from uint256 to bytes memory requested. This function requires a single bytes argument. Use abi.encodePacked(...) to obtain the pre-0.5.0 behaviour or abi.encode(...) to use ABI encoding.
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:6:47:
+  |
+6 |         return RandomNumberFromSeed(uint(sha3(block.number))^uint(sha3(now))^uint(msg.sender)^uint(tx.origin));
+  |                                               ^^^^^^^^^^^^
+
+Error: "sha3" has been deprecated in favour of "keccak256".
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:6:67:
+  |
+6 |         return RandomNumberFromSeed(uint(sha3(block.number))^uint(sha3(now))^uint(msg.sender)^uint(tx.origin));
+  |                                                                   ^^^^
+
+Error: Invalid type for argument in function call. Invalid implicit conversion from uint256 to bytes memory requested. This function requires a single bytes argument. Use abi.encodePacked(...) to obtain the pre-0.5.0 behaviour or abi.encode(...) to use ABI encoding.
+ --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:6:72:
+  |
+6 |         return RandomNumberFromSeed(uint(sha3(block.number))^uint(sha3(now))^uint(msg.sender)^uint(tx.origin));
+  |                                                                        ^^^
+
+Error: "sha3" has been deprecated in favour of "keccak256".
+  --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:10:27:
+   |
+10 |         last = seed^(uint(sha3(block.blockhash(block.number),nonces[msg.sender]))*0x000b0007000500030001);
+   |                           ^^^^
+
+Error: Wrong argument count for function call: 2 arguments given but expected 1. This function requires a single bytes argument. Use abi.encodePacked(...) to obtain the pre-0.5.0 behaviour or abi.encode(...) to use ABI encoding.
+  --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:10:27:
+   |
+10 |         last = seed^(uint(sha3(block.blockhash(block.number),nonces[msg.sender]))*0x000b0007000500030001);
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Member "balance" not found or not visible after argument-dependent lookup in contract RNG. Use "address(this).balance" to access this address member.
+  --> /sb/0xaed5a41450b38fc0ea0f6f203a985653fe187d9c.sol:18:34:
+   |
+18 |             if (!msg.sender.send(this.balance)) throw;
+   |                                  ^^^^^^^^^^^^

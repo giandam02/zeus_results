@@ -1,0 +1,76 @@
+'solc --version' running
+'solc /sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:21:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function BalancedPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:30:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:54:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        currentNiceGuy.send(1 ether);
+        ^--------------------------^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:56:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        while (this.balance > 10 ether) {
+               ^----------^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:57:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            persons[payoutIdx].addr.send(10 ether);
+            ^------------------------------------^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:64:19: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        beta.send(this.balance);
+                  ^----------^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:64:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        beta.send(this.balance);
+        ^---------------------^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function BalancedPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:27:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:29:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value != 9 ether) {
+            ^-------^
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function funnel() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+BalancedPonzi.fallback() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#27-60) sends eth to arbitrary user
+	Dangerous calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#54)
+BalancedPonzi.funnel() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#63-65) sends eth to arbitrary user
+	Dangerous calls:
+	- beta.send(this.balance) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#64)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+BalancedPonzi.fallback() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#27-60) ignores return value by currentNiceGuy.send(1000000000000000000) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#54)
+BalancedPonzi.fallback() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#27-60) ignores return value by persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#57)
+BalancedPonzi.funnel() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#63-65) ignores return value by beta.send(this.balance) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#64)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+BalancedPonzi.fallback() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#27-60) has external calls inside a loop: persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#57)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+BalancedPonzi.fallback() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#27-60) has costly operations inside a loop:
+	- payoutIdx += 1 (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#30):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in BalancedPonzi.fallback() (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#27-60):
+	External calls:
+	- currentNiceGuy.send(1000000000000000000) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#54)
+	- persons[payoutIdx].addr.send(10000000000000000000) (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#57)
+	State variables written after the call(s):
+	- payoutIdx += 1 (../sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x09515Cb5e3aCaEf239Ab83d78B2F3e3764FcaB9B.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

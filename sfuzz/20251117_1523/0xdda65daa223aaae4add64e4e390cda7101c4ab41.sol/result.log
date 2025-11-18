@@ -1,0 +1,34 @@
+Extract contract /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol:6:52: from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+cp: cannot create regular file '/home/contracts//sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol:6:52:.sol': No such file or directory
+Extract contract ParserError: from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract Expected from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract ';' from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract but from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract got from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract '}' from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract modifier from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract noEther() from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract {if from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract (msg.value from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract > from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract 0) from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract throw; from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract _}
+ from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extract contract ^ from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+Extracted 16 contract(s) from /sb/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/modifier.sol:6:52: Error: Expected ';' but got '}'
+    modifier noEther() {if (msg.value > 0) throw; _}
+                                                   ^
+contracts/got.sol:6:52: Error: Expected ';' but got '}'
+    modifier noEther() {if (msg.value > 0) throw; _}
+                                                   ^
+contracts/ParserError:.sol:6:52: Error: Expected ';' but got '}'
+    modifier noEther() {if (msg.value > 0) throw; _}
+                                                   ^
+./fuzzMe: line 5: syntax error near unexpected token `)'
+./fuzzMe: line 5: `solc --combined-json abi,bin,bin-runtime,srcmap,srcmap-runtime contracts/0).sol > contracts/0).sol.json'

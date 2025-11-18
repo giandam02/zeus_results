@@ -1,0 +1,250 @@
+'solc --version' running
+'solc /sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:4:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:9:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;       
+                                 ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:8:24: Error: Modifier body does not contain '_'.
+    modifier onlyOwner {
+                       ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:36:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GSIToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:53:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:54:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:55:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[msg.sender]) throw;                // Check if frozen
+                                       ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:64:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[_from]) throw;                        // Check if frozen            
+                                  ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:65:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:66:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:67:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:94:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:101:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                             ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:105:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to avoid recursion attacks
+            ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:132:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:154:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+		function GSI() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:174:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+				if(freeReadings[msg.sender]==0) throw;
+				                                ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:177:47: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			if(_reading<lastReading[msg.sender].value) throw;
+			                                           ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:178:50: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			if(_reading<requestReading[msg.sender].value) throw;
+			                                              ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:179:69: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			if(now<lastReading[msg.sender].timestamp+secondsBetweenReadings) throw;
+			                                                                 ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:58:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:71:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:78:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, owner, mintedAmount);
+        ^------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:79:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(owner, target, mintedAmount);
+        ^-----------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:84:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FrozenFunds(target, freeze);
+        ^-------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:97:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:107:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);            // executes an event reflecting on the change
+            ^--------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:182:4: Warning: Invoking events without "emit" prefix is deprecated.
+			OracleRequest(msg.sender);
+			^-----------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:183:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			owner.send(msg.value);
+			^-------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:203:7: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+			if(this.balance>0) {
+			   ^----------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:204:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+				owner.send(this.balance);
+				           ^----------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:204:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				owner.send(this.balance);
+				^----------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:215:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				owner.send(msg.value);
+				^-------------------^
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 581, in _run_solc
+    ret: Dict = json.loads(stdout)
+                ~~~~~~~~~~^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/local/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/bin/slither", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 776, in main
+    main_impl(all_detector_classes=detectors, all_printer_classes=printers)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 882, in main_impl
+    ) = process_all(filename, args, detector_classes, printer_classes)
+        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 96, in process_all
+    compilations = compile_all(target, **vars(args))
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/crytic_compile.py", line 722, in compile_all
+    compilations.append(CryticCompile(target, **kwargs))
+                        ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/crytic_compile.py", line 211, in __init__
+    self._compile(**kwargs)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/crytic_compile.py", line 633, in _compile
+    self._platform.compile(self, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 150, in compile
+    targets_json = _get_targets_json(compilation_unit, self._target, **kwargs)
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 279, in _get_targets_json
+    return _run_solc(
+        compilation_unit,
+    ...<6 lines>...
+        force_legacy_json=force_legacy_json,
+    )
+  File "/usr/local/lib/python3.13/site-packages/crytic_compile/platform/solc.py", line 585, in _run_solc
+    raise InvalidCompilation(f"Invalid solc compilation {stderr}")
+crytic_compile.platform.exceptions.InvalidCompilation: Invalid solc compilation /sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:4:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:9:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;       
+                                 ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:8:24: Error: Modifier body does not contain '_'.
+    modifier onlyOwner {
+                       ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:36:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GSIToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:53:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough
+                                            ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:54:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows
+                                                      ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:55:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[msg.sender]) throw;                // Check if frozen
+                                       ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:64:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (frozenAccount[_from]) throw;                        // Check if frozen            
+                                  ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:65:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:66:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:67:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance
+                                                   ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:94:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[this] < amount) throw;               // checks if it has enough to sell
+                                      ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:101:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < amount ) throw;        // checks if the sender has enough to sell
+                                             ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:105:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;                                         // to do this last to avoid recursion attacks
+            ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:132:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether
+        ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:154:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+		function GSI() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:174:37: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+				if(freeReadings[msg.sender]==0) throw;
+				                                ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:177:47: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			if(_reading<lastReading[msg.sender].value) throw;
+			                                           ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:178:50: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			if(_reading<requestReading[msg.sender].value) throw;
+			                                              ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:179:69: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			if(now<lastReading[msg.sender].timestamp+secondsBetweenReadings) throw;
+			                                                                 ^---^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:58:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:71:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:78:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, owner, mintedAmount);
+        ^------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:79:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(owner, target, mintedAmount);
+        ^-----------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:84:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FrozenFunds(target, freeze);
+        ^-------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:97:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, msg.sender, amount);                // execute an event reflecting the change
+        ^--------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:107:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, this, amount);            // executes an event reflecting on the change
+            ^--------------------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:182:4: Warning: Invoking events without "emit" prefix is deprecated.
+			OracleRequest(msg.sender);
+			^-----------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:183:4: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+			owner.send(msg.value);
+			^-------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:203:7: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+			if(this.balance>0) {
+			   ^----------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:204:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+				owner.send(this.balance);
+				           ^----------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:204:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				owner.send(this.balance);
+				^----------------------^
+/sb/0x65bBC91459aAAd9603ef1345c6Bb6396dd6772B9.sol:215:5: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+				owner.send(msg.value);
+				^-------------------^
+

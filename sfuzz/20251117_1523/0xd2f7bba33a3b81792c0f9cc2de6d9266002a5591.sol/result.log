@@ -1,0 +1,202 @@
+Extract contract CampaignBeneficiary from /sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol
+Extract contract owned from /sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol
+Extracted 2 contract(s) from /sb/0xd2f7bba33a3b81792c0f9cc2de6d9266002a5591.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/CampaignBeneficiary.sol:6:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:11:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/CampaignBeneficiary.sol:24:9: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+        function CampaignBeneficiary() {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:28:54: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Resilience.call(setBeneficiarySig)) throw;
+                                                     ^---^
+contracts/CampaignBeneficiary.sol:32:42: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if(msg.sender != Resilience) throw;
+                                         ^---^
+contracts/CampaignBeneficiary.sol:38:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call.value(msg.value)(buySig)) throw;
+                                                               ^---^
+contracts/CampaignBeneficiary.sol:41:75: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call(transferSig, msg.sender, msg.value)) throw;
+                                                                          ^---^
+contracts/CampaignBeneficiary.sol:46:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call(sellSig, _value)) throw;
+                                                       ^---^
+contracts/CampaignBeneficiary.sol:50:47: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!msg.sender.send(_value)) throw;
+                                              ^---^
+contracts/CampaignBeneficiary.sol:55:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Resilience.call(closeCampaignSig)) throw;
+                                                    ^---^
+contracts/CampaignBeneficiary.sol:27:47: Warning: "sha3" has been deprecated in favour of "keccak256"
+            bytes4 setBeneficiarySig = bytes4(sha3("setBeneficiary()"));
+                                              ^----------------------^
+contracts/CampaignBeneficiary.sol:37:40: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 buySig = bytes4(sha3("buy()"));
+                                       ^-----------^
+contracts/CampaignBeneficiary.sol:40:45: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 transferSig = bytes4(sha3("transfer(address,uint256)"));
+                                            ^-------------------------------^
+contracts/CampaignBeneficiary.sol:45:41: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 sellSig = bytes4(sha3("sell(uint256)"));
+                                        ^-------------------^
+contracts/CampaignBeneficiary.sol:54:46: Warning: "sha3" has been deprecated in favour of "keccak256"
+            bytes4 closeCampaignSig = bytes4(sha3("closeCampaign()"));
+                                             ^---------------------^
+contracts/CampaignBeneficiary.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:24:9: Warning: No visibility specified. Defaulting to "public". 
+        function CampaignBeneficiary() {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:31:9: Warning: No visibility specified. Defaulting to "public". 
+        function() payable {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:44:9: Warning: No visibility specified. Defaulting to "public". 
+        function sell(uint256 _value) onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:49:9: Warning: No visibility specified. Defaulting to "public". 
+        function withdraw(uint256 _value) onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CampaignBeneficiary.sol:53:9: Warning: No visibility specified. Defaulting to "public". 
+        function closeCampaign() onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:6:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:11:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/owned.sol:24:9: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+        function CampaignBeneficiary() {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:28:54: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Resilience.call(setBeneficiarySig)) throw;
+                                                     ^---^
+contracts/owned.sol:32:42: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if(msg.sender != Resilience) throw;
+                                         ^---^
+contracts/owned.sol:38:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call.value(msg.value)(buySig)) throw;
+                                                               ^---^
+contracts/owned.sol:41:75: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call(transferSig, msg.sender, msg.value)) throw;
+                                                                          ^---^
+contracts/owned.sol:46:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!Resilience.call(sellSig, _value)) throw;
+                                                       ^---^
+contracts/owned.sol:50:47: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!msg.sender.send(_value)) throw;
+                                              ^---^
+contracts/owned.sol:55:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            if (!Resilience.call(closeCampaignSig)) throw;
+                                                    ^---^
+contracts/owned.sol:27:47: Warning: "sha3" has been deprecated in favour of "keccak256"
+            bytes4 setBeneficiarySig = bytes4(sha3("setBeneficiary()"));
+                                              ^----------------------^
+contracts/owned.sol:37:40: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 buySig = bytes4(sha3("buy()"));
+                                       ^-----------^
+contracts/owned.sol:40:45: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 transferSig = bytes4(sha3("transfer(address,uint256)"));
+                                            ^-------------------------------^
+contracts/owned.sol:45:41: Warning: "sha3" has been deprecated in favour of "keccak256"
+                bytes4 sellSig = bytes4(sha3("sell(uint256)"));
+                                        ^-------------------^
+contracts/owned.sol:54:46: Warning: "sha3" has been deprecated in favour of "keccak256"
+            bytes4 closeCampaignSig = bytes4(sha3("closeCampaign()"));
+                                             ^---------------------^
+contracts/owned.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:24:9: Warning: No visibility specified. Defaulting to "public". 
+        function CampaignBeneficiary() {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:31:9: Warning: No visibility specified. Defaulting to "public". 
+        function() payable {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:44:9: Warning: No visibility specified. Defaulting to "public". 
+        function sell(uint256 _value) onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:49:9: Warning: No visibility specified. Defaulting to "public". 
+        function withdraw(uint256 _value) onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:53:9: Warning: No visibility specified. Defaulting to "public". 
+        function closeCampaign() onlyOwner {
+        ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz CampaignBeneficiary
+** Write stats: 0.007664
+** Write stats: 5.00017
+** Write stats: 10.0194
+** Write stats: 15.0006
+** Write stats: 20.0002
+** Write stats: 25.0212
+** Write stats: 30.0007
+** Write stats: 35.0006
+** Write stats: 40.0005
+** Write stats: 45.0001
+** Write stats: 50.0005
+** Write stats: 55.0005
+** Write stats: 60.0002
+** Write stats: 65.0008
+** Write stats: 70.0003
+** Write stats: 75.0004
+** Write stats: 80.0004
+** Write stats: 85.0008
+** Write stats: 90.0002
+** Write stats: 95.0009
+** Write stats: 100.001
+** Write stats: 105
+** Write stats: 110.007
+** Write stats: 115.001
+** Write stats: 120
+** Write stats: 120.015
+>> Fuzz owned
+** Write stats: 0.002978
+** Write stats: 5.00014
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0002
+** Write stats: 25.0001
+** Write stats: 30.0002
+** Write stats: 35.0021
+** Write stats: 40.0002
+** Write stats: 45.2292
+** Write stats: 50.0002
+** Write stats: 55.0002
+** Write stats: 60.0003
+** Write stats: 65.0002
+** Write stats: 70.0002
+** Write stats: 75.0002
+** Write stats: 80.0001
+** Write stats: 85.0002
+** Write stats: 90.0083
+** Write stats: 95.0001
+** Write stats: 100.019
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.011

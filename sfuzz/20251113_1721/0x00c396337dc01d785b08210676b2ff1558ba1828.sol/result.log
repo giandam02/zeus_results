@@ -1,0 +1,18 @@
+Extract contract AuthereumProxy from /sb/0x00c396337dc01d785b08210676b2ff1558ba1828.sol
+Extracted 1 contract(s) from /sb/0x00c396337dc01d785b08210676b2ff1558ba1828.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/AuthereumProxy.sol:3:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.12+commit.7709ece9.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.12+commit.7709ece9.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 5:    21 Aborted                 (core dumped) ./fuzzer --file contracts/AuthereumProxy.sol.json --name AuthereumProxy --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

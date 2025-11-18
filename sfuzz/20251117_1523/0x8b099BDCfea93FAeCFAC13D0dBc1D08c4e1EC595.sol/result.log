@@ -1,0 +1,77 @@
+Extract contract HelpMeSave from /sb/0x8b099BDCfea93FAeCFAC13D0dBc1D08c4e1EC595.sol
+Extracted 1 contract(s) from /sb/0x8b099BDCfea93FAeCFAC13D0dBc1D08c4e1EC595.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/HelpMeSave.sol:18:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+         uint256 withdraw_amt = this.balance;
+                                ^----------^
+contracts/HelpMeSave.sol:24:10: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+         msg.sender.send(withdraw_amt); // ok send it back to me
+         ^---------------------------^
+contracts/HelpMeSave.sol:39:21: Warning: "sha3" has been deprecated in favour of "keccak256"
+       if ( uint256(sha3(_return_addr)) % 100000000000000 == 94865382827780 ){
+                    ^----------------^
+contracts/HelpMeSave.sol:39:21: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+       if ( uint256(sha3(_return_addr)) % 100000000000000 == 94865382827780 ){
+                    ^----------------^
+contracts/HelpMeSave.sol:39:21: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+       if ( uint256(sha3(_return_addr)) % 100000000000000 == 94865382827780 ){
+                    ^----------------^
+contracts/HelpMeSave.sol:42:23: Warning: "sha3" has been deprecated in favour of "keccak256"
+       return uint256(sha3(_return_addr)) % 100000000000000;
+                      ^----------------^
+contracts/HelpMeSave.sol:42:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+       return uint256(sha3(_return_addr)) % 100000000000000;
+                      ^----------------^
+contracts/HelpMeSave.sol:42:23: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+       return uint256(sha3(_return_addr)) % 100000000000000;
+                      ^----------------^
+contracts/HelpMeSave.sol:8:4: Warning: No visibility specified. Defaulting to "public". 
+   function MyTestWallet7(){
+   ^ (Relevant source part starts here and spans across multiple lines).
+contracts/HelpMeSave.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function() payable {deposit();}
+    ^-----------------------------^
+contracts/HelpMeSave.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function recovery (string _password, address _return_addr) returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/HelpMeSave.sol:37:24: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function recovery (string _password, address _return_addr) returns (uint256) {
+                       ^--------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz HelpMeSave
+** Write stats: 0.004478
+** Write stats: 5.00027
+** Write stats: 10.0003
+** Write stats: 15.0001
+** Write stats: 20.0003
+** Write stats: 25.0002
+** Write stats: 30.0003
+** Write stats: 35.0004
+** Write stats: 40.0003
+** Write stats: 45.0002
+** Write stats: 50.0002
+** Write stats: 55.0002
+** Write stats: 60.0003
+** Write stats: 65.0003
+** Write stats: 70.0003
+** Write stats: 75.0017
+** Write stats: 80.0003
+** Write stats: 85.0006
+** Write stats: 90.0072
+** Write stats: 95.0004
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.008

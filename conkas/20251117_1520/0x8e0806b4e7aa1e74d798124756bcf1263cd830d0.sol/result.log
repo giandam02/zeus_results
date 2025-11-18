@@ -1,0 +1,56 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol
+
+Error: No visibility specified. Did you intend to add "public"?
+  --> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:28:5:
+   |
+28 |     function newvow(uint payoff, address oracle) returns (uint vowID) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: No visibility specified. Did you intend to add "public"?
+  --> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:41:5:
+   |
+41 |     function deposit(uint vowID) returns (bool res) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: No visibility specified. Did you intend to add "public"?
+  --> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:54:5:
+   |
+54 |     function withdraw(uint amount, address beneficiary, uint vowID) returns (bool res) {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning: This declaration shadows an existing declaration.
+ --> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:8:5:
+  |
+8 |     struct Vow {
+  |     ^ (Relevant source part starts here and spans across multiple lines).
+Note: The shadowed declaration is here:
+ --> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:2:1:
+  |
+2 | contract Vow {
+  | ^ (Relevant source part starts here and spans across multiple lines).
+
+Error: Undeclared identifier. "wc" is not (or not yet) visible at this point.
+  --> /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:58:13:
+   |
+58 |         if (wc.balance < amount || amount == 0)
+   |             ^^

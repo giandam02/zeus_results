@@ -1,0 +1,97 @@
+Extract contract CoinToken from /sb/0x00c0831d5ad16a64024816ceecce03fdd1203dc0.sol
+Extract contract ERC20 from /sb/0x00c0831d5ad16a64024816ceecce03fdd1203dc0.sol
+Extracted 2 contract(s) from /sb/0x00c0831d5ad16a64024816ceecce03fdd1203dc0.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+Warning: Return value of low-level calls not used.
+    --> contracts/ERC20.sol:1947:21:
+     |
+1947 |                     taxWallets["marketing"].call{value: marketingETH}("");
+     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/ERC20.sol:1949:21:
+     |
+1949 |                     taxWallets["dev"].call{value: devETH}("");
+     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/ERC20.sol:1951:21:
+     |
+1951 |                     taxWallets["charity"].call{value: charityETH}("");
+     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/ERC20.sol:1957:25:
+     |
+1957 |                         taxWallets["marketing"].call{value: ethGained - (marketingETH + devETH + liquidityETH + charityETH)}("");
+     |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Unused local variable.
+    --> contracts/ERC20.sol:1917:40:
+     |
+1917 |                     (uint amountToken, uint amountETH, uint liquidity) = uniswapV2Router02.addLiquidityETH{value: liquidityETH}(
+     |                                        ^^^^^^^^^^^^^^
+
+Warning: Unused local variable.
+    --> contracts/ERC20.sol:1917:56:
+     |
+1917 |                     (uint amountToken, uint amountETH, uint liquidity) = uniswapV2Router02.addLiquidityETH{value: liquidityETH}(
+     |                                                        ^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/CoinToken.sol:1947:21:
+     |
+1947 |                     taxWallets["marketing"].call{value: marketingETH}("");
+     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/CoinToken.sol:1949:21:
+     |
+1949 |                     taxWallets["dev"].call{value: devETH}("");
+     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/CoinToken.sol:1951:21:
+     |
+1951 |                     taxWallets["charity"].call{value: charityETH}("");
+     |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Return value of low-level calls not used.
+    --> contracts/CoinToken.sol:1957:25:
+     |
+1957 |                         taxWallets["marketing"].call{value: ethGained - (marketingETH + devETH + liquidityETH + charityETH)}("");
+     |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning: Unused local variable.
+    --> contracts/CoinToken.sol:1917:40:
+     |
+1917 |                     (uint amountToken, uint amountETH, uint liquidity) = uniswapV2Router02.addLiquidityETH{value: liquidityETH}(
+     |                                        ^^^^^^^^^^^^^^
+
+Warning: Unused local variable.
+    --> contracts/CoinToken.sol:1917:56:
+     |
+1917 |                     (uint amountToken, uint amountETH, uint liquidity) = uniswapV2Router02.addLiquidityETH{value: liquidityETH}(
+     |                                                        ^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.8.30+commit.73712a01.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/NormalAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.8.30+commit.73712a01.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/ReentrancyAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 6:    23 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20.sol.json --name ERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    24 Aborted                 (core dumped) ./fuzzer --file contracts/CoinToken.sol.json --name CoinToken --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

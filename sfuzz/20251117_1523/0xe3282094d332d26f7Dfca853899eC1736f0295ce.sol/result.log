@@ -1,0 +1,665 @@
+Extract contract ERC20Events from /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol
+Extract contract TokenTrader from /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol
+Extract contract TokenTraderFactory from /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol
+Extract contract owned from /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol
+Extracted 4 contract(s) from /sb/0xe3282094d332d26f7Dfca853899eC1736f0295ce.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/TokenTrader.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:29:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/TokenTrader.sol:54:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:127:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(change)) throw;
+                                             ^---^
+contracts/TokenTrader.sol:131:70: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transfer(msg.sender,order * units)) throw;
+                                                                     ^---^
+contracts/TokenTrader.sol:135:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else throw;  // return user funds if the contract is not selling
+             ^---^
+contracts/TokenTrader.sol:150:83: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transferFrom(msg.sender, address(this), amount)) throw;
+                                                                                  ^---^
+contracts/TokenTrader.sol:153:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(order * buyPrice)) throw;
+                                                       ^---^
+contracts/TokenTrader.sol:185:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_buyPrice > _sellPrice) throw; // must make profit on spread
+                                   ^---^
+contracts/TokenTrader.sol:186:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_units == 0) throw;              // can't sell zero units
+                        ^---^
+contracts/TokenTrader.sol:196:9: Warning: Use of the "var" keyword is deprecated.
+        var bookid = sha3(_asset,_units);
+        ^--------^
+contracts/TokenTrader.sol:211:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether to the factory
+        ^---^
+contracts/TokenTrader.sol:70:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/TokenTrader.sol:82:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/TokenTrader.sol:89:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTrader.sol:96:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTrader.sol:104:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTrader.sol:110:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(this.balance >= _value) {
+           ^----------^
+contracts/TokenTrader.sol:113:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTrader.sol:133:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/TokenTrader.sol:142:31: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            uint256 can_buy = this.balance / buyPrice;  // token lots contract can buy
+                              ^----------^
+contracts/TokenTrader.sol:155:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/TokenTrader.sol:196:22: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/TokenTrader.sol:196:22: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/TokenTrader.sol:204:13: Warning: Invoking events without "emit" prefix is deprecated.
+            NewBook(bookid, _asset, _units);
+            ^-----------------------------^
+contracts/TokenTrader.sol:207:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TradeListing(bookid,msg.sender,trader);
+        ^------------------------------------^
+contracts/TokenTrader.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint supply);
+    ^----------------------------------------------------^
+contracts/TokenTrader.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf( address who ) constant returns (uint value);
+    ^--------------------------------------------------------------^
+contracts/TokenTrader.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address owner, address spender) constant returns (uint _allowance);
+    ^------------------------------------------------------------------------------------^
+contracts/TokenTrader.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer( address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------^
+contracts/TokenTrader.sol:12:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom( address from, address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------------------------^
+contracts/TokenTrader.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address spender, uint value) returns (bool ok);
+    ^--------------------------------------------------------------^
+contracts/TokenTrader.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function activate (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:93:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawAsset(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:101:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawToken(address _token, uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:108:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:140:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:176:5: Warning: No visibility specified. Defaulting to "public". 
+    function createTradeContract(       
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTrader.sol:210:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:29:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/owned.sol:54:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:127:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(change)) throw;
+                                             ^---^
+contracts/owned.sol:131:70: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transfer(msg.sender,order * units)) throw;
+                                                                     ^---^
+contracts/owned.sol:135:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else throw;  // return user funds if the contract is not selling
+             ^---^
+contracts/owned.sol:150:83: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transferFrom(msg.sender, address(this), amount)) throw;
+                                                                                  ^---^
+contracts/owned.sol:153:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(order * buyPrice)) throw;
+                                                       ^---^
+contracts/owned.sol:185:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_buyPrice > _sellPrice) throw; // must make profit on spread
+                                   ^---^
+contracts/owned.sol:186:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_units == 0) throw;              // can't sell zero units
+                        ^---^
+contracts/owned.sol:196:9: Warning: Use of the "var" keyword is deprecated.
+        var bookid = sha3(_asset,_units);
+        ^--------^
+contracts/owned.sol:211:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether to the factory
+        ^---^
+contracts/owned.sol:70:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/owned.sol:82:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/owned.sol:89:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/owned.sol:96:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/owned.sol:104:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/owned.sol:110:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(this.balance >= _value) {
+           ^----------^
+contracts/owned.sol:113:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/owned.sol:133:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/owned.sol:142:31: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            uint256 can_buy = this.balance / buyPrice;  // token lots contract can buy
+                              ^----------^
+contracts/owned.sol:155:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/owned.sol:196:22: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/owned.sol:196:22: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/owned.sol:204:13: Warning: Invoking events without "emit" prefix is deprecated.
+            NewBook(bookid, _asset, _units);
+            ^-----------------------------^
+contracts/owned.sol:207:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TradeListing(bookid,msg.sender,trader);
+        ^------------------------------------^
+contracts/owned.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint supply);
+    ^----------------------------------------------------^
+contracts/owned.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf( address who ) constant returns (uint value);
+    ^--------------------------------------------------------------^
+contracts/owned.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address owner, address spender) constant returns (uint _allowance);
+    ^------------------------------------------------------------------------------------^
+contracts/owned.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer( address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------^
+contracts/owned.sol:12:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom( address from, address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------------------------^
+contracts/owned.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address spender, uint value) returns (bool ok);
+    ^--------------------------------------------------------------^
+contracts/owned.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function activate (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:93:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawAsset(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:101:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawToken(address _token, uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:108:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:140:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:176:5: Warning: No visibility specified. Defaulting to "public". 
+    function createTradeContract(       
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:210:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:29:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/TokenTraderFactory.sol:54:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:127:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(change)) throw;
+                                             ^---^
+contracts/TokenTraderFactory.sol:131:70: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transfer(msg.sender,order * units)) throw;
+                                                                     ^---^
+contracts/TokenTraderFactory.sol:135:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else throw;  // return user funds if the contract is not selling
+             ^---^
+contracts/TokenTraderFactory.sol:150:83: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transferFrom(msg.sender, address(this), amount)) throw;
+                                                                                  ^---^
+contracts/TokenTraderFactory.sol:153:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(order * buyPrice)) throw;
+                                                       ^---^
+contracts/TokenTraderFactory.sol:185:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_buyPrice > _sellPrice) throw; // must make profit on spread
+                                   ^---^
+contracts/TokenTraderFactory.sol:186:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_units == 0) throw;              // can't sell zero units
+                        ^---^
+contracts/TokenTraderFactory.sol:196:9: Warning: Use of the "var" keyword is deprecated.
+        var bookid = sha3(_asset,_units);
+        ^--------^
+contracts/TokenTraderFactory.sol:211:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether to the factory
+        ^---^
+contracts/TokenTraderFactory.sol:70:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/TokenTraderFactory.sol:82:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/TokenTraderFactory.sol:89:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTraderFactory.sol:96:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTraderFactory.sol:104:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTraderFactory.sol:110:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(this.balance >= _value) {
+           ^----------^
+contracts/TokenTraderFactory.sol:113:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/TokenTraderFactory.sol:133:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/TokenTraderFactory.sol:142:31: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            uint256 can_buy = this.balance / buyPrice;  // token lots contract can buy
+                              ^----------^
+contracts/TokenTraderFactory.sol:155:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/TokenTraderFactory.sol:196:22: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/TokenTraderFactory.sol:196:22: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/TokenTraderFactory.sol:204:13: Warning: Invoking events without "emit" prefix is deprecated.
+            NewBook(bookid, _asset, _units);
+            ^-----------------------------^
+contracts/TokenTraderFactory.sol:207:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TradeListing(bookid,msg.sender,trader);
+        ^------------------------------------^
+contracts/TokenTraderFactory.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint supply);
+    ^----------------------------------------------------^
+contracts/TokenTraderFactory.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf( address who ) constant returns (uint value);
+    ^--------------------------------------------------------------^
+contracts/TokenTraderFactory.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address owner, address spender) constant returns (uint _allowance);
+    ^------------------------------------------------------------------------------------^
+contracts/TokenTraderFactory.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer( address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------^
+contracts/TokenTraderFactory.sol:12:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom( address from, address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------------------------^
+contracts/TokenTraderFactory.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address spender, uint value) returns (bool ok);
+    ^--------------------------------------------------------------^
+contracts/TokenTraderFactory.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function activate (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:93:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawAsset(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:101:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawToken(address _token, uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:108:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:140:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:176:5: Warning: No visibility specified. Defaulting to "public". 
+    function createTradeContract(       
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenTraderFactory.sol:210:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:29:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/ERC20Events.sol:54:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:127:46: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(change)) throw;
+                                             ^---^
+contracts/ERC20Events.sol:131:70: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transfer(msg.sender,order * units)) throw;
+                                                                     ^---^
+contracts/ERC20Events.sol:135:14: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        else throw;  // return user funds if the contract is not selling
+             ^---^
+contracts/ERC20Events.sol:150:83: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!ERC20(asset).transferFrom(msg.sender, address(this), amount)) throw;
+                                                                                  ^---^
+contracts/ERC20Events.sol:153:56: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if(!msg.sender.send(order * buyPrice)) throw;
+                                                       ^---^
+contracts/ERC20Events.sol:185:36: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_buyPrice > _sellPrice) throw; // must make profit on spread
+                                   ^---^
+contracts/ERC20Events.sol:186:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(_units == 0) throw;              // can't sell zero units
+                        ^---^
+contracts/ERC20Events.sol:196:9: Warning: Use of the "var" keyword is deprecated.
+        var bookid = sha3(_asset,_units);
+        ^--------^
+contracts/ERC20Events.sol:211:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;     // Prevents accidental sending of ether to the factory
+        ^---^
+contracts/ERC20Events.sol:70:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/ERC20Events.sol:82:11: Warning: Invoking events without "emit" prefix is deprecated.
+          ActivatedEvent(sellsTokens,buysTokens);
+          ^------------------------------------^
+contracts/ERC20Events.sol:89:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/ERC20Events.sol:96:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/ERC20Events.sol:104:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/ERC20Events.sol:110:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(this.balance >= _value) {
+           ^----------^
+contracts/ERC20Events.sol:113:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpdateEvent();
+        ^-----------^
+contracts/ERC20Events.sol:133:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/ERC20Events.sol:142:31: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            uint256 can_buy = this.balance / buyPrice;  // token lots contract can buy
+                              ^----------^
+contracts/ERC20Events.sol:155:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UpdateEvent();
+            ^-----------^
+contracts/ERC20Events.sol:196:22: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/ERC20Events.sol:196:22: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var bookid = sha3(_asset,_units);
+                     ^-----------------^
+contracts/ERC20Events.sol:204:13: Warning: Invoking events without "emit" prefix is deprecated.
+            NewBook(bookid, _asset, _units);
+            ^-----------------------------^
+contracts/ERC20Events.sol:207:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TradeListing(bookid,msg.sender,trader);
+        ^------------------------------------^
+contracts/ERC20Events.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint supply);
+    ^----------------------------------------------------^
+contracts/ERC20Events.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf( address who ) constant returns (uint value);
+    ^--------------------------------------------------------------^
+contracts/ERC20Events.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address owner, address spender) constant returns (uint _allowance);
+    ^------------------------------------------------------------------------------------^
+contracts/ERC20Events.sol:11:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer( address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------^
+contracts/ERC20Events.sol:12:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom( address from, address to, uint value) returns (bool ok);
+    ^-----------------------------------------------------------------------------^
+contracts/ERC20Events.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address spender, uint value) returns (bool ok);
+    ^--------------------------------------------------------------^
+contracts/ERC20Events.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function TokenTrader (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:74:5: Warning: No visibility specified. Defaulting to "public". 
+    function activate (
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:93:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawAsset(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:101:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawToken(address _token, uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:108:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint256 _value) onlyOwner returns (bool ok)
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function buy() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:140:5: Warning: No visibility specified. Defaulting to "public". 
+    function sell(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:160:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:176:5: Warning: No visibility specified. Defaulting to "public". 
+    function createTradeContract(       
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ERC20Events.sol:210:5: Warning: No visibility specified. Defaulting to "public". 
+    function () {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz TokenTrader
+** Write stats: 0.01934
+** Write stats: 5.00056
+** Write stats: 10.001
+** Write stats: 15.0002
+** Write stats: 20.0001
+** Write stats: 25.001
+** Write stats: 30.0321
+** Write stats: 35.0011
+** Write stats: 40.0007
+** Write stats: 45.0011
+** Write stats: 50.0007
+** Write stats: 55.0237
+** Write stats: 60.0005
+** Write stats: 65.0003
+** Write stats: 70.0003
+** Write stats: 75.001
+** Write stats: 80.0184
+** Write stats: 85.0007
+** Write stats: 90.0012
+** Write stats: 95.0002
+** Write stats: 100.001
+** Write stats: 105.001
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120.001
+** Write stats: 120.04
+>> Fuzz owned
+** Write stats: 0.002924
+** Write stats: 5.00019
+** Write stats: 10.0002
+** Write stats: 15.0001
+** Write stats: 20.0002
+** Write stats: 25.0002
+** Write stats: 30.0001
+** Write stats: 35.0002
+** Write stats: 40.0151
+** Write stats: 45.0002
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0181
+** Write stats: 70.0102
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0013
+** Write stats: 95.0001
+** Write stats: 100.007
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.019
+>> Fuzz TokenTraderFactory
+** Write stats: 0.009007
+** Write stats: 5.00385
+** Write stats: 10.0068
+** Write stats: 15.0034
+** Write stats: 20.0072
+** Write stats: 25.0131
+** Write stats: 30.0081
+** Write stats: 35.0053
+** Write stats: 40.0052
+** Write stats: 45.0127
+** Write stats: 50.0106
+** Write stats: 55.0137
+** Write stats: 60.0129
+** Write stats: 65.0141
+** Write stats: 70.0007
+** Write stats: 75.004
+** Write stats: 80.0175
+** Write stats: 85.0133
+** Write stats: 90.0217
+** Write stats: 95.0238
+** Write stats: 100.023
+** Write stats: 105.022
+** Write stats: 110.004
+** Write stats: 115.002
+** Write stats: 120.008
+** Write stats: 120.017
+>> Fuzz ERC20Events
+** Write stats: 0.001939
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0922
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.5163
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.349
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.001

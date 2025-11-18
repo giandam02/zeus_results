@@ -1,0 +1,64 @@
+Extract contract ParserError: from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+Extract contract Invalid from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+Extract contract SPDX from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+Extract contract license from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+Extract contract identifier. from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+Extract contract --> from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+Extract contract /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+cp: cannot create regular file '/home/contracts//sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol.sol': No such file or directory
+Extracted 7 contract(s) from /sb/0x0000000011c6fda753efec35c5c484004450cc6c.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+Error: Invalid SPDX license identifier.
+--> contracts/Invalid.sol
+
+Error: Invalid SPDX license identifier.
+--> contracts/SPDX.sol
+
+Error: Invalid SPDX license identifier.
+--> contracts/ParserError:.sol
+
+Error: Invalid SPDX license identifier.
+--> contracts/identifier..sol
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/--
+
+Warning: Source file does not specify required compiler version! Consider adding "pragma solidity ^0.8.30;"
+--> contracts/--
+
+Error: Invalid SPDX license identifier.
+--> contracts/license.sol
+
+Error: Source file requires different compiler version (current compiler is 0.8.30+commit.73712a01.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/NormalAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error: Source file requires different compiler version (current compiler is 0.8.30+commit.73712a01.Linux.g++) - note that nightly builds are considered to be strictly less than the released version
+ --> assets/ReentrancyAttacker.sol:1:1:
+  |
+1 | pragma solidity ^0.4.24;
+  | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 10:    32 Aborted                 (core dumped) ./fuzzer --file contracts/Invalid.sol.json --name Invalid --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    33 Aborted                 (core dumped) ./fuzzer --file contracts/SPDX.sol.json --name SPDX --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    34 Aborted                 (core dumped) ./fuzzer --file contracts/ParserError:.sol.json --name ParserError: --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    35 Aborted                 (core dumped) ./fuzzer --file contracts/identifier..sol.json --name identifier --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 14:    36 Aborted                 (core dumped) ./fuzzer --file contracts/-- --name -- assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker > .sol.json > --assets
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 15:    37 Aborted                 (core dumped) ./fuzzer --file contracts/license.sol.json --name license --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

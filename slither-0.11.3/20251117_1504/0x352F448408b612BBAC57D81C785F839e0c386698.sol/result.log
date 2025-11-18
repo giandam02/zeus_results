@@ -1,0 +1,121 @@
+'solc --version' running
+'solc /sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:57:4: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+   function TheGreatEtherRace(string p_sponsor){ // create the contract
+   ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:71:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if ( msg.value < registration_fee ) throw;    // not enough paid to 
+                                            ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:72:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if ( racer_index[msg.sender] > 0  ) throw;    // already part of the race
+                                            ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:73:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if ( eventStatus != EvtStatus.SignUp ) throw; // are we still in signup phase
+                                               ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:87:53: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       if ( eventStatus != EvtStatus.ReadyToStart ) throw; // race is not ready to be started yet
+                                                    ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:88:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       if (block.number < race_start_block) throw;            // race starting block not yet reached
+                                            ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:94:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       if ( eventStatus != EvtStatus.Started ) throw;
+                                               ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:117:51: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!winner.send(winning_amount)) throw;       // send to winner
+                                                  ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:118:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                if (!developer_address.send(5 ether)) throw;   // send 5 ether to developer
+                                                      ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:126:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       if (msg.sender != creator) throw;
+                                  ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:133:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+       else throw;
+            ^---^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:116:39: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+                uint winning_amount = this.balance - 5 ether;  // balance minus 5 ether fee
+                                      ^----------^
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:46:4: Warning: No visibility specified. Defaulting to "public". 
+   function getStatus() constant returns (string) {
+   ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:57:4: Warning: No visibility specified. Defaulting to "public". 
+   function TheGreatEtherRace(string p_sponsor){ // create the contract
+   ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:69:4: Warning: No visibility specified. Defaulting to "public". 
+   function() payable { // buy starting position by simply transferring 
+   ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol:70:9: Warning: Unused local variable.
+        uint store;
+        ^--------^
+
+
+TheGreatEtherRace.claim_price_money() (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#113-121) sends eth to arbitrary user
+	Dangerous calls:
+	- ! winner.send(winning_amount) (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#117)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+TheGreatEtherRace.drive() (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#93-109) has costly operations inside a loop:
+	- winner = racers[idx] (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#104)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#71):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#72):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#73):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#87):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#88):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#94):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#117):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#118):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#126):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#133):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- ^0.4.6 (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function TheGreatEtherRace.additional_incentive() (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#53-55) is not in mixedCase
+Function TheGreatEtherRace.start_the_race() (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#86-90) is not in mixedCase
+Function TheGreatEtherRace.claim_price_money() (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#113-121) is not in mixedCase
+Variable TheGreatEtherRace.racer_index (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#26) is not in mixedCase
+Variable TheGreatEtherRace.distance_driven (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#28) is not in mixedCase
+Variable TheGreatEtherRace.total_racers (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#32) is not in mixedCase
+Variable TheGreatEtherRace.registered_racers (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#33) is not in mixedCase
+Variable TheGreatEtherRace.registration_fee (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#34) is not in mixedCase
+Variable TheGreatEtherRace.additional_price_money (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#35) is not in mixedCase
+Variable TheGreatEtherRace.race_start_block (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#36) is not in mixedCase
+Variable TheGreatEtherRace.developer_address (../sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol#40) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x352F448408b612BBAC57D81C785F839e0c386698.sol analyzed (1 contracts with 100 detectors), 25 result(s) found

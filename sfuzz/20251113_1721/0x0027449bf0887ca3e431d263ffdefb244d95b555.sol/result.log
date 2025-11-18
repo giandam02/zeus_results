@@ -1,0 +1,63 @@
+Extract contract NotCoin from /sb/0x0027449bf0887ca3e431d263ffdefb244d95b555.sol
+Extracted 1 contract(s) from /sb/0x0027449bf0887ca3e431d263ffdefb244d95b555.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/NotCoin.sol:67:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function NotCoin(string _name, string _symbol, uint8 _decimals) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/NotCoin.sol:99:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/NotCoin.sol:109:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/NotCoin.sol:127:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/NotCoin.sol:89:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function balanceOf(address _owner) public view returns (uint256 balance) {
+                     ^------------^
+contracts/NotCoin.sol:117:22: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, address _spender) public view returns (uint256) {
+                     ^------------^
+contracts/NotCoin.sol:117:38: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function allowance(address _owner, address _spender) public view returns (uint256) {
+                                     ^--------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz NotCoin
+** Write stats: 0.009627
+** Write stats: 5.0002
+** Write stats: 10.0001
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0168
+** Write stats: 30.0001
+** Write stats: 35.0189
+** Write stats: 40.0002
+** Write stats: 45.0175
+** Write stats: 50.0231
+** Write stats: 55.0004
+** Write stats: 60.0004
+** Write stats: 65.0003
+** Write stats: 70.0006
+** Write stats: 75.0002
+** Write stats: 80.0002
+** Write stats: 85.0005
+** Write stats: 90.0001
+** Write stats: 95.0003
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.012

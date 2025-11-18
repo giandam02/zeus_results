@@ -1,0 +1,75 @@
+Extract contract ResetPonzi from /sb/0x1368e088682b3ea455c4856297365542ca6828d8.sol
+Extracted 1 contract(s) from /sb/0x1368e088682b3ea455c4856297365542ca6828d8.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ResetPonzi.sol:21:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ResetPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ResetPonzi.sol:30:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/ResetPonzi.sol:54:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        currentNiceGuy.send(1 ether);
+        ^--------------------------^
+contracts/ResetPonzi.sol:56:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        while (this.balance >= 10 ether) {
+               ^----------^
+contracts/ResetPonzi.sol:57:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            persons[payoutIdx].addr.send(10 ether);
+            ^------------------------------------^
+contracts/ResetPonzi.sol:64:19: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        beta.send(this.balance);
+                  ^----------^
+contracts/ResetPonzi.sol:64:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        beta.send(this.balance);
+        ^---------------------^
+contracts/ResetPonzi.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function ResetPonzi() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ResetPonzi.sol:27:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ResetPonzi.sol:29:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value != 9 ether) {
+            ^-------^
+contracts/ResetPonzi.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function funnel() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz ResetPonzi
+** Write stats: 0.003296
+** Write stats: 5.00019
+** Write stats: 10.0003
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0003
+** Write stats: 30.0001
+** Write stats: 35.0003
+** Write stats: 40.0002
+** Write stats: 45.0003
+** Write stats: 50.0002
+** Write stats: 55.0002
+** Write stats: 60.0001
+** Write stats: 65.0002
+** Write stats: 70.0003
+** Write stats: 75.0002
+** Write stats: 80.0003
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0002
+** Write stats: 100.005
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.007

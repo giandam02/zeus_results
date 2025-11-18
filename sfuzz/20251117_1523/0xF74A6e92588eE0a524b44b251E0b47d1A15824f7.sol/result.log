@@ -1,0 +1,214 @@
+Extract contract BadgeReg from /sb/0xF74A6e92588eE0a524b44b251E0b47d1A15824f7.sol
+Extract contract Owned from /sb/0xF74A6e92588eE0a524b44b251E0b47d1A15824f7.sol
+Extracted 2 contract(s) from /sb/0xF74A6e92588eE0a524b44b251E0b47d1A15824f7.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/BadgeReg.sol:63:3: Warning: Use of the "var" keyword is deprecated.
+		var t = badges[_id];
+		^---^
+contracts/BadgeReg.sol:71:3: Warning: Use of the "var" keyword is deprecated.
+		var t = badges[id];
+		^---^
+contracts/BadgeReg.sol:78:3: Warning: Use of the "var" keyword is deprecated.
+		var t = badges[id];
+		^---^
+contracts/BadgeReg.sol:88:3: Warning: Use of the "var" keyword is deprecated.
+		var oldAddr = badges[_id].addr;
+		^---------^
+contracts/BadgeReg.sol:102:4: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			throw;
+			^---^
+contracts/BadgeReg.sol:13:47: Warning: Invoking events without "emit" prefix is deprecated.
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	                                             ^-------------------^
+contracts/BadgeReg.sol:45:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Registered(_name, badges.length - 1, _addr);
+		^-----------------------------------------^
+contracts/BadgeReg.sol:50:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Unregistered(badges[_id].name, _id);
+		^---------------------------------^
+contracts/BadgeReg.sol:92:3: Warning: Invoking events without "emit" prefix is deprecated.
+		AddressChanged(_id, _newAddr);
+		^---------------------------^
+contracts/BadgeReg.sol:97:3: Warning: Invoking events without "emit" prefix is deprecated.
+		MetaChanged(_id, _key, _value);
+		^----------------------------^
+contracts/BadgeReg.sol:101:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+		if (!msg.sender.send(this.balance))
+		                     ^----------^
+contracts/BadgeReg.sol:13:2: Warning: No visibility specified. Defaulting to "public". 
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	^---------------------------------------------------------------------------------^
+contracts/BadgeReg.sol:37:2: Warning: No visibility specified. Defaulting to "public". 
+	function register(address _addr, bytes32 _name) payable returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:41:2: Warning: No visibility specified. Defaulting to "public". 
+	function registerAs(address _addr, bytes32 _name, address _owner) payable when_fee_paid when_address_free(_addr) when_name_free(_name) returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:49:2: Warning: No visibility specified. Defaulting to "public". 
+	function unregister(uint _id) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:56:2: Warning: No visibility specified. Defaulting to "public". 
+	function setFee(uint _fee) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:60:2: Warning: No visibility specified. Defaulting to "public". 
+	function badgeCount() constant returns (uint) { return badges.length; }
+	^---------------------------------------------------------------------^
+contracts/BadgeReg.sol:62:2: Warning: No visibility specified. Defaulting to "public". 
+	function badge(uint _id) constant returns (address addr, bytes32 name, address owner) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:69:2: Warning: No visibility specified. Defaulting to "public". 
+	function fromAddress(address _addr) constant returns (uint id, bytes32 name, address owner) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:76:2: Warning: No visibility specified. Defaulting to "public". 
+	function fromName(bytes32 _name) constant returns (uint id, address addr, address owner) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:83:2: Warning: No visibility specified. Defaulting to "public". 
+	function meta(uint _id, bytes32 _key) constant returns (bytes32) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:87:2: Warning: No visibility specified. Defaulting to "public". 
+	function setAddress(uint _id, address _newAddr) only_badge_owner(_id) when_address_free(_newAddr) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:95:2: Warning: No visibility specified. Defaulting to "public". 
+	function setMeta(uint _id, bytes32 _key, bytes32 _value) only_badge_owner(_id) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BadgeReg.sol:100:2: Warning: No visibility specified. Defaulting to "public". 
+	function drain() only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:63:3: Warning: Use of the "var" keyword is deprecated.
+		var t = badges[_id];
+		^---^
+contracts/Owned.sol:71:3: Warning: Use of the "var" keyword is deprecated.
+		var t = badges[id];
+		^---^
+contracts/Owned.sol:78:3: Warning: Use of the "var" keyword is deprecated.
+		var t = badges[id];
+		^---^
+contracts/Owned.sol:88:3: Warning: Use of the "var" keyword is deprecated.
+		var oldAddr = badges[_id].addr;
+		^---------^
+contracts/Owned.sol:102:4: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+			throw;
+			^---^
+contracts/Owned.sol:13:47: Warning: Invoking events without "emit" prefix is deprecated.
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	                                             ^-------------------^
+contracts/Owned.sol:45:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Registered(_name, badges.length - 1, _addr);
+		^-----------------------------------------^
+contracts/Owned.sol:50:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Unregistered(badges[_id].name, _id);
+		^---------------------------------^
+contracts/Owned.sol:92:3: Warning: Invoking events without "emit" prefix is deprecated.
+		AddressChanged(_id, _newAddr);
+		^---------------------------^
+contracts/Owned.sol:97:3: Warning: Invoking events without "emit" prefix is deprecated.
+		MetaChanged(_id, _key, _value);
+		^----------------------------^
+contracts/Owned.sol:101:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+		if (!msg.sender.send(this.balance))
+		                     ^----------^
+contracts/Owned.sol:13:2: Warning: No visibility specified. Defaulting to "public". 
+	function setOwner(address _new) only_owner { NewOwner(owner, _new); owner = _new; }
+	^---------------------------------------------------------------------------------^
+contracts/Owned.sol:37:2: Warning: No visibility specified. Defaulting to "public". 
+	function register(address _addr, bytes32 _name) payable returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:41:2: Warning: No visibility specified. Defaulting to "public". 
+	function registerAs(address _addr, bytes32 _name, address _owner) payable when_fee_paid when_address_free(_addr) when_name_free(_name) returns (bool) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:49:2: Warning: No visibility specified. Defaulting to "public". 
+	function unregister(uint _id) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:56:2: Warning: No visibility specified. Defaulting to "public". 
+	function setFee(uint _fee) only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:60:2: Warning: No visibility specified. Defaulting to "public". 
+	function badgeCount() constant returns (uint) { return badges.length; }
+	^---------------------------------------------------------------------^
+contracts/Owned.sol:62:2: Warning: No visibility specified. Defaulting to "public". 
+	function badge(uint _id) constant returns (address addr, bytes32 name, address owner) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:69:2: Warning: No visibility specified. Defaulting to "public". 
+	function fromAddress(address _addr) constant returns (uint id, bytes32 name, address owner) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:76:2: Warning: No visibility specified. Defaulting to "public". 
+	function fromName(bytes32 _name) constant returns (uint id, address addr, address owner) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:83:2: Warning: No visibility specified. Defaulting to "public". 
+	function meta(uint _id, bytes32 _key) constant returns (bytes32) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:87:2: Warning: No visibility specified. Defaulting to "public". 
+	function setAddress(uint _id, address _newAddr) only_badge_owner(_id) when_address_free(_newAddr) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:95:2: Warning: No visibility specified. Defaulting to "public". 
+	function setMeta(uint _id, bytes32 _key, bytes32 _value) only_badge_owner(_id) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:100:2: Warning: No visibility specified. Defaulting to "public". 
+	function drain() only_owner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz BadgeReg
+** Write stats: 0.013921
+** Write stats: 5.00744
+** Write stats: 10.0051
+** Write stats: 15.0173
+** Write stats: 20.0272
+** Write stats: 25.0433
+** Write stats: 30.0172
+** Write stats: 35.0146
+** Write stats: 40.0282
+** Write stats: 45.02
+** Write stats: 50.0282
+** Write stats: 55.0604
+** Write stats: 60.0567
+** Write stats: 65.0467
+** Write stats: 70.0537
+** Write stats: 75.0412
+** Write stats: 80.0168
+** Write stats: 85.057
+** Write stats: 90.0795
+** Write stats: 95.0782
+** Write stats: 100.061
+** Write stats: 105.054
+** Write stats: 110.03
+** Write stats: 115.019
+** Write stats: 120.026
+** Write stats: 120.09
+>> Fuzz Owned
+** Write stats: 0.003088
+** Write stats: 5.00022
+** Write stats: 10.0133
+** Write stats: 15.0006
+** Write stats: 20.0004
+** Write stats: 25.0001
+** Write stats: 30.0002
+** Write stats: 35.0003
+** Write stats: 40.0002
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0002
+** Write stats: 75.0001
+** Write stats: 80.0002
+** Write stats: 85.0002
+** Write stats: 90.0108
+** Write stats: 95.0146
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.023

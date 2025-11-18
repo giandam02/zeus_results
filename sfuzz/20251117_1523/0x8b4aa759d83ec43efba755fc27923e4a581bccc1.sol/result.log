@@ -1,0 +1,126 @@
+Extract contract BlockChainChallenge from /sb/0x8b4aa759d83ec43efba755fc27923e4a581bccc1.sol
+Extracted 1 contract(s) from /sb/0x8b4aa759d83ec43efba755fc27923e4a581bccc1.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/BlockChainChallenge.sol:22:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function BlockChainChallenge(){ 
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:91:9: Warning: Use of the "var" keyword is deprecated.
+        var challengeHash = sha3(challengeData);
+        ^---------------^
+contracts/BlockChainChallenge.sol:34:18: Warning: "sha3" has been deprecated in favour of "keccak256"
+    leaderHash = sha3("09F911029D74E35BD84156C5635688C0");
+                 ^--------------------------------------^
+contracts/BlockChainChallenge.sol:52:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Begin("Collide the most bits of the leader's hash to replace the leader. Leader will win any bounty at the end of the week.");
+    ^---------------------------------------------------------------------------------------------------------------------------^
+contracts/BlockChainChallenge.sol:59:20: Warning: "sha3" has been deprecated in favour of "keccak256"
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+contracts/BlockChainChallenge.sol:59:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+contracts/BlockChainChallenge.sol:59:20: Warning: The provided argument of type uint256 is not implicitly convertible to expected type bytes memory.
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+contracts/BlockChainChallenge.sol:75:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Winner("Victory! Game will be reset to end in 1 week (in block time).", leader);
+            ^-----------------------------------------------------------------------------^
+contracts/BlockChainChallenge.sol:76:25: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            leader.send(this.balance);
+                        ^----------^
+contracts/BlockChainChallenge.sol:76:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            leader.send(this.balance);
+            ^-----------------------^
+contracts/BlockChainChallenge.sol:77:17: Warning: Invoking events without "emit" prefix is deprecated.
+          }else NoWinner("No winner! Game will be reset to end in 1 week (in block time).");
+                ^-------------------------------------------------------------------------^
+contracts/BlockChainChallenge.sol:91:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+contracts/BlockChainChallenge.sol:91:29: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+contracts/BlockChainChallenge.sol:91:29: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+contracts/BlockChainChallenge.sol:119:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Leader("New leader! This is their address, and the new hash to collide.", leader, leaderHash);
+        ^-------------------------------------------------------------------------------------------^
+contracts/BlockChainChallenge.sol:133:9: Warning: Invoking events without "emit" prefix is deprecated.
+        WorldRecord("A record setting collision occcured!", difficultyWorldRecord, msg.sender);
+        ^------------------------------------------------------------------------------------^
+contracts/BlockChainChallenge.sol:168:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GameOver("The challenge has ended.");
+        ^----------------------------------^
+contracts/BlockChainChallenge.sol:22:3: Warning: No visibility specified. Defaulting to "public". 
+  function BlockChainChallenge(){ 
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:88:3: Warning: No visibility specified. Defaulting to "public". 
+  function overthrow(string challengeData) returns (bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:137:3: Warning: No visibility specified. Defaulting to "public". 
+  function changeLeaderMessage(string newMessage){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:144:3: Warning: No visibility specified. Defaulting to "public". 
+  function currentLeader() constant returns (address CurrentLeaderAddress){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:147:3: Warning: No visibility specified. Defaulting to "public". 
+  function Difficulty() constant returns (bytes32 XorMustBeLessThan){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:150:3: Warning: No visibility specified. Defaulting to "public". 
+  function TargetHash() constant returns (bytes32 leadingHash){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:153:3: Warning: No visibility specified. Defaulting to "public". 
+  function LeaderMessage() constant returns (string MessageOfTheDay){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:156:3: Warning: No visibility specified. Defaulting to "public". 
+  function FallenLeaders() constant returns (uint Victors){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:159:3: Warning: No visibility specified. Defaulting to "public". 
+  function GameEnds() constant returns (uint EndingTime){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:162:3: Warning: No visibility specified. Defaulting to "public". 
+  function getWins(address check) constant returns (uint wins){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BlockChainChallenge.sol:166:3: Warning: No visibility specified. Defaulting to "public". 
+  function kill(){
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz BlockChainChallenge
+** Write stats: 0.007414
+** Write stats: 5.0005
+** Write stats: 10.0004
+** Write stats: 15.0008
+** Write stats: 20.0008
+** Write stats: 25.0008
+** Write stats: 30.0008
+** Write stats: 35.0005
+** Write stats: 40.0003
+** Write stats: 45.0009
+** Write stats: 50.0002
+** Write stats: 55.0007
+** Write stats: 60.0003
+** Write stats: 65.0056
+** Write stats: 70.0009
+** Write stats: 75.0011
+** Write stats: 80.001
+** Write stats: 85.0008
+** Write stats: 90.0003
+** Write stats: 95.001
+** Write stats: 100.001
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115.06
+** Write stats: 120
+** Write stats: 120.031

@@ -1,0 +1,105 @@
+Extract contract SplitterEthToEtc from /sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol
+Extracted 1 contract(s) from /sb/0x98a31890002355fbe5231c60db4b1b6c28f45e90.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SplitterEthToEtc.sol:17:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function SplitterEthToEtc() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SplitterEthToEtc.sol:24:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/SplitterEthToEtc.sol:31:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    throw;
+                    ^---^
+contracts/SplitterEthToEtc.sol:35:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    throw;
+                    ^---^
+contracts/SplitterEthToEtc.sol:37:21: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                    throw;
+                    ^---^
+contracts/SplitterEthToEtc.sol:42:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+contracts/SplitterEthToEtc.sol:47:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/SplitterEthToEtc.sol:51:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/SplitterEthToEtc.sol:55:34: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != owner) throw;
+                                 ^---^
+contracts/SplitterEthToEtc.sol:15:46: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x2BD2326c993DFaeF84f696526064FF22eba5b362'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+    AmIOnTheFork amIOnTheFork = AmIOnTheFork(0x2bd2326c993dfaef84f696526064ff22eba5b362);
+                                             ^----------------------------------------^
+contracts/SplitterEthToEtc.sol:3:5: Warning: No visibility specified. Defaulting to "public". 
+    function forked() constant returns(bool);
+    ^---------------------------------------^
+contracts/SplitterEthToEtc.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function SplitterEthToEtc() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SplitterEthToEtc.sol:21:5: Warning: No visibility specified. Defaulting to "public". 
+    function() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SplitterEthToEtc.sol:23:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value < lowLimit)
+            ^-------^
+contracts/SplitterEthToEtc.sol:28:17: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (msg.value <= upLimit) {
+                ^-------^
+contracts/SplitterEthToEtc.sol:30:40: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                if (!intermediate.send(msg.value))
+                                       ^-------^
+contracts/SplitterEthToEtc.sol:36:38: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+                if (!msg.sender.send(msg.value - upLimit))
+                                     ^-------^
+contracts/SplitterEthToEtc.sol:41:34: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+            if (!msg.sender.send(msg.value))
+                                 ^-------^
+contracts/SplitterEthToEtc.sol:46:5: Warning: No visibility specified. Defaulting to "public". 
+    function setIntermediate(address _intermediate) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SplitterEthToEtc.sol:50:5: Warning: No visibility specified. Defaulting to "public". 
+    function setUpLimit(uint _limit) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SplitterEthToEtc.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function setLowLimit(uint _limit) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz SplitterEthToEtc
+** Write stats: 0.004853
+** Write stats: 5.00013
+** Write stats: 10.0003
+** Write stats: 15.0003
+** Write stats: 20.0003
+** Write stats: 25.0003
+** Write stats: 30.0001
+** Write stats: 35.0002
+** Write stats: 40.0008
+** Write stats: 45.0049
+** Write stats: 50.0001
+** Write stats: 55.0002
+** Write stats: 60.0046
+** Write stats: 65.0147
+** Write stats: 70.0002
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0004
+** Write stats: 90.0002
+** Write stats: 95.0055
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 120.018

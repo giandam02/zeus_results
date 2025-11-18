@@ -1,0 +1,46 @@
+Extract contract Address from /sb/0x00ce26f43cc3dfe0a899ee011761066cea8d2179.sol
+Extract contract ERC20 from /sb/0x00ce26f43cc3dfe0a899ee011761066cea8d2179.sol
+Extract contract SafeERC20 from /sb/0x00ce26f43cc3dfe0a899ee011761066cea8d2179.sol
+Extract contract SafeMath from /sb/0x00ce26f43cc3dfe0a899ee011761066cea8d2179.sol
+Extract contract StandardToken from /sb/0x00ce26f43cc3dfe0a899ee011761066cea8d2179.sol
+Extracted 5 contract(s) from /sb/0x00ce26f43cc3dfe0a899ee011761066cea8d2179.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ERC20.sol:499:9: Warning: Return value of low-level calls not used.
+        a.delegatecall(b);
+        ^---------------^
+contracts/SafeERC20.sol:499:9: Warning: Return value of low-level calls not used.
+        a.delegatecall(b);
+        ^---------------^
+contracts/SafeMath.sol:499:9: Warning: Return value of low-level calls not used.
+        a.delegatecall(b);
+        ^---------------^
+contracts/Address.sol:499:9: Warning: Return value of low-level calls not used.
+        a.delegatecall(b);
+        ^---------------^
+contracts/StandardToken.sol:499:9: Warning: Return value of low-level calls not used.
+        a.delegatecall(b);
+        ^---------------^
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.17+commit.d19bba13.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 9:    29 Aborted                 (core dumped) ./fuzzer --file contracts/ERC20.sol.json --name ERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 10:    30 Aborted                 (core dumped) ./fuzzer --file contracts/SafeERC20.sol.json --name SafeERC20 --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 11:    31 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 12:    32 Aborted                 (core dumped) ./fuzzer --file contracts/Address.sol.json --name Address --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 13:    33 Aborted                 (core dumped) ./fuzzer --file contracts/StandardToken.sol.json --name StandardToken --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

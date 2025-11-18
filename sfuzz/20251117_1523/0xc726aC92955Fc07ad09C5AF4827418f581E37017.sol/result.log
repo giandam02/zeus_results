@@ -1,0 +1,122 @@
+Extract contract CryptoHill from /sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol
+Extracted 1 contract(s) from /sb/0xc726aC92955Fc07ad09C5AF4827418f581E37017.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/CryptoHill.sol:21:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function CryptoHill(){ 
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:90:9: Warning: Use of the "var" keyword is deprecated.
+        var challengeHash = sha3(challengeData);
+        ^---------------^
+contracts/CryptoHill.sol:33:18: Warning: "sha3" has been deprecated in favour of "keccak256"
+    leaderHash = sha3("09F911029D74E35BD84156C5635688C0");
+                 ^--------------------------------------^
+contracts/CryptoHill.sol:51:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Begin("Collide the most bits of the leader's hash to replace the leader. Leader will win any bounty at the end of the week.");
+    ^---------------------------------------------------------------------------------------------------------------------------^
+contracts/CryptoHill.sol:58:20: Warning: "sha3" has been deprecated in favour of "keccak256"
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+contracts/CryptoHill.sol:58:20: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+contracts/CryptoHill.sol:58:20: Warning: The provided argument of type uint256 is not implicitly convertible to expected type bytes memory.
+      leaderHash = sha3(block.timestamp);
+                   ^-------------------^
+contracts/CryptoHill.sol:74:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Winner("Victory! Game will be reset to end in 1 week (in block time).", leader);
+            ^-----------------------------------------------------------------------------^
+contracts/CryptoHill.sol:75:25: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            leader.send(this.balance);
+                        ^----------^
+contracts/CryptoHill.sol:75:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            leader.send(this.balance);
+            ^-----------------------^
+contracts/CryptoHill.sol:76:17: Warning: Invoking events without "emit" prefix is deprecated.
+          }else NoWinner("No winner! Game will be reset to end in 1 week (in block time).");
+                ^-------------------------------------------------------------------------^
+contracts/CryptoHill.sol:90:29: Warning: "sha3" has been deprecated in favour of "keccak256"
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+contracts/CryptoHill.sol:90:29: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+contracts/CryptoHill.sol:90:29: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        var challengeHash = sha3(challengeData);
+                            ^-----------------^
+contracts/CryptoHill.sol:118:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Leader("New leader! This is their address, and the new hash to collide.", leader, leaderHash);
+        ^-------------------------------------------------------------------------------------------^
+contracts/CryptoHill.sol:129:9: Warning: Invoking events without "emit" prefix is deprecated.
+        WorldRecord("A record setting collision occcured!", difficultyWorldRecord, msg.sender);
+        ^------------------------------------------------------------------------------------^
+contracts/CryptoHill.sol:161:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GameOver("The Crypto Hill has ended.");
+        ^------------------------------------^
+contracts/CryptoHill.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function CryptoHill(){ 
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:87:3: Warning: No visibility specified. Defaulting to "public". 
+  function overthrow(string challengeData) returns (bool success){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:133:3: Warning: No visibility specified. Defaulting to "public". 
+  function changeLeaderMessage(string newMessage){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:140:3: Warning: No visibility specified. Defaulting to "public". 
+  function currentLeader() constant returns (address CurrentLeaderAddress){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:143:3: Warning: No visibility specified. Defaulting to "public". 
+  function Difficulty() constant returns (bytes32 XorMustBeLessThan){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:146:3: Warning: No visibility specified. Defaulting to "public". 
+  function LeaderHash() constant returns (bytes32 leadingHash){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:149:3: Warning: No visibility specified. Defaulting to "public". 
+  function LeaderMessage() constant returns (string MessageOfTheDay){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:152:3: Warning: No visibility specified. Defaulting to "public". 
+  function FallenLeaders() constant returns (uint Victors){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:155:3: Warning: No visibility specified. Defaulting to "public". 
+  function GameEnds() constant returns (uint EndingTime){
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/CryptoHill.sol:159:3: Warning: No visibility specified. Defaulting to "public". 
+  function kill(){
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz CryptoHill
+** Write stats: 0.007327
+** Write stats: 5.00059
+** Write stats: 10.0006
+** Write stats: 15.0009
+** Write stats: 20.0008
+** Write stats: 25.0003
+** Write stats: 30.0007
+** Write stats: 35.0004
+** Write stats: 40.0003
+** Write stats: 45.0007
+** Write stats: 50.0483
+** Write stats: 55.0004
+** Write stats: 60.0004
+** Write stats: 65.0006
+** Write stats: 70.0001
+** Write stats: 75.0007
+** Write stats: 80.0584
+** Write stats: 85.0516
+** Write stats: 90.0009
+** Write stats: 95.0007
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110.001
+** Write stats: 115
+** Write stats: 120.013

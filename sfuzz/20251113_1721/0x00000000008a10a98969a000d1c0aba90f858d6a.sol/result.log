@@ -1,0 +1,67 @@
+Extract contract DharmaUpgradeBeaconControllerManager from /sb/0x00000000008a10a98969a000d1c0aba90f858d6a.sol
+Extract contract SafeMath from /sb/0x00000000008a10a98969a000d1c0aba90f858d6a.sol
+Extracted 2 contract(s) from /sb/0x00000000008a10a98969a000d1c0aba90f858d6a.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SafeMath.sol:1781:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.transferControllerOwnership.selector, 4 weeks
+      ^--^
+contracts/SafeMath.sol:1785:33: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockInterval(this.modifyTimelockInterval.selector, 4 weeks);
+                                ^--^
+contracts/SafeMath.sol:1789:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.modifyTimelockExpiration.selector, 4 weeks
+      ^--^
+contracts/SafeMath.sol:1793:33: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockInterval(this.upgrade.selector, 7 days);
+                                ^--^
+contracts/SafeMath.sol:1801:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.transferControllerOwnership.selector, 7 days
+      ^--^
+contracts/SafeMath.sol:1805:35: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockExpiration(this.modifyTimelockInterval.selector, 7 days);
+                                  ^--^
+contracts/SafeMath.sol:1809:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.modifyTimelockExpiration.selector, 7 days
+      ^--^
+contracts/SafeMath.sol:1813:35: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockExpiration(this.upgrade.selector, 7 days);
+                                  ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1781:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.transferControllerOwnership.selector, 4 weeks
+      ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1785:33: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockInterval(this.modifyTimelockInterval.selector, 4 weeks);
+                                ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1789:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.modifyTimelockExpiration.selector, 4 weeks
+      ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1793:33: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockInterval(this.upgrade.selector, 7 days);
+                                ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1801:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.transferControllerOwnership.selector, 7 days
+      ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1805:35: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockExpiration(this.modifyTimelockInterval.selector, 7 days);
+                                  ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1809:7: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+      this.modifyTimelockExpiration.selector, 7 days
+      ^--^
+contracts/DharmaUpgradeBeaconControllerManager.sol:1813:35: Warning: "this" used in constructor. Note that external functions of a contract cannot be called while it is being constructed.
+    _setInitialTimelockExpiration(this.upgrade.selector, 7 days);
+                                  ^--^
+assets/NormalAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.11+commit.22be8592.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+assets/ReentrancyAttacker.sol:1:1: Error: Source file requires different compiler version (current compiler is 0.5.11+commit.22be8592.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+pragma solidity ^0.4.24;
+^----------------------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 6:    23 Aborted                 (core dumped) ./fuzzer --file contracts/SafeMath.sol.json --name SafeMath --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 7:    24 Aborted                 (core dumped) ./fuzzer --file contracts/DharmaUpgradeBeaconControllerManager.sol.json --name DharmaUpgradeBeaconControllerManager --assets assets/ --duration 120 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker

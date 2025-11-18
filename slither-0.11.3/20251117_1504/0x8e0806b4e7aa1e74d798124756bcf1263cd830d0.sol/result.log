@@ -1,0 +1,82 @@
+'solc --version' running
+'solc /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:8:5: Warning: This declaration shadows an existing declaration.
+    struct Vow {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:2:1: The shadowed declaration is here:
+contract Vow {
+^ (Relevant source part starts here and spans across multiple lines).
+
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:30:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Vow v = vows[vowID];
+        ^---^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:47:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Customer c = vows[vowID].customers[msg.sender];
+        ^--------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:60:9: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+        Customer wc = vows[vowID].customers[beneficiary];
+        ^---------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:37:9: Warning: Invoking events without "emit" prefix is deprecated.
+        newVowIdFlag(v.vower, vowID, v.payoff);
+        ^------------------------------------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:50:9: Warning: Invoking events without "emit" prefix is deprecated.
+        depositFlag(msg.sender, c.balance, c.ref);
+        ^---------------------------------------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:62:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        beneficiary.send(amount);
+        ^----------------------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:63:9: Warning: Invoking events without "emit" prefix is deprecated.
+        withdrawFlag(beneficiary, amount, wc.balance);
+        ^-------------------------------------------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:28:5: Warning: No visibility specified. Defaulting to "public". 
+    function newvow(uint payoff, address oracle) returns (uint vowID) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:32:19: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        v.funds = msg.value;
+                  ^-------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:41:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit(uint vowID) returns (bool res) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:43:13: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        if (msg.value == 0){
+            ^-------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:46:33: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        vows[vowID].deposits += msg.value;
+                                ^-------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:48:22: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+        c.balance += msg.value;
+                     ^-------^
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint amount, address beneficiary, uint vowID) returns (bool res) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Vow.withdraw(uint256,address,uint256) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#54-65) ignores return value by beneficiary.send(amount) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#62)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Vow.withdraw(uint256,address,uint256).beneficiary (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#54) lacks a zero-check on :
+		- beneficiary.send(amount) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#62)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Variable 'Vow.withdraw(uint256,address,uint256).wc (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#60)' in Vow.withdraw(uint256,address,uint256) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#54-65) potentially used before declaration: wc.balance < amount || amount == 0 (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Version constraint >=0.4.0<0.9.0 is too complex.
+It is used by:
+	- >=0.4.0<0.9.0 (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event Vow.depositFlag(address,uint256,uint256) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#24) is not in CapWords
+Event Vow.withdrawFlag(address,uint256,uint256) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#25) is not in CapWords
+Event Vow.newVowIdFlag(address,uint256,uint256) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#26) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Vow.withdraw(uint256,address,uint256) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#54-65):
+	External calls:
+	- beneficiary.send(amount) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#62)
+	Event emitted after the call(s):
+	- withdrawFlag(beneficiary,amount,wc.balance) (../sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol#63)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x8e0806b4e7aa1e74d798124756bcf1263cd830d0.sol analyzed (1 contracts with 100 detectors), 9 result(s) found
