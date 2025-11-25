@@ -1,0 +1,71 @@
+'solc --version' running
+'solc /sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Token (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#80-101) has incorrect ERC20 function interface:TokenBase.transfer(address,uint256) (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#53-55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Owned.transferOwnership(address) (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#15-17) should emit an event for: 
+	- owner = newOwner (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#16) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Owned.transferOwnership(address).newOwner (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#15) lacks a zero-check on :
+		- owner = newOwner (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#16)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+TokenBase.tokenUnit (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#29) is set pre-construction with a non-constant function or state variable:
+	- 10 ** uint256(decimals)
+TokenBase.wanUnit (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#30) is set pre-construction with a non-constant function or state variable:
+	- 10000 * tokenUnit
+Token.initialSupply (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#81) is set pre-construction with a non-constant function or state variable:
+	- 0 * wanUnit
+Token.reserveSupply (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#82) is set pre-construction with a non-constant function or state variable:
+	- 500000 * wanUnit
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#21) is not in CapWords
+Parameter TokenBase.transfer(address,uint256)._to (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#53) is not in mixedCase
+Parameter TokenBase.transfer(address,uint256)._value (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#53) is not in mixedCase
+Parameter TokenBase.transferFrom(address,address,uint256)._from (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#57) is not in mixedCase
+Parameter TokenBase.transferFrom(address,address,uint256)._to (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#57) is not in mixedCase
+Parameter TokenBase.transferFrom(address,address,uint256)._value (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#57) is not in mixedCase
+Parameter TokenBase.approve(address,uint256)._spender (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#64) is not in mixedCase
+Parameter TokenBase.approve(address,uint256)._value (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#64) is not in mixedCase
+Parameter TokenBase.approveAndCall(address,uint256,bytes)._spender (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#69) is not in mixedCase
+Parameter TokenBase.approveAndCall(address,uint256,bytes)._value (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#69) is not in mixedCase
+Parameter TokenBase.approveAndCall(address,uint256,bytes)._extraData (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#69) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Token.slitherConstructorVariables() (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#80-101) uses literals with too many digits:
+	- reserveSupply = 500000 * wanUnit (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#82)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+TokenBase.decimals (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#27) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+approveAndCall(address,uint256,bytes) should be declared external:
+	- TokenBase.approveAndCall(address,uint256,bytes) (../sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol#69-75)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xdac324a72f774a614da500240f2786f2ec06c10d.sol analyzed (4 contracts with 100 detectors), 23 result(s) found

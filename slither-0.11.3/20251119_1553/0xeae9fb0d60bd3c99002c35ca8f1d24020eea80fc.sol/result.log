@@ -1,0 +1,41 @@
+'solc --version' running
+'solc /sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract CASINO_301202 (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#3-56) is not in CapWords
+Function CASINO_301202.SimpleERC20Token() (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#15-18) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CASINO_301202.slitherConstructorVariables() (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#3-56) uses literals with too many digits:
+	- totalSupply = 10990099143654100000000000 (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#11)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+CASINO_301202.decimals (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#9) should be constant 
+CASINO_301202.name (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#7) should be constant 
+CASINO_301202.symbol (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#8) should be constant 
+CASINO_301202.totalSupply (../sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol#11) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xeae9fb0d60bd3c99002c35ca8f1d24020eea80fc.sol analyzed (1 contracts with 100 detectors), 9 result(s) found

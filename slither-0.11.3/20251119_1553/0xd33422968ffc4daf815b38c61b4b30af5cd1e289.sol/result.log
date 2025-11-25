@@ -1,0 +1,139 @@
+'solc --version' running
+'solc /sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:194:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:298:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AIETTOKEN( address _admin, uint _totalTokenAmount ) 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:82:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:123:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:139:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:161:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:172:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:214:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:257:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PausePublic(newPausedPublic);
+    ^--------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:258:5: Warning: Invoking events without "emit" prefix is deprecated.
+    PauseOwnerAdmin(newPausedOwnerAdmin);
+    ^----------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:306:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0x0), msg.sender, _totalTokenAmount);
+        ^---------------------------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:325:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(msg.sender, _value);
+        ^----------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:326:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, address(0x0), _value);
+        ^----------------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:346:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AdminTransferred(admin, newAdmin);
+        ^-------------------------------^
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:298:5: Warning: No visibility specified. Defaulting to "public". 
+    function AIETTOKEN( address _admin, uint _totalTokenAmount ) 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:309:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint _value) validDestination(_to) returns (bool) 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:314:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint _value) validDestination(_to) returns (bool) 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:321:5: Warning: No visibility specified. Defaulting to "public". 
+    function burn(uint _value) returns (bool)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:331:5: Warning: No visibility specified. Defaulting to "public". 
+    function burnFrom(address _from, uint256 _value) returns (bool) 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:337:5: Warning: No visibility specified. Defaulting to "public". 
+    function emergencyERC20Drain( ERC20 token, uint amount ) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol:344:5: Warning: No visibility specified. Defaulting to "public". 
+    function changeAdmin(address newAdmin) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+AIETTOKEN.emergencyERC20Drain(ERC20,uint256) (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#337-340) ignores return value by token.transfer(owner,amount) (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#339)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+AIETTOKEN.AIETTOKEN(address,uint256)._admin (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#298) lacks a zero-check on :
+		- admin = _admin (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#301)
+AIETTOKEN.changeAdmin(address).newAdmin (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#344) lacks a zero-check on :
+		- admin = newAdmin (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#347)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Pausable.pause(bool,bool) (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#251-259) compares to a boolean constant:
+	-require(bool)(! (newPausedPublic == false && newPausedOwnerAdmin == true)) (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#252)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#75) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#75) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#91) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#115) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#115) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#115) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#137) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#137) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#149) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#149) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#159) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#159) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#165) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#165) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._to (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#264) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#264) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._from (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#268) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._to (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#268) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#268) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#272) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#272) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#276) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._addedValue (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#276) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._spender (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#280) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#280) is not in mixedCase
+Parameter AIETTOKEN.transfer(address,uint256)._to (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#309) is not in mixedCase
+Parameter AIETTOKEN.transfer(address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#309) is not in mixedCase
+Parameter AIETTOKEN.transferFrom(address,address,uint256)._from (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#314) is not in mixedCase
+Parameter AIETTOKEN.transferFrom(address,address,uint256)._to (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#314) is not in mixedCase
+Parameter AIETTOKEN.transferFrom(address,address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#314) is not in mixedCase
+Parameter AIETTOKEN.burn(uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#321) is not in mixedCase
+Parameter AIETTOKEN.burnFrom(address,uint256)._from (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#331) is not in mixedCase
+Parameter AIETTOKEN.burnFrom(address,uint256)._value (../sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol#331) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xd33422968ffc4daf815b38c61b4b30af5cd1e289.sol analyzed (9 contracts with 100 detectors), 39 result(s) found

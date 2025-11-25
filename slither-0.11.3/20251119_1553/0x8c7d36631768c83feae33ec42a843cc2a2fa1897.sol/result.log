@@ -1,0 +1,123 @@
+'solc --version' running
+'solc /sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:609:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:790:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Raffle(uint _ticketPrice, address _rewardDistributor) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:1062:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function CountBasedRaffle(uint _ticketPrice, uint _drawTicketCount, address _rewardDistributor) Raffle(_ticketPrice, _rewardDistributor) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:1115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function GoldRaffle(address _rewardDistributor) CountBasedRaffle(100 finney, 10, _rewardDistributor) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:169:56: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        oraclize_randomDS_setCommitment(self, queryId, keccak256(bytes8(_delay), args[1], sha256(args[0]), args[2]));
+                                                       ^----------------------------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:180:52: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        checkok = (keccak256(keyhash) == keccak256(sha256(context_name, queryId)));
+                                                   ^---------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:180:42: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        checkok = (keccak256(keyhash) == keccak256(sha256(context_name, queryId)));
+                                         ^--------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:180:42: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        checkok = (keccak256(keyhash) == keccak256(sha256(context_name, queryId)));
+                                         ^--------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:204:51: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (self.oraclizeRandomDSArgs[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)) {
+                                                  ^--------------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:237:22: Warning: Decimal literal assigned to bytesXX variable will be left-aligned. Use an explicit conversion to silence this warning.
+        tosign2[0] = 1; //role
+                     ^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:629:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:716:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance >= payment);
+                ^----------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:733:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance >= payment);
+                ^----------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:743:9: Warning: Invoking events without "emit" prefix is deprecated.
+        WinnerWithdrew(winner, payment, block.number);
+        ^-------------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:864:7: Warning: Invoking events without "emit" prefix is deprecated.
+      RandomProofFailed(queryId, gameId, now);
+      ^-------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:882:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    uint randomNumber = uint(keccak256(result)) % maxRange; 
+                             ^---------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:882:30: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+    uint randomNumber = uint(keccak256(result)) % maxRange; 
+                             ^---------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:899:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance > total);
+            ^----------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:958:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinnerSelected(winner.purchaser, gameId, jackpotTotals.winnerTotal, now);    
+    ^----------------------------------------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:1079:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return this.balance.sub(totalPendingPayments);
+           ^----------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:1093:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TicketPurchased(msg.sender, gameId, numTickets, ticketPrice.mul(numTickets), now);
+    ^-------------------------------------------------------------------------------^
+/sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol:873:23: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function __callback(bytes32 queryId, string result) public {
+                      ^-------------^
+
+
+Failed to generate IR for CountBasedRaffle.getAbsoluteJackpot. Please open an issue https://github.com/crytic/slither/issues.
+CountBasedRaffle.getAbsoluteJackpot (../sb/0x8c7d36631768c83feae33ec42a843cc2a2fa1897.sol#1074-1080):
+ 	ticketHolders.length == 0
+	0
+	this.balance.sub(totalPendingPayments)
+Traceback (most recent call last):
+  File "/usr/local/bin/slither", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 776, in main
+    main_impl(all_detector_classes=detectors, all_printer_classes=printers)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 882, in main_impl
+    ) = process_all(filename, args, detector_classes, printer_classes)
+        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 107, in process_all
+    ) = process_single(compilation, args, detector_classes, printer_classes)
+        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/__main__.py", line 80, in process_single
+    slither = Slither(target, ast_format=ast, **vars(args))
+  File "/usr/local/lib/python3.13/site-packages/slither/slither.py", line 202, in __init__
+    self._init_parsing_and_analyses(kwargs.get("skip_analyze", False))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/slither.py", line 221, in _init_parsing_and_analyses
+    raise e
+  File "/usr/local/lib/python3.13/site-packages/slither/slither.py", line 217, in _init_parsing_and_analyses
+    parser.analyze_contracts()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/solc_parsing/slither_compilation_unit_solc.py", line 593, in analyze_contracts
+    self._convert_to_slithir()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/solc_parsing/slither_compilation_unit_solc.py", line 828, in _convert_to_slithir
+    raise e
+  File "/usr/local/lib/python3.13/site-packages/slither/solc_parsing/slither_compilation_unit_solc.py", line 813, in _convert_to_slithir
+    func.generate_slithir_and_analyze()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/core/declarations/function.py", line 1878, in generate_slithir_and_analyze
+    node.slithir_generation()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/site-packages/slither/core/cfg/node.py", line 706, in slithir_generation
+    self._irs = convert_expression(expression, self)  # type:ignore
+                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/site-packages/slither/slithir/convert.py", line 117, in convert_expression
+    result = apply_ir_heuristics(result, node, is_solidity)
+  File "/usr/local/lib/python3.13/site-packages/slither/slithir/convert.py", line 2053, in apply_ir_heuristics
+    irs = propagate_type_and_convert_call(irs, node)
+  File "/usr/local/lib/python3.13/site-packages/slither/slithir/convert.py", line 538, in propagate_type_and_convert_call
+    new_ins = propagate_types(ins, node)
+  File "/usr/local/lib/python3.13/site-packages/slither/slithir/convert.py", line 639, in propagate_types
+    if t in using_for or "*" in using_for:
+       ^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'

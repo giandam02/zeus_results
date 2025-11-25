@@ -1,0 +1,46 @@
+'solc --version' running
+'solc /sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Address.isContract(address) (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#81-92) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+OrbsGuardians.leave() (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#249-269) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(now >= guardiansData[sender].registeredOn.add(registrationMinTime),Minimal guardian time didnt pass) (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#251)
+OrbsGuardians.isGuardian(address) (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#345-347) uses timestamp for comparisons
+	Dangerous comparisons:
+	- guardiansData[guardian].registeredOnBlock > 0 (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#346)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Address.isContract(address) (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#81-92) uses assembly
+	- INLINE ASM (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#90-91)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint 0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- 0.4.25 (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#1)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in OrbsGuardians.leave() (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#249-269):
+	External calls:
+	- sender.transfer(registrationDepositWei) (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#266)
+	Event emitted after the call(s):
+	- GuardianLeft(sender) (../sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol#268)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xd64b1bf6fcab5add75041c89f61816c2b3d5e711.sol analyzed (4 contracts with 100 detectors), 7 result(s) found

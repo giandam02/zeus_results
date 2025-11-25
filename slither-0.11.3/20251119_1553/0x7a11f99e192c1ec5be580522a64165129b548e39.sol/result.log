@@ -1,0 +1,777 @@
+'solc --version' running
+'solc /sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+FoMo3DFast.airDropPot_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#468) is never initialized. It is used in:
+	- FoMo3DFast.getCurrentRoundInfo() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1106-1131)
+	- FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857-1880)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+NameFilter.nameFilter(string) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#14-76) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+FoMo3DFast.getPlayerVaultsHelper(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1080-1086) performs a multiplication on the result of a division:
+	- (((((round_[_rID].mask).add(((((round_[_rID].pot).mul(potSplit_[round_[_rID].team].gen)) / 100).mul(1000000000000000000)) / (round_[_rID].keys))).mul(plyrRnds_[_pID][_rID].keys)) / 1000000000000000000)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1085)
+FoMo3DFast.updateTimer(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678-1696) performs a multiplication on the result of a division:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1689)
+FoMo3DFast.updateTimer(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678-1696) performs a multiplication on the result of a division:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1687)
+FoMo3DFast.airdrop() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1703-1722) performs a multiplication on the result of a division:
+	- (seed - ((seed / 1000) * 1000)) < airDropTracker_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1718)
+FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803-1829) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1819)
+	- _pearn = (_ppt.mul(_keys)) / (1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1824)
+FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803-1829) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1819)
+	- (_gen.sub((_ppt.mul(round_[_rID].keys)) / (1000000000000000000))) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1828)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#612)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	State variables written after the call(s):
+	- plyr_[_pID].laff = _affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#634)
+	FoMo3DFast.plyr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#476) can be used in cross function reentrancies:
+	- FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180-1228)
+	- FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234-1282)
+	- FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643)
+	- FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603)
+	- FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684)
+	- FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393)
+	- FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528)
+	- FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566)
+	- FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727-1756)
+	- FoMo3DFast.endRound(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608-1657)
+	- FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857-1880)
+	- FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562)
+	- FoMo3DFast.getCurrentRoundInfo() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1106-1131)
+	- FoMo3DFast.getPlayerInfoByAddress(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1146-1170)
+	- FoMo3DFast.getPlayerVaults(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1036-1075)
+	- FoMo3DFast.managePlayer(uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1587-1603)
+	- FoMo3DFast.plyr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#476)
+	- FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288-1333)
+	- FoMo3DFast.reLoadXaddr(address,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751-789)
+	- FoMo3DFast.reLoadXid(uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719-749)
+	- FoMo3DFast.reLoadXname(bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791-829)
+	- FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464-1480)
+	- FoMo3DFast.updateGenVault(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1662-1673)
+	- FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901)
+	- FoMo3DFast.withdrawEarnings(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1835-1852)
+	- FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973)
+Reentrancy in FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#580)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	State variables written after the call(s):
+	- plyr_[_pID].laff = _affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#595)
+	FoMo3DFast.plyr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#476) can be used in cross function reentrancies:
+	- FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180-1228)
+	- FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234-1282)
+	- FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643)
+	- FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603)
+	- FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684)
+	- FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393)
+	- FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528)
+	- FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566)
+	- FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727-1756)
+	- FoMo3DFast.endRound(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608-1657)
+	- FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857-1880)
+	- FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562)
+	- FoMo3DFast.getCurrentRoundInfo() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1106-1131)
+	- FoMo3DFast.getPlayerInfoByAddress(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1146-1170)
+	- FoMo3DFast.getPlayerVaults(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1036-1075)
+	- FoMo3DFast.managePlayer(uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1587-1603)
+	- FoMo3DFast.plyr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#476)
+	- FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288-1333)
+	- FoMo3DFast.reLoadXaddr(address,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751-789)
+	- FoMo3DFast.reLoadXid(uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719-749)
+	- FoMo3DFast.reLoadXname(bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791-829)
+	- FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464-1480)
+	- FoMo3DFast.updateGenVault(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1662-1673)
+	- FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901)
+	- FoMo3DFast.withdrawEarnings(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1835-1852)
+	- FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973)
+Reentrancy in FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#653)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	State variables written after the call(s):
+	- plyr_[_pID].laff = _affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#675)
+	FoMo3DFast.plyr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#476) can be used in cross function reentrancies:
+	- FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180-1228)
+	- FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234-1282)
+	- FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643)
+	- FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603)
+	- FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684)
+	- FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393)
+	- FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528)
+	- FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566)
+	- FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727-1756)
+	- FoMo3DFast.endRound(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608-1657)
+	- FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857-1880)
+	- FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562)
+	- FoMo3DFast.getCurrentRoundInfo() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1106-1131)
+	- FoMo3DFast.getPlayerInfoByAddress(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1146-1170)
+	- FoMo3DFast.getPlayerVaults(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1036-1075)
+	- FoMo3DFast.managePlayer(uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1587-1603)
+	- FoMo3DFast.plyr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#476)
+	- FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288-1333)
+	- FoMo3DFast.reLoadXaddr(address,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751-789)
+	- FoMo3DFast.reLoadXid(uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719-749)
+	- FoMo3DFast.reLoadXname(bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791-829)
+	- FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464-1480)
+	- FoMo3DFast.updateGenVault(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1662-1673)
+	- FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901)
+	- FoMo3DFast.withdrawEarnings(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1835-1852)
+	- FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973)
+Reentrancy in FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528):
+	External calls:
+	- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+	- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+	- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	State variables written after the call(s):
+	- pIDxAddr_[msg.sender] = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1511)
+	FoMo3DFast.pIDxAddr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#474) can be used in cross function reentrancies:
+	- FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643)
+	- FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603)
+	- FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684)
+	- FoMo3DFast.buyXnameQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#687-707)
+	- FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528)
+	- FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566)
+	- FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562)
+	- FoMo3DFast.getPlayerInfoByAddress(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1146-1170)
+	- FoMo3DFast.pIDxAddr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#474)
+	- FoMo3DFast.reLoadXaddr(address,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751-789)
+	- FoMo3DFast.reLoadXid(uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719-749)
+	- FoMo3DFast.reLoadXname(bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791-829)
+	- FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464-1480)
+	- FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901)
+	- FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973)
+Reentrancy in FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566):
+	External calls:
+	- _pID = PlayerBook.getPlayerID(_realSender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1544)
+	- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1545)
+	- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1546)
+	State variables written after the call(s):
+	- pIDxAddr_[_realSender] = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1549)
+	FoMo3DFast.pIDxAddr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#474) can be used in cross function reentrancies:
+	- FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643)
+	- FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603)
+	- FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684)
+	- FoMo3DFast.buyXnameQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#687-707)
+	- FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528)
+	- FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566)
+	- FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562)
+	- FoMo3DFast.getPlayerInfoByAddress(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1146-1170)
+	- FoMo3DFast.pIDxAddr_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#474)
+	- FoMo3DFast.reLoadXaddr(address,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751-789)
+	- FoMo3DFast.reLoadXid(uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719-749)
+	- FoMo3DFast.reLoadXname(bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791-829)
+	- FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464-1480)
+	- FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901)
+	- FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+FoMo3DFast.verifyTeam(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1572-1581) contains a tautology or contradiction:
+	- _team < 0 || _team > 3 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1577)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+FoMo3DFast.reLoadXid(uint256,uint256,uint256)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#726) is a local variable never initialized
+FoMo3DFast.reLoadXname(bytes32,uint256,uint256)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#798) is a local variable never initialized
+FoMo3DFast.reLoadXaddr(address,uint256,uint256)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#758) is a local variable never initialized
+FoMo3DFast.withdraw()._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#856) is a local variable never initialized
+FoMo3DFast.withdrawQR(address)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#928) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Reentrancy in FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#612)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1671)
+		- plyrRnds_[_pID][_rID].keys = _keys.add(plyrRnds_[_pID][_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1378)
+		- plyrRnds_[_pID][_rID].eth = _eth.add(plyrRnds_[_pID][_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1379)
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+		- rID_ ++ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1650)
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+		- rndTmEth_[_rID][_team] = _eth.add(rndTmEth_[_rID][_team]) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1384)
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1820)
+		- round_[_rID].ended = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1201)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1789)
+		- round_[_rID].end = _newTime (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1693)
+		- round_[_rID].pot = round_[_rID].pot.add(_potAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1751)
+		- round_[_rID].end = rndMax_.add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1695)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1637)
+		- round_[_rID].plyr = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1369)
+		- round_[_rID].team = _team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1371)
+		- round_[_rID].strt = now (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1652)
+		- round_[_rID].keys = _keys.add(round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1382)
+		- round_[_rID].end = now.add(rndInit_).add(rndGap_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1653)
+		- round_[_rID].eth = _eth.add(round_[_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1383)
+		- round_[_rID].pot = _res (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1654)
+Reentrancy in FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#580)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1671)
+		- plyrRnds_[_pID][_rID].keys = _keys.add(plyrRnds_[_pID][_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1378)
+		- plyrRnds_[_pID][_rID].eth = _eth.add(plyrRnds_[_pID][_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1379)
+	- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+		- rID_ ++ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1650)
+	- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+		- rndTmEth_[_rID][_team] = _eth.add(rndTmEth_[_rID][_team]) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1384)
+	- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1820)
+		- round_[_rID].ended = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1201)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1789)
+		- round_[_rID].end = _newTime (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1693)
+		- round_[_rID].pot = round_[_rID].pot.add(_potAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1751)
+		- round_[_rID].end = rndMax_.add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1695)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1637)
+		- round_[_rID].plyr = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1369)
+		- round_[_rID].team = _team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1371)
+		- round_[_rID].strt = now (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1652)
+		- round_[_rID].keys = _keys.add(round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1382)
+		- round_[_rID].end = now.add(rndInit_).add(rndGap_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1653)
+		- round_[_rID].eth = _eth.add(round_[_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1383)
+		- round_[_rID].pot = _res (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1654)
+Reentrancy in FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#653)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1671)
+		- plyrRnds_[_pID][_rID].keys = _keys.add(plyrRnds_[_pID][_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1378)
+		- plyrRnds_[_pID][_rID].eth = _eth.add(plyrRnds_[_pID][_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1379)
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+		- rID_ ++ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1650)
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+		- rndTmEth_[_rID][_team] = _eth.add(rndTmEth_[_rID][_team]) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1384)
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1820)
+		- round_[_rID].ended = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1201)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1789)
+		- round_[_rID].end = _newTime (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1693)
+		- round_[_rID].pot = round_[_rID].pot.add(_potAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1751)
+		- round_[_rID].end = rndMax_.add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1695)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1637)
+		- round_[_rID].plyr = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1369)
+		- round_[_rID].team = _team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1371)
+		- round_[_rID].strt = now (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1652)
+		- round_[_rID].keys = _keys.add(round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1382)
+		- round_[_rID].end = now.add(rndInit_).add(rndGap_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1653)
+		- round_[_rID].eth = _eth.add(round_[_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1383)
+		- round_[_rID].pot = _res (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1654)
+Reentrancy in FoMo3DFast.buyXnameQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#687-707):
+	External calls:
+	- _eventData_ = determinePIDQR(_realSender,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#694)
+		- _pID = PlayerBook.getPlayerID(_realSender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1544)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1545)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1546)
+	External calls sending eth:
+	- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1671)
+		- plyrRnds_[_pID][_rID].keys = _keys.add(plyrRnds_[_pID][_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1378)
+		- plyrRnds_[_pID][_rID].eth = _eth.add(plyrRnds_[_pID][_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1379)
+	- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+		- rID_ ++ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1650)
+	- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+		- rndTmEth_[_rID][_team] = _eth.add(rndTmEth_[_rID][_team]) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1384)
+	- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1820)
+		- round_[_rID].ended = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1255)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1789)
+		- round_[_rID].end = _newTime (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1693)
+		- round_[_rID].pot = round_[_rID].pot.add(_potAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1751)
+		- round_[_rID].end = rndMax_.add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1695)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1637)
+		- round_[_rID].plyr = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1369)
+		- round_[_rID].team = _team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1371)
+		- round_[_rID].strt = now (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1652)
+		- round_[_rID].keys = _keys.add(round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1382)
+		- round_[_rID].end = now.add(rndInit_).add(rndGap_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1653)
+		- round_[_rID].eth = _eth.add(round_[_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1383)
+		- round_[_rID].pot = _res (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1654)
+Reentrancy in FoMo3DFast.determinePID(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497-1528):
+	External calls:
+	- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+	- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+	- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	State variables written after the call(s):
+	- pIDxName_[_name] = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1516)
+	- plyrNames_[_pID][_name] = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1518)
+	- plyr_[_pID].addr = msg.sender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1512)
+	- plyr_[_pID].name = _name (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1517)
+	- plyr_[_pID].laff = _laff (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1522)
+Reentrancy in FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535-1566):
+	External calls:
+	- _pID = PlayerBook.getPlayerID(_realSender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1544)
+	- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1545)
+	- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1546)
+	State variables written after the call(s):
+	- pIDxName_[_name] = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1554)
+	- plyrNames_[_pID][_name] = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1556)
+	- plyr_[_pID].addr = _realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1550)
+	- plyr_[_pID].name = _name (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1555)
+	- plyr_[_pID].laff = _laff (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1560)
+Reentrancy in FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#555)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1671)
+		- plyrRnds_[_pID][_rID].keys = _keys.add(plyrRnds_[_pID][_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1378)
+		- plyrRnds_[_pID][_rID].eth = _eth.add(plyrRnds_[_pID][_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1379)
+	- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+		- rID_ ++ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1650)
+	- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+		- rndTmEth_[_rID][_team] = _eth.add(rndTmEth_[_rID][_team]) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1384)
+	- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1820)
+		- round_[_rID].ended = true (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1201)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1789)
+		- round_[_rID].end = _newTime (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1693)
+		- round_[_rID].pot = round_[_rID].pot.add(_potAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1751)
+		- round_[_rID].end = rndMax_.add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1695)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1637)
+		- round_[_rID].plyr = _pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1369)
+		- round_[_rID].team = _team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1371)
+		- round_[_rID].strt = now (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1652)
+		- round_[_rID].keys = _keys.add(round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1382)
+		- round_[_rID].end = now.add(rndInit_).add(rndGap_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1653)
+		- round_[_rID].eth = _eth.add(round_[_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1383)
+		- round_[_rID].pot = _res (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1654)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in FoMo3DFast.buyXaddr(address,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605-643):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#612)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	Event emitted after the call(s):
+	- F3Devents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1743)
+		- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+	- F3Devents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1209-1222)
+		- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+	- F3Devents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,_realSender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount,_eventData_.potAmount,airDropPot_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1863-1879)
+		- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#642)
+Reentrancy in FoMo3DFast.buyXid(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572-603):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#580)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	Event emitted after the call(s):
+	- F3Devents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1743)
+		- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+	- F3Devents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1209-1222)
+		- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+	- F3Devents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,_realSender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount,_eventData_.potAmount,airDropPot_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1863-1879)
+		- buyCore(_pID,_affCode,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#602)
+Reentrancy in FoMo3DFast.buyXname(bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645-684):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#653)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	Event emitted after the call(s):
+	- F3Devents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1743)
+		- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+	- F3Devents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1209-1222)
+		- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+	- F3Devents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,_realSender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount,_eventData_.potAmount,airDropPot_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1863-1879)
+		- buyCore(_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#683)
+Reentrancy in FoMo3DFast.buyXnameQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#687-707):
+	External calls:
+	- _eventData_ = determinePIDQR(_realSender,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#694)
+		- _pID = PlayerBook.getPlayerID(_realSender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1544)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1545)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1546)
+	External calls sending eth:
+	- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	Event emitted after the call(s):
+	- F3Devents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1743)
+		- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+	- F3Devents.onBuyAndDistribute(_realSender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1263-1276)
+		- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+	- F3Devents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,_realSender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount,_eventData_.potAmount,airDropPot_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1863-1879)
+		- buyCoreQR(_realSender,_pID,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#706)
+Reentrancy in FoMo3DFast.fallback() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#547-562):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#555)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1506)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1507)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1508)
+	External calls sending eth:
+	- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	Event emitted after the call(s):
+	- F3Devents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1743)
+		- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+	- F3Devents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1209-1222)
+		- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+	- F3Devents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,_realSender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount,_eventData_.potAmount,airDropPot_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1863-1879)
+		- buyCore(_pID,plyr_[1].laff,0,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#561)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#853)
+FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#925)
+FoMo3DFast.getBuyPrice() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#985-1001) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#997)
+FoMo3DFast.getTimeLeft() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1009-1027) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now < round_[_rID].end (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1020)
+	- _now > round_[_rID].strt + rndGap_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1021)
+FoMo3DFast.getPlayerVaults(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1036-1075) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1045)
+FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180-1228) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1190)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1198)
+FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234-1282) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1244)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1252)
+FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288-1333) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1298)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1309)
+FoMo3DFast.calcKeysReceived(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1419-1432) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1428)
+FoMo3DFast.iWantXKeys(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1440-1456) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1452)
+FoMo3DFast.updateTimer(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678-1696) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].plyr == 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1686)
+	- _newTime < (rndMax_).add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1692)
+FoMo3DFast.airdrop() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1703-1722) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (seed - ((seed / 1000) * 1000)) < airDropTracker_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1718)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+NameFilter.nameFilter(string) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#14-76) uses assembly
+	- INLINE ASM (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#72-75)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+NameFilter.nameFilter(string) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#14-76) compares to a boolean constant:
+	-_hasNonNumber == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#46)
+NameFilter.nameFilter(string) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#14-76) compares to a boolean constant:
+	-require(bool,string)(_hasNonNumber == true,string cannot be only numbers) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#69)
+NameFilter.nameFilter(string) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#14-76) compares to a boolean constant:
+	-_hasNonNumber == false && (_temp[i] < 0x30 || _temp[i] > 0x39) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#64)
+FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#853)
+FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#925)
+FoMo3DFast.getPlayerVaults(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1036-1075) compares to a boolean constant:
+	-now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1045)
+FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180-1228) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1198)
+FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234-1282) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1252)
+FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288-1333) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1309)
+FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464-1480) compares to a boolean constant:
+	-plyrNames_[_pID][_name] == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1478)
+FoMo3DFast.receivePlayerNameList(uint256,bytes32) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1485-1491) compares to a boolean constant:
+	-plyrNames_[_pID][_name] == false (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1489)
+FoMo3DFast.activate() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1890-1907) compares to a boolean constant:
+	-require(bool,string)(activated_ == false,FOMO Short already activated) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1898)
+FoMo3DFast.isActivated() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#515-518) compares to a boolean constant:
+	-require(bool,string)(activated_ == true,its not ready yet.  check ?eta in discord) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#516)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+FoMo3DFast.airdrop() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1703-1722) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter NameFilter.nameFilter(string)._input (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#14) is not in mixedCase
+Parameter F3DKeysCalcShort.keysRec(uint256,uint256)._curEth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#271) is not in mixedCase
+Parameter F3DKeysCalcShort.keysRec(uint256,uint256)._newEth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#271) is not in mixedCase
+Parameter F3DKeysCalcShort.ethRec(uint256,uint256)._curKeys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#285) is not in mixedCase
+Parameter F3DKeysCalcShort.ethRec(uint256,uint256)._sellKeys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#285) is not in mixedCase
+Parameter F3DKeysCalcShort.keys(uint256)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#298) is not in mixedCase
+Parameter F3DKeysCalcShort.eth(uint256)._keys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#311) is not in mixedCase
+Event F3Devents.onNewName(uint256,address,bytes32,bool,uint256,address,bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#328-339) is not in CapWords
+Event F3Devents.onEndTx(uint256,uint256,bytes32,address,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#342-358) is not in CapWords
+Event F3Devents.onWithdraw(uint256,address,bytes32,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#361-368) is not in CapWords
+Event F3Devents.onWithdrawAndDistribute(address,bytes32,uint256,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#371-384) is not in CapWords
+Event F3Devents.onBuyAndDistribute(address,bytes32,uint256,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#388-401) is not in CapWords
+Event F3Devents.onReLoadAndDistribute(address,bytes32,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#405-417) is not in CapWords
+Event F3Devents.onAffiliatePayout(uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#420-429) is not in CapWords
+Event F3Devents.onPotSwapDeposit(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#432-436) is not in CapWords
+Contract modularFast (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#450) is not in CapWords
+Parameter FoMo3DFast.buyXid(uint256,uint256)._affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572) is not in mixedCase
+Parameter FoMo3DFast.buyXid(uint256,uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#572) is not in mixedCase
+Parameter FoMo3DFast.buyXaddr(address,uint256)._affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605) is not in mixedCase
+Parameter FoMo3DFast.buyXaddr(address,uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#605) is not in mixedCase
+Parameter FoMo3DFast.buyXname(bytes32,uint256)._affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645) is not in mixedCase
+Parameter FoMo3DFast.buyXname(bytes32,uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#645) is not in mixedCase
+Parameter FoMo3DFast.buyXnameQR(address)._realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#687) is not in mixedCase
+Parameter FoMo3DFast.reLoadXid(uint256,uint256,uint256)._affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719) is not in mixedCase
+Parameter FoMo3DFast.reLoadXid(uint256,uint256,uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719) is not in mixedCase
+Parameter FoMo3DFast.reLoadXid(uint256,uint256,uint256)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#719) is not in mixedCase
+Parameter FoMo3DFast.reLoadXaddr(address,uint256,uint256)._affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751) is not in mixedCase
+Parameter FoMo3DFast.reLoadXaddr(address,uint256,uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751) is not in mixedCase
+Parameter FoMo3DFast.reLoadXaddr(address,uint256,uint256)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#751) is not in mixedCase
+Parameter FoMo3DFast.reLoadXname(bytes32,uint256,uint256)._affCode (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791) is not in mixedCase
+Parameter FoMo3DFast.reLoadXname(bytes32,uint256,uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791) is not in mixedCase
+Parameter FoMo3DFast.reLoadXname(bytes32,uint256,uint256)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#791) is not in mixedCase
+Parameter FoMo3DFast.withdrawQR(address)._realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907) is not in mixedCase
+Parameter FoMo3DFast.getPlayerVaults(uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1036) is not in mixedCase
+Parameter FoMo3DFast.getPlayerVaultsHelper(uint256,uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1080) is not in mixedCase
+Parameter FoMo3DFast.getPlayerVaultsHelper(uint256,uint256)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1080) is not in mixedCase
+Parameter FoMo3DFast.getPlayerInfoByAddress(address)._addr (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1146) is not in mixedCase
+Parameter FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180) is not in mixedCase
+Parameter FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns)._affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180) is not in mixedCase
+Parameter FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180) is not in mixedCase
+Parameter FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180) is not in mixedCase
+Parameter FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns)._realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234) is not in mixedCase
+Parameter FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234) is not in mixedCase
+Parameter FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns)._affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234) is not in mixedCase
+Parameter FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234) is not in mixedCase
+Parameter FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234) is not in mixedCase
+Parameter FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288) is not in mixedCase
+Parameter FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288) is not in mixedCase
+Parameter FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288) is not in mixedCase
+Parameter FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288) is not in mixedCase
+Parameter FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339) is not in mixedCase
+Parameter FoMo3DFast.calcUnMaskedEarnings(uint256,uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1404) is not in mixedCase
+Parameter FoMo3DFast.calcUnMaskedEarnings(uint256,uint256)._rIDlast (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1404) is not in mixedCase
+Parameter FoMo3DFast.calcKeysReceived(uint256,uint256)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1419) is not in mixedCase
+Parameter FoMo3DFast.calcKeysReceived(uint256,uint256)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1419) is not in mixedCase
+Parameter FoMo3DFast.iWantXKeys(uint256)._keys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1440) is not in mixedCase
+Parameter FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464) is not in mixedCase
+Parameter FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256)._addr (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464) is not in mixedCase
+Parameter FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256)._name (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464) is not in mixedCase
+Parameter FoMo3DFast.receivePlayerInfo(uint256,address,bytes32,uint256)._laff (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1464) is not in mixedCase
+Parameter FoMo3DFast.receivePlayerNameList(uint256,bytes32)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1485) is not in mixedCase
+Parameter FoMo3DFast.receivePlayerNameList(uint256,bytes32)._name (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1485) is not in mixedCase
+Parameter FoMo3DFast.determinePID(F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1497) is not in mixedCase
+Parameter FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns)._realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535) is not in mixedCase
+Parameter FoMo3DFast.determinePIDQR(address,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1535) is not in mixedCase
+Parameter FoMo3DFast.verifyTeam(uint256)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1572) is not in mixedCase
+Parameter FoMo3DFast.managePlayer(uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1587) is not in mixedCase
+Parameter FoMo3DFast.managePlayer(uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1587) is not in mixedCase
+Parameter FoMo3DFast.endRound(F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608) is not in mixedCase
+Parameter FoMo3DFast.updateGenVault(uint256,uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1662) is not in mixedCase
+Parameter FoMo3DFast.updateGenVault(uint256,uint256)._rIDlast (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1662) is not in mixedCase
+Parameter FoMo3DFast.updateTimer(uint256,uint256)._keys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678) is not in mixedCase
+Parameter FoMo3DFast.updateTimer(uint256,uint256)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678) is not in mixedCase
+Parameter FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727) is not in mixedCase
+Parameter FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727) is not in mixedCase
+Parameter FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727) is not in mixedCase
+Parameter FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._affID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727) is not in mixedCase
+Parameter FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727) is not in mixedCase
+Parameter FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727) is not in mixedCase
+Parameter FoMo3DFast.distributeInternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1772) is not in mixedCase
+Parameter FoMo3DFast.distributeInternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1772) is not in mixedCase
+Parameter FoMo3DFast.distributeInternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1772) is not in mixedCase
+Parameter FoMo3DFast.distributeInternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1772) is not in mixedCase
+Parameter FoMo3DFast.distributeInternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._keys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1772) is not in mixedCase
+Parameter FoMo3DFast.distributeInternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1772) is not in mixedCase
+Parameter FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256)._rID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803) is not in mixedCase
+Parameter FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803) is not in mixedCase
+Parameter FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256)._gen (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803) is not in mixedCase
+Parameter FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256)._keys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803) is not in mixedCase
+Parameter FoMo3DFast.withdrawEarnings(uint256)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1835) is not in mixedCase
+Parameter FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._realSender (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857) is not in mixedCase
+Parameter FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._pID (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857) is not in mixedCase
+Parameter FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._team (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857) is not in mixedCase
+Parameter FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eth (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857) is not in mixedCase
+Parameter FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._keys (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857) is not in mixedCase
+Parameter FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns)._eventData_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857) is not in mixedCase
+Constant FoMo3DFast.PlayerBook (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#458) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant FoMo3DFast.rndInit_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#465) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant FoMo3DFast.rndInc_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#466) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant FoMo3DFast.rndMax_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#467) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393):
+	External calls:
+	- _eventData_ = distributeExternal(_rID,_pID,_eth,_affID,_team,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1387)
+		- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- _eventData_ = distributeInternal(_rID,_pID,_eth,_team,_keys,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1388)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+	- _eventData_ = distributeInternal(_rID,_pID,_eth,_team,_keys,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1388)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1820)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1789)
+	Event emitted after the call(s):
+	- F3Devents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,_realSender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount,_eventData_.potAmount,airDropPot_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1863-1879)
+		- endTxQR(_realSender,_pID,_team,_eth,_keys,_eventData_) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1391)
+Reentrancy in FoMo3DFast.distributeExternal(uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1727-1756):
+	External calls:
+	- admin.transfer(_p3d) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1750)
+	State variables written after the call(s):
+	- round_[_rID].pot = round_[_rID].pot.add(_potAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1751)
+Reentrancy in FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#867)
+	Event emitted after the call(s):
+	- F3Devents.onWithdrawAndDistribute(msg.sender,plyr_[_pID].name,_eth,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#874-887)
+Reentrancy in FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#896)
+	Event emitted after the call(s):
+	- F3Devents.onWithdraw(_pID,msg.sender,plyr_[_pID].name,_eth,_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#899)
+Reentrancy in FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#939)
+	Event emitted after the call(s):
+	- F3Devents.onWithdrawAndDistribute(_realSender,plyr_[_pID].name,_eth,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.P3DAmount,_eventData_.genAmount) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#946-959)
+Reentrancy in FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#968)
+	Event emitted after the call(s):
+	- F3Devents.onWithdraw(_pID,_realSender,plyr_[_pID].name,_eth,_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#971)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+F3DKeysCalcShort.keys(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#298-304) uses literals with too many digits:
+	- ((((((_eth).mul(1000000000000000000)).mul(312500000000000000000000000)).add(5624988281256103515625000000000000000000000000000000000000000000)).sqrt()).sub(74999921875000000000000000000000)) / (156250000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#303)
+F3DKeysCalcShort.eth(uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#311-317) uses literals with too many digits:
+	- ((78125000).mul(_keys.sq()).add(((149999843750000).mul(_keys.mul(1000000000000000000))) / (2))) / ((1000000000000000000).sq()) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#316)
+FoMo3DFast.withdraw() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#835-901) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#870)
+FoMo3DFast.withdrawQR(address) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#907-973) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#942)
+FoMo3DFast.getBuyPrice() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#985-1001) uses literals with too many digits:
+	- ((round_[_rID].keys.add(1000000000000000000)).ethRec(1000000000000000000)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#998)
+FoMo3DFast.getBuyPrice() (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#985-1001) uses literals with too many digits:
+	- (75000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1000)
+FoMo3DFast.getPlayerVaultsHelper(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1080-1086) uses literals with too many digits:
+	- (((((round_[_rID].mask).add(((((round_[_rID].pot).mul(potSplit_[round_[_rID].team].gen)) / 100).mul(1000000000000000000)) / (round_[_rID].keys))).mul(plyrRnds_[_pID][_rID].keys)) / 1000000000000000000)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1085)
+FoMo3DFast.buyCore(uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1180-1228) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1205)
+FoMo3DFast.buyCoreQR(address,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1234-1282) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1259)
+FoMo3DFast.reLoadCore(uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1288-1333) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1315)
+FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393) uses literals with too many digits:
+	- round_[_rID].eth < 100000000000000000000 && plyrRnds_[_pID][_rID].eth.add(_eth) > 1000000000000000000 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1347)
+FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393) uses literals with too many digits:
+	- _availableLimit = (1000000000000000000).sub(plyrRnds_[_pID][_rID].eth) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1349)
+FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393) uses literals with too many digits:
+	- _eth > 1000000000 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1356)
+FoMo3DFast.core(address,uint256,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1339-1393) uses literals with too many digits:
+	- _keys >= 1000000000000000000 (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1363)
+FoMo3DFast.calcUnMaskedEarnings(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1404-1410) uses literals with too many digits:
+	- ((((round_[_rIDlast].mask).mul(plyrRnds_[_pID][_rIDlast].keys)) / (1000000000000000000)).sub(plyrRnds_[_pID][_rIDlast].mask)) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1409)
+FoMo3DFast.endRound(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608-1657) uses literals with too many digits:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1631)
+FoMo3DFast.endRound(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608-1657) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (round_[_rID].end * 1000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1640)
+FoMo3DFast.endRound(F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1608-1657) uses literals with too many digits:
+	- _eventData_.compressedIDs = _eventData_.compressedIDs + (_winPID * 100000000000000000000000000) + (_winTID * 100000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1641)
+FoMo3DFast.updateTimer(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678-1696) uses literals with too many digits:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1687)
+FoMo3DFast.updateTimer(uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1678-1696) uses literals with too many digits:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1689)
+FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803-1829) uses literals with too many digits:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1819)
+FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803-1829) uses literals with too many digits:
+	- _pearn = (_ppt.mul(_keys)) / (1000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1824)
+FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803-1829) uses literals with too many digits:
+	- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1825)
+FoMo3DFast.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1803-1829) uses literals with too many digits:
+	- (_gen.sub((_ppt.mul(round_[_rID].keys)) / (1000000000000000000))) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1828)
+FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857-1880) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (now * 1000000000000000000) + (_team * 100000000000000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1860)
+FoMo3DFast.endTxQR(address,uint256,uint256,uint256,uint256,F3Ddatasets.EventReturns) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1857-1880) uses literals with too many digits:
+	- _eventData_.compressedIDs = _eventData_.compressedIDs + _pID + (rID_ * 10000000000000000000000000000000000000000000000000000) (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#1861)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+FoMo3DFast.airDropPot_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#468) should be constant 
+FoMo3DFast.airDropTracker_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#469) should be constant 
+FoMo3DFast.rndExtra_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#463) should be constant 
+FoMo3DFast.rndGap_ (../sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol#464) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x7a11f99e192c1ec5be580522a64165129b548e39.sol analyzed (8 contracts with 100 detectors), 203 result(s) found

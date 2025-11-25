@@ -1,0 +1,95 @@
+'solc --version' running
+'solc /sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol:
+/sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol:69:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function TwoXJackpot() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TwoXJackpot.seed() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#87-90) should emit an event for: 
+	- jackpotBalance += msg.value (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#89) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161) has external calls inside a loop: buyIn.owner.transfer(valueAfterTax) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#132)
+TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161) has external calls inside a loop: buyIn.owner.transfer(buyIn.value) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#138)
+TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161) has external calls inside a loop: buyIn.owner.transfer(valueAfterTax) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#132)
+	Calls stack containing the loop:
+		TwoXJackpot.fallback()
+TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161) has external calls inside a loop: buyIn.owner.transfer(buyIn.value) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#138)
+	Calls stack containing the loop:
+		TwoXJackpot.fallback()
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+TwoXJackpot.killme() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#79-84) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > lastAction + 2592000) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#80)
+TwoXJackpot.changeStartTime(uint256) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#93-97) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now < _time) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#94)
+	- require(bool)(now < gameStartTime) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#95)
+TwoXJackpot.claim() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#165-177) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > lastAction + 21600) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#166)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161) has costly operations inside a loop:
+	- index ++ (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#143)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter TwoXJackpot.changeStartTime(uint256)._time (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#93) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in TwoXJackpot.claim() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#165-177):
+	External calls:
+	- contractOwner.transfer(seedPay) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#173)
+	State variables written after the call(s):
+	- jackpotBalance = 0 (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#175)
+Reentrancy in TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161):
+	External calls:
+	- buyIn.owner.transfer(valueAfterTax) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#132)
+	- buyIn.owner.transfer(buyIn.value) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#138)
+	State variables written after the call(s):
+	- buyIn.value -= valueAfterTax (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#135)
+	- buyIn.value = 0 (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#142)
+	- index ++ (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#143)
+	- totalPaidOut[buyIn.owner] += valueAfterTax (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#133)
+	- totalPaidOut[buyIn.owner] += buyIn.value (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#139)
+	- totalValue[buyIn.owner] -= valueAfterTax (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#134)
+	- totalValue[buyIn.owner] -= buyIn.value (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#140)
+Reentrancy in TwoXJackpot.purchase() (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#103-161):
+	External calls:
+	- buyIn.owner.transfer(valueAfterTax) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#132)
+	- buyIn.owner.transfer(buyIn.value) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#138)
+	- msg.sender.transfer(valueAfterTax) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#150)
+	State variables written after the call(s):
+	- buyIns.push(BuyIn({value:valueMultiplied,owner:msg.sender})) (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#157-160)
+	- totalPaidOut[msg.sender] += valueAfterTax (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#152)
+	- totalValue[msg.sender] += valueMultiplied (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+TwoXJackpot.devFeeBalance (../sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol#28) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xc446b5b0a696b6735bf95888a896253a1a5d25f5.sol analyzed (2 contracts with 100 detectors), 16 result(s) found

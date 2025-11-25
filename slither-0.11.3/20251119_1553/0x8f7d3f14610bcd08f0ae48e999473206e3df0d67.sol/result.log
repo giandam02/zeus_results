@@ -1,0 +1,160 @@
+'solc --version' running
+'solc /sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:213:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Ownable() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:321:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Crowdsale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:354:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function HFTCrowdsale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:107:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:142:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:158:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:180:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:192:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:232:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerChanged(owner, newOwner);
+        ^---------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:270:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Mint(_to, _amount);
+        ^----------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:271:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_owner, _to, _amount);
+        ^----------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:281:9: Warning: Invoking events without "emit" prefix is deprecated.
+        MintFinished();
+        ^------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:291:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            owner.transfer(this.balance);
+                           ^----------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:299:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_token, owner, balance);
+        ^------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:400:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokenPurchase(_investor, weiAmount, tokens);
+        ^-----------------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:486:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TokenLimitReached(tokenAllocated, addTokens);
+            ^------------------------------------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:490:13: Warning: Invoking events without "emit" prefix is deprecated.
+            HardCapReached();
+            ^--------------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:499:25: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        wallet.transfer(this.balance);
+                        ^----------^
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol:501:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Finalized();
+        ^---------^
+
+
+MintableToken.claimTokens(address) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#289-300) ignores return value by token.transfer(owner,balance) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#297)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+HFTCrowdsale.getTotalAmountOfTokens(uint256) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#420-438) performs a multiplication on the result of a division:
+	- amountOfTokens = amountOfTokens.mul(110).div(100) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#426)
+	- amountOfTokens = amountOfTokens.mul(120).div(100) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#429)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+HFTCrowdsale.mintForOwner(address).result (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#469) is written in both
+	result = false (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#470)
+	result = true (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#473)
+HFTCrowdsale.finalize().result (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#496) is written in both
+	result = false (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#497)
+	result = true (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#502)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#write-after-write
+
+Reentrancy in MintableToken.claimTokens(address) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#289-300):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#296)
+	- token.transfer(owner,balance) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#297)
+	Event emitted after the call(s):
+	- Transfer(_token,owner,balance) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#299)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+HFTCrowdsale.buyTokens(address) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#390-407) compares to a boolean constant:
+	-require(bool)(saleToken == true) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#392)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Ownable.changeOwner(address) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#230-234) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#99) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#99) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#116) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#133) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#133) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#133) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#156) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#156) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#168) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#168) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#178) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#178) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#184) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#184) is not in mixedCase
+Parameter MintableToken.mint(address,uint256,address)._to (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#267) is not in mixedCase
+Parameter MintableToken.mint(address,uint256,address)._amount (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#267) is not in mixedCase
+Parameter MintableToken.mint(address,uint256,address)._owner (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#267) is not in mixedCase
+Parameter MintableToken.claimTokens(address)._token (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#289) is not in mixedCase
+Parameter HFTCrowdsale.buyTokens(address)._investor (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#390) is not in mixedCase
+Parameter HFTCrowdsale.getTotalAmountOfTokens(uint256)._weiAmount (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#420) is not in mixedCase
+Parameter HFTCrowdsale.mintForOwner(address)._wallet (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#469) is not in mixedCase
+Parameter HFTCrowdsale.getDeposited(address)._investor (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#476) is not in mixedCase
+Parameter HFTCrowdsale.validPurchaseTokens(uint256)._weiAmount (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#480) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in HFTCrowdsale.finalize() (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#496-503):
+	External calls:
+	- wallet.transfer(this.balance) (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#499)
+	State variables written after the call(s):
+	- finishMinting() (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#500)
+		- mintingFinished = true (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#280)
+	Event emitted after the call(s):
+	- Finalized() (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#501)
+	- MintFinished() (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#281)
+		- finishMinting() (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#500)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Crowdsale.hardWeiCap (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#319) should be constant 
+ERC20.totalSupply (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#61) should be constant 
+ERC20.transfersEnabled (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#63) should be constant 
+HFTCrowdsale.fundForSale (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#344) should be constant 
+HFTCrowdsale.weiMinSale (../sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol#339) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x8f7d3f14610bcd08f0ae48e999473206e3df0d67.sol analyzed (9 contracts with 100 detectors), 38 result(s) found

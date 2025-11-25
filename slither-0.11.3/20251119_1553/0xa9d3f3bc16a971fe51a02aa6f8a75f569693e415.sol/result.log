@@ -1,0 +1,389 @@
+'solc --version' running
+'solc /sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CryptoPoliceCrowdsale (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#66-548) contract sets array length with a user-controlled value:
+	- participantSuspendedExternalPaymentChecksums[participant].push(externalPaymentChecksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#250)
+CryptoPoliceCrowdsale (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#66-548) contract sets array length with a user-controlled value:
+	- participantExternalPaymentChecksums[beneficiary].push(checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#303)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360):
+	External calls:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- participants[participant].suspendedDirectWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#348)
+	CryptoPoliceCrowdsale.participants (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#139) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.participants (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#139)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.returnDirectPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#479-489)
+	- CryptoPoliceCrowdsale.returnExternalPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#498-506)
+	- CryptoPoliceCrowdsale.unidentifyParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#362-364)
+	- suspendedPayments = suspendedPayments.sub(participants[participant].suspendedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#347)
+	CryptoPoliceCrowdsale.suspendedPayments (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#112) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.endCrowdsale(bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#330-340)
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.suspendedPayments (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#112)
+Reentrancy in CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360):
+	External calls:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participantSuspendedExternalPaymentChecksums[participant].push(externalPaymentChecksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#250)
+	CryptoPoliceCrowdsale.participantSuspendedExternalPaymentChecksums (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#151) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.participantSuspendedExternalPaymentChecksums (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#151)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- participantSuspendedExternalPaymentChecksums[participant] = new bytes32[](0) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#358)
+	CryptoPoliceCrowdsale.participantSuspendedExternalPaymentChecksums (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#151) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.participantSuspendedExternalPaymentChecksums (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#151)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participants[participant].suspendedDirectWeiAmount = participants[participant].suspendedDirectWeiAmount.add(payment) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#248)
+		- participants[participant].suspendedExternalWeiAmount = participants[participant].suspendedExternalWeiAmount.add(payment) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#251)
+		- participants[participant].processedDirectWeiAmount = participants[participant].processedDirectWeiAmount.add(spent) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#271)
+		- participants[participant].processedExternalWeiAmount = participants[participant].processedExternalWeiAmount.add(spent) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#273)
+	CryptoPoliceCrowdsale.participants (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#139) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.participants (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#139)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.returnDirectPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#479-489)
+	- CryptoPoliceCrowdsale.returnExternalPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#498-506)
+	- CryptoPoliceCrowdsale.unidentifyParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#362-364)
+	- participants[participant].suspendedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#357)
+	CryptoPoliceCrowdsale.participants (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#139) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.participants (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#139)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.returnDirectPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#479-489)
+	- CryptoPoliceCrowdsale.returnExternalPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#498-506)
+	- CryptoPoliceCrowdsale.unidentifyParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#362-364)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- state = CrowdsaleState.SoldOut (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#279)
+	CryptoPoliceCrowdsale.state (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#122) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.burnLeftoverTokens(uint8) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#394-404)
+	- CryptoPoliceCrowdsale.endCrowdsale(bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#330-340)
+	- CryptoPoliceCrowdsale.fallback() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#166-174)
+	- CryptoPoliceCrowdsale.isCrowdsaleSuccessful() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#534-536)
+	- CryptoPoliceCrowdsale.notEnded() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#538-541)
+	- CryptoPoliceCrowdsale.pauseCrowdsale() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#317-320)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.refundParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#382-388)
+	- CryptoPoliceCrowdsale.startCrowdsale(address,address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#309-315)
+	- CryptoPoliceCrowdsale.state (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#122)
+	- CryptoPoliceCrowdsale.unPauseCrowdsale() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#322-325)
+	- suspendedExternalPayments[checksums[i]] = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#355)
+	CryptoPoliceCrowdsale.suspendedExternalPayments (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#156) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.suspendedExternalPayments (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#156)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- suspendedPayments = suspendedPayments + payment (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#245)
+	CryptoPoliceCrowdsale.suspendedPayments (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#112) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.endCrowdsale(bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#330-340)
+	- CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.suspendedPayments (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#112)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- tokensSold = tokensSold + processedTokenCount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#282)
+	CryptoPoliceCrowdsale.tokensSold (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#102) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.tokensSold (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#102)
+	- CryptoPoliceCrowdsale.transwerFunds(uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#513-524)
+Reentrancy in CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285):
+	External calls:
+	- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- tokensSold = tokensSold + processedTokenCount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#282)
+	CryptoPoliceCrowdsale.tokensSold (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#102) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.tokensSold (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#102)
+	- CryptoPoliceCrowdsale.transwerFunds(uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#513-524)
+Reentrancy in CryptoPoliceCrowdsale.proxyExchange(address,uint256,string,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#291-304):
+	External calls:
+	- processPayment(beneficiary,payment,checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#300)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- processPayment(beneficiary,payment,checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#300)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- externalPaymentDescriptions[checksum] = description (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#302)
+	CryptoPoliceCrowdsale.externalPaymentDescriptions (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#144) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.externalPaymentDescriptions (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#144)
+	- CryptoPoliceCrowdsale.proxyExchange(address,uint256,string,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#291-304)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+CryptoPoliceCrowdsale.exchangeCalculator(uint256,uint256,uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#187-217) performs a multiplication on the result of a division:
+	- requestedPortions = _paymentReminder / currentExchangeRate.price (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#206)
+	- newProcessedTokenCount = _processedTokenCount + portions * currentExchangeRate.tokens (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#208)
+	- portions = requestedPortions (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#207)
+CryptoPoliceCrowdsale.exchangeCalculator(uint256,uint256,uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#187-217) performs a multiplication on the result of a division:
+	- requestedPortions = _paymentReminder / currentExchangeRate.price (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#206)
+	- newPaymentReminder = _paymentReminder - portions * currentExchangeRate.price (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#209)
+	- portions = requestedPortions (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#207)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+CryptoPoliceCrowdsale.startCrowdsale(address,address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#309-315) uses a dangerous strict equality:
+	- require(bool)(token.balanceOf(address(this)) == 510000000e18) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#313)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in CryptoPoliceCrowdsale.startCrowdsale(address,address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#309-315):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) == 510000000e18) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#313)
+	State variables written after the call(s):
+	- state = CrowdsaleState.Started (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#314)
+	CryptoPoliceCrowdsale.state (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#122) can be used in cross function reentrancies:
+	- CryptoPoliceCrowdsale.burnLeftoverTokens(uint8) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#394-404)
+	- CryptoPoliceCrowdsale.endCrowdsale(bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#330-340)
+	- CryptoPoliceCrowdsale.fallback() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#166-174)
+	- CryptoPoliceCrowdsale.isCrowdsaleSuccessful() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#534-536)
+	- CryptoPoliceCrowdsale.notEnded() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#538-541)
+	- CryptoPoliceCrowdsale.pauseCrowdsale() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#317-320)
+	- CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285)
+	- CryptoPoliceCrowdsale.refundParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#382-388)
+	- CryptoPoliceCrowdsale.startCrowdsale(address,address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#309-315)
+	- CryptoPoliceCrowdsale.state (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#122)
+	- CryptoPoliceCrowdsale.unPauseCrowdsale() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#322-325)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+CryptoPoliceCrowdsale.updateExchangeRate(uint8,uint256,uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#406-414) contains a tautology or contradiction:
+	- require(bool)(idx >= 0 && idx <= 3) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#408)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+CryptoPoliceCrowdsale.updateUnidentifiedSaleLimit(uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#371-373) should emit an event for: 
+	- unidentifiedSaleLimit = limit (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#372) 
+CryptoPoliceCrowdsale.updateMinSale(uint256) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#375-377) should emit an event for: 
+	- minSale = weiAmount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#376) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+CryptoPoliceCrowdsale.setAdmin(address).adminAddress (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#508) lacks a zero-check on :
+		- admin = adminAddress (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#509)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285):
+	External calls:
+	- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- state = CrowdsaleState.SoldOut (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#279)
+Reentrancy in CryptoPoliceCrowdsale.proxyExchange(address,uint256,string,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#291-304):
+	External calls:
+	- processPayment(beneficiary,payment,checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#300)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- processPayment(beneficiary,payment,checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#300)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- participantExternalPaymentChecksums[beneficiary].push(checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#303)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360):
+	External calls:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	Event emitted after the call(s):
+	- ExternalPaymentReminder(paymentReminder,externalPaymentChecksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#266)
+		- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+	- PaymentProcessed(spent,participant,externalPaymentChecksum,processedTokenCount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#284)
+		- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+	- PaymentSuspended(participant) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#255)
+		- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+Reentrancy in CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285):
+	External calls:
+	- require(bool,string)(token.transfer(participant,processedTokenCount),Failed to transfer tokens) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#276)
+	External calls sending eth:
+	- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	Event emitted after the call(s):
+	- PaymentProcessed(spent,participant,externalPaymentChecksum,processedTokenCount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#284)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285) compares to a boolean constant:
+	-participants[participant].identified == false (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#233)
+CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285) compares to a boolean constant:
+	-require(bool,string)(revertSuspendedPayment == false,Participant does not comply with KYC) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#243)
+CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285) compares to a boolean constant:
+	-require(bool,string)(bannedParticipants[participant] == false,Participant is banned) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#221)
+CryptoPoliceCrowdsale.refundParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#382-388) compares to a boolean constant:
+	-require(bool)(crowdsaleEndedSuccessfully == false) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#384)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285) has costly operations inside a loop:
+	- suspendedPayments = suspendedPayments + payment (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#245)
+	Calls stack containing the loop:
+		CryptoPoliceCrowdsale.markParticipantIdentifiend(address)
+CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285) has costly operations inside a loop:
+	- state = CrowdsaleState.SoldOut (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#279)
+	Calls stack containing the loop:
+		CryptoPoliceCrowdsale.markParticipantIdentifiend(address)
+CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285) has costly operations inside a loop:
+	- tokensSold = tokensSold + processedTokenCount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#282)
+	Calls stack containing the loop:
+		CryptoPoliceCrowdsale.markParticipantIdentifiend(address)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter CryptoPoliceCrowdsale.exchangeCalculator(uint256,uint256,uint256)._paymentReminder (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#187) is not in mixedCase
+Parameter CryptoPoliceCrowdsale.exchangeCalculator(uint256,uint256,uint256)._processedTokenCount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#187) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in CryptoPoliceCrowdsale.fallback() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#166-174):
+	External calls:
+	- msg.sender.transfer(msg.value) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#168)
+	- refundParticipant(msg.sender) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#169)
+		- participant.transfer(participants[participant].processedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#481)
+		- participant.transfer(participants[participant].suspendedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#486)
+	State variables written after the call(s):
+	- refundParticipant(msg.sender) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#169)
+		- participants[participant].processedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#500)
+		- participants[participant].processedDirectWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#482)
+		- participants[participant].suspendedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#504)
+		- participants[participant].suspendedDirectWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#487)
+Reentrancy in CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360):
+	External calls:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- participants[participant].suspendedDirectWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#348)
+	- suspendedPayments = suspendedPayments.sub(participants[participant].suspendedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#347)
+Reentrancy in CryptoPoliceCrowdsale.markParticipantIdentifiend(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#342-360):
+	External calls:
+	- processPayment(participant,participants[participant].suspendedDirectWeiAmount,) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#346)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participantSuspendedExternalPaymentChecksums[participant].push(externalPaymentChecksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#250)
+	- participantSuspendedExternalPaymentChecksums[participant] = new bytes32[](0) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#358)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- participants[participant].suspendedDirectWeiAmount = participants[participant].suspendedDirectWeiAmount.add(payment) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#248)
+		- participants[participant].suspendedExternalWeiAmount = participants[participant].suspendedExternalWeiAmount.add(payment) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#251)
+		- participants[participant].processedDirectWeiAmount = participants[participant].processedDirectWeiAmount.add(spent) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#271)
+		- participants[participant].processedExternalWeiAmount = participants[participant].processedExternalWeiAmount.add(spent) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#273)
+	- participants[participant].suspendedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#357)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- state = CrowdsaleState.SoldOut (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#279)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- suspendedExternalPayments[externalPaymentChecksum] = payment (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#252)
+	- suspendedExternalPayments[checksums[i]] = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#355)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- suspendedPayments = suspendedPayments + payment (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#245)
+	- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+		- tokensSold = tokensSold + processedTokenCount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#282)
+	Event emitted after the call(s):
+	- ExternalPaymentReminder(paymentReminder,externalPaymentChecksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#266)
+		- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+	- PaymentProcessed(spent,participant,externalPaymentChecksum,processedTokenCount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#284)
+		- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+	- PaymentSuspended(participant) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#255)
+		- processPayment(participant,suspendedExternalPayments[checksums[i]],checksums[i]) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#354)
+Reentrancy in CryptoPoliceCrowdsale.processPayment(address,uint256,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#219-285):
+	External calls:
+	- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- participants[participant].processedDirectWeiAmount = participants[participant].processedDirectWeiAmount.add(spent) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#271)
+	- participants[participant].processedExternalWeiAmount = participants[participant].processedExternalWeiAmount.add(spent) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#273)
+	- state = CrowdsaleState.SoldOut (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#279)
+	- tokensSold = tokensSold + processedTokenCount (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#282)
+	Event emitted after the call(s):
+	- PaymentProcessed(spent,participant,externalPaymentChecksum,processedTokenCount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#284)
+Reentrancy in CryptoPoliceCrowdsale.proxyExchange(address,uint256,string,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#291-304):
+	External calls:
+	- processPayment(beneficiary,payment,checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#300)
+		- participant.transfer(paymentReminder) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#264)
+	State variables written after the call(s):
+	- externalPaymentDescriptions[checksum] = description (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#302)
+	- participantExternalPaymentChecksums[beneficiary].push(checksum) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#303)
+Reentrancy in CryptoPoliceCrowdsale.refundParticipant(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#382-388):
+	External calls:
+	- returnDirectPayments(participant,true,true) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#386)
+		- participant.transfer(participants[participant].processedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#481)
+		- participant.transfer(participants[participant].suspendedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#486)
+	State variables written after the call(s):
+	- returnExternalPayments(participant,true,true) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#387)
+		- participants[participant].processedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#500)
+		- participants[participant].suspendedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#504)
+Reentrancy in CryptoPoliceCrowdsale.returnDirectPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#479-489):
+	External calls:
+	- participant.transfer(participants[participant].processedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#481)
+	State variables written after the call(s):
+	- participants[participant].processedDirectWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#482)
+Reentrancy in CryptoPoliceCrowdsale.returnDirectPayments(address,bool,bool) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#479-489):
+	External calls:
+	- participant.transfer(participants[participant].processedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#481)
+	- participant.transfer(participants[participant].suspendedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#486)
+	State variables written after the call(s):
+	- participants[participant].suspendedDirectWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#487)
+Reentrancy in CryptoPoliceCrowdsale.returnSuspendedPayments(address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#366-369):
+	External calls:
+	- returnDirectPayments(participant,false,true) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#367)
+		- participant.transfer(participants[participant].processedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#481)
+		- participant.transfer(participants[participant].suspendedDirectWeiAmount) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#486)
+	State variables written after the call(s):
+	- returnExternalPayments(participant,false,true) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#368)
+		- participants[participant].processedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#500)
+		- participants[participant].suspendedExternalWeiAmount = 0 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#504)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+CryptoPoliceCrowdsale.startCrowdsale(address,address) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#309-315) uses literals with too many digits:
+	- require(bool)(token.balanceOf(address(this)) == 510000000e18) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#313)
+CryptoPoliceCrowdsale.slitherConstructorConstantVariables() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#66-548) uses literals with too many digits:
+	- THRESHOLD1 = 270000000e18 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#90)
+CryptoPoliceCrowdsale.slitherConstructorConstantVariables() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#66-548) uses literals with too many digits:
+	- THRESHOLD2 = 350000000e18 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#91)
+CryptoPoliceCrowdsale.slitherConstructorConstantVariables() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#66-548) uses literals with too many digits:
+	- THRESHOLD3 = 490000000e18 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#92)
+CryptoPoliceCrowdsale.slitherConstructorConstantVariables() (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#66-548) uses literals with too many digits:
+	- THRESHOLD4 = 510000000e18 (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#93)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+proxyExchange(address,uint256,string,bytes32) should be declared external:
+	- CryptoPoliceCrowdsale.proxyExchange(address,uint256,string,bytes32) (../sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol#291-304)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xa9d3f3bc16a971fe51a02aa6f8a75f569693e415.sol analyzed (4 contracts with 100 detectors), 44 result(s) found

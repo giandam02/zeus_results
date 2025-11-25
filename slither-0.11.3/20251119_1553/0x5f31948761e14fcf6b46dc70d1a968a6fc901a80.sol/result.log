@@ -1,0 +1,61 @@
+'solc --version' running
+'solc /sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+YINC.INITIAL_SUPPLY (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#250) is set pre-construction with a non-constant function or state variable:
+	- 300000000 * (10 ** decimals)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.8 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.8 (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#49) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#49) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#59) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#86) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#87) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#88) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#104) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#104) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#111) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#112) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#122) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#123) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#135) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#136) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#157) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#194) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#223) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#224) is not in mixedCase
+Variable YINC.INITIAL_SUPPLY (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#250) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+YINC.slitherConstructorVariables() (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#246-257) uses literals with too many digits:
+	- INITIAL_SUPPLY = 300000000 * (10 ** decimals) (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#250)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+YINC.decimals (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#249) should be constant 
+YINC.name (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#247) should be constant 
+YINC.symbol (../sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol#248) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x5f31948761e14fcf6b46dc70d1a968a6fc901a80.sol analyzed (9 contracts with 100 detectors), 26 result(s) found

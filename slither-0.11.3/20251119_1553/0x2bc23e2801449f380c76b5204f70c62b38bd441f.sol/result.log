@@ -1,0 +1,137 @@
+'solc --version' running
+'solc /sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol:
+/sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol:4:5: Warning: Functions in interfaces should be declared external.
+    function keyHasPurpose(bytes32 _key, uint256 _purpose) public view returns (bool result);
+    ^---------------------------------------------------------------------------------------^
+/sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol:13:2: Warning: Functions in interfaces should be declared external.
+	function balanceOf(address who) public constant returns (uint256);
+	^----------------------------------------------------------------^
+/sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol:18:2: Warning: Functions in interfaces should be declared external.
+	function getStake(address identity) public view returns(uint256);
+	^---------------------------------------------------------------^
+
+
+Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165) has bitwise-xor operator ^ instead of the exponentiation operator **: 
+	 - profileStorageContract.getStake(ERC725Addresses[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#142)
+Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165) has bitwise-xor operator ^ instead of the exponentiation operator **: 
+	 - tokenContract.balanceOf(wallets[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#154)
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) has bitwise-xor operator ^ instead of the exponentiation operator **: 
+	 - require(bool,string)(tokenContract.balanceOf(msg.sender) >= 10 ^ 21,Sender does not have at least 1000 TRAC and thus cannot vote!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#209)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) has bitwise-xor operator ^ instead of the exponentiation operator **: 
+	 - require(bool,string)(tokenContract.balanceOf(msg.sender) >= 10 ^ 21 || profileStorageContract.getStake(ERC725Address) >= 10 ^ 21,Neither the sender nor the submitted profile have at least 1000 TRAC and thus cannot vote!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#247-248)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-exponentiation
+
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) contains a tautology or contradiction:
+	- require(bool,string)(candidateIndexes[2] >= 0 && candidateIndexes[2] < candidates.length,The selected candidate does not exist!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#195)
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) contains a tautology or contradiction:
+	- require(bool,string)(candidateIndexes[1] >= 0 && candidateIndexes[1] < candidates.length,The selected candidate does not exist!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#194)
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) contains a tautology or contradiction:
+	- require(bool,string)(candidateIndexes[0] >= 0 && candidateIndexes[0] < candidates.length,The selected candidate does not exist!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#193)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) contains a tautology or contradiction:
+	- require(bool,string)(candidateIndexes[2] >= 0 && candidateIndexes[2] < candidates.length,The selected candidate does not exist!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#229)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) contains a tautology or contradiction:
+	- require(bool,string)(candidateIndexes[1] >= 0 && candidateIndexes[1] < candidates.length,The selected candidate does not exist!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#228)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) contains a tautology or contradiction:
+	- require(bool,string)(candidateIndexes[0] >= 0 && candidateIndexes[0] < candidates.length,The selected candidate does not exist!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#227)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165) has external calls inside a loop: profileStorageContract.getStake(ERC725Addresses[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#142)
+Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165) has external calls inside a loop: tokenContract.balanceOf(wallets[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#154)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165):
+	External calls:
+	- profileStorageContract.getStake(ERC725Addresses[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#142)
+	- tokenContract.balanceOf(wallets[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#154)
+	State variables written after the call(s):
+	- walletApproved[wallets[i]] = false (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#134)
+	- walletApproved[ERC725Addresses[i]] = true (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#143)
+	- walletApproved[wallets[i]] = true (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165):
+	External calls:
+	- profileStorageContract.getStake(ERC725Addresses[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#142)
+	- tokenContract.balanceOf(wallets[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#154)
+	Event emitted after the call(s):
+	- WalletApproved(address(0),ERC725Addresses[i]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#144)
+	- WalletApproved(wallets[i],address(0)) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#156)
+	- WalletRejected(wallets[i],ERC725Addresses[i],Cannot verify an empty application!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#137-138)
+Reentrancy in Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165):
+	External calls:
+	- tokenContract.balanceOf(wallets[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#154)
+	Event emitted after the call(s):
+	- WalletRejected(wallets[i],ERC725Addresses[i],Profile does not have at least 1000 trac at the time of approval!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#147-148)
+Reentrancy in Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165):
+	External calls:
+	- profileStorageContract.getStake(ERC725Addresses[i]) >= 10 ^ 21 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#142)
+	Event emitted after the call(s):
+	- WalletRejected(wallets[i],address(0),Wallet does not have at least 1000 trac at the time of approval!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#159-160)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Voting.startVoting() (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#118-121) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(votingClosingTime == 0,Voting already started once!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#119)
+Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(votingClosingTime == 0,Voting already started!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#129)
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(votingClosingTime != 0,Voting has not yet started!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#180)
+	- require(bool,string)(votingClosingTime >= block.timestamp,Voting period has expired!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#181)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(votingClosingTime != 0,Voting has not yet started!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#213)
+	- require(bool,string)(votingClosingTime >= block.timestamp,Voting period has expired!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#214)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) compares to a boolean constant:
+	-require(bool,string)(walletVoted[msg.sender] == false,Sender already voted!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#185)
+Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210) compares to a boolean constant:
+	-require(bool,string)(walletApproved[msg.sender] == true,Sender is not approved and thus cannot vote!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#183)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) compares to a boolean constant:
+	-require(bool,string)(walletVoted[msg.sender] == false,Sender already voted!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#218)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) compares to a boolean constant:
+	-require(bool,string)(walletApproved[msg.sender] == true || walletApproved[ERC725Address] == true,Sender is not approved and thus cannot vote!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#216)
+Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249) compares to a boolean constant:
+	-require(bool,string)(walletVoted[ERC725Address] == false,Profile was already used for voting!) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#219)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Voting.approveMultipleWallets(address[],address[]).ERC725Addresses (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128) is not in mixedCase
+Parameter Voting.voteWithProfile(uint256[],address).ERC725Address (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+approveMultipleWallets(address[],address[]) should be declared external:
+	- Voting.approveMultipleWallets(address[],address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#128-165)
+disapproveMultipleWallets(address[]) should be declared external:
+	- Voting.disapproveMultipleWallets(address[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#166-173)
+vote(uint256[]) should be declared external:
+	- Voting.vote(uint256[]) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#179-210)
+voteWithProfile(uint256[],address) should be declared external:
+	- Voting.voteWithProfile(uint256[],address) (../sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol#212-249)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x2bc23e2801449f380c76b5204f70c62b38bd441f.sol analyzed (5 contracts with 100 detectors), 33 result(s) found

@@ -1,0 +1,179 @@
+'solc --version' running
+'solc /sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:56:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:291:3: Warning: Modifiers of functions without implementation are ignored.
+  function convertMint(address _to, uint256 _amount) onlyOwner canMint public returns (bool);
+  ^-----------------------------------------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:294:3: Warning: Modifiers of functions without implementation are ignored.
+  function setWhitelisting(bool _status) onlyOwner public;
+  ^------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:295:3: Warning: Modifiers of functions without implementation are ignored.
+  function setAllowTransferGlobal(bool _status) onlyOwner public;
+  ^-------------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:296:3: Warning: Modifiers of functions without implementation are ignored.
+  function setAllowTransferWhitelist(bool _status) onlyOwner public;
+  ^----------------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:297:3: Warning: Modifiers of functions without implementation are ignored.
+  function setManager(address _manager, bool _status) onlyOwner public;
+  ^-------------------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:298:3: Warning: Modifiers of functions without implementation are ignored.
+  function burn(address _burner, uint256 _value) onlyOwner public;
+  ^--------------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:332:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Crowdsale(uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:400:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Moozicore (
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:76:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:119:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:175:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:191:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:217:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:238:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:274:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_to, _amount);
+    ^----------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:275:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(address(0), _to, _amount);
+    ^--------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:285:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MintFinished();
+    ^------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:369:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+    ^-------------------------------------------------------^
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol:434:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+    ^-------------------------------------------------------^
+
+
+Crowdsale.buyTokens(address) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#356-372) ignores return value by token.mint(beneficiary,tokens) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#368)
+Moozicore.buyTokens(address) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#424-437) ignores return value by token.mint(beneficiary,tokens) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#433)
+Moozicore.convertMintTokens(address,uint256) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#472-474) ignores return value by token.convertMint(_to,_amount) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#473)
+Moozicore.mintTokens(address,uint256) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#476-478) ignores return value by token.mint(walletToMint,t) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#477)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Moozicore.changeEnd(uint256) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#484-486) should emit an event for: 
+	- endTime = _end (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#485) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in Crowdsale.buyTokens(address) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#356-372):
+	External calls:
+	- token.mint(beneficiary,tokens) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#368)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,beneficiary,weiAmount,tokens) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#369)
+Reentrancy in Moozicore.buyTokens(address) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#424-437):
+	External calls:
+	- token.mint(beneficiary,tokens) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#433)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,beneficiary,weiAmount,tokens) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#434)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Crowdsale.Crowdsale(uint256,uint256,uint256,address) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#332-343) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_startTime >= now) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#333)
+Crowdsale.validPurchase() (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#381-385) uses timestamp for comparisons
+	Dangerous comparisons:
+	- withinPeriod = now >= startTime && now <= endTime (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#382)
+	- withinPeriod && nonZeroPurchase (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#384)
+Crowdsale.hasEnded() (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#388-390) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > endTime (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#389)
+Moozicore.getRate() (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#440-454) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= startTime && now < 1545037200 (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#441)
+	- now >= 1545037200 && now < 1546851600 (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#445)
+	- now >= 1546851600 && now < endTime (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#449)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#112) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#112) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#128) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#167) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#167) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#167) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#189) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#189) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#201) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#201) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#215) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#215) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#231) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#231) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#271) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#271) is not in mixedCase
+Parameter Moozicore.setManager(address,bool)._manager (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#456) is not in mixedCase
+Parameter Moozicore.setManager(address,bool)._status (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#456) is not in mixedCase
+Parameter Moozicore.setWhitelisting(bool)._status (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#460) is not in mixedCase
+Parameter Moozicore.setAllowTransferGlobal(bool)._status (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#464) is not in mixedCase
+Parameter Moozicore.setAllowTransferWhitelist(bool)._status (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#468) is not in mixedCase
+Parameter Moozicore.convertMintTokens(address,uint256)._to (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#472) is not in mixedCase
+Parameter Moozicore.convertMintTokens(address,uint256)._amount (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#472) is not in mixedCase
+Parameter Moozicore.changeEnd(uint256)._end (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#484) is not in mixedCase
+Parameter Moozicore.burn(address,uint256)._burner (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#488) is not in mixedCase
+Parameter Moozicore.burn(address,uint256)._value (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#488) is not in mixedCase
+Parameter Moozicore.setWhitelist(address,bool)._address (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#492) is not in mixedCase
+Parameter Moozicore.setWhitelist(address,bool)._status (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#492) is not in mixedCase
+Parameter Moozicore.setWhitelistTransfer(address,bool)._address (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#496) is not in mixedCase
+Parameter Moozicore.setWhitelistTransfer(address,bool)._status (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#496) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Moozicore.slitherConstructorConstantVariables() (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#393-500) uses literals with too many digits:
+	- ICO_CAP = 498000000000000000000000000 (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#395)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+MziGold (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#290-301) does not implement functions:
+	- MziGold.allowManager() (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#293)
+	- MziGold.allowTransfer(address,address) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#292)
+	- MziGold.burn(address,uint256) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#298)
+	- MziGold.convertMint(address,uint256) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#291)
+	- MziGold.setAllowTransferGlobal(bool) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#295)
+	- MziGold.setAllowTransferWhitelist(bool) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#296)
+	- MziGold.setManager(address,bool) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#297)
+	- MziGold.setWhitelist(address,bool) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#299)
+	- MziGold.setWhitelistTransfer(address,bool) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#300)
+	- MziGold.setWhitelisting(bool) (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#294)
+Moozicore (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#393-500) does not implement functions:
+	- Crowdsale.createTokenContract() (../sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol#347)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+/sb/0xfac73a67cd6520ccc8e44cd865022a2c07b9f1ab.sol analyzed (10 contracts with 100 detectors), 46 result(s) found

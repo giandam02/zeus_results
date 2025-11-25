@@ -1,0 +1,58 @@
+'solc --version' running
+'solc /sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+DEMI (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#5-154) has incorrect ERC20 function interface:DEMI.transfer(address,uint256) (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#68-70)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Version constraint ^0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.16 (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#3) is not in CapWords
+Parameter DEMI.transfer(address,uint256)._to (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#68) is not in mixedCase
+Parameter DEMI.transfer(address,uint256)._value (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#68) is not in mixedCase
+Parameter DEMI.transferFrom(address,address,uint256)._from (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#81) is not in mixedCase
+Parameter DEMI.transferFrom(address,address,uint256)._to (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#81) is not in mixedCase
+Parameter DEMI.transferFrom(address,address,uint256)._value (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#81) is not in mixedCase
+Parameter DEMI.approve(address,uint256)._spender (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#96) is not in mixedCase
+Parameter DEMI.approve(address,uint256)._value (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#96) is not in mixedCase
+Parameter DEMI.approveAndCall(address,uint256,bytes)._spender (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#111) is not in mixedCase
+Parameter DEMI.approveAndCall(address,uint256,bytes)._value (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#111) is not in mixedCase
+Parameter DEMI.approveAndCall(address,uint256,bytes)._extraData (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#111) is not in mixedCase
+Parameter DEMI.burn(uint256)._value (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#128) is not in mixedCase
+Parameter DEMI.burnFrom(address,uint256)._from (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#144) is not in mixedCase
+Parameter DEMI.burnFrom(address,uint256)._value (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#144) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+DEMI.slitherConstructorVariables() (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#5-154) uses literals with too many digits:
+	- totalSupply = 10000000000 (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#11)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+DEMI.decimals (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+demi(uint256,string,string) should be declared external:
+	- DEMI.demi(uint256,string,string) (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#28-37)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- DEMI.approveAndCall(address,uint256,bytes) (../sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol#111-119)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xf09a3ea98a90b2de766227f04617a5a2d1c326c4.sol analyzed (2 contracts with 100 detectors), 21 result(s) found

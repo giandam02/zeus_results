@@ -1,0 +1,171 @@
+'solc --version' running
+'solc /sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+WinEtherPot10 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#8-393) contract sets array length with a user-controlled value:
+	- bets.push(msg.sender) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#96)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194) uses a weak PRNG: "_randomInt = uint256(_finalHash) % bets.length (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#128)" 
+WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263) uses a weak PRNG: "_randomInt = uint256(_finalHash) % bets.length (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#205)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+WinEtherPot10.slitherConstructorVariables() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#8-393) performs a multiplication on the result of a division:
+	- minEntryInWei = (1 / 10) * 1e18 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#31)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+WinEtherPot10.setMinEntriesRequiredPerGame(uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#315-319) should emit an event for: 
+	- minEntriesRequiredPerGame = entries (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#317) 
+WinEtherPot10.setMinBetAmountInWei(uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#325-329) should emit an event for: 
+	- minEntryInWei = amount (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#327) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+WinEtherPot10.placeBet() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#82-116) compares to a boolean constant:
+	-autoWithdrawWinner == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#106)
+WinEtherPot10.placeBet() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#82-116) compares to a boolean constant:
+	-isRunning == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#84)
+WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194) compares to a boolean constant:
+	-autoDistributeWinning == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#148)
+WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194) compares to a boolean constant:
+	-splitAllowed == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#141)
+WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194) compares to a boolean constant:
+	-autoDistributeWinning == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#170)
+WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263) compares to a boolean constant:
+	-autoDistributeWinning == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#240)
+WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263) compares to a boolean constant:
+	-splitAllowed == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#215)
+WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263) compares to a boolean constant:
+	-autoDistributeWinning == true (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#220)
+WinEtherPot10.startTheGame() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#301-310) compares to a boolean constant:
+	-isRunning == false (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#303)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event WinEtherPot10.betPlaced(address,uint256,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#35) is not in CapWords
+Event WinEtherPot10.betStarted(address,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#36) is not in CapWords
+Event WinEtherPot10.betAccepted(address,uint256,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#37) is not in CapWords
+Event WinEtherPot10.betNotPlaced(address,uint256,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#38) is not in CapWords
+Event WinEtherPot10.startWinnerDraw(uint256,address,uint256,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#41) is not in CapWords
+Event WinEtherPot10.amountWonByOwner(address,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#44) is not in CapWords
+Event WinEtherPot10.amountWonByWinner(address,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#45) is not in CapWords
+Event WinEtherPot10.startWithDraw(address,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#48) is not in CapWords
+Event WinEtherPot10.successWithDraw(address,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#49) is not in CapWords
+Event WinEtherPot10.rollbackWithDraw(address,uint256) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#50) is not in CapWords
+Event WinEtherPot10.showParticipants(address[]) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#52) is not in CapWords
+Event WinEtherPot10.showBetNumber(uint256,address) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#53) is not in CapWords
+Event WinEtherPot10.calledConstructor(uint256,address) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#55) is not in CapWords
+Event WinEtherPot10.successDrawWinner(bool) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#57) is not in CapWords
+Event WinEtherPot10.notReadyDrawWinner(bool) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#58) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194):
+	External calls:
+	- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#145)
+	State variables written after the call(s):
+	- winners[_winner] = 0 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#150)
+	- winners[_winner] = winnerAmt (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#158)
+	Event emitted after the call(s):
+	- amountWonByOwner(owner,ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#146)
+	- rollbackWithDraw(_winner,winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#159)
+Reentrancy in WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194):
+	External calls:
+	- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#145)
+	- _winner.send(winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#152)
+	Event emitted after the call(s):
+	- amountWonByWinner(_winner,winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#154)
+	- successWithDraw(_winner,winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#153)
+Reentrancy in WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194):
+	External calls:
+	- _winner.send(amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#174)
+	Event emitted after the call(s):
+	- amountWonByWinner(_winner,amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#176)
+	- successWithDraw(_winner,amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#175)
+Reentrancy in WinEtherPot10.drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#118-194):
+	External calls:
+	- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#145)
+	- _winner.send(winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#152)
+	- _winner.send(amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#174)
+	State variables written after the call(s):
+	- delete bets (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#186)
+	- cumulativeHash = bytes32(0) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#185)
+	- potSize = 0 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#188)
+Reentrancy in WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263):
+	External calls:
+	- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#217)
+	State variables written after the call(s):
+	- winners[_winner] = 0 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#222)
+	- winners[_winner] = winnerAmt (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#230)
+	Event emitted after the call(s):
+	- amountWonByOwner(owner,ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#218)
+	- rollbackWithDraw(_winner,winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#231)
+Reentrancy in WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263):
+	External calls:
+	- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#217)
+	- _winner.send(winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#224)
+	Event emitted after the call(s):
+	- amountWonByWinner(_winner,winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#226)
+	- successWithDraw(_winner,winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#225)
+Reentrancy in WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263):
+	External calls:
+	- _winner.send(amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#244)
+	Event emitted after the call(s):
+	- amountWonByWinner(_winner,amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#246)
+	- successWithDraw(_winner,amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#245)
+Reentrancy in WinEtherPot10.drawWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#197-263):
+	External calls:
+	- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#217)
+	- _winner.send(winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#224)
+	- _winner.send(amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#244)
+	State variables written after the call(s):
+	- delete bets (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#256)
+	- cumulativeHash = bytes32(0) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#255)
+	- potSize = 0 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#258)
+	Event emitted after the call(s):
+	- startWinnerDraw(_randomInt,_winner,latestBlockNumber,winners[_winner]) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#260)
+Reentrancy in WinEtherPot10.placeBet() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#82-116):
+	External calls:
+	- successDrawWinnerFlag = drawAutoWinner() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#109)
+		- owner.transfer(ownerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#145)
+		- _winner.send(winnerAmt) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#152)
+		- _winner.send(amountWon) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#174)
+	Event emitted after the call(s):
+	- successDrawWinner(successDrawWinnerFlag) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#110)
+Reentrancy in WinEtherPot10.withdraw() (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#270-288):
+	External calls:
+	- msg.sender.send(amount) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#277)
+	Event emitted after the call(s):
+	- successWithDraw(msg.sender,amount) (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#279)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+WinEtherPot10.playerCount (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#22) is never used in WinEtherPot10 (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#8-393)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+WinEtherPot10.autoDistributeWinning (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#25) should be constant 
+WinEtherPot10.autoWithdrawWinner (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#27) should be constant 
+WinEtherPot10.ownerShare (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#17) should be constant 
+WinEtherPot10.playerCount (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#22) should be constant 
+WinEtherPot10.splitAllowed (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#19) should be constant 
+WinEtherPot10.winnerShare (../sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol#18) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x160a9f91993f81281127b7144344976cdfe2095b.sol analyzed (1 contracts with 100 detectors), 49 result(s) found

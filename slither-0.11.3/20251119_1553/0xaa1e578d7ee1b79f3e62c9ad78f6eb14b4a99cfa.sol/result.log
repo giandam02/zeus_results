@@ -1,0 +1,233 @@
+'solc --version' running
+'solc /sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:225:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function RaidenToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:400:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DutchAuction(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:85:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:143:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:163:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:244:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0x0, auction_address, balances[auction_address]);
+        ^-------------------------------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:245:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0x0, wallet_address, balances[wallet_address]);
+        ^-----------------------------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:247:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Deployed(totalSupply);
+        ^-------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:265:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burnt(msg.sender, num, totalSupply);
+        ^---------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:266:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, 0x0, num);
+        ^----------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:416:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Deployed(_price_start, _price_constant, _price_exponent);
+        ^------------------------------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:438:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Setup();
+        ^-----^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:486:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AuctionStarted(start_time, start_block);
+        ^-------------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:504:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AuctionEnded(final_price);
+        ^-----------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:536:9: Warning: Invoking events without "emit" prefix is deprecated.
+        BidSubmission(msg.sender, msg.value, missing_funds);
+        ^-------------------------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:585:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ClaimedTokens(receiver_address, num);
+        ^----------------------------------^
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol:591:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TokensDistributed();
+            ^-----------------^
+
+
+DutchAuction.finalizeAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#492-507) uses a dangerous strict equality:
+	- require(bool)(missing_funds == 0) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#496)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597):
+	External calls:
+	- auction_tokens_balance = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#572)
+	State variables written after the call(s):
+	- bids[receiver_address] = 0 (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#581)
+	DutchAuction.bids (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#334) can be used in cross function reentrancies:
+	- DutchAuction.bid() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#514-539)
+	- DutchAuction.bids (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#334)
+	- DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597)
+Reentrancy in DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597):
+	External calls:
+	- auction_tokens_balance = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#572)
+	- require(bool)(token.transfer(receiver_address,num)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#583)
+	State variables written after the call(s):
+	- stage = Stages.TokensDistributed (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#590)
+	DutchAuction.stage (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#339) can be used in cross function reentrancies:
+	- DutchAuction.DutchAuction(address,address,uint256,uint256,uint32) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#400-417)
+	- DutchAuction.atStage(DutchAuction.Stages) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#355-358)
+	- DutchAuction.calcTokenPrice() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#640-648)
+	- DutchAuction.changeSettings(uint256,uint256,uint32) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#447-460)
+	- DutchAuction.finalizeAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#492-507)
+	- DutchAuction.price() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#604-610)
+	- DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597)
+	- DutchAuction.setup(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#427-439)
+	- DutchAuction.stage (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#339)
+	- DutchAuction.startAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#482-487)
+Reentrancy in DutchAuction.setup(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#427-439):
+	External calls:
+	- num_tokens_auctioned = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#432)
+	- token_multiplier = 10 ** uint256(token.decimals()) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#435)
+	State variables written after the call(s):
+	- stage = Stages.AuctionSetUp (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#437)
+	DutchAuction.stage (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#339) can be used in cross function reentrancies:
+	- DutchAuction.DutchAuction(address,address,uint256,uint256,uint32) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#400-417)
+	- DutchAuction.atStage(DutchAuction.Stages) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#355-358)
+	- DutchAuction.calcTokenPrice() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#640-648)
+	- DutchAuction.changeSettings(uint256,uint256,uint32) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#447-460)
+	- DutchAuction.finalizeAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#492-507)
+	- DutchAuction.price() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#604-610)
+	- DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597)
+	- DutchAuction.setup(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#427-439)
+	- DutchAuction.stage (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#339)
+	- DutchAuction.startAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#482-487)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+DutchAuction.calcTokenPrice().elapsed (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#641) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Reentrancy in DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597):
+	External calls:
+	- auction_tokens_balance = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#572)
+	State variables written after the call(s):
+	- funds_claimed += bids[receiver_address] (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#578)
+Reentrancy in DutchAuction.setup(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#427-439):
+	External calls:
+	- num_tokens_auctioned = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#432)
+	- token_multiplier = 10 ** uint256(token.decimals()) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#435)
+	State variables written after the call(s):
+	- token_multiplier = 10 ** uint256(token.decimals()) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#435)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597):
+	External calls:
+	- auction_tokens_balance = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#572)
+	- require(bool)(token.transfer(receiver_address,num)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#583)
+	Event emitted after the call(s):
+	- ClaimedTokens(receiver_address,num) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#585)
+	- TokensDistributed() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#591)
+Reentrancy in DutchAuction.setup(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#427-439):
+	External calls:
+	- num_tokens_auctioned = token.balanceOf(address(this)) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#432)
+	- token_multiplier = 10 ** uint256(token.decimals()) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#435)
+	Event emitted after the call(s):
+	- Setup() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#438)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+DutchAuction.finalizeAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#492-507) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(missing_funds == 0) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#496)
+DutchAuction.bid() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#514-539) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(msg.value <= missing_funds) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#528)
+DutchAuction.proxyClaimTokens(address) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551-597) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > end_time + token_claim_waiting_period) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#559)
+DutchAuction.missingFundsToEndAuction() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#616-626) uses timestamp for comparisons
+	Dangerous comparisons:
+	- required_wei_at_price <= received_wei (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#620)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+StandardToken.transfer(address,uint256,bytes) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#97-119) uses assembly
+	- INLINE ASM (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#108-113)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.17 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.17 (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter StandardToken.transfer(address,uint256)._to (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#76) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256)._value (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#76) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256,bytes)._to (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#98) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256,bytes)._value (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#99) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256,bytes)._data (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#100) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#128) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#128) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#128) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#153) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#153) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#175) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#175) is not in mixedCase
+Parameter StandardToken.balanceOf(address)._owner (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#186) is not in mixedCase
+Constant RaidenToken.multiplier (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#208) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter DutchAuction.setup(address)._token_address (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#427) is not in mixedCase
+Parameter DutchAuction.changeSettings(uint256,uint256,uint32)._price_start (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#448) is not in mixedCase
+Parameter DutchAuction.changeSettings(uint256,uint256,uint32)._price_constant (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#449) is not in mixedCase
+Parameter DutchAuction.changeSettings(uint256,uint256,uint32)._price_exponent (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#450) is not in mixedCase
+Parameter DutchAuction.addToWhitelist(address[])._bidder_addresses (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#465) is not in mixedCase
+Parameter DutchAuction.removeFromWhitelist(address[])._bidder_addresses (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#474) is not in mixedCase
+Parameter DutchAuction.proxyClaimTokens(address).receiver_address (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#551) is not in mixedCase
+Variable DutchAuction.owner_address (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#299) is not in mixedCase
+Variable DutchAuction.wallet_address (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#300) is not in mixedCase
+Variable DutchAuction.whitelister_address (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#301) is not in mixedCase
+Variable DutchAuction.price_start (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#306) is not in mixedCase
+Variable DutchAuction.price_constant (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#309) is not in mixedCase
+Variable DutchAuction.price_exponent (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#312) is not in mixedCase
+Variable DutchAuction.start_time (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#315) is not in mixedCase
+Variable DutchAuction.end_time (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#316) is not in mixedCase
+Variable DutchAuction.start_block (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#317) is not in mixedCase
+Variable DutchAuction.received_wei (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#320) is not in mixedCase
+Variable DutchAuction.funds_claimed (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#323) is not in mixedCase
+Variable DutchAuction.token_multiplier (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#325) is not in mixedCase
+Variable DutchAuction.num_tokens_auctioned (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#328) is not in mixedCase
+Variable DutchAuction.final_price (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#331) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in DutchAuction.bid() (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#514-539):
+	External calls:
+	- wallet_address.transfer(msg.value) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#534)
+	Event emitted after the call(s):
+	- BidSubmission(msg.sender,msg.value,missing_funds) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#536)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+tokenFallback(address,uint256,bytes) should be declared external:
+	- ERC223ReceivingContract.tokenFallback(address,uint256,bytes) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#10)
+transfer(address,uint256,bytes) should be declared external:
+	- StandardToken.transfer(address,uint256,bytes) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#97-119)
+	- Token.transfer(address,uint256,bytes) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#47)
+addToWhitelist(address[]) should be declared external:
+	- DutchAuction.addToWhitelist(address[]) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#465-469)
+removeFromWhitelist(address[]) should be declared external:
+	- DutchAuction.removeFromWhitelist(address[]) (../sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol#474-478)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xaa1e578d7ee1b79f3e62c9ad78f6eb14b4a99cfa.sol analyzed (5 contracts with 100 detectors), 56 result(s) found

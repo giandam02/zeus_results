@@ -1,0 +1,134 @@
+'solc --version' running
+'solc /sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:216:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DENtoken() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:111:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:145:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:161:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:183:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:194:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:241:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokenPurchase(_investor, weiAmount, tokens);
+        ^-----------------------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:249:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TokenLimitReached(tokenAllocated, addTokens);
+            ^------------------------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:363:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_owner, _to, _amount);
+        ^----------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:374:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerChanged(owner, _newOwner);
+        ^----------------------------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:396:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        owner.transfer(this.balance);
+                       ^----------^
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol:399:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, owner, balance);
+        ^----------------------------^
+
+
+DENtoken.buyTokens(address) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#230-244) compares to a boolean constant:
+	-require(bool)(saleToken == true) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#232)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) has a high cyclomatic complexity (30).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#103) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#103) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#120) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#136) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#136) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#136) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#159) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#159) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#171) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#171) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#181) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#181) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#187) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#187) is not in mixedCase
+Parameter DENtoken.buyTokens(address)._investor (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#230) is not in mixedCase
+Parameter DENtoken.validPurchaseTokens(uint256)._weiAmount (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#246) is not in mixedCase
+Parameter DENtoken.getTotalAmountOfTokens(uint256)._weiAmount (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264) is not in mixedCase
+Parameter DENtoken.mint(address,uint256,address)._to (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#357) is not in mixedCase
+Parameter DENtoken.mint(address,uint256,address)._amount (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#357) is not in mixedCase
+Parameter DENtoken.mint(address,uint256,address)._owner (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#357) is not in mixedCase
+Parameter DENtoken.changeOwner(address)._newOwner (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#372) is not in mixedCase
+Parameter DENtoken.enableTransfers(bool)._transfersEnabled (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#387) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in DENtoken.claimTokens() (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#395-400):
+	External calls:
+	- owner.transfer(this.balance) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#396)
+	State variables written after the call(s):
+	- transfer(owner,balance) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#398)
+		- balances[msg.sender] = balances[msg.sender].sub(_value) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#109)
+		- balances[_to] = balances[_to].add(_value) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#110)
+	Event emitted after the call(s):
+	- Transfer(this,owner,balance) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#399)
+	- Transfer(msg.sender,_to,_value) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#111)
+		- transfer(owner,balance) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#398)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 100000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#324)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 200000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#327)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 300000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#330)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 400000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#333)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 500000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#336)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 600000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#339)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 700000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#342)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 800000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#345)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 900000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#348)
+DENtoken.getTotalAmountOfTokens(uint256) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#264-354) uses literals with too many digits:
+	- amountOfTokens = 1000000 * (10 ** uint256(decimals)) (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#351)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20.totalSupply (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#66) should be constant 
+ERC20.transfersEnabled (../sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol#68) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xf894f2e0b3fe9e33cce6057e4988569a70ce5caf.sol analyzed (6 contracts with 100 detectors), 39 result(s) found

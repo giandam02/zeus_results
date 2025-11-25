@@ -1,0 +1,367 @@
+'solc --version' running
+'solc /sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.transfer(minerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#966)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+TaskRegister (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#632-1007) contract sets array length with a user-controlled value:
+	- taskIds.push(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#869)
+TaskRegister (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#632-1007) contract sets array length with a user-controlled value:
+	- indexOfCompletedTaskId[_taskId] = completedTaskIds.push(_taskId) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#974)
+TaskRegister (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#632-1007) contract sets array length with a user-controlled value:
+	- allTasks.push(Task(TaskType.BITCOIN_ADDRESS_PREFIX,0,0,0,0,bytes32(0),0,0,0)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#822)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+TaskRegister.claim(ERC20Basic,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#998-1004) ignores return value by _token.transfer(_to,_token.balanceOf(this)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#1002)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+VanityLib.bytesToBytes32(bytes) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#379-383) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+EC._inverse(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#73-89) performs a multiplication on the result of a division:
+	- q = r / newR (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#82)
+	- (r,newR) = (newR,r - q * newR) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#85)
+TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971) performs a multiplication on the result of a division:
+	- serviceReward = taskReard.mul(serviceFee).div(MAX_PERCENT) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#960)
+	- referrerReward = serviceReward.mul(referrerFee).div(MAX_PERCENT) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#963)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971):
+	External calls:
+	- require(bool)(ec.publicKeyVerify(_answerPrivateKey,publicXPoint,publicYPoint)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#943)
+	- (publicXPoint,publicYPoint) = ec.ecadd(task.requestPublicXPoint,task.requestPublicYPoint,publicXPoint,publicYPoint) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#944-949)
+	State variables written after the call(s):
+	- task.answerPrivateKey = _answerPrivateKey (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#954)
+	TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658) can be used in cross function reentrancies:
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658)
+	- TaskRegister.allTasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#673-675)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.getCompletedTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#744-793)
+	- TaskRegister.payForTask(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883-891)
+	- TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	- tasksLength = prev.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#817)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	State variables written after the call(s):
+	- allTasks.push(Task(TaskType.BITCOIN_ADDRESS_PREFIX,0,0,0,0,bytes32(0),0,0,0)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#822)
+	TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658) can be used in cross function reentrancies:
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658)
+	- TaskRegister.allTasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#673-675)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.getCompletedTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#744-793)
+	- TaskRegister.payForTask(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883-891)
+	- TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658) can be used in cross function reentrancies:
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658)
+	- TaskRegister.allTasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#673-675)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.getCompletedTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#744-793)
+	- TaskRegister.payForTask(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883-891)
+	- TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	- tasksLength = prev.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#817)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#839)
+	- (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+	State variables written after the call(s):
+	- (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+	TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658) can be used in cross function reentrancies:
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658)
+	- TaskRegister.allTasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#673-675)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.getCompletedTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#744-793)
+	- TaskRegister.payForTask(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883-891)
+	- TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	- tasksLength = prev.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#817)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#839)
+	- (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#854)
+	- (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+	State variables written after the call(s):
+	- (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+	TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658) can be used in cross function reentrancies:
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658)
+	- TaskRegister.allTasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#673-675)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.getCompletedTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#744-793)
+	- TaskRegister.payForTask(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883-891)
+	- TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	- tasksLength = prev.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#817)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#839)
+	- (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#854)
+	- (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+	- taskIds.push(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#869)
+	State variables written after the call(s):
+	- _removeAllActiveTasksWithHoles(index,index + _size) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#872)
+		- delete allTasks[index] (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#989)
+	TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658) can be used in cross function reentrancies:
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.allTasks (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#658)
+	- TaskRegister.allTasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#673-675)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.getCompletedTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#744-793)
+	- TaskRegister.payForTask(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883-891)
+	- TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+	- _removeAllActiveTasksWithHoles(index,index + _size) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#872)
+		- taskIds.length = 0 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#994)
+	TaskRegister.taskIds (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#659) can be used in cross function reentrancies:
+	- TaskRegister._completeTask(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#973-983)
+	- TaskRegister._removeAllActiveTasksWithHoles(uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#985-996)
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+	- TaskRegister.getActiveTasks() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#693-742)
+	- TaskRegister.taskIds (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#659)
+	- TaskRegister.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#677-679)
+	- TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) ignores return value by (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) ignores return value by (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) ignores return value by (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+TaskRegister.setServiceFee(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#795-798) should emit an event for: 
+	- serviceFee = _serviceFee (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#797) 
+TaskRegister.setReferrerFee(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#800-803) should emit an event for: 
+	- referrerFee = _referrerFee (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#802) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+TaskRegister.claim(ERC20Basic,address)._to (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#998) lacks a zero-check on :
+		- _to.transfer(address(this).balance - totalReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#1000)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#839)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#854)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) has external calls inside a loop: taskIds.push(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#869)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Variable 'TaskRegister.upgrade(uint256).j (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)' in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) potentially used before declaration: j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#839)
+Variable 'TaskRegister.upgrade(uint256).j (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)' in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) potentially used before declaration: (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+Variable 'TaskRegister.upgrade(uint256).j (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)' in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) potentially used before declaration: j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#854)
+Variable 'TaskRegister.upgrade(uint256).j (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)' in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873) potentially used before declaration: (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971):
+	External calls:
+	- require(bool)(ec.publicKeyVerify(_answerPrivateKey,publicXPoint,publicYPoint)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#943)
+	- (publicXPoint,publicYPoint) = ec.ecadd(task.requestPublicXPoint,task.requestPublicYPoint,publicXPoint,publicYPoint) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#944-949)
+	External calls sending eth:
+	- task.referrer.transfer(referrerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#964)
+	- msg.sender.transfer(minerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#966)
+	State variables written after the call(s):
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- indexOfCompletedTaskId[_taskId] = completedTaskIds.push(_taskId) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#974)
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- delete indexOfActiveTaskId[_taskId] (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#975)
+		- indexOfActiveTaskId[lastTaskId] = _activeTaskIndex + 1 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#980)
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- indexOfCompletedTaskId[_taskId] = completedTaskIds.push(_taskId) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#974)
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- taskIds[_activeTaskIndex] = lastTaskId (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#979)
+		- taskIds.length -= 1 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#982)
+	- totalReward -= taskReard (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#967)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	State variables written after the call(s):
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	State variables written after the call(s):
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	State variables written after the call(s):
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	- tasksLength = prev.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#817)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	State variables written after the call(s):
+	- indexOfTaskId[allTasks[i].taskId] = i + 1 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#835)
+Reentrancy in TaskRegister.upgrade(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805-873):
+	External calls:
+	- nextTaskId = prev.nextTaskId() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#811)
+	- totalReward = prev.totalReward() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#812)
+	- serviceFee = prev.serviceFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#813)
+	- referrerFee = prev.referrerFee() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#814)
+	- tasksLength = prev.tasksCount() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#817)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#823)
+	- (allTasks[i].taskType,allTasks[i].taskId,allTasks[i].creator,None,None,None,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#824-834)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#839)
+	- (None,None,None,allTasks[i].referrer,allTasks[i].reward,allTasks[i].data,None,None,None) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#840-850)
+	- j = prev.indexOfActiveTaskId(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#854)
+	- (None,None,None,None,None,None,allTasks[i].requestPublicXPoint,allTasks[i].requestPublicYPoint,allTasks[i].answerPrivateKey) = prev.allTasks(j) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#855-865)
+	- taskIds.push(prev.taskIds(i)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#869)
+	State variables written after the call(s):
+	- _removeAllActiveTasksWithHoles(index,index + _size) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#872)
+		- delete indexOfActiveTaskId[taskId] (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#991)
+	- _removeAllActiveTasksWithHoles(index,index + _size) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#872)
+		- delete indexOfTaskId[taskId] (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#990)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Upgradable.endUpgrade() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#346-359):
+	External calls:
+	- Upgradable(upgradableState.prevVersion).endUpgrade() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#355)
+	Event emitted after the call(s):
+	- Initialized(upgradableState.prevVersion) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#357)
+Reentrancy in TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971):
+	External calls:
+	- require(bool)(ec.publicKeyVerify(_answerPrivateKey,publicXPoint,publicYPoint)) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#943)
+	- (publicXPoint,publicYPoint) = ec.ecadd(task.requestPublicXPoint,task.requestPublicYPoint,publicXPoint,publicYPoint) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#944-949)
+	External calls sending eth:
+	- task.referrer.transfer(referrerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#964)
+	- msg.sender.transfer(minerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#966)
+	Event emitted after the call(s):
+	- TaskSolved(_taskId,minerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#970)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+VanityLib.bytesToBytes32(bytes) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#379-383) uses assembly
+	- INLINE ASM (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#380-383)
+TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931) uses assembly
+	- INLINE ASM (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#910-914)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function EC._jAdd(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#13-28) is not in mixedCase
+Function EC._jSub(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#30-45) is not in mixedCase
+Function EC._jMul(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#47-58) is not in mixedCase
+Function EC._jDiv(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#60-71) is not in mixedCase
+Function EC._inverse(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#73-89) is not in mixedCase
+Function EC._ecAdd(uint256,uint256,uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#91-139) is not in mixedCase
+Function EC._ecDouble(uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#141-145) is not in mixedCase
+Function EC._ecMul(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#147-171) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#278) is not in mixedCase
+Parameter VanityLib.toBase58Checked(uint256,bytes1)._value (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#386) is not in mixedCase
+Constant VanityLib.m (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#365) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter TaskRegister.setServiceFee(uint256)._serviceFee (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#795) is not in mixedCase
+Parameter TaskRegister.setReferrerFee(uint256)._referrerFee (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#800) is not in mixedCase
+Parameter TaskRegister.upgrade(uint256)._size (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#805) is not in mixedCase
+Parameter TaskRegister.payForTask(uint256)._taskId (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#883) is not in mixedCase
+Parameter TaskRegister.solveTask(uint256,uint256,uint256,uint256)._taskId (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933) is not in mixedCase
+Parameter TaskRegister.solveTask(uint256,uint256,uint256,uint256)._answerPrivateKey (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933) is not in mixedCase
+Parameter TaskRegister.claim(ERC20Basic,address)._token (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#998) is not in mixedCase
+Parameter TaskRegister.claim(ERC20Basic,address)._to (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#998) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in TaskRegister.solveTask(uint256,uint256,uint256,uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#933-971):
+	External calls:
+	- task.referrer.transfer(referrerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#964)
+	- msg.sender.transfer(minerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#966)
+	State variables written after the call(s):
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- indexOfCompletedTaskId[_taskId] = completedTaskIds.push(_taskId) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#974)
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- delete indexOfActiveTaskId[_taskId] (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#975)
+		- indexOfActiveTaskId[lastTaskId] = _activeTaskIndex + 1 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#980)
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- indexOfCompletedTaskId[_taskId] = completedTaskIds.push(_taskId) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#974)
+	- _completeTask(_taskId,activeTaskIndex) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#969)
+		- taskIds[_activeTaskIndex] = lastTaskId (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#979)
+		- taskIds.length -= 1 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#982)
+	- totalReward -= taskReard (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#967)
+	Event emitted after the call(s):
+	- TaskSolved(_taskId,minerReward) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#970)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+TaskRegister.setReferrerFee(uint256) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#800-803) uses literals with too many digits:
+	- require(bool,string)(_referrerFee <= 500000,setReferrerFee: value should be less than 500000, which means 50% of service fee) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#801)
+TaskRegister.slitherConstructorConstantVariables() (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#632-1007) uses literals with too many digits:
+	- MAX_PERCENT = 1000000 (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#654)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Loop condition i < taskIds.length (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#718) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < completedTaskIds.length (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#769) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) should be declared external:
+	- TaskRegister.createBitcoinAddressPrefixTask(bytes,uint256,uint256,address) (../sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol#893-931)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xeb897ad24189a911cad00c071fc7182f5753a3d3.sol analyzed (9 contracts with 100 detectors), 67 result(s) found

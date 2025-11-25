@@ -1,0 +1,328 @@
+'solc --version' running
+'solc /sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol:
+/sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol:2:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
+pragma experimental ABIEncoderV2;
+^-------------------------------^
+
+
+Reentrancy in ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442):
+	External calls:
+	- token.transfer(msg.sender,x) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#438)
+	External calls sending eth:
+	- msg.sender.transfer(_systemReserves[0x0]) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#424)
+	State variables written after the call(s):
+	- _listedReserves.length = 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#441)
+	ldoh._listedReserves (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#123) can be used in cross function reentrancies:
+	- ldoh.GetTokensAddressesWithFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#456-477)
+	- ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442)
+	- ldoh._listedReserves (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#123)
+	- _systemReserves[ta] = 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#435)
+	ldoh._systemReserves (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#122) can be used in cross function reentrancies:
+	- ldoh.GetTokenFees(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#332-334)
+	- ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442)
+	- ldoh.WithdrawTokenFees(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#404-414)
+	- ldoh.fallback() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#141-145)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+ldoh.PayToken(address,address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#278-284) ignores return value by token.transfer(user,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#283)
+ldoh.WithdrawTokenFees(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#404-414) ignores return value by token.transfer(msg.sender,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#413)
+ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442) ignores return value by token.transfer(msg.sender,x) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#438)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) performs a multiplication on the result of a division:
+	- realAmount = s.amount * final_perc / 100 * timeframe / seconds30days (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#235)
+ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) performs a multiplication on the result of a division:
+	- percentagereceived = tokenreceived / s.amount * 100 * 1000000000000000000 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#243)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+ldoh.mul(uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#524-531) uses a dangerous strict equality:
+	- a == 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#525)
+ldoh.mul(uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#524-531) uses a dangerous strict equality:
+	- assert(bool)(c / a == b) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#529)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#157)
+	- _safes[_currentIndex] = Safe(_currentIndex,amount,now + hodlingTime,msg.sender,tokenAddress,token.symbol(),data_amountbalance,data_cashbackbalance,now,percent,0,0,0,0,0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#166-170)
+	State variables written after the call(s):
+	- _currentIndex ++ (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#176)
+	ldoh._currentIndex (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#114) can be used in cross function reentrancies:
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+	- ldoh.constructor() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#127-134)
+Reentrancy in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#210)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#282)
+		- token.transfer(user,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#283)
+	State variables written after the call(s):
+	- s.amountbalance = 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#213)
+	ldoh._safes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#113) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193)
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+Reentrancy in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255):
+	External calls:
+	- token.balanceOf(address(this)) >= final_ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#229)
+	State variables written after the call(s):
+	- s.amountbalance = newamountbalance (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#238)
+	ldoh._safes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#113) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193)
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+	- s.lasttime = now (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#239)
+	ldoh._safes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#113) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193)
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+	- s.tokenreceive = tokenreceived (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#245)
+	ldoh._safes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#113) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193)
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+	- s.percentagereceive = percentagereceived (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#246)
+	ldoh._safes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#113) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193)
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+Reentrancy in ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#494)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#282)
+		- token.transfer(user,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#283)
+	State variables written after the call(s):
+	- _countSafes -- (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#497)
+	ldoh._countSafes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#115) can be used in cross function reentrancies:
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+	- ldoh._countSafes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#115)
+	- DeleteSafe(s) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#495)
+		- delete _safes[s.id] (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#292)
+	ldoh._safes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#113) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193)
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504)
+	- DeleteSafe(s) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#495)
+		- _totalSaved[s.tokenAddress] = sub(_totalSaved[s.tokenAddress],s.amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#291)
+	ldoh._totalSaved (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#116) can be used in cross function reentrancies:
+	- ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303)
+	- ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180)
+	- ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255)
+	- ldoh._totalSaved (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#116)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+ldoh.ReturnAllTokens(bool).returned (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#484) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+ldoh.ChangeHodlingTime(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#379-383) should emit an event for: 
+	- hodlingTime = newHodlingDays * 86400 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#382) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442) has external calls inside a loop: token.transfer(msg.sender,x) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#438)
+ldoh.GetTokensAddressesWithFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#456-477) has external calls inside a loop: tokenSymbol[i] = token.symbol() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#472)
+ldoh.PayToken(address,address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#278-284) has external calls inside a loop: require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#282)
+	Calls stack containing the loop:
+		ldoh.ReturnAllTokens(bool)
+ldoh.PayToken(address,address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#278-284) has external calls inside a loop: token.transfer(user,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#283)
+	Calls stack containing the loop:
+		ldoh.ReturnAllTokens(bool)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Variable 'ldoh.RetireHodl(address,uint256).final_perc (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#231)' in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) potentially used before declaration: final_perc = s.percentage (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#231)
+Variable 'ldoh.RetireHodl(address,uint256).final_perc (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#231)' in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) potentially used before declaration: realAmount = s.amount * final_perc / 100 * timeframe / seconds30days (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#235)
+Variable 'ldoh.RetireHodl(address,uint256).final_ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#227)' in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) potentially used before declaration: final_ratio = Current_ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#227)
+Variable 'ldoh.RetireHodl(address,uint256).final_ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#227)' in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) potentially used before declaration: token.balanceOf(address(this)) >= final_ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#229)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#157)
+	State variables written after the call(s):
+	- _userSafes[msg.sender].push(_currentIndex) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#165)
+Reentrancy in ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#157)
+	- _safes[_currentIndex] = Safe(_currentIndex,amount,now + hodlingTime,msg.sender,tokenAddress,token.symbol(),data_amountbalance,data_cashbackbalance,now,percent,0,0,0,0,0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#166-170)
+	State variables written after the call(s):
+	- _countSafes ++ (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#177)
+	- _safes[_currentIndex] = Safe(_currentIndex,amount,now + hodlingTime,msg.sender,tokenAddress,token.symbol(),data_amountbalance,data_cashbackbalance,now,percent,0,0,0,0,0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#166-170)
+	- _totalSaved[tokenAddress] = add(_totalSaved[tokenAddress],amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#175)
+Reentrancy in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#210)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#282)
+		- token.transfer(user,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#283)
+	State variables written after the call(s):
+	- _totalSaved[s.tokenAddress] = sub(_totalSaved[s.tokenAddress],s.amountbalance) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#211)
+Reentrancy in ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255):
+	External calls:
+	- token.balanceOf(address(this)) >= final_ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#229)
+	State variables written after the call(s):
+	- _totalSaved[s.tokenAddress] = sub(_totalSaved[s.tokenAddress],realAmount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#247)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#157)
+	- _safes[_currentIndex] = Safe(_currentIndex,amount,now + hodlingTime,msg.sender,tokenAddress,token.symbol(),data_amountbalance,data_cashbackbalance,now,percent,0,0,0,0,0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#166-170)
+	- onHodlTokens(msg.sender,tokenAddress,token.symbol(),amount,now + hodlingTime) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#179)
+	Event emitted after the call(s):
+	- onHodlTokens(msg.sender,tokenAddress,token.symbol(),amount,now + hodlingTime) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#179)
+Reentrancy in ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#494)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#282)
+		- token.transfer(user,amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#283)
+	Event emitted after the call(s):
+	- onReturnAll(returned) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#503)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(s.user == msg.sender) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#190)
+ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(s.id != 0) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#199)
+	- require(bool)(s.tokenAddress == tokenAddress) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#200)
+	- require(bool)((tokenAddress == AXPRtoken && s.endtime < now) || tokenAddress != AXPRtoken) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#201-204)
+	- s.endtime < now (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#208)
+ldoh.PayToken(address,address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#278-284) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#282)
+ldoh.WithdrawTokenFees(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#404-414) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_systemReserves[tokenAddress] > 0) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#405)
+ldoh.mul(uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#524-531) uses timestamp for comparisons
+	Dangerous comparisons:
+	- a == 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#525)
+	- assert(bool)(c / a == b) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#529)
+ldoh.sub(uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#546-549) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assert(bool)(b <= a) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#547)
+ldoh.add(uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#554-558) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assert(bool)(c >= a) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#556)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303) has costly operations inside a loop:
+	- delete _safes[s.id] (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#292)
+	Calls stack containing the loop:
+		ldoh.ReturnAllTokens(bool)
+ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504) has costly operations inside a loop:
+	- _countSafes -- (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#497)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+OwnableContract.viewSuperOwner() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#18-20) is never used and should be removed
+ldoh.GetHodlTokensBalance(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#350-359) is never used and should be removed
+ldoh.StoreComission(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#260-272) is never used and should be removed
+ldoh.div(uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#536-541) is never used and should be removed
+ldoh.storeProfileHashed(string) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#340-344) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event OwnableContract.onTransferOwnership(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#7) is not in CapWords
+Event BlockableContract.onBlockHODLs(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#35) is not in CapWords
+Contract ldoh (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#63-560) is not in CapWords
+Event ldoh.onStoreProfileHash(address,string) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#65) is not in CapWords
+Event ldoh.onHodlTokens(address,address,string,uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#66) is not in CapWords
+Event ldoh.onClaimTokens(address,address,string,uint256,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#67) is not in CapWords
+Event ldoh.onReturnAll(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#68) is not in CapWords
+Function ldoh.HodlTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#150-180) is not in mixedCase
+Function ldoh.ClaimTokens(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#185-193) is not in mixedCase
+Function ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) is not in mixedCase
+Function ldoh.StoreComission(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#260-272) is not in mixedCase
+Function ldoh.PayToken(address,address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#278-284) is not in mixedCase
+Function ldoh.DeleteSafe(ldoh.Safe) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#289-303) is not in mixedCase
+Function ldoh.GetUserSafesLength(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#308-310) is not in mixedCase
+Function ldoh.GetSafe(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315-320) is not in mixedCase
+Parameter ldoh.GetSafe(uint256)._id (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#315) is not in mixedCase
+Function ldoh.GetContractBalance() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#324-327) is not in mixedCase
+Function ldoh.GetTokenFees(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#332-334) is not in mixedCase
+Parameter ldoh.storeProfileHashed(string)._profileHashed (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#340) is not in mixedCase
+Function ldoh.GetHodlTokensBalance(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#350-359) is not in mixedCase
+Function ldoh.OwnerRetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#369-374) is not in mixedCase
+Function ldoh.ChangeHodlingTime(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#379-383) is not in mixedCase
+Function ldoh.ChangeAllTimeHighPrice(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#387-391) is not in mixedCase
+Function ldoh.ChangeComission(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#396-400) is not in mixedCase
+Function ldoh.WithdrawTokenFees(address) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#404-414) is not in mixedCase
+Function ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442) is not in mixedCase
+Function ldoh.WithdrawEth(uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#447-452) is not in mixedCase
+Function ldoh.GetTokensAddressesWithFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#456-477) is not in mixedCase
+Function ldoh.ReturnAllTokens(bool) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#482-504) is not in mixedCase
+Function ldoh.CreateRatio(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#508-511) is not in mixedCase
+Parameter ldoh.CreateRatio(address,uint256)._ratio (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#508) is not in mixedCase
+Variable ldoh.AXPRtoken (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#72) is not in mixedCase
+Constant ldoh.affiliate (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#83) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.cashback (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#84) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.totalreceive (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#85) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.seconds30days (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#86) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.less_speed (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#88) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.more_speed (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#89) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable ldoh._countSafes (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#115) is not in mixedCase
+Variable ldoh._totalSaved (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#116) is not in mixedCase
+Variable ldoh._listedReserves (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#123) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ldoh.WithdrawAllFees() (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#418-442):
+	External calls:
+	- msg.sender.transfer(_systemReserves[0x0]) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#424)
+	State variables written after the call(s):
+	- _listedReserves.length = 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#441)
+	- _systemReserves[ta] = 0 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#435)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) uses literals with too many digits:
+	- final_ratio = 2000000000000000000000000000 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#227)
+ldoh.RetireHodl(address,uint256) (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#195-255) uses literals with too many digits:
+	- percentagereceived = tokenreceived / s.amount * 100 * 1000000000000000000 (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#243)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ldoh.totalreceive (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#85) is never used in ldoh (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#63-560)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+Loop condition i < _listedReserves.length (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#265) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+ldoh.percent (../sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol#82) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x1722a1c1c82298809f7f71d113695845c110195a.sol analyzed (4 contracts with 100 detectors), 91 result(s) found

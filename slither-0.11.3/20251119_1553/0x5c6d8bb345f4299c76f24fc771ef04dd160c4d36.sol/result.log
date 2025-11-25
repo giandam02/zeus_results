@@ -1,0 +1,96 @@
+'solc --version' running
+'solc /sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+EthCrystal.buyWarriors(uint256,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126-205) performs a multiplication on the result of a division:
+	- _value = (_WarriorsAmount * _warriorPrice) + (((_WarriorsAmount - 1) * (_WarriorsAmount - 1) + _WarriorsAmount - 1) / 2) * GameRounds[_TowerType].growthCoefficient (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#157)
+EthCrystal.WarriorTotalPrice(uint256,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#316-321) performs a multiplication on the result of a division:
+	- (_WarriorsAmount * _warriorPrice) + (((_WarriorsAmount - 1) * (_WarriorsAmount - 1) + _WarriorsAmount - 1) / 2) * coef (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#320)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+EthCrystal.buyWarriors(uint256,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126-205) uses timestamp for comparisons
+	Dangerous comparisons:
+	- GameRounds[_TowerType].RoundList[GameRounds[_TowerType].currentRoundID].timeToFinish < now (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#139)
+	- GameRounds[_TowerType].RoundList[GameRounds[_TowerType].currentRoundID].timeToFinish > now + GameRounds[_TowerType].RoundList[GameRounds[_TowerType].currentRoundID].timeLimit (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#189)
+EthCrystal._playerRoundsInfo(address,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#249-268) uses timestamp for comparisons
+	Dangerous comparisons:
+	- GameRounds[_TowerType].RoundList[_RoundID].timeToFinish > now (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#257)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter EthCrystal.newRound(uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#118) is not in mixedCase
+Parameter EthCrystal.buyWarriors(uint256,uint256,uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126) is not in mixedCase
+Parameter EthCrystal.buyWarriors(uint256,uint256,uint256)._WarriorsAmount (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126) is not in mixedCase
+Parameter EthCrystal.buyWarriors(uint256,uint256,uint256)._referralID (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126) is not in mixedCase
+Parameter EthCrystal.dividendCashout(uint256,uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#207) is not in mixedCase
+Parameter EthCrystal.dividendCashout(uint256,uint256)._RoundID (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#207) is not in mixedCase
+Parameter EthCrystal.setNickname(string,address)._referralAddress (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#237) is not in mixedCase
+Function EthCrystal._playerRoundsInfo(address,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#249-268) is not in mixedCase
+Parameter EthCrystal._playerRoundsInfo(address,uint256,uint256)._playerAddress (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#249) is not in mixedCase
+Parameter EthCrystal._playerRoundsInfo(address,uint256,uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#249) is not in mixedCase
+Parameter EthCrystal._playerRoundsInfo(address,uint256,uint256)._RoundID (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#249) is not in mixedCase
+Function EthCrystal._currentWarriorPrice(uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#270-275) is not in mixedCase
+Parameter EthCrystal._currentWarriorPrice(uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#270) is not in mixedCase
+Function EthCrystal._currentPlayerAmountUnclaimed(address,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#277-288) is not in mixedCase
+Parameter EthCrystal._currentPlayerAmountUnclaimed(address,uint256,uint256)._playerAddress (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#277) is not in mixedCase
+Parameter EthCrystal._currentPlayerAmountUnclaimed(address,uint256,uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#277) is not in mixedCase
+Parameter EthCrystal._currentPlayerAmountUnclaimed(address,uint256,uint256)._RoundID (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#277) is not in mixedCase
+Function EthCrystal._currentPlayerAmountUnclaimedAll(address) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#290-301) is not in mixedCase
+Parameter EthCrystal._currentPlayerAmountUnclaimedAll(address)._playerAddress (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#290) is not in mixedCase
+Function EthCrystal._playerInfo(uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#306-314) is not in mixedCase
+Parameter EthCrystal._playerInfo(uint256)._playerID (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#306) is not in mixedCase
+Function EthCrystal.WarriorTotalPrice(uint256,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#316-321) is not in mixedCase
+Parameter EthCrystal.WarriorTotalPrice(uint256,uint256,uint256)._WarriorsAmount (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#316) is not in mixedCase
+Parameter EthCrystal.WarriorTotalPrice(uint256,uint256,uint256)._warriorPrice (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#316) is not in mixedCase
+Function EthCrystal._playerBalance(address) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#325-330) is not in mixedCase
+Parameter EthCrystal._playerBalance(address)._playerAddress (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#325) is not in mixedCase
+Function EthCrystal._TowerRoundDetails(uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#335-353) is not in mixedCase
+Parameter EthCrystal._TowerRoundDetails(uint256,uint256)._TowerType (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#335) is not in mixedCase
+Parameter EthCrystal._TowerRoundDetails(uint256,uint256)._RoundID (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#335) is not in mixedCase
+Variable EthCrystal.playerID_counter (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#81) is not in mixedCase
+Variable EthCrystal.GameRounds (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#90) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[0] = TowersInfoList(Crystal Tower,60 * 60 * 24,30,0,2,10000000000000,35,15,50) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#100)
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[1] = TowersInfoList(Red Tower,60 * 60 * 24,60,0,2,20000000000000,25,5,70) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#101)
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[2] = TowersInfoList(Gold Tower,60 * 60 * 12,60 * 2,0,2,250000000000000,40,10,50) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#102)
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[3] = TowersInfoList(Purple Tower,60 * 60 * 24,60 * 10,0,2,5000000000000000,30,10,60) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#103)
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[4] = TowersInfoList(Silver Tower,60 * 60 * 12,60 * 2,0,2,1000000000000000,35,15,50) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#104)
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[5] = TowersInfoList(Black Tower,60 * 60 * 12,30,0,2,1000000000000000,65,10,25) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#105)
+EthCrystal.constructor() (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#96-116) uses literals with too many digits:
+	- GameRounds[6] = TowersInfoList(Toxic Tower,60 * 60 * 24,60,0,2,2000000000000000,65,10,25) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#106)
+EthCrystal.buyWarriors(uint256,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126-205) uses literals with too many digits:
+	- require(bool)(msg.value > 10000000) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#127)
+EthCrystal.buyWarriors(uint256,uint256,uint256) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#126-205) uses literals with too many digits:
+	- require(bool)(_WarriorsAmount >= 1 && _WarriorsAmount < 1000000000) (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#128)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+EthCrystal.affShare (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#84) should be constant 
+EthCrystal.devShare (../sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol#83) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x5c6d8bb345f4299c76f24fc771ef04dd160c4d36.sol analyzed (2 contracts with 100 detectors), 48 result(s) found

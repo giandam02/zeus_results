@@ -1,0 +1,141 @@
+'solc --version' running
+'solc /sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:8:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:4:5: Warning: No visibility specified. Defaulting to "public". 
+    function __transferWithReference(address _to, uint _value, string _reference, address _sender) returns(bool);
+    ^-----------------------------------------------------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function __transferFromWithReference(address _from, address _to, uint _value, string _reference, address _sender) returns(bool);
+    ^------------------------------------------------------------------------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function __approve(address _spender, uint _value, address _sender) returns(bool);
+    ^-------------------------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:7:5: Warning: No visibility specified. Defaulting to "public". 
+    function __process(bytes _data, address _sender) payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:7:24: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function __process(bytes _data, address _sender) payable {
+                       ^---------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:7:37: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function __process(bytes _data, address _sender) payable {
+                                    ^-------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function __transferWithReference(address _to, uint _value, string _reference, address _sender) returns(bool);
+    ^-----------------------------------------------------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function __transferFromWithReference(address _from, address _to, uint _value, string _reference, address _sender) returns(bool);
+    ^------------------------------------------------------------------------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:16:5: Warning: No visibility specified. Defaulting to "public". 
+    function __approve(address _spender, uint _value, address _sender) returns(bool);    
+    ^-------------------------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function getLatestVersion() returns(address);
+    ^-------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:18:5: Warning: No visibility specified. Defaulting to "public". 
+    function init(address _bmcPlatform, string _symbol, string _name);
+    ^----------------------------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:19:5: Warning: No visibility specified. Defaulting to "public". 
+    function proposeUpgrade(address _newVersion);
+    ^-------------------------------------------^
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:55:5: Warning: No visibility specified. Defaulting to "public". 
+    function init(BMCAssetProxy _proxy) returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:71:5: Warning: No visibility specified. Defaulting to "public". 
+    function __transferWithReference(address _to, uint _value, string _reference, address _sender) onlyProxy() returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:93:5: Warning: No visibility specified. Defaulting to "public". 
+    function __transferFromWithReference(address _from, address _to, uint _value, string _reference, address _sender) onlyProxy() returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:115:5: Warning: No visibility specified. Defaulting to "public". 
+    function __approve(address _spender, uint _value, address _sender) onlyProxy() returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol:143:5: Warning: No visibility specified. Defaulting to "public". 
+    function initBMC(BMCAssetProxy _proxy, uint _icoUsd, uint _icoEth, uint _icoBtc, uint _icoLtc) returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Contract locking ether found:
+	Contract BMC (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#136-156) has payable functions:
+	 - BMCAssetInterface.__process(bytes,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#7-9)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Modifier BMCAsset.onlyProxy() (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#39-43) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+Deprecated standard detected THROW (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#8):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function BMCAssetInterface.__transferWithReference(address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#4) is not in mixedCase
+Function BMCAssetInterface.__transferFromWithReference(address,address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#5) is not in mixedCase
+Function BMCAssetInterface.__approve(address,uint256,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#6) is not in mixedCase
+Function BMCAssetInterface.__process(bytes,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#7-9) is not in mixedCase
+Function BMCAssetProxy.__transferWithReference(address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#14) is not in mixedCase
+Function BMCAssetProxy.__transferFromWithReference(address,address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#15) is not in mixedCase
+Function BMCAssetProxy.__approve(address,uint256,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#16) is not in mixedCase
+Parameter BMCAsset.init(BMCAssetProxy)._proxy (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#55) is not in mixedCase
+Function BMCAsset.__transferWithReference(address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#71-73) is not in mixedCase
+Parameter BMCAsset.__transferWithReference(address,uint256,string,address)._to (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#71) is not in mixedCase
+Parameter BMCAsset.__transferWithReference(address,uint256,string,address)._value (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#71) is not in mixedCase
+Parameter BMCAsset.__transferWithReference(address,uint256,string,address)._reference (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#71) is not in mixedCase
+Parameter BMCAsset.__transferWithReference(address,uint256,string,address)._sender (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#71) is not in mixedCase
+Function BMCAsset.__transferFromWithReference(address,address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93-95) is not in mixedCase
+Parameter BMCAsset.__transferFromWithReference(address,address,uint256,string,address)._from (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93) is not in mixedCase
+Parameter BMCAsset.__transferFromWithReference(address,address,uint256,string,address)._to (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93) is not in mixedCase
+Parameter BMCAsset.__transferFromWithReference(address,address,uint256,string,address)._value (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93) is not in mixedCase
+Parameter BMCAsset.__transferFromWithReference(address,address,uint256,string,address)._reference (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93) is not in mixedCase
+Parameter BMCAsset.__transferFromWithReference(address,address,uint256,string,address)._sender (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93) is not in mixedCase
+Function BMCAsset.__approve(address,uint256,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#115-117) is not in mixedCase
+Parameter BMCAsset.__approve(address,uint256,address)._spender (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#115) is not in mixedCase
+Parameter BMCAsset.__approve(address,uint256,address)._value (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#115) is not in mixedCase
+Parameter BMCAsset.__approve(address,uint256,address)._sender (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#115) is not in mixedCase
+Parameter BMC.initBMC(BMCAssetProxy,uint256,uint256,uint256,uint256)._proxy (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#143) is not in mixedCase
+Parameter BMC.initBMC(BMCAssetProxy,uint256,uint256,uint256,uint256)._icoUsd (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#143) is not in mixedCase
+Parameter BMC.initBMC(BMCAssetProxy,uint256,uint256,uint256,uint256)._icoEth (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#143) is not in mixedCase
+Parameter BMC.initBMC(BMCAssetProxy,uint256,uint256,uint256,uint256)._icoBtc (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#143) is not in mixedCase
+Parameter BMC.initBMC(BMCAssetProxy,uint256,uint256,uint256,uint256)._icoLtc (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#143) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+__transferWithReference(address,uint256,string,address) should be declared external:
+	- BMCAsset.__transferWithReference(address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#71-73)
+	- BMCAssetInterface.__transferWithReference(address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#4)
+__transferFromWithReference(address,address,uint256,string,address) should be declared external:
+	- BMCAsset.__transferFromWithReference(address,address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#93-95)
+	- BMCAssetInterface.__transferFromWithReference(address,address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#5)
+__process(bytes,address) should be declared external:
+	- BMCAssetInterface.__process(bytes,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#7-9)
+__transferWithReference(address,uint256,string,address) should be declared external:
+	- BMCAssetProxy.__transferWithReference(address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#14)
+__transferFromWithReference(address,address,uint256,string,address) should be declared external:
+	- BMCAssetProxy.__transferFromWithReference(address,address,uint256,string,address) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#15)
+init(address,string,string) should be declared external:
+	- BMCAssetProxy.init(address,string,string) (../sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol#18)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x8bccd8547cd101ee78c33c41476670cf58fff411.sol analyzed (4 contracts with 100 detectors), 39 result(s) found

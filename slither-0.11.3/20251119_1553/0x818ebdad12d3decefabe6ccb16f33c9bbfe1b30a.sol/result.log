@@ -1,0 +1,92 @@
+'solc --version' running
+'solc /sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:32:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function NAGACoin() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:74:9: Warning: Use of the "var" keyword is deprecated.
+        var senderBalance = balances[msg.sender];
+        ^---------------^
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:141:9: Warning: Use of the "var" keyword is deprecated.
+        var numTokens = msg.value * (1000.0/totalTokens);
+        ^-----------^
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:52:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            owner.transfer(this.balance);
+                           ^----------^
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:79:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, _to, _value);
+            ^-------------------------------^
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:89:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, _to, _value);
+            ^-------------------------------^
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:123:10: Warning: Invoking events without "emit" prefix is deprecated.
+         Approval(msg.sender, _spender, _amount);
+         ^-------------------------------------^
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol:148:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, msg.sender, numTokens);
+        ^--------------------------------^
+
+
+NAGACoin.changeOwner(address) (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#47-55) sends eth to arbitrary user
+	Dangerous calls:
+	- owner.transfer(this.balance) (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#52)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+NAGACoin.fallback() (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#132-149) performs a multiplication on the result of a division:
+	- numTokens = msg.value * (1000.0 / totalTokens) (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#141)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+NAGACoin.changeOwner(address)._newowner (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#47) lacks a zero-check on :
+		- owner = _newowner (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter NAGACoin.changeNameSymbol(string,string)._name (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#37) is not in mixedCase
+Parameter NAGACoin.changeNameSymbol(string,string)._symbol (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#37) is not in mixedCase
+Parameter NAGACoin.changeOwner(address)._newowner (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#47) is not in mixedCase
+Parameter NAGACoin.transfer(address,uint256)._to (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#71) is not in mixedCase
+Parameter NAGACoin.transfer(address,uint256)._value (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#71) is not in mixedCase
+Parameter NAGACoin.mintTo(address,uint256)._to (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#85) is not in mixedCase
+Parameter NAGACoin.mintTo(address,uint256)._value (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#85) is not in mixedCase
+Parameter NAGACoin.balanceOf(address)._owner (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#98) is not in mixedCase
+Parameter NAGACoin.transferFrom(address,address,uint256)._from (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#104) is not in mixedCase
+Parameter NAGACoin.transferFrom(address,address,uint256)._to (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#105) is not in mixedCase
+Parameter NAGACoin.transferFrom(address,address,uint256)._amount (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#106) is not in mixedCase
+Parameter NAGACoin.approve(address,uint256)._spender (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#121) is not in mixedCase
+Parameter NAGACoin.approve(address,uint256)._amount (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#121) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in NAGACoin.changeOwner(address) (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#47-55):
+	External calls:
+	- owner.transfer(msg.value) (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#51)
+	- owner.transfer(this.balance) (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#52)
+	State variables written after the call(s):
+	- owner = _newowner (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+NAGACoin.funding (../sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol#19) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x818ebdad12d3decefabe6ccb16f33c9bbfe1b30a.sol analyzed (1 contracts with 100 detectors), 20 result(s) found

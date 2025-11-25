@@ -1,0 +1,129 @@
+'solc --version' running
+'solc /sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CertificationDb (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#303-523) contract sets array length with a user-controlled value:
+	- studentCertifications[student].documents.push(document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#376)
+CertificationDb (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#303-523) contract sets array length with a user-controlled value:
+	- certification.documents.push(document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#423)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+CertificationDb.uncertify(address) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#383-398) deletes CertificationDb.Certification (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#312-319) which contains a mapping:
+	-delete studentCertifications[student] (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#390)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deletion-on-mapping-containing-a-structure
+
+WithFee.constructor(address,uint256).beneficiary (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#102) shadows:
+	- WithBeneficiary.beneficiary (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#59) (state variable)
+CertificationDb.constructor(address,uint256,address).beneficiary (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#327) shadows:
+	- WithBeneficiary.beneficiary (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#59) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Reentrancy in CertificationDb.addCertificationDocument(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#400-404):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#401)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	State variables written after the call(s):
+	- success = addCertificationDocumentInternal(student,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#403)
+		- certification.documentStatuses[document] = DocumentStatus({isValid:true,index:certification.documents.length}) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#419-422)
+		- certification.documents.push(document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#423)
+Reentrancy in CertificationDb.certify(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#358-381):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#359)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	State variables written after the call(s):
+	- certifiedStudents.push(student) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#378)
+	- studentCertifications[student] = Certification({certified:true,timestamp:now,certifier:msg.sender,documents:new bytes32[](0),index:certifiedStudents.length}) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#364-370)
+	- studentCertifications[student].documentStatuses[document] = DocumentStatus({isValid:true,index:studentCertifications[student].documents.length}) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#372-375)
+	- studentCertifications[student].documents.push(document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#376)
+Reentrancy in CertificationDb.removeCertificationDocument(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#429-433):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#430)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	State variables written after the call(s):
+	- success = removeCertificationDocumentInternal(student,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#432)
+		- delete certification.documentStatuses[document] (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#448)
+		- certification.documents[index] = certification.documents[certification.documents.length - 1] (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#450-451)
+		- certification.documentStatuses[certification.documents[index]].index = index (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#452)
+		- certification.documents.length -- (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#454)
+Reentrancy in CertificationDb.uncertify(address) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#383-398):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#384)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	State variables written after the call(s):
+	- certifiedStudents[index] = certifiedStudents[certifiedStudents.length - 1] (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#392)
+	- certifiedStudents.length -- (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#395)
+	- delete studentCertifications[student] (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#390)
+	- studentCertifications[certifiedStudents[index]].index = index (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#393)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in CertificationDb.addCertificationDocument(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#400-404):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#401)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	Event emitted after the call(s):
+	- LogCertificationDocumentAdded(student,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#424)
+		- success = addCertificationDocumentInternal(student,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#403)
+Reentrancy in CertificationDb.certify(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#358-381):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#359)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	Event emitted after the call(s):
+	- LogStudentCertified(student,now,msg.sender,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#379)
+Reentrancy in CertificationDb.removeCertificationDocument(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#429-433):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#430)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	Event emitted after the call(s):
+	- LogCertificationDocumentRemoved(student,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#455)
+		- success = removeCertificationDocumentInternal(student,document) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#432)
+Reentrancy in CertificationDb.uncertify(address) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#383-398):
+	External calls:
+	- fromCertifier() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#384)
+		- require(bool)(certifierDb.isCertifier(msg.sender)) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#337)
+	Event emitted after the call(s):
+	- LogStudentUncertified(student,now,msg.sender) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#396)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+CertificationDb.certify(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#358-381) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(! studentCertifications[student].certified) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#362)
+CertificationDb.uncertify(address) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#383-398) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(studentCertifications[student].certified) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#386)
+	- require(bool)(studentCertifications[student].documents.length == 0) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#388)
+CertificationDb.addCertificationDocumentInternal(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#412-427) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(studentCertifications[student].certified) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#415)
+CertificationDb.removeCertificationDocumentInternal(address,bytes32) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#441-458) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(studentCertifications[student].certified) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#444)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint 0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- 0.4.25 (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#1)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in PullPaymentCapable.withdrawPayments() (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#170-178):
+	- require(bool)(msg.sender.call.value(payment)()) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#176)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+CertificationDb (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#303-523) does not implement functions:
+	- WithBeneficiary.asyncSend(address,uint256) (../sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol#71)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+/sb/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol analyzed (8 contracts with 100 detectors), 21 result(s) found

@@ -1,0 +1,139 @@
+'solc --version' running
+'solc /sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol:
+/sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol:253:21: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0xA206d217C0642735e82a6B11547bF00659623163'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+		lendingAddress_ = 0xa206d217c0642735e82a6b11547bf00659623163;
+		                  ^----------------------------------------^
+
+
+HyperETH.isContract(address) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#461-470) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+HyperETH.sell(uint256) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#360-394) performs a multiplication on the result of a division:
+	- _dividends = SafeMath.div(SafeMath.mul(_ethereum,dividendFee_),100) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#371)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#389)
+HyperETH.purchaseTokens(uint256,address) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#771-845) performs a multiplication on the result of a division:
+	- _fee = _fee - (_fee - (_amountOfTokens * (_dividends * magnitude / (tokenSupply_)))) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#826)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+HyperETH.setAdministrator(address)._identifier (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#502) lacks a zero-check on :
+		- administrator = _identifier (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#506)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+HyperETH.isContract(address) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#461-470) uses assembly
+	- INLINE ASM (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#468-469)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+HyperETH.transferAndCall(address,uint256,bytes) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#441-455) compares to a boolean constant:
+	-require(bool)(canAcceptTokens_[_to] == true) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#446)
+HyperETH.antiEarlyWhale(uint256) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#73-103) compares to a boolean constant:
+	-require(bool)(ambassadors_[_customerAddress] == true && (ambassadorAccumulatedQuota_[_customerAddress] + _amountOfEthereum) <= ambassadorMaxPurchase_) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#82-89)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in HyperETH.payFund() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#487-497):
+	- ! fundAddress_.call.value(ethToPay).gas(400000)() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#494)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Event HyperETH.onTokenPurchase(address,uint256,uint256,address) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#150-155) is not in CapWords
+Event HyperETH.onTokenSell(address,uint256,uint256) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#157-161) is not in CapWords
+Event HyperETH.onReinvestment(address,uint256,uint256) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#163-167) is not in CapWords
+Event HyperETH.onWithdraw(address,uint256) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#169-172) is not in CapWords
+Parameter HyperETH.buy(address)._referredBy (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#268) is not in mixedCase
+Parameter HyperETH.sell(uint256)._amountOfTokens (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#360) is not in mixedCase
+Parameter HyperETH.transfer(address,uint256)._toAddress (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#401) is not in mixedCase
+Parameter HyperETH.transfer(address,uint256)._amountOfTokens (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#401) is not in mixedCase
+Parameter HyperETH.transferAndCall(address,uint256,bytes)._to (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#441) is not in mixedCase
+Parameter HyperETH.transferAndCall(address,uint256,bytes)._value (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#441) is not in mixedCase
+Parameter HyperETH.transferAndCall(address,uint256,bytes)._data (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#441) is not in mixedCase
+Parameter HyperETH.setAdministrator(address)._identifier (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#502) is not in mixedCase
+Parameter HyperETH.setCanAcceptTokens(address)._address (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#513) is not in mixedCase
+Parameter HyperETH.setStakingRequirement(uint256)._amountOfTokens (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#523) is not in mixedCase
+Parameter HyperETH.setName(string)._name (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#533) is not in mixedCase
+Parameter HyperETH.setSymbol(string)._symbol (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#543) is not in mixedCase
+Parameter HyperETH.myDividends(bool)._includeReferralBonus (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#593) is not in mixedCase
+Parameter HyperETH.myLastRef(address)._addr (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#605) is not in mixedCase
+Parameter HyperETH.balanceOf(address)._customerAddress (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#616) is not in mixedCase
+Parameter HyperETH.dividendsOf(address)._customerAddress (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#627) is not in mixedCase
+Parameter HyperETH.calculateTokensReceived(uint256)._weiToSpend (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#676) is not in mixedCase
+Parameter HyperETH.calculateEthereumReceived(uint256)._tokensToSell (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#691) is not in mixedCase
+Parameter HyperETH.handleLastRef(address)._ref (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#719) is not in mixedCase
+Parameter HyperETH.purchaseInternal(uint256,address)._incomingEthereum (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#746) is not in mixedCase
+Parameter HyperETH.purchaseInternal(uint256,address)._referredBy (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#746) is not in mixedCase
+Parameter HyperETH.purchaseTokens(uint256,address)._incomingEthereum (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#771) is not in mixedCase
+Parameter HyperETH.purchaseTokens(uint256,address)._referredBy (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#771) is not in mixedCase
+Parameter HyperETH.ethereumToTokens_(uint256)._ethereum (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#852) is not in mixedCase
+Parameter HyperETH.tokensToEthereum_(uint256)._tokens (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#890) is not in mixedCase
+Constant HyperETH.dividendFee_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#188) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.fundFee_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#189) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.referralBonus_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#190) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.tokenPriceInitial_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#191) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.tokenPriceIncremental_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#192) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.magnitude (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#193) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.ambassadorMaxPurchase_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#199) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.ambassadorQuota_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#200) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HyperETH.antiPumpAndDumpTime_ (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#203) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in HyperETH.reinvest() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#294-315):
+	External calls:
+	- _tokens = purchaseInternal(_dividends,_lastRef) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#311)
+		- _customerAddress.transfer(_excess) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#767)
+	Event emitted after the call(s):
+	- onReinvestment(_customerAddress,_dividends,_tokens) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#314)
+Reentrancy in HyperETH.transfer(address,uint256) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#401-431):
+	External calls:
+	- withdraw() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#416)
+		- _customerAddress.transfer(_dividends) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#351)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] -= int256(profitPerShare_ * _amountOfTokens) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#423)
+	- payoutsTo_[_toAddress] += int256(profitPerShare_ * _amountOfTokens) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#424)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.sub(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#419)
+	- tokenBalanceLedger_[_toAddress] = SafeMath.add(tokenBalanceLedger_[_toAddress],_amountOfTokens) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#420)
+	Event emitted after the call(s):
+	- Transfer(_customerAddress,_toAddress,_amountOfTokens) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#427)
+Reentrancy in HyperETH.withdraw() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#335-355):
+	External calls:
+	- _customerAddress.transfer(_dividends) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#351)
+	Event emitted after the call(s):
+	- onWithdraw(_customerAddress,_dividends) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#354)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+HyperETH.payFund() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#487-497) uses literals with too many digits:
+	- ! fundAddress_.call.value(ethToPay).gas(400000)() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#494)
+HyperETH.slitherConstructorConstantVariables() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#39-926) uses literals with too many digits:
+	- tokenPriceInitial_ = 1000000000 (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#191)
+HyperETH.slitherConstructorConstantVariables() (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#39-926) uses literals with too many digits:
+	- tokenPriceIncremental_ = 10000000000 (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#192)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+AcceptsHyperETH (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#17-37) does not implement functions:
+	- AcceptsHyperETH.tokenFallback(address,uint256,bytes) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#36)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+setName(string) should be declared external:
+	- HyperETH.setName(string) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#533-538)
+setSymbol(string) should be declared external:
+	- HyperETH.setSymbol(string) (../sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol#543-548)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x2747fe8dc21d5efcc0787101dc986df028bd42b9.sol analyzed (3 contracts with 100 detectors), 57 result(s) found

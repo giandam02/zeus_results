@@ -1,0 +1,148 @@
+'solc --version' running
+'solc /sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#51-60) uses arbitrary from in transferFrom: require(bool)(token.transferFrom(from,to,value)) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+InitialTokenDistribution.initialTransfer(address,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#393-397) ignores return value by token.transferFrom(msg.sender,to,amount) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#396)
+InitialTokenDistribution.vest(address,uint256,uint256,uint256,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#399-403) ignores return value by token.transferFrom(msg.sender,vested[to],amount) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#402)
+InitialTokenDistribution.lock(address,uint256,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#405-409) ignores return value by token.transferFrom(msg.sender,address(timelocked[to]),amount) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#408)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Reentrancy in TokenVesting.release(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#296-306):
+	External calls:
+	- unreleased = releasableAmount(token) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#297)
+		- currentBalance = token.balanceOf(this) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#342)
+	State variables written after the call(s):
+	- released[token] = released[token].add(unreleased) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#301)
+	TokenVesting.released (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#260) can be used in cross function reentrancies:
+	- TokenVesting.releasableAmount(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#333-335)
+	- TokenVesting.release(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#296-306)
+	- TokenVesting.released (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#260)
+	- TokenVesting.vestedAmount(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#341-352)
+Reentrancy in TokenVesting.revoke(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#313-327):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#317)
+	- unreleased = releasableAmount(token) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#319)
+		- currentBalance = token.balanceOf(this) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#342)
+	State variables written after the call(s):
+	- revoked[token] = true (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#322)
+	TokenVesting.revoked (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#261) can be used in cross function reentrancies:
+	- TokenVesting.revoke(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#313-327)
+	- TokenVesting.revoked (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#261)
+	- TokenVesting.vestedAmount(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#341-352)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TokenTimelock.constructor(ERC20Basic,address,uint256)._beneficiary (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#88) lacks a zero-check on :
+		- beneficiary = _beneficiary (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#96)
+BlockFollowInitialTokenDistribution.constructor(DetailedERC20,address,address)._functionalityWallet (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#445) lacks a zero-check on :
+		- functionalityWallet = _functionalityWallet (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#451)
+BlockFollowInitialTokenDistribution.constructor(DetailedERC20,address,address)._teamWallet (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#446) lacks a zero-check on :
+		- teamWallet = _teamWallet (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#452)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in BlockFollowInitialTokenDistribution.initialDistribution() (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#459-462):
+	External calls:
+	- initialTransfer(functionalityWallet,reservedTokensFunctionality) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#460)
+		- token.transferFrom(msg.sender,to,amount) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#396)
+	- initialTransfer(teamWallet,reservedTokensTeam) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#461)
+		- token.transferFrom(msg.sender,to,amount) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#396)
+	State variables written after the call(s):
+	- initialTransfer(teamWallet,reservedTokensTeam) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#461)
+		- initiallyDistributed[to] = amount (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#395)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TokenVesting.release(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#296-306):
+	External calls:
+	- unreleased = releasableAmount(token) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#297)
+		- currentBalance = token.balanceOf(this) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#342)
+	- token.safeTransfer(beneficiary,unreleased) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#303)
+	Event emitted after the call(s):
+	- Released(unreleased) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#305)
+Reentrancy in TokenVesting.revoke(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#313-327):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#317)
+	- unreleased = releasableAmount(token) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#319)
+		- currentBalance = token.balanceOf(this) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#342)
+	- token.safeTransfer(owner,refund) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#324)
+	Event emitted after the call(s):
+	- Revoked() (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#326)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenTimelock.constructor(ERC20Basic,address,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#86-98) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_releaseTime > block.timestamp) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#94)
+TokenTimelock.release() (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#103-111) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp >= releaseTime) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#105)
+TokenVesting.release(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#296-306) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(unreleased > 0) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#299)
+TokenVesting.vestedAmount(ERC20Basic) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#341-352) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < cliff (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#345)
+	- block.timestamp >= start.add(duration) || revoked[token] (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#347)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+2 different versions of Solidity are used:
+	- Version constraint ^0.4.24 is used by:
+		-^0.4.24 (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#1)
+	- Version constraint ^0.4.23 is used by:
+		-^0.4.23 (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#231)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#1)
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#231)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#212) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+DetailedERC20 (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#420-430) does not implement functions:
+	- ERC20.allowance(address,address) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#24-25)
+	- ERC20.approve(address,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#30)
+	- ERC20Basic.balanceOf(address) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#12)
+	- ERC20Basic.totalSupply() (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#11)
+	- ERC20Basic.transfer(address,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#13)
+	- ERC20.transferFrom(address,address,uint256) (../sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol#27-28)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+/sb/0xb5af99b7278a1c528e9f372f58b13b1799e31c50.sol analyzed (10 contracts with 100 detectors), 22 result(s) found

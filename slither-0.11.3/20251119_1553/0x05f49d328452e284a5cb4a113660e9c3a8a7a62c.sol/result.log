@@ -1,0 +1,87 @@
+'solc --version' running
+'solc /sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol:
+/sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol:119:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function VibeXChainToken () public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+VibeXChainToken.totalSupply (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#89) shadows:
+	- ERC20Basic.totalSupply (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#64)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+VibeXChainToken.transferOwnership(address) (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#124-128) should emit an event for: 
+	- owner = newOwner (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#126) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+VibeXChainToken.doAirdrop(address,uint256) (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#146-162) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#153)
+	Calls stack containing the loop:
+		VibeXChainToken.adminClaimAirdropMultiple(address[],uint256)
+VibeXChainToken.doAirdrop(address,uint256) (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#146-162) has costly operations inside a loop:
+	- distributionFinished = true (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#156)
+	Calls stack containing the loop:
+		VibeXChainToken.adminClaimAirdropMultiple(address[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter VibeXChainToken.distr(address,uint256)._to (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#137) is not in mixedCase
+Parameter VibeXChainToken.distr(address,uint256)._amount (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#137) is not in mixedCase
+Parameter VibeXChainToken.doAirdrop(address,uint256)._participant (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#146) is not in mixedCase
+Parameter VibeXChainToken.doAirdrop(address,uint256)._amount (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#146) is not in mixedCase
+Parameter VibeXChainToken.adminClaimAirdrop(address,uint256)._participant (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#164) is not in mixedCase
+Parameter VibeXChainToken.adminClaimAirdrop(address,uint256)._amount (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#164) is not in mixedCase
+Parameter VibeXChainToken.adminClaimAirdropMultiple(address[],uint256)._addresses (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#168) is not in mixedCase
+Parameter VibeXChainToken.adminClaimAirdropMultiple(address[],uint256)._amount (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#168) is not in mixedCase
+Parameter VibeXChainToken.updateTokensPerEth(uint256)._tokensPerEth (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#172) is not in mixedCase
+Parameter VibeXChainToken.balanceOf(address)._owner (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#202) is not in mixedCase
+Parameter VibeXChainToken.transfer(address,uint256)._to (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#212) is not in mixedCase
+Parameter VibeXChainToken.transfer(address,uint256)._amount (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#212) is not in mixedCase
+Parameter VibeXChainToken.transferFrom(address,address,uint256)._from (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#223) is not in mixedCase
+Parameter VibeXChainToken.transferFrom(address,address,uint256)._to (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#223) is not in mixedCase
+Parameter VibeXChainToken.transferFrom(address,address,uint256)._amount (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#223) is not in mixedCase
+Parameter VibeXChainToken.approve(address,uint256)._spender (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#236) is not in mixedCase
+Parameter VibeXChainToken.approve(address,uint256)._value (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#236) is not in mixedCase
+Parameter VibeXChainToken.allowance(address,address)._owner (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#244) is not in mixedCase
+Parameter VibeXChainToken.allowance(address,address)._spender (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#244) is not in mixedCase
+Parameter VibeXChainToken.burn(uint256)._value (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#260) is not in mixedCase
+Parameter VibeXChainToken.withdrawForeignTokens(address)._tokenContract (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#272) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+VibeXChainToken.slitherConstructorVariables() (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#77-278) uses literals with too many digits:
+	- totalSupply = 100000000000000000 (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#89)
+VibeXChainToken.slitherConstructorVariables() (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#77-278) uses literals with too many digits:
+	- totalDistributed = 100000000000000 (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#90)
+VibeXChainToken.slitherConstructorVariables() (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#77-278) uses literals with too many digits:
+	- tokensPerEth = 600000000000000 (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#92)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#64) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+adminClaimAirdropMultiple(address[],uint256) should be declared external:
+	- VibeXChainToken.adminClaimAirdropMultiple(address[],uint256) (../sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol#168-170)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x05f49d328452e284a5cb4a113660e9c3a8a7a62c.sol analyzed (5 contracts with 100 detectors), 32 result(s) found

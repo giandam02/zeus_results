@@ -1,0 +1,109 @@
+'solc --version' running
+'solc /sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:88:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function RLSToken() public payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:117:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokenPurchase(msg.sender, recipient, weiAmount, tokens);
+        ^-----------------------------------------------------^
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:141:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(owner, to, value);
+        ^------------------------^
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:154:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, to, value);
+        ^-----------------------------^
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:169:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(from, to, value);
+        ^-----------------------^
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:182:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, value);
+        ^----------------------------------^
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:4:5: Warning: Function state mutability can be restricted to pure
+    function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:10:5: Warning: Function state mutability can be restricted to pure
+    function div(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:17:5: Warning: Function state mutability can be restricted to pure
+    function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol:22:5: Warning: Function state mutability can be restricted to pure
+    function add(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+RLSToken (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) has incorrect ERC20 function interface:IERC20.transfer(address,uint256) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#33)
+RLSToken (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) has incorrect ERC20 function interface:IERC20.transferFrom(address,address,uint256) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#34)
+RLSToken (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) has incorrect ERC20 function interface:IERC20.approve(address,uint256) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#35)
+RLSToken (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) has incorrect ERC20 function interface:RLSToken.transfer(address,uint256) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#148-155)
+RLSToken (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) has incorrect ERC20 function interface:RLSToken.transferFrom(address,address,uint256) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#162-170)
+RLSToken (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) has incorrect ERC20 function interface:RLSToken.approve(address,uint256) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#177-183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+RLSToken.getPrice() (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#195-211) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= startTime && now <= startTime + 604800 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#196)
+	- now >= startTime + 691200 && now <= startTime + 1209600 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#198)
+	- now >= startTime + 1296000 && now <= startTime + 1814400 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#200)
+	- now >= startTime + 1900800 && now <= startTime + 2419200 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#202)
+	- now >= startTime + 2505600 && now <= startTime + 2592000 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#204)
+	- now >= startTime + 2678400 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#206)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter RLSToken.allowance(address,address)._owner (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#189) is not in mixedCase
+Variable RLSToken._totalSupply (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#52) is not in mixedCase
+Variable RLSToken._icoSupply (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#54) is not in mixedCase
+Variable RLSToken._futureSupply (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#56) is not in mixedCase
+Variable RLSToken.PRICE (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#70) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in RLSToken.tokensale(address) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#104-118):
+	External calls:
+	- owner.transfer(msg.value) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#116)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,recipient,weiAmount,tokens) (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#117)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+RLSToken.slitherConstructorVariables() (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) uses literals with too many digits:
+	- _totalSupply = 1000000000e18 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#52)
+RLSToken.slitherConstructorVariables() (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) uses literals with too many digits:
+	- _icoSupply = 500000000e18 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#54)
+RLSToken.slitherConstructorVariables() (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) uses literals with too many digits:
+	- _futureSupply = 500000000e18 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#56)
+RLSToken.slitherConstructorVariables() (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#43-214) uses literals with too many digits:
+	- maxCap = 700000000000000000000000000000000000000000 (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#72)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+RLSToken.PRICE (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#70) should be constant 
+RLSToken._totalSupply (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#52) should be constant 
+RLSToken.decimals (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#50) should be constant 
+RLSToken.fundRaised (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#75) should be constant 
+RLSToken.maxCap (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#72) should be constant 
+RLSToken.name (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#48) should be constant 
+RLSToken.symbol (../sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol#49) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x999e3102682c769a3fbd9faf64370c15eccdd007.sol analyzed (3 contracts with 100 detectors), 26 result(s) found

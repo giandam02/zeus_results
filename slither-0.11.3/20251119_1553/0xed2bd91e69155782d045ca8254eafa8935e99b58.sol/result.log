@@ -1,0 +1,850 @@
+'solc --version' running
+'solc /sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Reentrancy in P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595):
+	External calls:
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#588)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#588)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- bot[_customerAddress].coolOff = now (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#654)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- payoutsTo_[_customerAddress] += int256(_dividends * magnitude) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#637)
+		- payoutsTo_[_customerAddress] += _updatedPayouts (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#979)
+	P6.payoutsTo_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#501) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- profitPerShare_ += (_dividends * magnitude / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#964)
+	P6.profitPerShare_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#507) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- referralBalance_[_customerAddress] = 0 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#641)
+		- referralBalance_[_referredBy] = SafeMath.add(referralBalance_[_referredBy],_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#941)
+	P6.referralBalance_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#500) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.deposit() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#597-609)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.totalDividends(address,bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#835-837)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- stats[_customerAddress].reinvested = SafeMath.add(stats[_customerAddress].reinvested,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#650)
+		- stats[_customerAddress].xReinvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#651)
+		- stats[_referredBy].rewarded = SafeMath.add(stats[_referredBy].rewarded,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#944)
+		- stats[_referredBy].xRewarded += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#945)
+		- stats[_customerAddress].contributed = SafeMath.add(stats[_customerAddress].contributed,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#946)
+		- stats[_customerAddress].xContributed += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#947)
+		- stats[_customerAddress].invested = SafeMath.add(stats[_customerAddress].invested,_incomingEthereum) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#990)
+		- stats[_customerAddress].xInvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#991)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- tokenBalanceLedger_[_customerAddress] = SafeMath.add(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#974)
+	P6.tokenBalanceLedger_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#499) can be used in cross function reentrancies:
+	- P6.balanceOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#840-842)
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.rewardAvailable() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1066-1069)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- tokenSupply_ = SafeMath.add(tokenSupply_,_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#961)
+		- tokenSupply_ = _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#970)
+	P6.tokenSupply_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#506) can be used in cross function reentrancies:
+	- P6.buyPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#871-882)
+	- P6.calculateEthereumReceived(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894-900)
+	- P6.ethereumToTokens_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004-1029)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.sellPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#857-868)
+	- P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055)
+	- P6.totalSupply() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#809-811)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+Reentrancy in P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154):
+	External calls:
+	- reinvestFor(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1140)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- reinvestFor(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1140)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- bankrollEnabled = false (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1139)
+	P6.bankrollEnabled (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#511) can be used in cross function reentrancies:
+	- P6.brbReinvest(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1093-1101)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- bankrollEnabled = true (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1141)
+	P6.bankrollEnabled (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#511) can be used in cross function reentrancies:
+	- P6.brbReinvest(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1093-1101)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- bot[_customer].lastBlock = block.number (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1129)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- bot[_customer].queued = false (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1130)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- bot[_customer].queued = true (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1146)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1125)
+		- first += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#95)
+	SessionQueue.first (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#68) can be used in cross function reentrancies:
+	- SessionQueue.available() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#78-80)
+	- SessionQueue.dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#88-96)
+	- SessionQueue.peek() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#99-104)
+	- enqueue(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1145)
+		- last += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#73)
+	SessionQueue.last (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#69) can be used in cross function reentrancies:
+	- SessionQueue.available() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#78-80)
+	- SessionQueue.dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#88-96)
+	- SessionQueue.enqueue(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#72-75)
+	- SessionQueue.peek() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#99-104)
+	- lastReward[msg.sender] = now (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1152)
+	P6.lastReward (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#498) can be used in cross function reentrancies:
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.rewardAvailable() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1066-1069)
+	- P6.teamPlayer() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#346-349)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1125)
+		- delete queue[first] (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#94)
+	SessionQueue.queue (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#67) can be used in cross function reentrancies:
+	- SessionQueue.dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#88-96)
+	- SessionQueue.enqueue(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#72-75)
+	- SessionQueue.peek() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#99-104)
+	- enqueue(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1145)
+		- queue[last] = data (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#74)
+	SessionQueue.queue (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#67) can be used in cross function reentrancies:
+	- SessionQueue.dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#88-96)
+	- SessionQueue.enqueue(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#72-75)
+	- SessionQueue.peek() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#99-104)
+Reentrancy in P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154):
+	External calls:
+	- reinvestFor(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1140)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- reinvestFor(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1140)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- bot[_customerAddress].coolOff = now (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#654)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- payoutsTo_[_customerAddress] += int256(_dividends * magnitude) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#637)
+		- payoutsTo_[_customerAddress] += _updatedPayouts (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#979)
+	P6.payoutsTo_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#501) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- profitPerShare_ += (_dividends * magnitude / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#964)
+	P6.profitPerShare_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#507) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- referralBalance_[_customerAddress] = 0 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#641)
+		- referralBalance_[_referredBy] = SafeMath.add(referralBalance_[_referredBy],_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#941)
+	P6.referralBalance_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#500) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.deposit() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#597-609)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.totalDividends(address,bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#835-837)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- stats[_customerAddress].reinvested = SafeMath.add(stats[_customerAddress].reinvested,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#650)
+		- stats[_customerAddress].xReinvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#651)
+		- stats[_referredBy].rewarded = SafeMath.add(stats[_referredBy].rewarded,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#944)
+		- stats[_referredBy].xRewarded += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#945)
+		- stats[_customerAddress].contributed = SafeMath.add(stats[_customerAddress].contributed,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#946)
+		- stats[_customerAddress].xContributed += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#947)
+		- stats[_customerAddress].invested = SafeMath.add(stats[_customerAddress].invested,_incomingEthereum) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#990)
+		- stats[_customerAddress].xInvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#991)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- tokenBalanceLedger_[_customerAddress] = SafeMath.add(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#974)
+	P6.tokenBalanceLedger_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#499) can be used in cross function reentrancies:
+	- P6.balanceOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#840-842)
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.rewardAvailable() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1066-1069)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- tokenSupply_ = SafeMath.add(tokenSupply_,_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#961)
+		- tokenSupply_ = _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#970)
+	P6.tokenSupply_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#506) can be used in cross function reentrancies:
+	- P6.buyPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#871-882)
+	- P6.calculateEthereumReceived(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894-900)
+	- P6.ethereumToTokens_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004-1029)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.sellPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#857-868)
+	- P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055)
+	- P6.totalSupply() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#809-811)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- tokenSupply_ = SafeMath.add(tokenSupply_,_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#961)
+	P6.tokenSupply_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#506) can be used in cross function reentrancies:
+	- P6.buyPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#871-882)
+	- P6.calculateEthereumReceived(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894-900)
+	- P6.ethereumToTokens_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004-1029)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.sellPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#857-868)
+	- P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055)
+	- P6.totalSupply() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#809-811)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- tokenSupply_ = _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#970)
+	P6.tokenSupply_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#506) can be used in cross function reentrancies:
+	- P6.buyPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#871-882)
+	- P6.calculateEthereumReceived(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894-900)
+	- P6.ethereumToTokens_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004-1029)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.sellPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#857-868)
+	- P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055)
+	- P6.totalSupply() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#809-811)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+	- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- stats[_customerAddress].invested = SafeMath.add(stats[_customerAddress].invested,_incomingEthereum) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#990)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- stats[_customerAddress].xInvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#991)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+	- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- payoutsTo_[_customerAddress] += int256(_dividends * magnitude) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#637)
+		- payoutsTo_[_customerAddress] += _updatedPayouts (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#979)
+	P6.payoutsTo_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#501) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- profitPerShare_ += (_dividends * magnitude / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#964)
+	P6.profitPerShare_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#507) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- referralBalance_[_customerAddress] = 0 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#641)
+		- referralBalance_[_referredBy] = SafeMath.add(referralBalance_[_referredBy],_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#941)
+	P6.referralBalance_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#500) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.deposit() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#597-609)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.totalDividends(address,bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#835-837)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- stats[_customerAddress].reinvested = SafeMath.add(stats[_customerAddress].reinvested,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#650)
+		- stats[_customerAddress].xReinvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#651)
+		- stats[_referredBy].rewarded = SafeMath.add(stats[_referredBy].rewarded,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#944)
+		- stats[_referredBy].xRewarded += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#945)
+		- stats[_customerAddress].contributed = SafeMath.add(stats[_customerAddress].contributed,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#946)
+		- stats[_customerAddress].xContributed += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#947)
+		- stats[_customerAddress].invested = SafeMath.add(stats[_customerAddress].invested,_incomingEthereum) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#990)
+		- stats[_customerAddress].xInvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#991)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- tokenBalanceLedger_[_customerAddress] = SafeMath.add(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#974)
+	P6.tokenBalanceLedger_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#499) can be used in cross function reentrancies:
+	- P6.balanceOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#840-842)
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.rewardAvailable() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1066-1069)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- tokenSupply_ = SafeMath.add(tokenSupply_,_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#961)
+		- tokenSupply_ = _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#970)
+	P6.tokenSupply_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#506) can be used in cross function reentrancies:
+	- P6.buyPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#871-882)
+	- P6.calculateEthereumReceived(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894-900)
+	- P6.ethereumToTokens_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004-1029)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.sellPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#857-868)
+	- P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055)
+	- P6.totalSupply() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#809-811)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+Reentrancy in P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656):
+	External calls:
+	- _tokens = purchaseTokens(_customerAddress,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#644)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- _tokens = purchaseTokens(_customerAddress,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#644)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- bot[_customerAddress].coolOff = now (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#654)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- stats[_customerAddress].reinvested = SafeMath.add(stats[_customerAddress].reinvested,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#650)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- stats[_customerAddress].xReinvested += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#651)
+	P6.stats (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#503) can be used in cross function reentrancies:
+	- P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595)
+	- P6.invested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#332-337)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.statsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845-849)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+Reentrancy in P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#718)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#723)
+	P6.profitPerShare_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#507) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+Reentrancy in P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#718)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#718)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- bot[_customerAddress].coolOff = now (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#654)
+	P6.bot (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#502) can be used in cross function reentrancies:
+	- P6.activateBot(bool) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556-566)
+	- P6.botEnabled() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#569-571)
+	- P6.cooledOff() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#340-343)
+	- P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.timerInfo() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1072-1074)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- payoutsTo_[_customerAddress] += int256(_dividends * magnitude) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#637)
+		- payoutsTo_[_customerAddress] += _updatedPayouts (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#979)
+	P6.payoutsTo_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#501) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- profitPerShare_ += (_dividends * magnitude / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#964)
+	P6.profitPerShare_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#507) can be used in cross function reentrancies:
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- tokenBalanceLedger_[_customerAddress] = SafeMath.add(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#974)
+	P6.tokenBalanceLedger_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#499) can be used in cross function reentrancies:
+	- P6.balanceOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#840-842)
+	- P6.dividendsOf(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852-854)
+	- P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.rewardAvailable() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1066-1069)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- tokenSupply_ = SafeMath.add(tokenSupply_,_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#961)
+		- tokenSupply_ = _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#970)
+	P6.tokenSupply_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#506) can be used in cross function reentrancies:
+	- P6.buyPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#871-882)
+	- P6.calculateEthereumReceived(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894-900)
+	- P6.ethereumToTokens_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004-1029)
+	- P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997)
+	- P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731)
+	- P6.sellPrice() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#857-868)
+	- P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055)
+	- P6.totalSupply() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#809-811)
+	- P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731) performs a multiplication on the result of a division:
+	- _undividedDividends = SafeMath.div(SafeMath.mul(_ethereum,exitFee_),100) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#702)
+	- _maintenance = SafeMath.div(SafeMath.mul(_undividedDividends,maintenanceFee_),100) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#703)
+P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997) performs a multiplication on the result of a division:
+	- _undividedDividends = SafeMath.div(SafeMath.mul(_incomingEthereum,entryFee_),100) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#911)
+	- _maintenance = SafeMath.div(SafeMath.mul(_undividedDividends,maintenanceFee_),100) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#912)
+P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997) performs a multiplication on the result of a division:
+	- _undividedDividends = SafeMath.div(SafeMath.mul(_incomingEthereum,entryFee_),100) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#911)
+	- _referralBonus = SafeMath.div(SafeMath.mul(_undividedDividends,referralFee_),100) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#913)
+P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997) performs a multiplication on the result of a division:
+	- _fee = _fee - (_fee - (_amountOfTokens * (_dividends * magnitude / tokenSupply_))) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#967)
+P6.tokensToEthereum_(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036-1055) performs a multiplication on the result of a division:
+	- _etherReceived = (SafeMath.sub((((tokenPriceInitial_ + (tokenPriceIncremental_ * (_tokenSupply / 1e18))) - tokenPriceIncremental_) * (tokens_ - 1e18)),(tokenPriceIncremental_ * ((tokens_ ** 2 - tokens_) / 1e18)) / 2) / 1e18) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1041-1053)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154) uses a dangerous strict equality:
+	- bot[_customer].lastBlock == block.number (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1120)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+P6.activateBot(bool).auto (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#556) (local variable) shadows built-in symbol"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#builtin-symbol-shadowing
+
+P6.updateCoolOffPeriod(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#542-545) should emit an event for: 
+	- coolOffPeriod = coolOff (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#544) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+P6.updateMaintenanceAddress(address).maintenance (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#526) lacks a zero-check on :
+		- maintenanceAddress = maintenance (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#527)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] += _updatedPayouts (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#979)
+	- profitPerShare_ += (_dividends * magnitude / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#964)
+	- referralBalance_[_referredBy] = SafeMath.add(referralBalance_[_referredBy],_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#941)
+	- stats[_referredBy].rewarded = SafeMath.add(stats[_referredBy].rewarded,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#944)
+	- stats[_referredBy].xRewarded += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#945)
+	- stats[_customerAddress].contributed = SafeMath.add(stats[_customerAddress].contributed,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#946)
+	- stats[_customerAddress].xContributed += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#947)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.add(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#974)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in P6.buy() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#584-595):
+	External calls:
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#588)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#588)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onCommunityReward(_customerAddress,_referredBy,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#950)
+		- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+	- onReinvestment(_customerAddress,_dividends,_tokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#647)
+		- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+	- onTokenPurchase(_customerAddress,_incomingEthereum,_amountOfTokens,_referredBy,now,buyPrice()) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#987)
+		- purchaseTokens(msg.sender,msg.value) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#590)
+Reentrancy in P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154):
+	External calls:
+	- reinvestFor(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1140)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- reinvestFor(_customer) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1140)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onCommunityReward(_customerAddress,_referredBy,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#950)
+		- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+	- onReinvestment(_customerAddress,_dividends,_tokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#647)
+		- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+	- onTokenPurchase(_customerAddress,_incomingEthereum,_amountOfTokens,_referredBy,now,buyPrice()) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#987)
+		- reinvestFor(msg.sender) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1153)
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onCommunityReward(_customerAddress,_referredBy,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#950)
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+	- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onTokenPurchase(_customerAddress,_incomingEthereum,_amountOfTokens,_referredBy,now,buyPrice()) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#987)
+Reentrancy in P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+	- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#928)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onCommunityReward(_customerAddress,_referredBy,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#950)
+		- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+	- onReinvestment(_customerAddress,_dividends,_tokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#647)
+		- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+	- onTokenPurchase(_customerAddress,_incomingEthereum,_amountOfTokens,_referredBy,now,buyPrice()) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#987)
+		- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#994)
+Reentrancy in P6.reinvestFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631-656):
+	External calls:
+	- _tokens = purchaseTokens(_customerAddress,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#644)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- _tokens = purchaseTokens(_customerAddress,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#644)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onReinvestment(_customerAddress,_dividends,_tokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#647)
+Reentrancy in P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#718)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onTokenSell(_customerAddress,_tokens,_taxedEthereum,now,buyPrice()) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#727)
+Reentrancy in P6.sell(uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690-731):
+	External calls:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#718)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+		- relay.relay(maintenanceAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#983)
+		- relay.relay(_customerAddress,_tokenAllocation) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#984)
+	External calls sending eth:
+	- fundBankRoll(_maintenance) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#718)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+		- bankroll.deposit.value(amount)() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#575)
+	Event emitted after the call(s):
+	- onCommunityReward(_customerAddress,_referredBy,_referralBonus) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#950)
+		- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+	- onReinvestment(_customerAddress,_dividends,_tokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#647)
+		- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+	- onTokenPurchase(_customerAddress,_incomingEthereum,_amountOfTokens,_referredBy,now,buyPrice()) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#987)
+		- brbReinvest(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#730)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+P6.reap(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#735-740) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(now - lastReaped > reapPeriod,Reap not available, too soon) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#736)
+P6.isVested() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1059-1061) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now - bot[msg.sender].coolOff > coolOffPeriod (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1060)
+P6.rewardAvailable() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1066-1069) uses timestamp for comparisons
+	Dangerous comparisons:
+	- available() && now - lastReward[msg.sender] > rewardProcessingPeriod && tokenBalanceLedger_[msg.sender] >= stakingRequirement (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1067-1068)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+SessionQueue.dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#88-96) has costly operations inside a loop:
+	- delete queue[first] (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#94)
+	Calls stack containing the loop:
+		P6.processRewards()
+SessionQueue.dequeue() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#88-96) has costly operations inside a loop:
+	- first += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#95)
+	Calls stack containing the loop:
+		P6.processRewards()
+P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154) has costly operations inside a loop:
+	- bankrollEnabled = false (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1139)
+P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997) has costly operations inside a loop:
+	- tokenSupply_ = SafeMath.add(tokenSupply_,_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#961)
+	Calls stack containing the loop:
+		P6.processRewards()
+		P6.reinvestFor(address)
+P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997) has costly operations inside a loop:
+	- profitPerShare_ += (_dividends * magnitude / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#964)
+	Calls stack containing the loop:
+		P6.processRewards()
+		P6.reinvestFor(address)
+P6.purchaseTokens(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908-997) has costly operations inside a loop:
+	- tokenSupply_ = _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#970)
+	Calls stack containing the loop:
+		P6.processRewards()
+		P6.reinvestFor(address)
+P6.processRewards() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1108-1154) has costly operations inside a loop:
+	- bankrollEnabled = true (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1141)
+SessionQueue.enqueue(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#72-75) has costly operations inside a loop:
+	- last += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#73)
+	Calls stack containing the loop:
+		P6.processRewards()
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+SessionQueue.depth() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#83-85) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event P6.onLog(string,address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#362-367) is not in CapWords
+Event P6.onTokenPurchase(address,uint256,uint256,address,uint256,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#369-376) is not in CapWords
+Event P6.onTokenSell(address,uint256,uint256,uint256,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#378-384) is not in CapWords
+Event P6.onReinvestment(address,uint256,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#386-390) is not in CapWords
+Event P6.onCommunityReward(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#392-396) is not in CapWords
+Event P6.onReinvestmentProxy(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#398-402) is not in CapWords
+Event P6.onWithdraw(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#404-407) is not in CapWords
+Event P6.onDeposit(address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#409-412) is not in CapWords
+Parameter P6.buyFor(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#579) is not in mixedCase
+Parameter P6.investSupporter(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#625) is not in mixedCase
+Parameter P6.reinvestFor(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#631) is not in mixedCase
+Parameter P6.withdrawFor(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664) is not in mixedCase
+Parameter P6.sell(uint256)._amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#690) is not in mixedCase
+Parameter P6.reap(address)._toAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#735) is not in mixedCase
+Parameter P6.transfer(address,uint256)._toAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#746) is not in mixedCase
+Parameter P6.transfer(address,uint256)._amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#746) is not in mixedCase
+Parameter P6.transferTokens(address,address,uint256)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752) is not in mixedCase
+Parameter P6.transferTokens(address,address,uint256)._toAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752) is not in mixedCase
+Parameter P6.transferTokens(address,address,uint256)._amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752) is not in mixedCase
+Parameter P6.myDividends(bool)._includeReferralBonus (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#831) is not in mixedCase
+Parameter P6.totalDividends(address,bool)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#835) is not in mixedCase
+Parameter P6.totalDividends(address,bool)._includeReferralBonus (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#835) is not in mixedCase
+Parameter P6.balanceOf(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#840) is not in mixedCase
+Parameter P6.statsOf(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#845) is not in mixedCase
+Parameter P6.dividendsOf(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#852) is not in mixedCase
+Parameter P6.calculateTokensReceived(uint256)._ethereumToSpend (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#885) is not in mixedCase
+Parameter P6.calculateEthereumReceived(uint256)._tokensToSell (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#894) is not in mixedCase
+Parameter P6.purchaseTokens(address,uint256)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908) is not in mixedCase
+Parameter P6.purchaseTokens(address,uint256)._incomingEthereum (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#908) is not in mixedCase
+Parameter P6.ethereumToTokens_(uint256)._ethereum (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1004) is not in mixedCase
+Parameter P6.tokensToEthereum_(uint256)._tokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1036) is not in mixedCase
+Parameter P6.brbReinvest(address)._customerAddress (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#1093) is not in mixedCase
+Constant P6.bankrollThreshold (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#445) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant P6.botThreshold (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#446) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant P6.rewardProcessingPeriod (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#447) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant P6.reapPeriod (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#448) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant P6.tokenPriceInitial_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#457) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant P6.tokenPriceIncremental_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#458) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant P6.magnitude (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#460) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in P6.transferTokens(address,address,uint256) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#752-793):
+	External calls:
+	- withdrawFor(_customerAddress) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#759)
+		- _customerAddress.transfer(_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#678)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] -= int256(profitPerShare_ * _amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#776)
+	- payoutsTo_[_toAddress] += int256(profitPerShare_ * _taxedTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#777)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#780)
+	- stats[_customerAddress].xTransferredTokens += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#786)
+	- stats[_customerAddress].transferredTokens += _amountOfTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#787)
+	- stats[_toAddress].receivedTokens += _taxedTokens (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#788)
+	- stats[_toAddress].xReceivedTokens += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#789)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.sub(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#772)
+	- tokenBalanceLedger_[_toAddress] = SafeMath.add(tokenBalanceLedger_[_toAddress],_taxedTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#773)
+	- tokenSupply_ = SafeMath.sub(tokenSupply_,_tokenFee) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#769)
+	Event emitted after the call(s):
+	- Transfer(_customerAddress,_toAddress,_taxedTokens) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#783)
+Reentrancy in P6.withdrawFor(address) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#664-686):
+	External calls:
+	- _customerAddress.transfer(_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#678)
+	State variables written after the call(s):
+	- stats[_customerAddress].withdrawn = SafeMath.add(stats[_customerAddress].withdrawn,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#681)
+	- stats[_customerAddress].xWithdrawn += 1 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#682)
+	Event emitted after the call(s):
+	- onWithdraw(_customerAddress,_dividends) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#685)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+P6.slitherConstructorConstantVariables() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#312-1159) uses literals with too many digits:
+	- tokenPriceInitial_ = 100000000000 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#457)
+P6.slitherConstructorConstantVariables() (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#312-1159) uses literals with too many digits:
+	- tokenPriceIncremental_ = 10000000000 (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#458)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+P6.entryFee_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#427) should be constant 
+P6.exitFee_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#433) should be constant 
+P6.launchETHMaximum (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#452) should be constant 
+P6.maintenanceFee_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#441) should be constant 
+P6.referralFee_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#438) should be constant 
+P6.stakingRequirement (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#463) should be constant 
+P6.transferFee_ (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#430) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+addAddressesToWhitelist(address[]) should be declared external:
+	- Whitelist.addAddressesToWhitelist(address[]) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#237-243)
+removeAddressesFromWhitelist(address[]) should be declared external:
+	- Whitelist.removeAddressesFromWhitelist(address[]) (../sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol#265-271)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xed2bd91e69155782d045ca8254eafa8935e99b58.sol analyzed (7 contracts with 100 detectors), 93 result(s) found

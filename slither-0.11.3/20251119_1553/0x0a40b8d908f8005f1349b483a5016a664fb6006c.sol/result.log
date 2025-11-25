@@ -1,0 +1,48 @@
+'solc --version' running
+'solc /sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+YeekAirdropper.withdrawAirdropTokens() (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#56-69) ignores return value by tokenContract.transferFrom(owner,msg.sender,numberOfTokensPerUser) (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#68)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Reentrancy in YeekAirdropper.withdrawAirdropTokens() (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#56-69):
+	External calls:
+	- require(bool)(tokenContract.allowance(owner,this) >= numberOfTokensPerUser) (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#57)
+	- require(bool)(tokenContract.balanceOf(owner) >= numberOfTokensPerUser) (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#58)
+	State variables written after the call(s):
+	- airdropRecipients.length ++ (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#64)
+	- airdropRecipients[airdropRecipients.length - 1] = msg.sender (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#65)
+	- airdroppedUsers[msg.sender] = true (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#63)
+	- tokensDispensed += numberOfTokensPerUser (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in YeekAirdropper.withdrawAirdropTokens() (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#56-69):
+	External calls:
+	- require(bool)(tokenContract.allowance(owner,this) >= numberOfTokensPerUser) (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#57)
+	- require(bool)(tokenContract.balanceOf(owner) >= numberOfTokensPerUser) (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#58)
+	Event emitted after the call(s):
+	- Dispensed(msg.sender,numberOfTokensPerUser) (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+/sb/0x0a40b8d908f8005f1349b483a5016a664fb6006c.sol analyzed (2 contracts with 100 detectors), 5 result(s) found

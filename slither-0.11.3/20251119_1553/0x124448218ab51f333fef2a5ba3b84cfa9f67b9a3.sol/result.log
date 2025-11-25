@@ -1,0 +1,143 @@
+'solc --version' running
+'solc /sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:106:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:151:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function HasNoEther() public payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:246:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Destructible() public payable { }
+  ^----------------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:126:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:165:23: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    assert(owner.send(this.balance));
+                      ^----------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:281:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:322:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:338:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:360:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:371:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:405:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_to, _amount);
+    ^----------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:406:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(address(0), _to, _amount);
+    ^--------------------------------^
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol:416:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MintFinished();
+    ^------------^
+
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#81-83) uses arbitrary from in transferFrom: assert(bool)(token.transferFrom(from,to,value)) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#82)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Reentrancy in BOBPToken.transfer(address,uint256) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#448-451):
+	External calls:
+	- notifyICO(msg.sender,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#449)
+		- require(bool)(ico.tokenTransferNotify(address(this),_from,_value)) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#463)
+	State variables written after the call(s):
+	- super.transfer(_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#450)
+		- balances[msg.sender] = balances[msg.sender].sub(_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#279)
+		- balances[_to] = balances[_to].add(_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#280)
+Reentrancy in BOBPToken.transferFrom(address,address,uint256) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#453-456):
+	External calls:
+	- notifyICO(_from,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#454)
+		- require(bool)(ico.tokenTransferNotify(address(this),_from,_value)) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#463)
+	State variables written after the call(s):
+	- super.transferFrom(_from,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#455)
+		- allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#321)
+	- super.transferFrom(_from,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#455)
+		- balances[_from] = balances[_from].sub(_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#319)
+		- balances[_to] = balances[_to].add(_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#320)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in BOBPToken.transfer(address,uint256) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#448-451):
+	External calls:
+	- notifyICO(msg.sender,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#449)
+		- require(bool)(ico.tokenTransferNotify(address(this),_from,_value)) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#463)
+	Event emitted after the call(s):
+	- Transfer(msg.sender,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#281)
+		- super.transfer(_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#450)
+Reentrancy in BOBPToken.transferFrom(address,address,uint256) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#453-456):
+	External calls:
+	- notifyICO(_from,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#454)
+		- require(bool)(ico.tokenTransferNotify(address(this),_from,_value)) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#463)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#322)
+		- super.transferFrom(_from,_to,_value) (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#455)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Destructible.destroyAndSend(address)._recipient (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#255) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#274) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#274) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#290) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#314) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#314) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#314) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#336) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#336) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#348) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#348) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#358) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#358) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#364) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#364) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#402) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#402) is not in mixedCase
+Parameter BOBPToken.transfer(address,uint256)._to (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#448) is not in mixedCase
+Parameter BOBPToken.transfer(address,uint256)._value (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#448) is not in mixedCase
+Parameter BOBPToken.transferFrom(address,address,uint256)._from (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#453) is not in mixedCase
+Parameter BOBPToken.transferFrom(address,address,uint256)._to (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#453) is not in mixedCase
+Parameter BOBPToken.transferFrom(address,address,uint256)._value (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#453) is not in mixedCase
+Parameter BOBPToken.setICO(TokenReceiver)._ico (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#458) is not in mixedCase
+Parameter BOBPToken.notifyICO(address,address,uint256)._from (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#461) is not in mixedCase
+Parameter BOBPToken.notifyICO(address,address,uint256)._to (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#461) is not in mixedCase
+Parameter BOBPToken.notifyICO(address,address,uint256)._value (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#461) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Redundant expression "from_ (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#223)" inHasNoTokens (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#214-229)
+Redundant expression "value_ (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#224)" inHasNoTokens (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#214-229)
+Redundant expression "data_ (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#225)" inHasNoTokens (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#214-229)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#redundant-statements
+
+BOBPToken.name (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#428) should be constant 
+BOBPToken.symbol (../sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol#427) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x124448218ab51f333fef2a5ba3b84cfa9f67b9a3.sol analyzed (16 contracts with 100 detectors), 38 result(s) found

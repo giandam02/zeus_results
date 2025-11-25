@@ -1,0 +1,139 @@
+'solc --version' running
+'solc /sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#114-123) uses arbitrary from in transferFrom: require(bool)(token.transferFrom(from,to,value)) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#122)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+PGOMonthlyInternalVault.vestedAmount(address) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#763-779) performs a multiplication on the result of a division:
+	- monthlyBalance = totalBalance.div(VESTING_DIV_RATE) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#768)
+	- elapsedOffsets = time.div(VESTING_INTERVAL) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#770)
+	- vestedToSum = elapsedOffsets.mul(monthlyBalance) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#771)
+PGOMonthlyPresaleVault.vestedAmount(address) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#807-830) performs a multiplication on the result of a division:
+	- monthlyBalance = lockedBalance.div(VESTING_DIV_RATE) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#819)
+	- elapsedOffsets = time.div(VESTING_INTERVAL) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#822)
+	- vested = vested.add(elapsedOffsets.mul(monthlyBalance)) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#823)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+PGOMonthlyInternalVault.vestedAmount(address) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#763-779) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp >= cliff && block.timestamp < end (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#765)
+	- block.timestamp >= end (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#774)
+PGOMonthlyPresaleVault.vestedAmount(address) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#807-830) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp >= start (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#810)
+	- block.timestamp >= cliff && block.timestamp < end (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#814)
+	- block.timestamp >= end (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#825)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+2 different versions of Solidity are used:
+	- Version constraint ^0.4.23 is used by:
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#2)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#56)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#72)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#97)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#131)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#183)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#312)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#375)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#438)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#489)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#559)
+		-^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#593)
+	- Version constraint ^0.4.24 is used by:
+		-^0.4.24 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#627)
+		-^0.4.24 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#659)
+		-^0.4.24 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#792)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#2)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#56)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#72)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#97)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#131)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#183)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#312)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#375)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#438)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#489)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#559)
+	- ^0.4.23 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#593)
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#627)
+	- ^0.4.24 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#659)
+	- ^0.4.24 (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#792)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#161) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#161) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#176) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#208) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#209) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#210) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#236) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#236) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#249) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#250) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#270) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#271) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#293) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#294) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#359) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#411) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#412) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._to (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#502) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#503) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._from (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#513) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._to (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#514) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#515) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#525) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#526) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#536) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._addedValue (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#537) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._spender (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#547) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#548) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#576) is not in mixedCase
+Parameter PGOMonthlyInternalVault.init(address[],uint256[],uint256,address)._token (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#704) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+init(address[],uint256[],uint256,address) should be declared external:
+	- PGOMonthlyInternalVault.init(address[],uint256[],uint256,address) (../sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol#704-718)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x1c96f2547ef02abbcf6b5af99c9d9b186c9ca98e.sol analyzed (15 contracts with 100 detectors), 40 result(s) found

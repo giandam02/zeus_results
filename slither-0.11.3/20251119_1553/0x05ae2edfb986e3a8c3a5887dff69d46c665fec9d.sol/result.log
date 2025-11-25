@@ -1,0 +1,126 @@
+'solc --version' running
+'solc /sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CryptoWatchesToken (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#476-620) contract sets array length with a user-controlled value:
+	- ownedTokens[_to].push(_tokenId) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#560)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+CryptoWatchesToken.cryptodiamondAddress (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#481) shadows:
+	- ERC721BasicToken.cryptodiamondAddress (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#255)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+AddressUtils.isContract(address) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#76-87) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Reentrancy in ERC721BasicToken.transferFrom(address,address,uint256) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#353-372):
+	External calls:
+	- cryptowatch.transferOwnershipTo(_to,Trasferimento proprietà dal token) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#369)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_tokenId) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#371)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+AddressUtils.isContract(address) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#76-87) uses assembly
+	- INLINE ASM (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#85-86)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#10)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SupportsInterfaceWithLookup.supportsInterface(bytes4)._interfaceId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#46) is not in mixedCase
+Contract cryptodiamondwatch (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#247-250) is not in CapWords
+Parameter ERC721BasicToken.balanceOf(address)._owner (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#303) is not in mixedCase
+Parameter ERC721BasicToken.ownerOf(uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#309) is not in mixedCase
+Parameter ERC721BasicToken.exists(uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#316) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#321) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#321) is not in mixedCase
+Parameter ERC721BasicToken.getApproved(uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#331) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#336) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._approved (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#336) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._owner (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#343) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._operator (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#344) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._from (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#354) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#355) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#356) is not in mixedCase
+Parameter ERC721BasicToken.getCryptoWatchETHAmountById(uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#374) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._from (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#379) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#379) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#379) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._from (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#386) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#387) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#388) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._data (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#389) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._spender (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#400) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#401) is not in mixedCase
+Function ERC721BasicToken._mint(address,uint256,address) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#419-424) is not in mixedCase
+Parameter ERC721BasicToken._mint(address,uint256,address)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#419) is not in mixedCase
+Parameter ERC721BasicToken._mint(address,uint256,address)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#419) is not in mixedCase
+Parameter ERC721BasicToken._mint(address,uint256,address)._cryptodiamondWatchAddress (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#419) is not in mixedCase
+Parameter ERC721BasicToken.getCryptodiamondWatchAddressById(uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#426) is not in mixedCase
+Function ERC721BasicToken._burn(address,uint256) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#430-434) is not in mixedCase
+Parameter ERC721BasicToken._burn(address,uint256)._owner (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#430) is not in mixedCase
+Parameter ERC721BasicToken._burn(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#430) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._owner (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#436) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#436) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#444) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#444) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._from (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#451) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#451) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._from (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#458) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#459) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#460) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._data (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#461) is not in mixedCase
+Constant ERC721BasicToken.InterfaceId_ERC721 (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#257) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721BasicToken.InterfaceId_ERC721Exists (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#258) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter CryptoWatchesToken.tokenURI(uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#524) is not in mixedCase
+Parameter CryptoWatchesToken.tokenOfOwnerByIndex(address,uint256)._owner (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#530) is not in mixedCase
+Parameter CryptoWatchesToken.tokenOfOwnerByIndex(address,uint256)._index (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#531) is not in mixedCase
+Parameter CryptoWatchesToken.tokenByIndex(uint256)._index (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#546) is not in mixedCase
+Function CryptoWatchesToken._setTokenURI(uint256,string) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#552-555) is not in mixedCase
+Parameter CryptoWatchesToken._setTokenURI(uint256,string)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#552) is not in mixedCase
+Parameter CryptoWatchesToken._setTokenURI(uint256,string)._uri (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#552) is not in mixedCase
+Parameter CryptoWatchesToken.addTokenTo(address,uint256)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#557) is not in mixedCase
+Parameter CryptoWatchesToken.addTokenTo(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#557) is not in mixedCase
+Parameter CryptoWatchesToken.removeTokenFrom(address,uint256)._from (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#564) is not in mixedCase
+Parameter CryptoWatchesToken.removeTokenFrom(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#564) is not in mixedCase
+Function CryptoWatchesToken._mint(address,uint256,address) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#578-583) is not in mixedCase
+Parameter CryptoWatchesToken._mint(address,uint256,address)._to (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#578) is not in mixedCase
+Parameter CryptoWatchesToken._mint(address,uint256,address)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#578) is not in mixedCase
+Parameter CryptoWatchesToken._mint(address,uint256,address)._cryptodiamondWatchAddress (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#578) is not in mixedCase
+Function CryptoWatchesToken._burn(address,uint256) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#586-605) is not in mixedCase
+Parameter CryptoWatchesToken._burn(address,uint256)._owner (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#586) is not in mixedCase
+Parameter CryptoWatchesToken._burn(address,uint256)._tokenId (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#586) is not in mixedCase
+Function CryptoWatchesToken.CO(address) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#608-614) is not in mixedCase
+Parameter CryptoWatchesToken.CO(address)._address (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#608) is not in mixedCase
+Constant CryptoWatchesToken.InterfaceId_ERC721Enumerable (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#478) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant CryptoWatchesToken.InterfaceId_ERC721Metadata (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#479) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ERC721BasicToken.cryptodiamondAddress (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#255) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+onERC721Received(address,address,uint256,bytes) should be declared external:
+	- ERC721Receiver.onERC721Received(address,address,uint256,bytes) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#169-176)
+_setTokenURI(uint256,string) should be declared external:
+	- CryptoWatchesToken._setTokenURI(uint256,string) (../sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol#552-555)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x05ae2edfb986e3a8c3a5887dff69d46c665fec9d.sol analyzed (12 contracts with 100 detectors), 77 result(s) found

@@ -1,0 +1,52 @@
+'solc --version' running
+'solc /sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol:
+/sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol:19:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Certificate(uint8 _type_id, uint _dt_create, address[] _subjects_addr) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Certificate.restricted_to_subject() (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#26-38) compares to a boolean constant:
+	-subjects[msg.sender].dt_sign != 0 || allowed == false (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#34)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function Certificate.Sign(uint256,address,uint256,uint8,uint256,string) (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40-44) is not in mixedCase
+Parameter Certificate.Sign(uint256,address,uint256,uint8,uint256,string)._id (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40) is not in mixedCase
+Parameter Certificate.Sign(uint256,address,uint256,uint8,uint256,string)._validate_hash (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40) is not in mixedCase
+Parameter Certificate.Sign(uint256,address,uint256,uint8,uint256,string)._birthday (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40) is not in mixedCase
+Parameter Certificate.Sign(uint256,address,uint256,uint8,uint256,string)._gender (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40) is not in mixedCase
+Parameter Certificate.Sign(uint256,address,uint256,uint8,uint256,string)._dt_sign (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40) is not in mixedCase
+Parameter Certificate.Sign(uint256,address,uint256,uint8,uint256,string)._fullname (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40) is not in mixedCase
+Variable Certificate.type_id (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#13) is not in mixedCase
+Variable Certificate.dt_create (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#14) is not in mixedCase
+Variable Certificate.subjects_addr (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#15) is not in mixedCase
+Modifier Certificate.restricted_to_subject() (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#26-38) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Sign(uint256,address,uint256,uint8,uint256,string) should be declared external:
+	- Certificate.Sign(uint256,address,uint256,uint8,uint256,string) (../sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol#40-44)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xdb2c5078a3e3f4c723568c2230155bcd43a8bc6c.sol analyzed (1 contracts with 100 detectors), 15 result(s) found

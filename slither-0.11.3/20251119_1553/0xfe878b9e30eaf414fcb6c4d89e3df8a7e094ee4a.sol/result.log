@@ -1,0 +1,705 @@
+'solc --version' running
+'solc /sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:50:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1164:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function PendingManager(address _accessManager) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1700:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ServiceController(address _pendingManager, address _proxy, address _profiterole, address _treasury) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1947:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DataController(address _serviceController, address _asset) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:2025:15: Warning: Use of the "var" keyword is deprecated.
+        var (,_created) = _createCountryId(_countryCode);
+              ^------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:68:9: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+        suicide(msg.sender);
+        ^-----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:199:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OracleAdded(_sig, _oracle);
+        ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:203:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OracleRemoved(_sig, _oracle);
+        ^--------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:539:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:548:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(_from, _spender, _value);
+        ^-------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:605:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UpgradeProposal(_newVersion);
+        ^--------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:691:9: Warning: Invoking events without "emit" prefix is deprecated.
+        HolderAddressAdded(_externalHolderId, _holderPrototype, _accessIndex);
+        ^-------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:695:9: Warning: Invoking events without "emit" prefix is deprecated.
+        HolderAddressRemoved(_externalHolderId, _holderPrototype, _accessIndex);
+        ^---------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:699:9: Warning: Invoking events without "emit" prefix is deprecated.
+        HolderRegistered(_externalHolderId, _accessIndex, _countryCode);
+        ^-------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:703:9: Warning: Invoking events without "emit" prefix is deprecated.
+        HolderOperationalChanged(_externalHolderId, _operational);
+        ^-------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:707:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CountryCodeAdded(_countryCode, _countryId, _maxHolderCount);
+        ^---------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:711:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CountryCodeChanged(_countryCode, _countryId, _maxHolderCount);
+        ^-----------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:715:9: Warning: Invoking events without "emit" prefix is deprecated.
+        DayLimitChanged(_externalHolderId, _from, _to);
+        ^--------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:719:9: Warning: Invoking events without "emit" prefix is deprecated.
+        MonthLimitChanged(_externalHolderId, _from, _to);
+        ^----------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:723:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Error(_errorCode);
+        ^---------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:807:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UserCreated(_user);
+        ^----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:837:9: Warning: Invoking events without "emit" prefix is deprecated.
+        UserDeleted(_user);
+        ^----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:861:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GroupCreated(_groupName);
+        ^----------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:906:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UserToGroupAdded(_user, _groupName);
+            ^---------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:947:13: Warning: Invoking events without "emit" prefix is deprecated.
+            UserFromGroupRemoved(_user, _groupName);
+            ^-------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1035:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Error(_errorCode);
+        ^---------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1227:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 _policyHash = keccak256(_sig, _contract);
+                              ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1253:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PolicyRuleAdded(_sig, _contract, _policyHash, _groupName, _acceptLimit, _declineLimit);
+        ^------------------------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1276:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 _policyHash = keccak256(_sig, _contract);
+                              ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1298:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PolicyRuleRemoved(_sig, _contract, _policyHash, _groupName);
+        ^---------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1312:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 _policyHash = keccak256(_sig, _contract);
+                              ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1338:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ProtectionTxAdded(_key, _policyHash, block.number);
+        ^------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1378:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TxDeleted(_key);
+        ^-------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1418:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ProtectionTxAccepted(_key, msg.sender, _votingGroupName);
+        ^------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1422:13: Warning: Invoking events without "emit" prefix is deprecated.
+            ProtectionTxDone(_key);
+            ^--------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1465:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ProtectionTxDeclined(_key, msg.sender, _votingGroupName);
+        ^------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1469:13: Warning: Invoking events without "emit" prefix is deprecated.
+            ProtectionTxCancelled(_key);
+            ^-------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1531:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 _policyHash = keccak256(_sig, _contract);
+                              ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1616:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ProtectionTxVoteRevoked(_key, _user, _votedGroupName);
+        ^---------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1669:19: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _txHash = keccak256(msg.sig, _args, _block);
+                  ^-------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1727:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_provider), _block);
+                          ^------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1727:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_provider), _block);
+                          ^------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1742:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_provider), _block);
+                          ^------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1742:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_provider), _block);
+                          ^------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1761:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_burningMan), _block);
+                          ^--------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1761:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_burningMan), _block);
+                          ^--------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1776:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_burningMan), _block);
+                          ^--------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1776:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_burningMan), _block);
+                          ^--------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1791:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_profiterole), _block);
+                          ^---------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1791:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_profiterole), _block);
+                          ^---------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1806:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_treasury), _block);
+                          ^------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1806:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_treasury), _block);
+                          ^------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1821:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_pendingManager), _block);
+                          ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1821:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_pendingManager), _block);
+                          ^------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1834:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_service), _block);
+                          ^-----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1834:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_service), _block);
+                          ^-----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1844:27: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        _code = _multisig(keccak256(_service), _block);
+                          ^-----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:1844:27: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        _code = _multisig(keccak256(_service), _block);
+                          ^-----------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:50:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:67:5: Warning: No visibility specified. Defaulting to "public". 
+    function destroy() onlyContractOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function changeContractOwnership(address _to) onlyContractOwner() returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:96:5: Warning: No visibility specified. Defaulting to "public". 
+    function claimContractOwnership() returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:113:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint256 supply);
+    ^-------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:114:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _owner) constant returns (uint256 balance);
+    ^--------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:115:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:116:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:117:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:118:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+    ^----------------------------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawnTokens(address[] tokens, address _to) onlyContractOwner returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:258:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint256 supply);
+    ^-------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:259:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _owner) constant returns (uint256 balance);
+    ^--------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:260:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:261:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:262:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol:263:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+    ^----------------------------------------------------------------------------------------^
+
+
+Object.withdrawnTokens(address[],address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#131-139) ignores return value by ERC20Interface(token).transfer(_to,balance) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#136)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+ATxAssetProxy.stringToBytes32(string) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#668-672) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Contract locking ether found:
+	Contract ATxAssetInterface (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#233-244) has payable functions:
+	 - ATxAssetInterface.__process(bytes,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#241-243)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+GroupsAccessManager.unregisterUser(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#817-839) deletes GroupsAccessManager.Member (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#758-763) which contains a mapping:
+	-delete address2member[_user] (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#832)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deletion-on-mapping-containing-a-structure
+
+Reentrancy in ServiceController.addBurningMan(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1756-1768):
+	External calls:
+	- _code = _multisig(keccak256()(_burningMan),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1761)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- burningMans[_burningMan] = true (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1766)
+	ServiceController.burningMans (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1692) can be used in cross function reentrancies:
+	- ServiceController.addBurningMan(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1756-1768)
+	- ServiceController.isService(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1858-1866)
+	- ServiceController.removeBurningMan(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1775-1783)
+Reentrancy in ServiceController.addEmissionProvider(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1723-1734):
+	External calls:
+	- _code = _multisig(keccak256()(_provider),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1727)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- emissionProviders[_provider] = true (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1732)
+	ServiceController.emissionProviders (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1691) can be used in cross function reentrancies:
+	- ServiceController.addEmissionProvider(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1723-1734)
+	- ServiceController.isService(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1858-1866)
+	- ServiceController.removeEmissionProvider(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1741-1749)
+Reentrancy in ServiceController.addSideService(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1830-1841):
+	External calls:
+	- _code = _multisig(keccak256()(_service),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1834)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- sideServices[_service] = true (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1839)
+	ServiceController.sideServices (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1690) can be used in cross function reentrancies:
+	- ServiceController.addSideService(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1830-1841)
+	- ServiceController.isService(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1858-1866)
+	- ServiceController.removeSideService(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1843-1851)
+	- ServiceController.sideServices (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1690)
+Reentrancy in ServiceController.updatePendingManager(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1820-1828):
+	External calls:
+	- _code = _multisig(keccak256()(_pendingManager),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1821)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- pendingManager = _pendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1826)
+	ServiceController.pendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1687) can be used in cross function reentrancies:
+	- ServiceController.ServiceController(address,address,address,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1700-1709)
+	- ServiceController.getPendingManager() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1714-1716)
+	- ServiceController.isService(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1858-1866)
+	- ServiceController.pendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1687)
+	- ServiceController.updatePendingManager(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1820-1828)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+DataController.setWithdraw(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1959-1963) should emit an event for: 
+	- withdrawal = _withdrawal (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1961) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+ServiceController.updateProfiterole(address,uint256)._profiterole (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1790) lacks a zero-check on :
+		- profiterole = _profiterole (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1796)
+ServiceController.updateTreasury(address,uint256)._treasury (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1805) lacks a zero-check on :
+		- treasury = _treasury (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1811)
+ServiceController.updatePendingManager(address,uint256)._pendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1820) lacks a zero-check on :
+		- pendingManager = _pendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1826)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Modifier Owned.onlyContractOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#57-61) does not always execute _; or revert
+Modifier OracleMethodAdapter.onlyOracle() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#158-162) does not always execute _; or revert
+Modifier OracleMethodAdapter.onlyOracleOrOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#164-168) does not always execute _; or revert
+Modifier ATxAssetProxy.onlyPlatform() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#320-324) does not always execute _; or revert
+Modifier ATxAssetProxy.onlyAssetOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#329-333) does not always execute _; or revert
+Modifier ATxAssetProxy.onlyAccess(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#338-342) does not always execute _; or revert
+Modifier PendingManager.onlyAuthorized() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1155-1159) does not always execute _; or revert
+Modifier MultiSigAdapter.isAuthorized() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1630-1634) does not always execute _; or revert
+Modifier DataController.onlyAsset() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1933-1937) does not always execute _; or revert
+Modifier DataController.onlyContractOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1939-1943) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+Object.withdrawnTokens(address[],address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#131-139) has external calls inside a loop: balance = ERC20Interface(token).balanceOf(this) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#134)
+Object.withdrawnTokens(address[],address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#131-139) has external calls inside a loop: ERC20Interface(token).transfer(_to,balance) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#136)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in PendingManager.accept(bytes32,bytes32) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1388-1426):
+	External calls:
+	- ! GroupsAccessManager(accessManager).isUserInGroup(_votingGroupName,msg.sender) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1393)
+	State variables written after the call(s):
+	- _guard.votes[msg.sender] = Vote(_votingGroupName,true) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1413)
+	- _guard.acceptedCount[_votingGroupName] = _groupAcceptedVotesCount + 1 (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1414)
+	- _guard.alreadyAccepted = _alreadyAcceptedCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1416)
+	- _guard.state = GuardState.Confirmed (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1421)
+Reentrancy in PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1210-1255):
+	External calls:
+	- require(bool)(GroupsAccessManager(accessManager).isGroupExists(_groupName)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1223)
+	State variables written after the call(s):
+	- index2PolicyId[_policiesCount] = _policyHash (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1231)
+	- policiesCount = _policiesCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1233)
+	- policyId2Index[_policyHash] = _policiesCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1232)
+	- _policy.groupName2index[_groupName] = _policyGroupsCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1241)
+	- _policy.participatedGroups[_policyGroupsCount].groupName = _groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1242)
+	- _policy.groupsCount = _policyGroupsCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1243)
+	- _policy.participatedGroups[_policyGroupsCount].acceptLimit = _acceptLimit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1248)
+	- _policy.participatedGroups[_policyGroupsCount].declineLimit = _declineLimit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1249)
+	- _policy.totalAcceptedLimit = _policy.totalAcceptedLimit.sub(_previousAcceptLimit).add(_acceptLimit) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1250)
+	- _policy.totalDeclinedLimit = _policy.totalDeclinedLimit.sub(_previousDeclineLimit).add(_declineLimit) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1251)
+Reentrancy in DataController.changeAllowance(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2225-2233):
+	External calls:
+	- token = ATxAssetProxy(_serviceController.proxy()) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2227)
+	State variables written after the call(s):
+	- allowance[_from] = _value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2231)
+Reentrancy in PendingManager.decline(bytes32,bytes32) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1434-1473):
+	External calls:
+	- ! GroupsAccessManager(accessManager).isUserInGroup(_votingGroupName,msg.sender) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1439)
+	State variables written after the call(s):
+	- _guard.votes[msg.sender] = Vote(_votingGroupName,false) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1459)
+	- _guard.declinedCount[_votingGroupName] = _groupDeclinedVotesCount + 1 (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1460)
+	- _guard.alreadyDeclined = _alreadyDeclinedCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1462)
+	- _guard.state = GuardState.Decline (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1468)
+Reentrancy in ATxAssetProxy.proposeUpgrade(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#589-607):
+	External calls:
+	- onlyAssetOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#589)
+		- platform.isOwner(msg.sender,smbl) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#330)
+	State variables written after the call(s):
+	- latestVersion = _newVersion (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#600)
+	- pendingVersion = _newVersion (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#603)
+	- pendingVersionTimestamp = now (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#604)
+Reentrancy in ATxAssetProxy.purgeUpgrade() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#616-623):
+	External calls:
+	- onlyAssetOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#616)
+		- platform.isOwner(msg.sender,smbl) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#330)
+	State variables written after the call(s):
+	- delete pendingVersion (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#620)
+	- delete pendingVersionTimestamp (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#621)
+Reentrancy in ServiceController.removeBurningMan(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1775-1783):
+	External calls:
+	- _code = _multisig(keccak256()(_burningMan),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1776)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- delete burningMans[_burningMan] (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1781)
+Reentrancy in ServiceController.removeEmissionProvider(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1741-1749):
+	External calls:
+	- _code = _multisig(keccak256()(_provider),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1742)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- delete emissionProviders[_provider] (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1747)
+Reentrancy in PendingManager.removePolicyRule(bytes4,address,bytes32) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1263-1300):
+	External calls:
+	- require(bool)(GroupsAccessManager(accessManager).isGroupExists(_groupName)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1274)
+	State variables written after the call(s):
+	- _policy.participatedGroups[_policyGroupNameIndex] = _requirements (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1287)
+	- _policy.groupName2index[_requirements.groupName] = _policyGroupNameIndex (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1288)
+	- _policy.totalAcceptedLimit = _policy.totalAcceptedLimit.sub(_policy.participatedGroups[_policyGroupsCount].acceptLimit) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1291)
+	- _policy.totalDeclinedLimit = _policy.totalDeclinedLimit.sub(_policy.participatedGroups[_policyGroupsCount].declineLimit) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1292)
+	- delete _policy.groupName2index[_groupName] (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1294)
+	- delete _policy.participatedGroups[_policyGroupsCount] (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1295)
+	- _policy.groupsCount = _policyGroupsCount.sub(1) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1296)
+Reentrancy in ServiceController.removeSideService(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1843-1851):
+	External calls:
+	- _code = _multisig(keccak256()(_service),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1844)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- delete sideServices[_service] (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1849)
+Reentrancy in ServiceController.updateProfiterole(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1790-1798):
+	External calls:
+	- _code = _multisig(keccak256()(_profiterole),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1791)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- profiterole = _profiterole (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1796)
+Reentrancy in ServiceController.updateTreasury(address,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1805-1813):
+	External calls:
+	- _code = _multisig(keccak256()(_treasury),_block) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1806)
+		- _code = PendingManager(_manager).hasConfirmedRecord(_txHash) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1649)
+		- OK != PendingManager(_manager).addTx(_txHash,msg.sig,address(this)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1654)
+	State variables written after the call(s):
+	- treasury = _treasury (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1811)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in PendingManager.accept(bytes32,bytes32) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1388-1426):
+	External calls:
+	- ! GroupsAccessManager(accessManager).isUserInGroup(_votingGroupName,msg.sender) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1393)
+	Event emitted after the call(s):
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1410)
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1403)
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1399)
+	- ProtectionTxAccepted(_key,msg.sender,_votingGroupName) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1418)
+	- ProtectionTxDone(_key) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1422)
+Reentrancy in PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1210-1255):
+	External calls:
+	- require(bool)(GroupsAccessManager(accessManager).isGroupExists(_groupName)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1223)
+	Event emitted after the call(s):
+	- PolicyRuleAdded(_sig,_contract,_policyHash,_groupName,_acceptLimit,_declineLimit) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1253)
+Reentrancy in PendingManager.decline(bytes32,bytes32) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1434-1473):
+	External calls:
+	- ! GroupsAccessManager(accessManager).isUserInGroup(_votingGroupName,msg.sender) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1439)
+	Event emitted after the call(s):
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1445)
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1449)
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1456)
+	- ProtectionTxCancelled(_key) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1469)
+	- ProtectionTxDeclined(_key,msg.sender,_votingGroupName) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1465)
+Reentrancy in ATxAssetProxy.proposeUpgrade(address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#589-607):
+	External calls:
+	- onlyAssetOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#589)
+		- platform.isOwner(msg.sender,smbl) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#330)
+	Event emitted after the call(s):
+	- UpgradeProposal(_newVersion) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#605)
+Reentrancy in PendingManager.removePolicyRule(bytes4,address,bytes32) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1263-1300):
+	External calls:
+	- require(bool)(GroupsAccessManager(accessManager).isGroupExists(_groupName)) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1274)
+	Event emitted after the call(s):
+	- Error(_errorCode) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1035)
+		- _emitError(PENDING_MANAGER_INVALID_INVOCATION) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1281)
+	- PolicyRuleRemoved(_sig,_contract,_policyHash,_groupName) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1298)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ATxAssetProxy.commitUpgrade() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#632-643) uses timestamp for comparisons
+	Dangerous comparisons:
+	- pendingVersionTimestamp.add(UPGRADE_FREEZE_TIME) > now (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#636)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+ATxAssetProxy.stringToBytes32(string) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#668-672) uses assembly
+	- INLINE ASM (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#669-672)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+MultiSigAdapter._isTxExistWithArgs(bytes32,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1661-1665) is never used and should be removed
+Object.checkOnlyContractOwner() (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#141-147) is never used and should be removed
+PendingManager._updateTxState(PendingManager.Policy,PendingManager.Guard,uint256,uint256) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1576-1584) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Deprecated standard detected suicide(address)(msg.sender) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#68):
+	- Usage of "suicide()" should be replaced with "selfdestruct()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+ServiceController (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1677-1867) should inherit from ServiceControllerInterface (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#225-231)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-inheritance
+
+Parameter Owned.changeContractOwnership(address)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#80) is not in mixedCase
+Parameter Object.withdrawnTokens(address[],address)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#131) is not in mixedCase
+Parameter OracleMethodAdapter.addOracles(bytes4[],address[])._signatures (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#170) is not in mixedCase
+Parameter OracleMethodAdapter.addOracles(bytes4[],address[])._oracles (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#170) is not in mixedCase
+Parameter OracleMethodAdapter.removeOracles(bytes4[],address[])._signatures (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#184) is not in mixedCase
+Parameter OracleMethodAdapter.removeOracles(bytes4[],address[])._oracles (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#184) is not in mixedCase
+Function ATxAssetInterface.__transferWithReference(address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#238) is not in mixedCase
+Function ATxAssetInterface.__transferFromWithReference(address,address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#239) is not in mixedCase
+Function ATxAssetInterface.__approve(address,uint256,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#240) is not in mixedCase
+Function ATxAssetInterface.__process(bytes,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#241-243) is not in mixedCase
+Parameter ATxAssetProxy.init(Platform,string,string)._platform (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#363) is not in mixedCase
+Parameter ATxAssetProxy.init(Platform,string,string)._symbol (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#363) is not in mixedCase
+Parameter ATxAssetProxy.init(Platform,string,string)._name (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#363) is not in mixedCase
+Parameter ATxAssetProxy.balanceOf(address)._owner (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#390) is not in mixedCase
+Parameter ATxAssetProxy.allowance(address,address)._from (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#402) is not in mixedCase
+Parameter ATxAssetProxy.allowance(address,address)._spender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#402) is not in mixedCase
+Parameter ATxAssetProxy.transfer(address,uint256)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#423) is not in mixedCase
+Parameter ATxAssetProxy.transfer(address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#423) is not in mixedCase
+Parameter ATxAssetProxy.transferWithReference(address,uint256,string)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#441) is not in mixedCase
+Parameter ATxAssetProxy.transferWithReference(address,uint256,string)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#441) is not in mixedCase
+Parameter ATxAssetProxy.transferWithReference(address,uint256,string)._reference (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#441) is not in mixedCase
+Function ATxAssetProxy.__transferWithReference(address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#462-464) is not in mixedCase
+Parameter ATxAssetProxy.__transferWithReference(address,uint256,string,address)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#462) is not in mixedCase
+Parameter ATxAssetProxy.__transferWithReference(address,uint256,string,address)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#462) is not in mixedCase
+Parameter ATxAssetProxy.__transferWithReference(address,uint256,string,address)._reference (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#462) is not in mixedCase
+Parameter ATxAssetProxy.__transferWithReference(address,uint256,string,address)._sender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#462) is not in mixedCase
+Parameter ATxAssetProxy.transferFrom(address,address,uint256)._from (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#475) is not in mixedCase
+Parameter ATxAssetProxy.transferFrom(address,address,uint256)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#475) is not in mixedCase
+Parameter ATxAssetProxy.transferFrom(address,address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#475) is not in mixedCase
+Function ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497-499) is not in mixedCase
+Parameter ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address)._from (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497) is not in mixedCase
+Parameter ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497) is not in mixedCase
+Parameter ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497) is not in mixedCase
+Parameter ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address)._reference (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497) is not in mixedCase
+Parameter ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address)._sender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497) is not in mixedCase
+Parameter ATxAssetProxy.approve(address,uint256)._spender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#509) is not in mixedCase
+Parameter ATxAssetProxy.approve(address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#509) is not in mixedCase
+Function ATxAssetProxy.__approve(address,uint256,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#529-531) is not in mixedCase
+Parameter ATxAssetProxy.__approve(address,uint256,address)._spender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#529) is not in mixedCase
+Parameter ATxAssetProxy.__approve(address,uint256,address)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#529) is not in mixedCase
+Parameter ATxAssetProxy.__approve(address,uint256,address)._sender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#529) is not in mixedCase
+Parameter ATxAssetProxy.emitTransfer(address,address,uint256)._from (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#538) is not in mixedCase
+Parameter ATxAssetProxy.emitTransfer(address,address,uint256)._to (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#538) is not in mixedCase
+Parameter ATxAssetProxy.emitTransfer(address,address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#538) is not in mixedCase
+Parameter ATxAssetProxy.emitApprove(address,address,uint256)._from (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#547) is not in mixedCase
+Parameter ATxAssetProxy.emitApprove(address,address,uint256)._spender (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#547) is not in mixedCase
+Parameter ATxAssetProxy.emitApprove(address,address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#547) is not in mixedCase
+Parameter ATxAssetProxy.proposeUpgrade(address)._newVersion (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#589) is not in mixedCase
+Parameter GroupsAccessManager.registerUser(address)._user (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#794) is not in mixedCase
+Parameter GroupsAccessManager.unregisterUser(address)._user (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#817) is not in mixedCase
+Parameter GroupsAccessManager.createGroup(bytes32,uint256)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#848) is not in mixedCase
+Parameter GroupsAccessManager.createGroup(bytes32,uint256)._priority (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#848) is not in mixedCase
+Parameter GroupsAccessManager.changeGroupActiveStatus(bytes32,bool)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#872) is not in mixedCase
+Parameter GroupsAccessManager.changeGroupActiveStatus(bytes32,bool)._blocked (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#872) is not in mixedCase
+Parameter GroupsAccessManager.addUsersToGroup(bytes32,address[])._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#885) is not in mixedCase
+Parameter GroupsAccessManager.addUsersToGroup(bytes32,address[])._users (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#885) is not in mixedCase
+Parameter GroupsAccessManager.removeUsersFromGroup(bytes32,address[])._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#920) is not in mixedCase
+Parameter GroupsAccessManager.removeUsersFromGroup(bytes32,address[])._users (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#920) is not in mixedCase
+Parameter GroupsAccessManager.isRegisteredUser(address)._user (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#959) is not in mixedCase
+Parameter GroupsAccessManager.isUserInGroup(bytes32,address)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#969) is not in mixedCase
+Parameter GroupsAccessManager.isUserInGroup(bytes32,address)._user (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#969) is not in mixedCase
+Parameter GroupsAccessManager.isGroupExists(bytes32)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#978) is not in mixedCase
+Parameter PendingManager.setAccessManager(address)._accessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1176) is not in mixedCase
+Parameter PendingManager.signIn(address)._contract (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1185) is not in mixedCase
+Parameter PendingManager.signOut(address)._contract (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1194) is not in mixedCase
+Parameter PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256)._sig (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1211) is not in mixedCase
+Parameter PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256)._contract (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1212) is not in mixedCase
+Parameter PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1213) is not in mixedCase
+Parameter PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256)._acceptLimit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1214) is not in mixedCase
+Parameter PendingManager.addPolicyRule(bytes4,address,bytes32,uint256,uint256)._declineLimit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1215) is not in mixedCase
+Parameter PendingManager.removePolicyRule(bytes4,address,bytes32)._sig (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1264) is not in mixedCase
+Parameter PendingManager.removePolicyRule(bytes4,address,bytes32)._contract (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1265) is not in mixedCase
+Parameter PendingManager.removePolicyRule(bytes4,address,bytes32)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1266) is not in mixedCase
+Parameter PendingManager.addTx(bytes32,bytes4,address)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1307) is not in mixedCase
+Parameter PendingManager.addTx(bytes32,bytes4,address)._sig (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1307) is not in mixedCase
+Parameter PendingManager.addTx(bytes32,bytes4,address)._contract (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1307) is not in mixedCase
+Parameter PendingManager.deleteTx(bytes32)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1345) is not in mixedCase
+Parameter PendingManager.accept(bytes32,bytes32)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1388) is not in mixedCase
+Parameter PendingManager.accept(bytes32,bytes32)._votingGroupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1388) is not in mixedCase
+Parameter PendingManager.decline(bytes32,bytes32)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1434) is not in mixedCase
+Parameter PendingManager.decline(bytes32,bytes32)._votingGroupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1434) is not in mixedCase
+Parameter PendingManager.forceRejectVotes(bytes32,address)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1482) is not in mixedCase
+Parameter PendingManager.forceRejectVotes(bytes32,address)._user (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1482) is not in mixedCase
+Parameter PendingManager.revoke(bytes32)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1490) is not in mixedCase
+Parameter PendingManager.hasConfirmedRecord(bytes32)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1497) is not in mixedCase
+Parameter PendingManager.getPolicyDetails(bytes4,address)._sig (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1518) is not in mixedCase
+Parameter PendingManager.getPolicyDetails(bytes4,address)._contract (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1518) is not in mixedCase
+Parameter PendingManager.isGroupInPolicy(bytes32,bytes32)._policyHash (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1557) is not in mixedCase
+Parameter PendingManager.isGroupInPolicy(bytes32,bytes32)._groupName (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1557) is not in mixedCase
+Parameter PendingManager.isPolicyExist(bytes32)._policyHash (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1565) is not in mixedCase
+Parameter PendingManager.isTxExist(bytes32)._key (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1572) is not in mixedCase
+Parameter ServiceController.addEmissionProvider(address,uint256)._provider (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1723) is not in mixedCase
+Parameter ServiceController.addEmissionProvider(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1723) is not in mixedCase
+Parameter ServiceController.removeEmissionProvider(address,uint256)._provider (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1741) is not in mixedCase
+Parameter ServiceController.removeEmissionProvider(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1741) is not in mixedCase
+Parameter ServiceController.addBurningMan(address,uint256)._burningMan (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1756) is not in mixedCase
+Parameter ServiceController.addBurningMan(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1756) is not in mixedCase
+Parameter ServiceController.removeBurningMan(address,uint256)._burningMan (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1775) is not in mixedCase
+Parameter ServiceController.removeBurningMan(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1775) is not in mixedCase
+Parameter ServiceController.updateProfiterole(address,uint256)._profiterole (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1790) is not in mixedCase
+Parameter ServiceController.updateProfiterole(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1790) is not in mixedCase
+Parameter ServiceController.updateTreasury(address,uint256)._treasury (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1805) is not in mixedCase
+Parameter ServiceController.updateTreasury(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1805) is not in mixedCase
+Parameter ServiceController.updatePendingManager(address,uint256)._pendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1820) is not in mixedCase
+Parameter ServiceController.updatePendingManager(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1820) is not in mixedCase
+Parameter ServiceController.addSideService(address,uint256)._service (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1830) is not in mixedCase
+Parameter ServiceController.addSideService(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1830) is not in mixedCase
+Parameter ServiceController.removeSideService(address,uint256)._service (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1843) is not in mixedCase
+Parameter ServiceController.removeSideService(address,uint256)._block (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1843) is not in mixedCase
+Parameter ServiceController.isService(address)._address (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1858) is not in mixedCase
+Parameter DataController.setWithdraw(address)._withdrawal (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1959) is not in mixedCase
+Parameter DataController.getHolderInfo(bytes32)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1970) is not in mixedCase
+Parameter DataController.getHolderAddresses(bytes32)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1981) is not in mixedCase
+Parameter DataController.getHolderCountryCode(bytes32)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1990) is not in mixedCase
+Parameter DataController.getHolderExternalIdByAddress(address)._address (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1994) is not in mixedCase
+Parameter DataController.isRegisteredAddress(address)._address (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2001) is not in mixedCase
+Parameter DataController.isHolderOwnAddress(bytes32,address)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2005) is not in mixedCase
+Parameter DataController.isHolderOwnAddress(bytes32,address)._address (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2005) is not in mixedCase
+Parameter DataController.getCountryInfo(uint256)._countryCode (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2013) is not in mixedCase
+Parameter DataController.getCountryLimit(uint256)._countryCode (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2018) is not in mixedCase
+Parameter DataController.addCountryCode(uint256)._countryCode (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2024) is not in mixedCase
+Parameter DataController.registerHolder(bytes32,address,uint256)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2036) is not in mixedCase
+Parameter DataController.registerHolder(bytes32,address,uint256)._holderAddress (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2036) is not in mixedCase
+Parameter DataController.registerHolder(bytes32,address,uint256)._countryCode (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2036) is not in mixedCase
+Parameter DataController.addHolderAddress(bytes32,address)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2065) is not in mixedCase
+Parameter DataController.addHolderAddress(bytes32,address)._newAddress (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2065) is not in mixedCase
+Parameter DataController.removeHolderAddress(bytes32,address)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2090) is not in mixedCase
+Parameter DataController.removeHolderAddress(bytes32,address)._address (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2090) is not in mixedCase
+Parameter DataController.changeOperational(bytes32,bool)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2118) is not in mixedCase
+Parameter DataController.changeOperational(bytes32,bool)._operational (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2118) is not in mixedCase
+Parameter DataController.updateTextForHolder(bytes32,bytes)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2135) is not in mixedCase
+Parameter DataController.updateTextForHolder(bytes32,bytes)._text (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2135) is not in mixedCase
+Parameter DataController.updateLimitPerDay(bytes32,uint256)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2151) is not in mixedCase
+Parameter DataController.updateLimitPerDay(bytes32,uint256)._limit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2151) is not in mixedCase
+Parameter DataController.updateLimitPerMonth(bytes32,uint256)._externalHolderId (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2169) is not in mixedCase
+Parameter DataController.updateLimitPerMonth(bytes32,uint256)._limit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2169) is not in mixedCase
+Parameter DataController.changeCountryLimit(uint256,uint256)._countryCode (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2187) is not in mixedCase
+Parameter DataController.changeCountryLimit(uint256,uint256)._limit (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2187) is not in mixedCase
+Parameter DataController.withdrawFrom(address,uint256)._holderAddress (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2202) is not in mixedCase
+Parameter DataController.withdrawFrom(address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2202) is not in mixedCase
+Parameter DataController.depositTo(address,uint256)._holderAddress (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2210) is not in mixedCase
+Parameter DataController.depositTo(address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2210) is not in mixedCase
+Parameter DataController.updateCountryHoldersCount(uint256,uint256)._countryCode (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2218) is not in mixedCase
+Parameter DataController.updateCountryHoldersCount(uint256,uint256)._updatedHolderCount (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2218) is not in mixedCase
+Parameter DataController.changeAllowance(address,uint256)._from (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2225) is not in mixedCase
+Parameter DataController.changeAllowance(address,uint256)._value (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#2225) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ATxAssetInterface (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#233-244) does not implement functions:
+	- ATxAssetInterface.__approve(address,uint256,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#240)
+	- ATxAssetInterface.__transferFromWithReference(address,address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#239)
+	- ATxAssetInterface.__transferWithReference(address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#238)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+GroupsAccessManager.USER_MANAGER_OBJECT_ALREADY_SECURED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#748) is never used in GroupsAccessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#743-1017)
+GroupsAccessManager.USER_MANAGER_CONFIRMATION_HAS_COMPLETED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#749) is never used in GroupsAccessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#743-1017)
+GroupsAccessManager.USER_MANAGER_USER_HAS_CONFIRMED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#750) is never used in GroupsAccessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#743-1017)
+GroupsAccessManager.USER_MANAGER_NOT_ENOUGH_GAS (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#751) is never used in GroupsAccessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#743-1017)
+GroupsAccessManager.USER_MANAGER_DONE (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#753) is never used in GroupsAccessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#743-1017)
+GroupsAccessManager.USER_MANAGER_CANCELLED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#754) is never used in GroupsAccessManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#743-1017)
+PendingManager.PENDING_MANAGER_CONFIRMED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1089) is never used in PendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1082-1619)
+PendingManager.PENDING_MANAGER_TX_WAS_DECLINED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1093) is never used in PendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1082-1619)
+PendingManager.PENDING_MANAGER_TX_WAS_NOT_CONFIRMED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1094) is never used in PendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1082-1619)
+PendingManager.PENDING_MANAGER_INSUFFICIENT_GAS (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1095) is never used in PendingManager (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1082-1619)
+ServiceController.SERVICE_CONTROLLER_ALREADY_INITIALIZED (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1682) is never used in ServiceController (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1677-1867)
+DataController.DATA_CONTROLLER_ERROR (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1875) is never used in DataController (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#1870-2254)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+ATxAssetInterface.dataController (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#235) should be constant 
+ATxAssetInterface.serviceController (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#236) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+withdrawnTokens(address[],address) should be declared external:
+	- Object.withdrawnTokens(address[],address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#131-139)
+__transferWithReference(address,uint256,string,address) should be declared external:
+	- ATxAssetInterface.__transferWithReference(address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#238)
+__transferFromWithReference(address,address,uint256,string,address) should be declared external:
+	- ATxAssetInterface.__transferFromWithReference(address,address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#239)
+__process(bytes,address) should be declared external:
+	- ATxAssetInterface.__process(bytes,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#241-243)
+proxyTransferWithReference(address,uint256,bytes32,string,address) should be declared external:
+	- Platform.proxyTransferWithReference(address,uint256,bytes32,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#277)
+proxyTransferFromWithReference(address,address,uint256,bytes32,string,address) should be declared external:
+	- Platform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#278)
+issueAsset(bytes32,uint256,string,string,uint8,bool) should be declared external:
+	- Platform.issueAsset(bytes32,uint256,string,string,uint8,bool) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#280)
+init(Platform,string,string) should be declared external:
+	- ATxAssetProxy.init(Platform,string,string) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#363-372)
+transferWithReference(address,uint256,string) should be declared external:
+	- ATxAssetProxy.transferWithReference(address,uint256,string) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#441-448)
+__transferWithReference(address,uint256,string,address) should be declared external:
+	- ATxAssetProxy.__transferWithReference(address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#462-464)
+__transferFromWithReference(address,address,uint256,string,address) should be declared external:
+	- ATxAssetProxy.__transferFromWithReference(address,address,uint256,string,address) (../sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol#497-499)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xfe878b9e30eaf414fcb6c4d89e3df8a7e094ee4a.sol analyzed (21 contracts with 100 detectors), 222 result(s) found

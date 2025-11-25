@@ -1,0 +1,66 @@
+'solc --version' running
+'solc /sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+HubTokenPurchase.approve_unwanted_tokens(EIP20Token,address,uint256) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#92-94) ignores return value by token.approve(dest,value) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#93)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Ownable.transferOwnership(address) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#29-32) should emit an event for: 
+	- owner = newOwner (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#31) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+HubTokenPurchase.set_transfer_gas(uint256) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#87-89) should emit an event for: 
+	- gas = transfer_gas (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#88) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+HubTokenPurchase.emergency_withdraw() (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#98-100) tries to limit the gas of an external call that controls implicit decoding
+	require(bool)(msg.sender.call.gas(gas).value(address(this).balance)()) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#99)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#return-bomb
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in HubTokenPurchase.execute_transfer(uint256) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#70-82):
+	- require(bool)(major_partner_address.call.gas(gas).value(major_fee)()) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#76)
+	- require(bool)(minor_partner_address.call.gas(gas).value(minor_fee)()) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#77)
+	- require(bool)(purchase_address.call.gas(gas).value(purchase_amount)()) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#81)
+Low level call in HubTokenPurchase.emergency_withdraw() (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#98-100):
+	- require(bool)(msg.sender.call.gas(gas).value(address(this).balance)()) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#99)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Function HubTokenPurchase.execute_transfer(uint256) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#70-82) is not in mixedCase
+Parameter HubTokenPurchase.execute_transfer(uint256).transfer_amount (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#70) is not in mixedCase
+Function HubTokenPurchase.set_transfer_gas(uint256) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#87-89) is not in mixedCase
+Parameter HubTokenPurchase.set_transfer_gas(uint256).transfer_gas (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#87) is not in mixedCase
+Function HubTokenPurchase.approve_unwanted_tokens(EIP20Token,address,uint256) (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#92-94) is not in mixedCase
+Function HubTokenPurchase.emergency_withdraw() (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#98-100) is not in mixedCase
+Variable HubTokenPurchase.purchase_address (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#56) is not in mixedCase
+Variable HubTokenPurchase.major_partner_address (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#58) is not in mixedCase
+Variable HubTokenPurchase.minor_partner_address (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#60) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+HubTokenPurchase.major_partner_address (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#58) should be constant 
+HubTokenPurchase.minor_partner_address (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#60) should be constant 
+HubTokenPurchase.purchase_address (../sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol#56) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xe14eac83b3bb1bb7b265bf298c348264f8399834.sol analyzed (3 contracts with 100 detectors), 20 result(s) found

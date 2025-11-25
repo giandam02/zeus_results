@@ -1,0 +1,90 @@
+'solc --version' running
+'solc /sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Reentrancy in CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443):
+	External calls:
+	- require(bool)(MintableToken(address(token)).mint(to,value)) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#441)
+	State variables written after the call(s):
+	- givenBountyTokens[to] = givenBountyTokens[to].add(value) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#436)
+	CappedBountyMinter.givenBountyTokens (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#409) can be used in cross function reentrancies:
+	- CappedBountyMinter.givenBountyTokens (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#409)
+	- CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443)
+	- totalGivenBountyTokens = totalGivenBountyTokens.add(value) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#437)
+	CappedBountyMinter.totalGivenBountyTokens (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#408) can be used in cross function reentrancies:
+	- CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443)
+	- CappedBountyMinter.remainingTokens() (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#445-447)
+	- CappedBountyMinter.totalGivenBountyTokens (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#408)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443) should emit an event for: 
+	- totalGivenBountyTokens = totalGivenBountyTokens.add(value) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#437) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443) has external calls inside a loop: require(bool)(MintableToken(address(token)).mint(to,value)) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#441)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443) has costly operations inside a loop:
+	- totalGivenBountyTokens = totalGivenBountyTokens.add(value) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#437)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#14) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#14) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#30) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#30) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#40) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#40) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#48) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#48) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#94) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#94) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#109) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#157) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#158) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#159) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#184) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#184) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#197) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#198) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#217) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#218) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#239) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#240) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#306) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#352) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#353) is not in mixedCase
+Parameter TokenRecover.transferAnyERC20Token(address,uint256)._tokenAddress (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#389) is not in mixedCase
+Parameter TokenRecover.transferAnyERC20Token(address,uint256)._tokens (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#390) is not in mixedCase
+Parameter CappedBountyMinter.multiSend(address[],uint256[])._addresses (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#422) is not in mixedCase
+Parameter CappedBountyMinter.multiSend(address[],uint256[])._amounts (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#423) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CappedBountyMinter.decimals (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#411) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+multiSend(address[],uint256[]) should be declared external:
+	- CappedBountyMinter.multiSend(address[],uint256[]) (../sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol#421-443)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xf2840d41288934cd7e1489ffdc4d9f0d5199ebe2.sol analyzed (9 contracts with 100 detectors), 37 result(s) found

@@ -1,0 +1,118 @@
+'solc --version' running
+'solc /sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+PartialERC20._balances (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#402) shadows:
+	- ERC20._balances (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#192)
+PartialERC20._allowed (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#403) shadows:
+	- ERC20._allowed (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#194)
+PartialERC20._totalSupply (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#405) shadows:
+	- ERC20._totalSupply (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#196)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+Reentrancy in KTFForTestMigration.migrateFromPKTF() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#706-719):
+	External calls:
+	- numberOfPKTFHolders = pktf.numberOfTokenHolders() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#710)
+	- user = pktf.holders(i) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#714)
+	- balance = pktf.balanceOf(user) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#715)
+	State variables written after the call(s):
+	- mint(user,balance) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#717)
+		- _balances[account] = _balances[account].add(value) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#530)
+	PartialERC20._balances (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#402) can be used in cross function reentrancies:
+	- PartialERC20._mint(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#526-532)
+	- PartialERC20._transfer(address,address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#511-517)
+	- PartialERC20.balanceOf(address) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#419-421)
+	- KTFForTestMigration.constructor(PrivateToken) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#695-704)
+	- mint(user,balance) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#717)
+		- _totalSupply = _totalSupply.add(value) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#529)
+	PartialERC20._totalSupply (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#405) can be used in cross function reentrancies:
+	- PartialERC20._mint(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#526-532)
+	- KTFForTestMigration.constructor(PrivateToken) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#695-704)
+	- PartialERC20.totalSupply() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#410-412)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+KTFForTestMigration.migrateFromPKTF() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#706-719) has external calls inside a loop: user = pktf.holders(i) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#714)
+KTFForTestMigration.migrateFromPKTF() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#706-719) has external calls inside a loop: balance = pktf.balanceOf(user) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#715)
+PrivateKatinrunFoudation.constructor(PrivateToken) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#891-913) has external calls inside a loop: user = pktf.holders(i) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#905)
+PrivateKatinrunFoudation.constructor(PrivateToken) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#891-913) has external calls inside a loop: balance = pktf.balanceOf(user) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#906)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in KTFForTestMigration.migrateFromPKTF() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#706-719):
+	External calls:
+	- numberOfPKTFHolders = pktf.numberOfTokenHolders() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#710)
+	State variables written after the call(s):
+	- holderCount = numberOfPKTFHolders (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#711)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in KTFForTestMigration.migrateFromPKTF() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#706-719):
+	External calls:
+	- numberOfPKTFHolders = pktf.numberOfTokenHolders() (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#710)
+	- user = pktf.holders(i) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#714)
+	- balance = pktf.balanceOf(user) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#715)
+	Event emitted after the call(s):
+	- Transfer(address(0),account,value) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#531)
+		- mint(user,balance) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#717)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+MintableWithVoucher.isVoucherExpired(uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#765-767) uses timestamp for comparisons
+	Dangerous comparisons:
+	- expired < now (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#766)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+PartialERC20._mint(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#526-532) has costly operations inside a loop:
+	- _totalSupply = _totalSupply.add(value) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#529)
+	Calls stack containing the loop:
+		KTFForTestMigration.migrateFromPKTF()
+		KTFForTestMigration.mint(address,uint256)
+PartialERC20._mint(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#526-532) has costly operations inside a loop:
+	- _totalSupply = _totalSupply.add(value) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#529)
+	Calls stack containing the loop:
+		PrivateKatinrunFoudation.constructor(PrivateToken)
+		MintableWithVoucher.mint(address,uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+ERC20._burn(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#362-369) is never used and should be removed
+ERC20._burnFrom(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#378-386) is never used and should be removed
+ERC20._mint(address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#349-354) is never used and should be removed
+ERC20._transfer(address,address,uint256) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#333-340) is never used and should be removed
+PrivateToken._removeTokenHolder(address) (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#615-635) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter MintableWithVoucher.isVoucherUsed(uint64)._voucherID (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#753) is not in mixedCase
+Parameter MintableWithVoucher.markVoucherAsUsed(uint64)._voucherID (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#757) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._v (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#780) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._r (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#781) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._s (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#782) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._voucherID (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#783) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._parityCode (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#784) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._amount (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#785) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._expired (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#786) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._receiver (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#787) is not in mixedCase
+Parameter MintableWithVoucher.redeemVoucher(uint8,bytes32,bytes32,uint64,uint64,uint256,uint256,address,bytes32)._socialHash (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#788) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ERC20._totalSupply (../sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol#196) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x7add89f3a7d2530d83b99593c67f56740ec11cc6.sol analyzed (9 contracts with 100 detectors), 32 result(s) found

@@ -1,0 +1,123 @@
+'solc --version' running
+'solc /sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:46:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Coin() public payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:53:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Refund(_client, _amount);
+    ^----------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:61:5: Warning: Invoking events without "emit" prefix is deprecated.
+    CurrentCoin(cur_coin);
+    ^-------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:67:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContractEnabled();
+    ^---------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:71:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ContractDisabled();
+    ^----------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:84:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TransferEnabled();
+    ^---------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:88:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TransferDisabled();
+    ^----------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:118:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokensSent(_client, _amount);
+    ^--------------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:146:11: Warning: Invoking events without "emit" prefix is deprecated.
+          Transfer(msg.sender, _to, _value);
+          ^-------------------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:153:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, _to, _value);
+            ^-------------------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:178:11: Warning: Invoking events without "emit" prefix is deprecated.
+          Transfer(_from, _to, _value);
+          ^--------------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:186:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(_from, _to, _value);
+            ^--------------------------^
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol:200:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+
+
+Coin.setPrice(uint256) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#120-122) should emit an event for: 
+	- price = _price (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#121) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Coin.refund(address,uint256,uint256)._client (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#50) lacks a zero-check on :
+		- _client.transfer(_amount) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#52)
+Coin.setCurrentCoin(address).current (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#59) lacks a zero-check on :
+		- cur_coin = current (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#60)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Coin.kill() (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#55-58) compares to a boolean constant:
+	-require(bool)(workingState == false) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#56)
+Coin.transfer(address,uint256) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#138-164) compares to a boolean constant:
+	-transferAllowed == true (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#150)
+Coin.transferFrom(address,address,uint256) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#165-197) compares to a boolean constant:
+	-transferAllowed == true (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#182)
+Coin.workingFlag() (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#37-40) compares to a boolean constant:
+	-require(bool)(workingState == true) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#38)
+Coin.transferFlag() (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#41-44) compares to a boolean constant:
+	-require(bool)(transferAllowed == true) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#42)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in Coin.fallback() (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#127-130):
+	- ret = cur_coin.call(bytes4(keccak256()(pay(address,uint256,uint256))),msg.sender,msg.value,price) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#128)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Parameter Coin.refund(address,uint256,uint256)._client (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#50) is not in mixedCase
+Parameter Coin.refund(address,uint256,uint256)._amount (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#50) is not in mixedCase
+Parameter Coin.refund(address,uint256,uint256)._tokens (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#50) is not in mixedCase
+Parameter Coin.generateTokens(address,uint256)._client (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#99) is not in mixedCase
+Parameter Coin.generateTokens(address,uint256)._amount (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#99) is not in mixedCase
+Parameter Coin.setPrice(uint256)._price (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#120) is not in mixedCase
+Parameter Coin.balanceOf(address)._owner (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#135) is not in mixedCase
+Parameter Coin.transfer(address,uint256)._to (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#138) is not in mixedCase
+Parameter Coin.transfer(address,uint256)._value (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#138) is not in mixedCase
+Parameter Coin.transferFrom(address,address,uint256)._from (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#165) is not in mixedCase
+Parameter Coin.transferFrom(address,address,uint256)._to (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#165) is not in mixedCase
+Parameter Coin.transferFrom(address,address,uint256)._value (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#165) is not in mixedCase
+Parameter Coin.approve(address,uint256)._spender (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#198) is not in mixedCase
+Parameter Coin.approve(address,uint256)._value (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#198) is not in mixedCase
+Parameter Coin.allowance(address,address)._owner (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#203) is not in mixedCase
+Parameter Coin.allowance(address,address)._spender (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#203) is not in mixedCase
+Variable Coin._totalSupply (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#10) is not in mixedCase
+Variable Coin.cur_coin (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#15) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Redundant expression "ret (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#129)" inCoin (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#6-207)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#redundant-statements
+
+Reentrancy in Coin.refund(address,uint256,uint256) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#50-54):
+	External calls:
+	- _client.transfer(_amount) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#52)
+	Event emitted after the call(s):
+	- Refund(_client,_amount) (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Coin.etherClients (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#18) is never used in Coin (../sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol#6-207)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+/sb/0x3491bd2c385849353f231688bffada9d1e005a8a.sol analyzed (1 contracts with 100 detectors), 32 result(s) found

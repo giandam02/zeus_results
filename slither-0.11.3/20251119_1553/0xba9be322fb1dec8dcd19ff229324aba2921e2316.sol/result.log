@@ -1,0 +1,63 @@
+'solc --version' running
+'solc /sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+STCToken.constructor(address)._owner (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#157) lacks a zero-check on :
+		- owner = _owner (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#158)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#63) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#63) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#77) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#100) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#100) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#100) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#121) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#121) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#140) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#140) is not in mixedCase
+Parameter STCToken.changeName(string)._name (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#163) is not in mixedCase
+Parameter STCToken.changeSymbol(string)._symbol (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#168) is not in mixedCase
+Parameter STCToken.changeNameAndSymbol(string,string)._name (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#173) is not in mixedCase
+Parameter STCToken.changeNameAndSymbol(string,string)._symbol (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#173) is not in mixedCase
+Variable STCToken.INITIAL_SUPPLY (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#155) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+STCToken.slitherConstructorVariables() (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#149-180) uses literals with too many digits:
+	- INITIAL_SUPPLY = 600000000 * 10 ** 18 (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+STCToken.INITIAL_SUPPLY (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#155) should be constant 
+STCToken.decimals (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#154) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+changeName(string) should be declared external:
+	- STCToken.changeName(string) (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#163-166)
+changeSymbol(string) should be declared external:
+	- STCToken.changeSymbol(string) (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#168-171)
+changeNameAndSymbol(string,string) should be declared external:
+	- STCToken.changeNameAndSymbol(string,string) (../sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol#173-178)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xba9be322fb1dec8dcd19ff229324aba2921e2316.sol analyzed (5 contracts with 100 detectors), 24 result(s) found

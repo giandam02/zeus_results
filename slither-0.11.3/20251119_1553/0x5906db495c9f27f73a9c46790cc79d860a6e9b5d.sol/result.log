@@ -1,0 +1,535 @@
+'solc --version' running
+'solc /sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:163:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        msg.sender.send(dispute.fee); // Avoid blocking.
+        ^--------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:598:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            transaction.sender.send(extraFeeSender);
+            ^-------------------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:605:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            transaction.receiver.send(extraFeeReceiver);
+            ^-----------------------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:665:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            transaction.sender.send(transaction.senderFee + transaction.amount);
+            ^-----------------------------------------------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:667:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            transaction.receiver.send(transaction.receiverFee + transaction.amount);
+            ^---------------------------------------------------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:670:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            transaction.sender.send(split_amount);
+            ^-----------------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:671:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            transaction.receiver.send(split_amount);
+            ^-------------------------------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:55:28: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function createDispute(uint _choices, bytes memory _extraData) public requireArbitrationFee(_extraData) payable returns(uint disputeID) {}
+                           ^-----------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:55:125: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function createDispute(uint _choices, bytes memory _extraData) public requireArbitrationFee(_extraData) payable returns(uint disputeID) {}
+                                                                                                                            ^------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:65:27: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function appealPeriod(uint _disputeID) public view returns(uint start, uint end) {}
+                          ^-------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:65:64: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function appealPeriod(uint _disputeID) public view returns(uint start, uint end) {}
+                                                               ^--------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:65:76: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function appealPeriod(uint _disputeID) public view returns(uint start, uint end) {}
+                                                                           ^------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:120:30: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function arbitrationCost(bytes _extraData) public view returns(uint fee) {
+                             ^--------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:129:25: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function appealCost(uint _disputeID, bytes _extraData) public view returns(uint fee) {
+                        ^-------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:129:42: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function appealCost(uint _disputeID, bytes _extraData) public view returns(uint fee) {
+                                         ^--------------^
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol:65:5: Warning: Function state mutability can be restricted to pure
+    function appealPeriod(uint _disputeID) public view returns(uint start, uint end) {}
+    ^---------------------------------------------------------------------------------^
+
+
+CentralizedArbitrator._giveRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#155-165) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.send(dispute.fee) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#163)
+MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607) sends eth to arbitrary user
+	Dangerous calls:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+	- transaction.receiver.send(extraFeeReceiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#605)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+MultipleArbitrableTransaction (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#337-714) contract sets array length with a user-controlled value:
+	- transactions.push(Transaction({sender:msg.sender,receiver:_receiver,amount:msg.value,timeoutPayment:_timeoutPayment,disputeId:0,senderFee:0,receiverFee:0,lastInteraction:now,status:Status.NoDispute})) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#447-457)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607):
+	External calls:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	State variables written after the call(s):
+	- transaction.senderFee = _arbitrationCost (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#597)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+Reentrancy in MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607):
+	External calls:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	External calls sending eth:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+	State variables written after the call(s):
+	- transaction.receiverFee = _arbitrationCost (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#604)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Reentrancy in AppealableArbitrator.appeal(uint256,bytes) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263-272):
+	External calls:
+	- super.appeal(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#264)
+		- cost = appealDisputes[_disputeID].arbitrator.appealCost(appealDisputes[_disputeID].appealDisputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#307)
+		- cost = arbitrator.arbitrationCost(_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#308)
+	- requireAppealFee(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263)
+		- cost = appealDisputes[_disputeID].arbitrator.appealCost(appealDisputes[_disputeID].appealDisputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#307)
+		- cost = arbitrator.arbitrationCost(_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#308)
+	State variables written after the call(s):
+	- appealDisputes[_disputeID].arbitrator = arbitrator (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#268)
+	AppealableArbitrator.appealDisputes (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#210) can be used in cross function reentrancies:
+	- AppealableArbitrator.appeal(uint256,bytes) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263-272)
+	- AppealableArbitrator.appealCost(uint256,bytes) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#305-310)
+	- AppealableArbitrator.appealDisputes (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#210)
+	- AppealableArbitrator.disputeStatus(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#316-320)
+	- AppealableArbitrator.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#328-334)
+	- AppealableArbitrator.getAppealDisputeID(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#251-255)
+	- AppealableArbitrator.giveRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#278-296)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#564)
+	State variables written after the call(s):
+	- transaction.receiverFee += msg.value (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#569)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+	- transaction.lastInteraction = now (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#573)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+	- transaction.status = Status.WaitingSender (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#576)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#538)
+	State variables written after the call(s):
+	- transaction.senderFee += msg.value (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#543)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+	- transaction.lastInteraction = now (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#547)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+	- transaction.status = Status.WaitingReceiver (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#551)
+	MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362) can be used in cross function reentrancies:
+	- MultipleArbitrableTransaction.appeal(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632-636)
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+	- MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678)
+	- MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505)
+	- MultipleArbitrableTransaction.getCountTransactions() (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#687-689)
+	- MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712)
+	- MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476)
+	- MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581)
+	- MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556)
+	- MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607)
+	- MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491)
+	- MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652)
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+	- MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529)
+	- MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517)
+	- MultipleArbitrableTransaction.transactions (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#362)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+CentralizedArbitrator._giveRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#155-165) ignores return value by msg.sender.send(dispute.fee) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#163)
+MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607) ignores return value by transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607) ignores return value by transaction.receiver.send(extraFeeReceiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#605)
+MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678) ignores return value by transaction.sender.send(transaction.senderFee + transaction.amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#665)
+MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678) ignores return value by transaction.receiver.send(transaction.receiverFee + transaction.amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#667)
+MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678) ignores return value by transaction.sender.send(split_amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#670)
+MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678) ignores return value by transaction.receiver.send(split_amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#671)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Reentrancy in AppealableArbitrator.appeal(uint256,bytes) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263-272):
+	External calls:
+	- super.appeal(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#264)
+		- cost = appealDisputes[_disputeID].arbitrator.appealCost(appealDisputes[_disputeID].appealDisputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#307)
+		- cost = arbitrator.arbitrationCost(_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#308)
+	- appealDisputes[_disputeID].appealDisputeID = arbitrator.createDispute.value(msg.value)(disputes[_disputeID].choices,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#269)
+	- requireAppealFee(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263)
+		- cost = appealDisputes[_disputeID].arbitrator.appealCost(appealDisputes[_disputeID].appealDisputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#307)
+		- cost = arbitrator.arbitrationCost(_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#308)
+	External calls sending eth:
+	- appealDisputes[_disputeID].appealDisputeID = arbitrator.createDispute.value(msg.value)(disputes[_disputeID].choices,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#269)
+	State variables written after the call(s):
+	- appealDisputeIDsToDisputeIDs[appealDisputes[_disputeID].appealDisputeID] = _disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#270)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#564)
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#579)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	External calls sending eth:
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#579)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+		- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+		- transaction.receiver.send(extraFeeReceiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#605)
+	State variables written after the call(s):
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#579)
+		- disputeIDtoTransactionID[transaction.disputeId] = _transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#591)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#538)
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#554)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	External calls sending eth:
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#554)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+		- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+		- transaction.receiver.send(extraFeeReceiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#605)
+	State variables written after the call(s):
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#554)
+		- disputeIDtoTransactionID[transaction.disputeId] = _transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#591)
+Reentrancy in MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607):
+	External calls:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	State variables written after the call(s):
+	- disputeIDtoTransactionID[transaction.disputeId] = _transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#591)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in AppealableArbitrator.appeal(uint256,bytes) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263-272):
+	External calls:
+	- super.appeal(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#264)
+		- cost = appealDisputes[_disputeID].arbitrator.appealCost(appealDisputes[_disputeID].appealDisputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#307)
+		- cost = arbitrator.arbitrationCost(_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#308)
+	- requireAppealFee(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263)
+		- cost = appealDisputes[_disputeID].arbitrator.appealCost(appealDisputes[_disputeID].appealDisputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#307)
+		- cost = arbitrator.arbitrationCost(_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#308)
+	Event emitted after the call(s):
+	- AppealDecision(_disputeID,Arbitrable(msg.sender)) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#60)
+		- super.appeal(_disputeID,_extraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#264)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#564)
+	Event emitted after the call(s):
+	- HasToPayFee(_transactionID,Party.Sender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#577)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#564)
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#579)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	External calls sending eth:
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#579)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+		- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+		- transaction.receiver.send(extraFeeReceiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#605)
+	Event emitted after the call(s):
+	- Dispute(arbitrator,transaction.disputeId,_transactionID,_transactionID) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#592)
+		- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#579)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#538)
+	Event emitted after the call(s):
+	- HasToPayFee(_transactionID,Party.Receiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#552)
+Reentrancy in MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556):
+	External calls:
+	- arbitrationCost = arbitrator.arbitrationCost(arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#538)
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#554)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	External calls sending eth:
+	- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#554)
+		- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+		- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+		- transaction.receiver.send(extraFeeReceiver) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#605)
+	Event emitted after the call(s):
+	- Dispute(arbitrator,transaction.disputeId,_transactionID,_transactionID) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#592)
+		- raiseDispute(_transactionID,arbitrationCost) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#554)
+Reentrancy in MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607):
+	External calls:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	Event emitted after the call(s):
+	- Dispute(arbitrator,transaction.disputeId,_transactionID,_transactionID) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#592)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+AppealableArbitrator.giveRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#278-296) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now - appealDisputes[_disputeID].rulingTime > timeOut (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#286)
+MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.sender == msg.sender,The caller must be the sender.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#469)
+	- require(bool,string)(transaction.status == Status.NoDispute,The transaction shouldn't be disputed.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#470)
+	- require(bool,string)(_amount <= transaction.amount,The amount paid has to be less than or equal to the transaction.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#471)
+MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.receiver == msg.sender,The caller must be the receiver.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#484)
+	- require(bool,string)(transaction.status == Status.NoDispute,The transaction shouldn't be disputed.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#485)
+	- require(bool,string)(_amountReimbursed <= transaction.amount,The amount reimbursed has to be less or equal than the transaction.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#486)
+MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(now - transaction.lastInteraction >= transaction.timeoutPayment,The timeout has not passed yet.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#498)
+	- require(bool,string)(transaction.status == Status.NoDispute,The transaction shouldn't be disputed.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#499)
+MultipleArbitrableTransaction.timeOutBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510-517) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.status == Status.WaitingReceiver,The transaction is not waiting on the receiver.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#513)
+	- require(bool,string)(now - transaction.lastInteraction >= feeTimeout,Timeout time has not passed yet.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#514)
+MultipleArbitrableTransaction.timeOutByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522-529) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.status == Status.WaitingSender,The transaction is not waiting on the sender.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#525)
+	- require(bool,string)(now - transaction.lastInteraction >= feeTimeout,Timeout time has not passed yet.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#526)
+MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536-556) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.status < Status.DisputeCreated,Dispute has already been created or because the transaction has been executed.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#540)
+	- require(bool,string)(msg.sender == transaction.sender,The caller must be the sender.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#541)
+	- require(bool,string)(transaction.senderFee >= arbitrationCost,The sender fee must cover arbitration costs.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#545)
+	- transaction.receiverFee < arbitrationCost (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#550)
+MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562-581) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.status < Status.DisputeCreated,Dispute has already been created or because the transaction has been executed.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#566)
+	- require(bool,string)(msg.sender == transaction.receiver,The caller must be the receiver.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#567)
+	- require(bool,string)(transaction.receiverFee >= arbitrationCost,The receiver fee must cover arbitration costs.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#571)
+	- transaction.senderFee < arbitrationCost (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#575)
+MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(msg.sender == transaction.sender || msg.sender == transaction.receiver,The caller must be the sender or the receiver.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#615-618)
+	- require(bool,string)(transaction.status < Status.Resolved,Must not send evidence if the dispute is resolved.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#619-622)
+MultipleArbitrableTransaction.rule(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643-652) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(transaction.status == Status.DisputeCreated,The dispute has already been resolved.) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#647)
+MultipleArbitrableTransaction.getTransactionIDsByAddress(address) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697-712) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < transactions.length (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#699)
+	- transactions[i].sender == _address || transactions[i].receiver == _address (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#700)
+	- j < transactions.length (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#708)
+	- transactions[j].sender == _address || transactions[j].receiver == _address (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#709)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Arbitrable.rule(uint256,uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#27) is not in mixedCase
+Parameter Arbitrable.rule(uint256,uint256)._ruling (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#27) is not in mixedCase
+Parameter Arbitrator.createDispute(uint256,bytes)._extraData (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#55) is not in mixedCase
+Parameter Arbitrator.appeal(uint256,bytes)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#59) is not in mixedCase
+Parameter Arbitrator.appeal(uint256,bytes)._extraData (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#59) is not in mixedCase
+Parameter CentralizedArbitrator.setArbitrationPrice(uint256)._arbitrationPrice (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#112) is not in mixedCase
+Parameter CentralizedArbitrator.createDispute(uint256,bytes)._choices (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#139) is not in mixedCase
+Parameter CentralizedArbitrator.createDispute(uint256,bytes)._extraData (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#139) is not in mixedCase
+Parameter CentralizedArbitrator.giveRuling(uint256,uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#171) is not in mixedCase
+Parameter CentralizedArbitrator.giveRuling(uint256,uint256)._ruling (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#171) is not in mixedCase
+Parameter CentralizedArbitrator.disputeStatus(uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#179) is not in mixedCase
+Parameter CentralizedArbitrator.currentRuling(uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#187) is not in mixedCase
+Parameter AppealableArbitrator.changeArbitrator(Arbitrator)._arbitrator (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#235) is not in mixedCase
+Parameter AppealableArbitrator.changeTimeOut(uint256)._timeOut (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#242) is not in mixedCase
+Parameter AppealableArbitrator.getAppealDisputeID(uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#251) is not in mixedCase
+Parameter AppealableArbitrator.appeal(uint256,bytes)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263) is not in mixedCase
+Parameter AppealableArbitrator.appeal(uint256,bytes)._extraData (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#263) is not in mixedCase
+Parameter AppealableArbitrator.giveRuling(uint256,uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#278) is not in mixedCase
+Parameter AppealableArbitrator.giveRuling(uint256,uint256)._ruling (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#278) is not in mixedCase
+Parameter AppealableArbitrator.appealCost(uint256,bytes)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#305) is not in mixedCase
+Parameter AppealableArbitrator.appealCost(uint256,bytes)._extraData (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#305) is not in mixedCase
+Parameter AppealableArbitrator.disputeStatus(uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#316) is not in mixedCase
+Parameter AppealableArbitrator.executeRuling(uint256,uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#328) is not in mixedCase
+Parameter AppealableArbitrator.executeRuling(uint256,uint256)._ruling (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#328) is not in mixedCase
+Parameter MultipleArbitrableTransaction.createTransaction(uint256,address,string)._timeoutPayment (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#443) is not in mixedCase
+Parameter MultipleArbitrableTransaction.createTransaction(uint256,address,string)._receiver (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#444) is not in mixedCase
+Parameter MultipleArbitrableTransaction.createTransaction(uint256,address,string)._metaEvidence (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#445) is not in mixedCase
+Parameter MultipleArbitrableTransaction.pay(uint256,uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467) is not in mixedCase
+Parameter MultipleArbitrableTransaction.pay(uint256,uint256)._amount (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467) is not in mixedCase
+Parameter MultipleArbitrableTransaction.reimburse(uint256,uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482) is not in mixedCase
+Parameter MultipleArbitrableTransaction.reimburse(uint256,uint256)._amountReimbursed (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482) is not in mixedCase
+Parameter MultipleArbitrableTransaction.executeTransaction(uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496) is not in mixedCase
+Parameter MultipleArbitrableTransaction.timeOutBySender(uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#510) is not in mixedCase
+Parameter MultipleArbitrableTransaction.timeOutByReceiver(uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#522) is not in mixedCase
+Parameter MultipleArbitrableTransaction.payArbitrationFeeBySender(uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#536) is not in mixedCase
+Parameter MultipleArbitrableTransaction.payArbitrationFeeByReceiver(uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#562) is not in mixedCase
+Parameter MultipleArbitrableTransaction.raiseDispute(uint256,uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587) is not in mixedCase
+Parameter MultipleArbitrableTransaction.raiseDispute(uint256,uint256)._arbitrationCost (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587) is not in mixedCase
+Parameter MultipleArbitrableTransaction.submitEvidence(uint256,string)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613) is not in mixedCase
+Parameter MultipleArbitrableTransaction.submitEvidence(uint256,string)._evidence (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613) is not in mixedCase
+Parameter MultipleArbitrableTransaction.appeal(uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#632) is not in mixedCase
+Parameter MultipleArbitrableTransaction.rule(uint256,uint256)._disputeID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643) is not in mixedCase
+Parameter MultipleArbitrableTransaction.rule(uint256,uint256)._ruling (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#643) is not in mixedCase
+Parameter MultipleArbitrableTransaction.executeRuling(uint256,uint256)._transactionID (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658) is not in mixedCase
+Parameter MultipleArbitrableTransaction.executeRuling(uint256,uint256)._ruling (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658) is not in mixedCase
+Parameter MultipleArbitrableTransaction.getTransactionIDsByAddress(address)._address (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#697) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in MultipleArbitrableTransaction.executeRuling(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#658-678):
+	External calls:
+	- transaction.sender.send(transaction.senderFee + transaction.amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#665)
+	- transaction.receiver.send(transaction.receiverFee + transaction.amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#667)
+	- transaction.sender.send(split_amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#670)
+	- transaction.receiver.send(split_amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#671)
+	State variables written after the call(s):
+	- transaction.amount = 0 (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#674)
+	- transaction.senderFee = 0 (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#675)
+	- transaction.receiverFee = 0 (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#676)
+	- transaction.status = Status.Resolved (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#677)
+Reentrancy in MultipleArbitrableTransaction.executeTransaction(uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#496-505):
+	External calls:
+	- transaction.receiver.transfer(transaction.amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#501)
+	State variables written after the call(s):
+	- transaction.amount = 0 (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#502)
+	- transaction.status = Status.Resolved (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#504)
+Reentrancy in MultipleArbitrableTransaction.pay(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#467-476):
+	External calls:
+	- transaction.receiver.transfer(_amount) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#473)
+	State variables written after the call(s):
+	- transaction.amount -= _amount (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#474)
+	Event emitted after the call(s):
+	- Payment(_transactionID,_amount,msg.sender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#475)
+Reentrancy in MultipleArbitrableTransaction.raiseDispute(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#587-607):
+	External calls:
+	- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+	External calls sending eth:
+	- transaction.disputeId = arbitrator.createDispute.value(_arbitrationCost)(AMOUNT_OF_CHOICES,arbitratorExtraData) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#590)
+	- transaction.sender.send(extraFeeSender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#598)
+	State variables written after the call(s):
+	- transaction.receiverFee = _arbitrationCost (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#604)
+Reentrancy in MultipleArbitrableTransaction.reimburse(uint256,uint256) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#482-491):
+	External calls:
+	- transaction.sender.transfer(_amountReimbursed) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#488)
+	State variables written after the call(s):
+	- transaction.amount -= _amountReimbursed (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#489)
+	Event emitted after the call(s):
+	- Payment(_transactionID,_amountReimbursed,msg.sender) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#490)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Loop condition i < transactions.length (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#699) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition j < transactions.length (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#708) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+createTransaction(uint256,address,string) should be declared external:
+	- MultipleArbitrableTransaction.createTransaction(uint256,address,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#442-461)
+submitEvidence(uint256,string) should be declared external:
+	- MultipleArbitrableTransaction.submitEvidence(uint256,string) (../sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol#613-625)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x5906db495c9f27f73a9c46790cc79d860a6e9b5d.sol analyzed (6 contracts with 100 detectors), 93 result(s) found

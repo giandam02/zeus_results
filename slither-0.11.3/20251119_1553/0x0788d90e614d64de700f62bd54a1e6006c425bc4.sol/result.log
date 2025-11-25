@@ -1,0 +1,73 @@
+'solc --version' running
+'solc /sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.transfer(address(this).balance) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#372)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) use msg.value in a loop: amount = msg.value.mul(weight[i]).div(weightSum) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#351)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#msgvalue-inside-a-loop
+
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) ignores return value by set.transfer(msg.sender,set.balanceOf(this)) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#369)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) ignores return value by set.transferFrom(msg.sender,this,amount) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#396)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) performs a multiplication on the result of a division:
+	- amount = amountArg.div(naturalUnit).mul(naturalUnit) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#394)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) ignores return value by (weight[i],None) = kyber.getExpectedRate(components[i],ETHER_ADDRESS,units[i]) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#339)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) ignores return value by kyber.tradeWithHint(components[i],token.balanceOf(this),ETHER_ADDRESS,this,1 << 255,0,0,) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#408-417)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) has external calls inside a loop: (weight[i],None) = kyber.getExpectedRate(components[i],ETHER_ADDRESS,units[i]) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#339)
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) has external calls inside a loop: token.allowance(this,set) == 0 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#347)
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) has external calls inside a loop: require(bool,string)(token.approve(set,uint256(- 1)),Approve failed) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#348)
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) has external calls inside a loop: received = kyber.tradeWithHint.value(amount)(ETHER_ADDRESS,amount,components[i],this,1 << 255,0,0,) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#352-361)
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) has external calls inside a loop: token.balanceOf(this) > 0 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#376)
+SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) has external calls inside a loop: require(bool,string)(token.transfer(msg.sender,token.balanceOf(this)),transfer failed) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#377)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) has external calls inside a loop: token.allowance(this,kyber) == 0 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#404)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) has external calls inside a loop: require(bool,string)(token.approve(set,uint256(- 1)),Approve failed) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#405)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) has external calls inside a loop: kyber.tradeWithHint(components[i],token.balanceOf(this),ETHER_ADDRESS,this,1 << 255,0,0,) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#408-417)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) has external calls inside a loop: token.balanceOf(this) > 0 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#419)
+SetBuyer.sell(ISetToken,uint256,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#386-427) has external calls inside a loop: require(bool,string)(token.transfer(msg.sender,token.balanceOf(this)),transfer failed) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#420)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Variable 'SetBuyer.buy(ISetToken,IKyberNetworkProxy).token (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#345)' in SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) potentially used before declaration: token = IERC20(components[i]) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#375)
+Variable 'SetBuyer.buy(ISetToken,IKyberNetworkProxy).token (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#345)' in SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) potentially used before declaration: token.balanceOf(this) > 0 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#376)
+Variable 'SetBuyer.buy(ISetToken,IKyberNetworkProxy).token (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#345)' in SetBuyer.buy(ISetToken,IKyberNetworkProxy) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#326-380) potentially used before declaration: require(bool,string)(token.transfer(msg.sender,token.balanceOf(this)),transfer failed) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#377)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+ExternalCall.externalCall(address,uint256,bytes,uint256,uint256) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#110-127) uses assembly
+	- INLINE ASM (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#112-127)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#1)
+	- ^0.4.24 (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#148)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+tradeWithHint(address,uint256,address,address,uint256,uint256,address,bytes) should be declared external:
+	- IKyberNetworkProxy.tradeWithHint(address,uint256,address,address,uint256,uint256,address,bytes) (../sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol#292-304)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x0788d90e614d64de700f62bd54a1e6006c425bc4.sol analyzed (6 contracts with 100 detectors), 25 result(s) found

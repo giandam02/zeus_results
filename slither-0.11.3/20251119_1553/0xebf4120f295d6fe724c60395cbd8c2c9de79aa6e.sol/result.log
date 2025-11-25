@@ -1,0 +1,46 @@
+'solc --version' running
+'solc /sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SPPTToken.name (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#135) shadows:
+	- BasicToken.name (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#59)
+SPPTToken.symbol (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#136) shadows:
+	- BasicToken.symbol (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#60)
+SPPTToken.decimals (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#137) shadows:
+	- BasicToken.decimals (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+SPPTToken.constructor() (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#138-143) uses literals with too many digits:
+	- _totalSupply = 1000000000 * (10 ** uint256(decimals)) (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#139)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+BasicToken.decimals (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#61) should be constant 
+BasicToken.name (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#59) should be constant 
+BasicToken.symbol (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#60) should be constant 
+SPPTToken.decimals (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#137) should be constant 
+SPPTToken.name (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#135) should be constant 
+SPPTToken.symbol (../sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol#136) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xebf4120f295d6fe724c60395cbd8c2c9de79aa6e.sol analyzed (6 contracts with 100 detectors), 12 result(s) found

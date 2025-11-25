@@ -1,0 +1,175 @@
+'solc --version' running
+'solc /sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738) uses arbitrary from in transferFrom: nonFungibleContract.transferFrom(owner,bidder,_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#721)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Reentrancy in Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738):
+	External calls:
+	- owner = nonFungibleContract.ownerOf(_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#702)
+	State variables written after the call(s):
+	- delete tokenIdToOffer[_tokenId] (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#718)
+	OffersBase.tokenIdToOffer (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#428) can be used in cross function reentrancies:
+	- Offers.batchRemoveExpired(uint256[]) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#745-800)
+	- Offers.bidderWithdrawFunds(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#837-852)
+	- Offers.cancelOffer(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#644-675)
+	- Offers.createOffer(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#565-638)
+	- Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738)
+	- OffersBase.tokenIdToOffer (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#428)
+	- Offers.updateOffer(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#809-830)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Offers.createOffer(uint256).previousBidder (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#607) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+OffersAccessControl.setCEO(address) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#75-78) should emit an event for: 
+	- ceoAddress = _newCEO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#77) 
+	- ceoAddress = _newCEO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#77) 
+OffersAccessControl.setCOO(address) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#82-85) should emit an event for: 
+	- cooAddress = _newCOO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#84) 
+OffersAccessControl.setCFO(address) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#89-92) should emit an event for: 
+	- cfoAddress = _newCFO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#91) 
+	- cfoAddress = _newCFO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#91) 
+OffersAccessControl.setLostAndFound(address) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#96-99) should emit an event for: 
+	- lostAndFoundAddress = _newLostAndFound (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#98) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+OffersBase._tryPushFunds(uint256,address,uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#478-490) has external calls inside a loop: success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	Calls stack containing the loop:
+		Offers.batchRemoveExpired(uint256[])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738):
+	External calls:
+	- owner = nonFungibleContract.ownerOf(_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#702)
+	- nonFungibleContract.transferFrom(owner,bidder,_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#721)
+	State variables written after the call(s):
+	- totalCFOEarnings += cfoEarnings (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#726)
+Reentrancy in Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738):
+	External calls:
+	- owner = nonFungibleContract.ownerOf(_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#702)
+	- nonFungibleContract.transferFrom(owner,bidder,_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#721)
+	External calls sending eth:
+	- _tryPushFunds(_tokenId,owner,offerPrice) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#729)
+		- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	State variables written after the call(s):
+	- _tryPushFunds(_tokenId,owner,offerPrice) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#729)
+		- totalLostAndFoundBalance = totalLostAndFoundBalance + _amount (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#485)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738):
+	External calls:
+	- owner = nonFungibleContract.ownerOf(_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#702)
+	- nonFungibleContract.transferFrom(owner,bidder,_tokenId) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#721)
+	External calls sending eth:
+	- _tryPushFunds(_tokenId,owner,offerPrice) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#729)
+		- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	Event emitted after the call(s):
+	- OfferFulfilled(_tokenId,bidder,owner,offerPrice,cfoEarnings) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#731-737)
+	- PushFundsFailed(_tokenId,_to,_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#488)
+		- _tryPushFunds(_tokenId,owner,offerPrice) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#729)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+OffersBase._isOfferActive(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#467-469) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < _expiresAt (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#468)
+Offers.updateOffer(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#809-830) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(msg.sender == offer.bidder,caller must be bidder of offer to be updated) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#816)
+Offers.bidderWithdrawFunds(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#837-852) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_offerExists(offer.expiresAt),offer to withdraw funds from must exist) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#840)
+	- require(bool,string)(msg.sender == offer.bidder,only bidders can withdraw their funds in escrow) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#841)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Offers.batchRemoveExpired(uint256[]) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#745-800) has costly operations inside a loop:
+	- delete tokenIdToOffer[tokenId] (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#775)
+OffersBase._tryPushFunds(uint256,address,uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#478-490) has costly operations inside a loop:
+	- totalLostAndFoundBalance = totalLostAndFoundBalance + _amount (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#485)
+	Calls stack containing the loop:
+		Offers.batchRemoveExpired(uint256[])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter OffersAccessControl.setCEO(address)._newCEO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#75) is not in mixedCase
+Parameter OffersAccessControl.setCOO(address)._newCOO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#82) is not in mixedCase
+Parameter OffersAccessControl.setCFO(address)._newCFO (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#89) is not in mixedCase
+Parameter OffersAccessControl.setLostAndFound(address)._newLostAndFound (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#96) is not in mixedCase
+Parameter OffersConfig.setMinimumTotalValue(uint256)._newMinTotal (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#226) is not in mixedCase
+Parameter OffersConfig.setGlobalDuration(uint256)._newDuration (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#237) is not in mixedCase
+Parameter OffersConfig.setOfferCut(uint256)._newOfferCut (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#248) is not in mixedCase
+Parameter OffersConfig.setUnsuccessfulFee(uint256)._newUnsuccessfulFee (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#262) is not in mixedCase
+Parameter OffersConfig.setMinimumPriceIncrement(uint256)._newMinimumPriceIncrement (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#273) is not in mixedCase
+Parameter Offers.createOffer(uint256)._tokenId (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#565) is not in mixedCase
+Parameter Offers.cancelOffer(uint256)._tokenId (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#644) is not in mixedCase
+Parameter Offers.fulfillOffer(uint256,uint128)._tokenId (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694) is not in mixedCase
+Parameter Offers.fulfillOffer(uint256,uint128)._minOfferPrice (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694) is not in mixedCase
+Parameter Offers.batchRemoveExpired(uint256[])._tokenIds (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#745) is not in mixedCase
+Parameter Offers.updateOffer(uint256)._tokenId (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#809) is not in mixedCase
+Parameter Offers.bidderWithdrawFunds(uint256)._tokenId (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#837) is not in mixedCase
+Constant Offers.InterfaceSignature_ERC721 (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#516) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in OffersBase._tryPushFunds(uint256,address,uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#478-490):
+	External calls:
+	- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	State variables written after the call(s):
+	- totalLostAndFoundBalance = totalLostAndFoundBalance + _amount (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#485)
+	Event emitted after the call(s):
+	- PushFundsFailed(_tokenId,_to,_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#488)
+Reentrancy in Offers.batchRemoveExpired(uint256[]) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#745-800):
+	External calls:
+	- _tryPushFunds(tokenId,bidder,toRefund) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#782-786)
+		- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	State variables written after the call(s):
+	- delete tokenIdToOffer[tokenId] (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#775)
+	- totalCFOEarnings += cumulativeCFOEarnings (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#798)
+	Event emitted after the call(s):
+	- ExpiredOfferRemoved(tokenId,bidder,toRefund,cfoEarnings) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#788-793)
+Reentrancy in Offers.bidderWithdrawFunds(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#837-852):
+	External calls:
+	- msg.sender.transfer(total) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#849)
+	Event emitted after the call(s):
+	- BidderWithdrewFundsWhenFrozen(_tokenId,msg.sender,total) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#851)
+Reentrancy in Offers.cancelOffer(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#644-675):
+	External calls:
+	- _tryPushFunds(_tokenId,bidder,toRefund) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#667)
+		- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	Event emitted after the call(s):
+	- OfferCancelled(_tokenId,bidder,toRefund,cfoEarnings) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#669-674)
+Reentrancy in Offers.createOffer(uint256) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#565-638):
+	External calls:
+	- _tryPushFunds(_tokenId,previousBidder,toRefund) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#624-628)
+		- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	Event emitted after the call(s):
+	- OfferCreated(_tokenId,msg.sender,newExpiresAt,msg.value,offerPrice) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#631-637)
+Reentrancy in Offers.fulfillOffer(uint256,uint128) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#694-738):
+	External calls:
+	- _tryPushFunds(_tokenId,owner,offerPrice) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#729)
+		- success = _to.send(_amount) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#481)
+	Event emitted after the call(s):
+	- OfferFulfilled(_tokenId,bidder,owner,offerPrice,cfoEarnings) (../sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol#731-737)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xb90b493864d030c81335f40a5892bd8b1a0c6562.sol analyzed (5 contracts with 100 detectors), 41 result(s) found

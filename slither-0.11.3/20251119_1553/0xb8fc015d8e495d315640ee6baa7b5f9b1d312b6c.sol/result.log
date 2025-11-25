@@ -1,0 +1,121 @@
+'solc --version' running
+'solc /sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#86-95) uses arbitrary from in transferFrom: require(bool)(_token.transferFrom(_from,_to,_value)) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#94)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+TokenTimelockPool (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#239-385) contract sets array length with a user-controlled value:
+	- beneficiaryDistributionContracts[_beneficiary].push(tokenTimelock) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#338)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in TokenTimelockPool.addBeneficiary(address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#311-345):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= _amount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#322)
+	State variables written after the call(s):
+	- distributedTokens = distributedTokens.add(_amount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#329)
+	TokenTimelockPool.distributedTokens (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#253) can be used in cross function reentrancies:
+	- TokenTimelockPool.addBeneficiary(address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#311-345)
+	- TokenTimelockPool.constructor(ERC20Basic,uint256,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#281-294)
+	- TokenTimelockPool.distributedTokens (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#253)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Claimable.transferOwnership(address) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#185-187) should emit an event for: 
+	- pendingOwner = newOwner (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#186) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+TokenTimelock.constructor(ERC20Basic,address,uint256)._beneficiary (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#213) lacks a zero-check on :
+		- beneficiary = _beneficiary (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#221)
+Claimable.transferOwnership(address).newOwner (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#185) lacks a zero-check on :
+		- pendingOwner = newOwner (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#186)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in TokenTimelockPool.addBeneficiary(address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#311-345):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= _amount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#322)
+	State variables written after the call(s):
+	- beneficiaries.push(_beneficiary) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#325)
+	- beneficiaryDistributionContracts[_beneficiary].push(tokenTimelock) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#338)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TokenTimelockPool.addBeneficiary(address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#311-345):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= _amount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#322)
+	- token.safeTransfer(tokenTimelock,_amount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#341)
+	Event emitted after the call(s):
+	- BeneficiaryAdded(_beneficiary,tokenTimelock,_amount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#343)
+Reentrancy in TokenTimelockPool.reclaim() (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#353-361):
+	External calls:
+	- reclaimableAmount = token.balanceOf(address(this)) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#356)
+	- token.safeTransfer(owner,reclaimableAmount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#358)
+	Event emitted after the call(s):
+	- Reclaim(reclaimableAmount) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#359)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenTimelock.constructor(ERC20Basic,address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#211-223) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_releaseTime > block.timestamp) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#219)
+TokenTimelock.release() (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#228-236) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp >= releaseTime) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#230)
+TokenTimelockPool.constructor(ERC20Basic,uint256,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#281-294) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_releaseDate > block.timestamp) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#288)
+TokenTimelockPool.addBeneficiary(address,uint256) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#311-345) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp < releaseDate) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#318)
+TokenTimelockPool.reclaim() (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#353-361) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp > releaseDate) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#355)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Ownable._transferOwnership(address) (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#158-162) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#8) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#8) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#24) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#24) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#34) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#34) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#42) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#42) is not in mixedCase
+Parameter SafeERC20.safeTransfer(ERC20Basic,address,uint256)._token (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#77) is not in mixedCase
+Parameter SafeERC20.safeTransfer(ERC20Basic,address,uint256)._to (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#78) is not in mixedCase
+Parameter SafeERC20.safeTransfer(ERC20Basic,address,uint256)._value (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#79) is not in mixedCase
+Parameter SafeERC20.safeTransferFrom(ERC20,address,address,uint256)._token (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#87) is not in mixedCase
+Parameter SafeERC20.safeTransferFrom(ERC20,address,address,uint256)._from (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#88) is not in mixedCase
+Parameter SafeERC20.safeTransferFrom(ERC20,address,address,uint256)._to (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#89) is not in mixedCase
+Parameter SafeERC20.safeTransferFrom(ERC20,address,address,uint256)._value (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#90) is not in mixedCase
+Parameter SafeERC20.safeApprove(ERC20,address,uint256)._token (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#98) is not in mixedCase
+Parameter SafeERC20.safeApprove(ERC20,address,uint256)._spender (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#99) is not in mixedCase
+Parameter SafeERC20.safeApprove(ERC20,address,uint256)._value (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#100) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#150) is not in mixedCase
+Parameter TokenTimelockPool.addBeneficiary(address,uint256)._beneficiary (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#312) is not in mixedCase
+Parameter TokenTimelockPool.addBeneficiary(address,uint256)._amount (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#313) is not in mixedCase
+Parameter TokenTimelockPool.getDistributionContracts(address)._beneficiary (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#369) is not in mixedCase
+Parameter TokenTimelockPool.beneficiaryExists(address)._beneficiary (../sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol#380) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xb8fc015d8e495d315640ee6baa7b5f9b1d312b6c.sol analyzed (8 contracts with 100 detectors), 40 result(s) found

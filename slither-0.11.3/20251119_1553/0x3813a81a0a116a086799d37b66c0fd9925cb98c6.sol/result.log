@@ -1,0 +1,152 @@
+'solc --version' running
+'solc /sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:95:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function WTF () public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:47:5: Warning: Functions in interfaces should be declared external.
+    function distr(address _to, uint256 _value) public returns (bool);
+    ^----------------------------------------------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:48:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() constant public returns (uint256 supply);
+    ^--------------------------------------------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:49:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner) constant public returns (uint256 balance);
+    ^---------------------------------------------------------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:121:9: Warning: Invoking events without "emit" prefix is deprecated.
+        DistrFinished();
+        ^-------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:129:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Distr(_to, _amount);
+        ^-----------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:130:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0), _to, _amount);
+        ^--------------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:228:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _amount);
+        ^--------------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:241:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _amount);
+        ^---------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:249:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:264:32: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint256 etherBalance = this.balance;
+                               ^----------^
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol:277:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(burner, _value);
+        ^------------------^
+
+
+WTF.getTokens() (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#187-209) performs a multiplication on the result of a division:
+	- value = value.div(100000).mul(99999) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#208)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+WTF.totalSupply (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#65) shadows:
+	- ERC20Basic.totalSupply (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+WTF.transferOwnership(address) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#101-105) should emit an event for: 
+	- owner = newOwner (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#103) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+WTF.onlyWhitelist() (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#90-93) compares to a boolean constant:
+	-require(bool)(blacklist[msg.sender] == false) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#91)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+WTF.distr(address,uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125-136) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#126)
+	Calls stack containing the loop:
+		WTF.airdrop(address[])
+WTF.distr(address,uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125-136) has costly operations inside a loop:
+	- totalRemaining = totalRemaining.sub(_amount) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#127)
+	Calls stack containing the loop:
+		WTF.airdrop(address[])
+WTF.distr(address,uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125-136) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#126)
+	Calls stack containing the loop:
+		WTF.distribution(address[],uint256)
+WTF.distr(address,uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125-136) has costly operations inside a loop:
+	- totalRemaining = totalRemaining.sub(_amount) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#127)
+	Calls stack containing the loop:
+		WTF.distribution(address[],uint256)
+WTF.distr(address,uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125-136) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#126)
+	Calls stack containing the loop:
+		WTF.distributeAmounts(address[],uint256[])
+WTF.distr(address,uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125-136) has costly operations inside a loop:
+	- totalRemaining = totalRemaining.sub(_amount) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#127)
+	Calls stack containing the loop:
+		WTF.distributeAmounts(address[],uint256[])
+WTF.distributeAmounts(address[],uint256[]) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#168-181) has costly operations inside a loop:
+	- distributionFinished = true (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#178)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+WTF.totalRemaining (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#67) is set pre-construction with a non-constant function or state variable:
+	- totalSupply.sub(totalDistributed)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter WTF.distr(address,uint256)._to (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125) is not in mixedCase
+Parameter WTF.distr(address,uint256)._amount (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#125) is not in mixedCase
+Parameter WTF.balanceOf(address)._owner (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#211) is not in mixedCase
+Parameter WTF.transfer(address,uint256)._to (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#221) is not in mixedCase
+Parameter WTF.transfer(address,uint256)._amount (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#221) is not in mixedCase
+Parameter WTF.transferFrom(address,address,uint256)._from (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#232) is not in mixedCase
+Parameter WTF.transferFrom(address,address,uint256)._to (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#232) is not in mixedCase
+Parameter WTF.transferFrom(address,address,uint256)._amount (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#232) is not in mixedCase
+Parameter WTF.approve(address,uint256)._spender (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#245) is not in mixedCase
+Parameter WTF.approve(address,uint256)._value (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#245) is not in mixedCase
+Parameter WTF.allowance(address,address)._owner (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#253) is not in mixedCase
+Parameter WTF.allowance(address,address)._spender (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#253) is not in mixedCase
+Parameter WTF.burn(uint256)._value (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#268) is not in mixedCase
+Parameter WTF.withdrawForeignTokens(address)._tokenContract (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#280) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+WTF.getTokens() (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#187-209) uses literals with too many digits:
+	- value = value.div(100000).mul(99999) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#208)
+WTF.slitherConstructorVariables() (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#52-288) uses literals with too many digits:
+	- totalSupply = 1000000000e8 (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#65)
+WTF.slitherConstructorVariables() (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#52-288) uses literals with too many digits:
+	- totalDistributed = 100000000e8 (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#66)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#33) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+enableWhitelist(address[]) should be declared external:
+	- WTF.enableWhitelist(address[]) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#107-111)
+disableWhitelist(address[]) should be declared external:
+	- WTF.disableWhitelist(address[]) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#113-117)
+airdrop(address[]) should be declared external:
+	- WTF.airdrop(address[]) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#138-151)
+distribution(address[],uint256) should be declared external:
+	- WTF.distribution(address[],uint256) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#153-166)
+distributeAmounts(address[],uint256[]) should be declared external:
+	- WTF.distributeAmounts(address[],uint256[]) (../sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol#168-181)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x3813a81a0a116a086799d37b66c0fd9925cb98c6.sol analyzed (6 contracts with 100 detectors), 37 result(s) found

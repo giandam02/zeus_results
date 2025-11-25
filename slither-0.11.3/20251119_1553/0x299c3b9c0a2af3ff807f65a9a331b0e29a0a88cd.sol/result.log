@@ -1,0 +1,48 @@
+'solc --version' running
+'solc /sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Tank.withdrawToken(address,address,uint256) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#30-32) ignores return value by ERC20(token).transfer(toAddress,amount) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#31)
+Tank.withdrawInBatch(address[],address[],uint256[]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#34-45) ignores return value by ERC20(tokenList[i]).transfer(toAddressList[i],amountList[i]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#42)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Tank.withdrawEther(address,uint256).toAddress (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#26) lacks a zero-check on :
+		- toAddress.transfer(amount) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Tank.withdrawInBatch(address[],address[],uint256[]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#34-45) has external calls inside a loop: toAddressList[i].transfer(amountList[i]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#40)
+Tank.withdrawInBatch(address[],address[],uint256[]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#34-45) has external calls inside a loop: ERC20(tokenList[i]).transfer(toAddressList[i],amountList[i]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#42)
+Tank.withdrawEtherInBatch(address[],uint256[]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#47-53) has external calls inside a loop: toAddressList[i].transfer(amountList[i]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#51)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#4-13) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+withdrawInBatch(address[],address[],uint256[]) should be declared external:
+	- Tank.withdrawInBatch(address[],address[],uint256[]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#34-45)
+withdrawEtherInBatch(address[],uint256[]) should be declared external:
+	- Tank.withdrawEtherInBatch(address[],uint256[]) (../sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol#47-53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x299c3b9c0a2af3ff807f65a9a331b0e29a0a88cd.sol analyzed (3 contracts with 100 detectors), 11 result(s) found

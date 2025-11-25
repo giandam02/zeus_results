@@ -1,0 +1,183 @@
+'solc --version' running
+'solc /sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Impossible to generate IR for TTTSan.constructor (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#924-944):
+ 'NoneType' object has no attribute 'parameters'
+Impossible to generate IR for TTTSan.sanMint (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#946-964):
+ 'NoneType' object has no attribute 'parameters'
+Impossible to generate IR for TTTSan.specialSanMint (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1099-1110):
+ 'NoneType' object has no attribute 'parameters'
+
+ERC721Token (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#680-867) contract sets array length with a user-controlled value:
+	- ownedTokens[_to].push(_tokenId) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#797)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+TTTSan.buySanSlot(address,uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1007-1014) ignores return value by ttt.transferFrom(msg.sender,wallet,_tip) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1011)
+TTTSan.emptyTTT() (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1090-1092) ignores return value by ttt.transfer(msg.sender,ttt.balanceOf(address(this))) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1091)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+TTTSan.sanOwnership (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#895) is never initialized. It is used in:
+	- TTTSan.sanitize(string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1114-1119)
+TTTSan.sans (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#909) is never initialized. It is used in:
+	- TTTSan.getSanName(uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#974-976)
+	- TTTSan.getSanageLink(uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#978-980)
+	- TTTSan.getSanTimeAlive(uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#982-984)
+	- TTTSan.getSanTimeLastMove(uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#986-988)
+	- TTTSan.getSanPrevOwner(uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#990-992)
+	- TTTSan.marketSale(uint256,string,address,address) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1016-1028)
+	- TTTSan.updateTokenUri(uint256,string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1084-1088)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+AddressUtils.isContract(address) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#78-89) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+TTTSan.setMarketAddress(address)._marketAddress (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1072) lacks a zero-check on :
+		- marketAddress = _marketAddress (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1073)
+TTTSan.setOwnerWallet(address)._wallet (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1080) lacks a zero-check on :
+		- wallet = _wallet (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1081)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in TTTSan.buySanSlot(address,uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1007-1014):
+	External calls:
+	- ttt.transferFrom(msg.sender,wallet,_tip) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1011)
+	Event emitted after the call(s):
+	- SanSlotPurchase(_sanOwner,1) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1012)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+AddressUtils.isContract(address) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#78-89) uses assembly
+	- INLINE ASM (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#87-88)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ERC721BasicToken._burn(address,uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#569-573) is never used and should be removed
+ERC721BasicToken._mint(address,uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#558-562) is never used and should be removed
+ERC721Token._burn(address,uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#846-865) is never used and should be removed
+ERC721Token._mint(address,uint256) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#833-838) is never used and should be removed
+TTTSan._sanMint(uint256,address,string,string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1121-1130) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#51) is not in mixedCase
+Parameter SupportsInterfaceWithLookup.supportsInterface(bytes4)._interfaceId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#193) is not in mixedCase
+Constant ERC721Basic.InterfaceId_ERC721 (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#219) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Basic.InterfaceId_ERC721Exists (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#233) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Basic.InterfaceId_ERC721Enumerable (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#239) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Basic.InterfaceId_ERC721Metadata (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#247) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter ERC721BasicToken.balanceOf(address)._owner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#371) is not in mixedCase
+Parameter ERC721BasicToken.ownerOf(uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#381) is not in mixedCase
+Parameter ERC721BasicToken.exists(uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#392) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#405) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#405) is not in mixedCase
+Parameter ERC721BasicToken.getApproved(uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#419) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#429) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._approved (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#429) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._owner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#442) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._operator (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#443) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._from (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#461) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#462) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#463) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._from (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#491) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#492) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#493) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._from (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#514) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#515) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#516) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._data (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#517) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._spender (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#534) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#535) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._owner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#581) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#581) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#593) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#593) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._from (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#604) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#604) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._from (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#620) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#621) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#622) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._data (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#623) is not in mixedCase
+Parameter ERC721Token.tokenURI(uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#736) is not in mixedCase
+Parameter ERC721Token.tokenOfOwnerByIndex(address,uint256)._owner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#748) is not in mixedCase
+Parameter ERC721Token.tokenOfOwnerByIndex(address,uint256)._index (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#749) is not in mixedCase
+Parameter ERC721Token.tokenByIndex(uint256)._index (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#773) is not in mixedCase
+Parameter ERC721Token.addTokenTo(address,uint256)._to (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#794) is not in mixedCase
+Parameter ERC721Token.addTokenTo(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#794) is not in mixedCase
+Parameter ERC721Token.removeTokenFrom(address,uint256)._from (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#806) is not in mixedCase
+Parameter ERC721Token.removeTokenFrom(address,uint256)._tokenId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#806) is not in mixedCase
+Parameter TTTSan.sanMint(string,string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#946) is not in mixedCase
+Parameter TTTSan.sanMint(string,string)._sanageUri (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#946) is not in mixedCase
+Parameter TTTSan.getSANOwner(uint256)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#966) is not in mixedCase
+Parameter TTTSan.getSanIdFromName(string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#970) is not in mixedCase
+Parameter TTTSan.getSanName(uint256)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#974) is not in mixedCase
+Parameter TTTSan.getSanageLink(uint256)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#978) is not in mixedCase
+Parameter TTTSan.getSanTimeAlive(uint256)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#982) is not in mixedCase
+Parameter TTTSan.getSanTimeLastMove(uint256)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#986) is not in mixedCase
+Parameter TTTSan.getSanPrevOwner(uint256)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#990) is not in mixedCase
+Parameter TTTSan.getAddressFromSan(string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#994) is not in mixedCase
+Parameter TTTSan.getSanSlots(address)._sanOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#998) is not in mixedCase
+Parameter TTTSan.getSANitized(string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1003) is not in mixedCase
+Parameter TTTSan.buySanSlot(address,uint256)._sanOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1007) is not in mixedCase
+Parameter TTTSan.buySanSlot(address,uint256)._tip (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1007) is not in mixedCase
+Parameter TTTSan.marketSale(uint256,string,address,address)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1016) is not in mixedCase
+Parameter TTTSan.marketSale(uint256,string,address,address)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1016) is not in mixedCase
+Parameter TTTSan.marketSale(uint256,string,address,address)._prevOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1016) is not in mixedCase
+Parameter TTTSan.marketSale(uint256,string,address,address)._newOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1016) is not in mixedCase
+Parameter TTTSan.setSanTTTCost(uint256)._cost (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1034) is not in mixedCase
+Parameter TTTSan.setSanLength(uint256,uint256)._length (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1039) is not in mixedCase
+Parameter TTTSan.setSanLength(uint256,uint256)._pos (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1039) is not in mixedCase
+Parameter TTTSan.setSanMaxAmount(uint256)._amount (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1046) is not in mixedCase
+Parameter TTTSan.setSanMaxFree(uint256)._sanMaxFree (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1051) is not in mixedCase
+Parameter TTTSan.ownerAddSanSlot(address,uint256)._sanOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1055) is not in mixedCase
+Parameter TTTSan.ownerAddSanSlot(address,uint256)._slotCount (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1055) is not in mixedCase
+Parameter TTTSan.ownerAddSanSlotBatch(address[],uint256[])._sanOwner (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1062) is not in mixedCase
+Parameter TTTSan.ownerAddSanSlotBatch(address[],uint256[])._slotCount (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1062) is not in mixedCase
+Parameter TTTSan.setMarketAddress(address)._marketAddress (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1072) is not in mixedCase
+Parameter TTTSan.setBaseUrl(string)._baseUrl (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1076) is not in mixedCase
+Parameter TTTSan.setOwnerWallet(address)._wallet (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1080) is not in mixedCase
+Parameter TTTSan.updateTokenUri(uint256,string)._sanId (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1084) is not in mixedCase
+Parameter TTTSan.updateTokenUri(uint256,string)._newUri (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1084) is not in mixedCase
+Parameter TTTSan.specialSanMint(string,string,address)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1099) is not in mixedCase
+Parameter TTTSan.specialSanMint(string,string,address)._sanageUri (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1099) is not in mixedCase
+Parameter TTTSan.specialSanMint(string,string,address)._address (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1099) is not in mixedCase
+Parameter TTTSan.sanitize(string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1114) is not in mixedCase
+Parameter TTTSan.isValidSan(string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1132) is not in mixedCase
+Parameter TTTSan.sanToLower(string)._sanName (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1164) is not in mixedCase
+Parameter TTTSan.byteToLower(bytes1)._b (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1172) is not in mixedCase
+Parameter TTTSan.strConcat(string,string)._a (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1178) is not in mixedCase
+Parameter TTTSan.strConcat(string,string)._b (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1178) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TTTSan.tttTokenAddress (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#883) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+onERC721Received(address,address,uint256,bytes) should be declared external:
+	- ERC721Receiver.onERC721Received(address,address,uint256,bytes) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#663-670)
+getSanIdFromName(string) should be declared external:
+	- TTTSan.getSanIdFromName(string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#970-972)
+getAddressFromSan(string) should be declared external:
+	- TTTSan.getAddressFromSan(string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#994-996)
+setBaseUrl(string) should be declared external:
+	- TTTSan.setBaseUrl(string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1076-1078)
+updateTokenUri(uint256,string) should be declared external:
+	- TTTSan.updateTokenUri(uint256,string) (../sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol#1084-1088)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x799946d6b94394f3859dad6b66b7fb60e6cd899a.sol analyzed (14 contracts with 100 detectors), 110 result(s) found

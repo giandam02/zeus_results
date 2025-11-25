@@ -1,0 +1,60 @@
+'solc --version' running
+'solc /sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+LockToken (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#188-248) contract sets array length with a user-controlled value:
+	- lockData[lockAddress].lockItems.push(LockItem({endtime:endtimeList[i],remain:remainList[i]})) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#240)
+LockToken (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#188-248) contract sets array length with a user-controlled value:
+	- lockData[lockAddress].lockItems.push(LockItem({endtime:thisEndtime,remain:thisRemain})) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#237)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+LockToken._transfer(address,address,uint256) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#204-217) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < item.endtime && remain < item.remain (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#211)
+MintToken.mint(address,uint256) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#258-276) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp >= mintBegintime) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#259)
+	- require(bool)(leave >= value) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#265)
+	- mintMax > 0 && mintTotal > mintMax (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#269)
+MintToken.mintToMax(address) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#278-299) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp >= mintBegintime) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#279)
+	- value > leave (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#287)
+	- require(bool)(value > 0) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#294)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable BaseToken._totalLimit (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#98) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CustomToken.constructor() (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#303-317) uses literals with too many digits:
+	- totalSupply = 999999999999000000000000000000 (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#307)
+CustomToken.constructor() (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#303-317) uses literals with too many digits:
+	- _totalLimit = 100000000000000000000000000000000 (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#308)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+batchTransfer(address[],uint256[]) should be declared external:
+	- BatchToken.batchTransfer(address[],uint256[]) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#175-185)
+lock(address,uint8,uint256[],uint256[]) should be declared external:
+	- LockToken.lock(address,uint8,uint256[],uint256[]) (../sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol#219-247)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xf2efa34020bcbfebdcafb69b5a80473f495b4bc1.sol analyzed (9 contracts with 100 detectors), 12 result(s) found

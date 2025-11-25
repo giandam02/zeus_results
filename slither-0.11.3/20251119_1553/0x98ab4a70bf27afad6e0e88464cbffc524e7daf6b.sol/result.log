@@ -1,0 +1,48 @@
+'solc --version' running
+'solc /sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Owned.transferOwnership(address)._newOwner (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#82) lacks a zero-check on :
+		- newOwner = _newOwner (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#83)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Owned.transferOwnership(address)._newOwner (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#82) is not in mixedCase
+Parameter WeOneCoin.setName(string)._value (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#218) is not in mixedCase
+Parameter WeOneCoin.setSymbol(string)._value (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#223) is not in mixedCase
+Variable WeOneCoin._totalSupply (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#102) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+WeOneCoin.constructor() (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#110-117) uses literals with too many digits:
+	- _totalSupply = 10000000000000000000000000000 (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#114)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- ApproveAndCallFallBack.receiveApproval(address,uint256,address,bytes) (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#60)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- WeOneCoin.approveAndCall(address,uint256,bytes) (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#196-201)
+setName(string) should be declared external:
+	- WeOneCoin.setName(string) (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#218-221)
+setSymbol(string) should be declared external:
+	- WeOneCoin.setSymbol(string) (../sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol#223-226)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x98ab4a70bf27afad6e0e88464cbffc524e7daf6b.sol analyzed (5 contracts with 100 detectors), 12 result(s) found

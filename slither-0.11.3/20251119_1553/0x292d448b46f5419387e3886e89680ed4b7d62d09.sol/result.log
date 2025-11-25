@@ -1,0 +1,83 @@
+'solc --version' running
+'solc /sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:20:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Ownable() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:55:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function RegistrationBonus(address _token){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:67:13: Warning: Invoking events without "emit" prefix is deprecated.
+            BonusEnrolled(_beneficiary, _userId, bonusAmount);
+            ^-----------------------------------------------^
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:4:5: Warning: No visibility specified. Defaulting to "public". 
+    function mintFromTrustedContract(address _to, uint256 _amount) returns (bool);
+    ^----------------------------------------------------------------------------^
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:20:5: Warning: No visibility specified. Defaulting to "public". 
+    function Ownable() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:38:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwnership(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:55:5: Warning: No visibility specified. Defaulting to "public". 
+    function RegistrationBonus(address _token){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol:60:5: Warning: No visibility specified. Defaulting to "public". 
+    function addBonusToken(address _beneficiary, uint _userId) onlyOwner returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in RegistrationBonus.addBonusToken(address,uint256) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#60-72):
+	External calls:
+	- token.mintFromTrustedContract(_beneficiary,bonusAmount) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#64)
+	State variables written after the call(s):
+	- beneficiaryAddresses[_beneficiary] = _userId (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#65)
+	RegistrationBonus.beneficiaryAddresses (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#49) can be used in cross function reentrancies:
+	- RegistrationBonus.addBonusToken(address,uint256) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#60-72)
+	- RegistrationBonus.beneficiaryAddresses (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#49)
+	- beneficiaryUserIds[_userId] = _beneficiary (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#66)
+	RegistrationBonus.beneficiaryUserIds (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#50) can be used in cross function reentrancies:
+	- RegistrationBonus.addBonusToken(address,uint256) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#60-72)
+	- RegistrationBonus.beneficiaryUserIds (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#50)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Ownable.transferOwnership(address) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#38-42) should emit an event for: 
+	- owner = newOwner (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#40) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+RegistrationBonus.RegistrationBonus(address)._token (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#55) lacks a zero-check on :
+		- tokenAddr = _token (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#56)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in RegistrationBonus.addBonusToken(address,uint256) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#60-72):
+	External calls:
+	- token.mintFromTrustedContract(_beneficiary,bonusAmount) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#64)
+	Event emitted after the call(s):
+	- BonusEnrolled(_beneficiary,_userId,bonusAmount) (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter RegistrationBonus.addBonusToken(address,uint256)._beneficiary (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#60) is not in mixedCase
+Parameter RegistrationBonus.addBonusToken(address,uint256)._userId (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#60) is not in mixedCase
+Constant RegistrationBonus.bonusAmount (../sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol#48) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x292d448b46f5419387e3886e89680ed4b7d62d09.sol analyzed (3 contracts with 100 detectors), 9 result(s) found

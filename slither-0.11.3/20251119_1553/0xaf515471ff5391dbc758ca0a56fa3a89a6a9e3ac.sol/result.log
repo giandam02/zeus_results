@@ -1,0 +1,78 @@
+'solc --version' running
+'solc /sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol:
+/sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol:21:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function BinksBucks(address bossman) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol:64:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, to, amount);
+        ^------------------------------^
+/sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol:74:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, amount);
+        ^-----------------------------------^
+/sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol:85:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(from, to, amount);
+        ^------------------------^
+/sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol:124:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(this, msg.sender, _distribution_size);
+            ^--------------------------------------------^
+
+
+BinksBucks.setCode(uint256) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#94-99) should emit an event for: 
+	- _code = code (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#96) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+BinksBucks.transferEmpire(address).newImperator (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#89) lacks a zero-check on :
+		- imperator = newImperator (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#91)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BinksBucks.canAdd(uint256,uint256) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#51-55) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function BinksBucks.CodeEligible() (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#111-113) is not in mixedCase
+Function BinksBucks.EnterCode(uint256) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#115-126) is not in mixedCase
+Variable BinksBucks._distribution_size (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#15) is not in mixedCase
+Variable BinksBucks._max_distributions (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#16) is not in mixedCase
+Variable BinksBucks._distributions_left (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#17) is not in mixedCase
+Variable BinksBucks._distribution_number (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#18) is not in mixedCase
+Variable BinksBucks._last_distribution (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#19) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+BinksBucks.BinksBucks(address) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#21-27) uses literals with too many digits:
+	- _balances[this] += 250000000000000000000000000 (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#23)
+BinksBucks.BinksBucks(address) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#21-27) uses literals with too many digits:
+	- _totalSupply += 250000000000000000000000000 (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#24)
+BinksBucks.BinksBucks(address) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#21-27) uses literals with too many digits:
+	- _balances[bossman] += 750000000000000000000000000 (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#25)
+BinksBucks.BinksBucks(address) (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#21-27) uses literals with too many digits:
+	- _totalSupply += 750000000000000000000000000 (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#26)
+BinksBucks.slitherConstructorVariables() (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#3-131) uses literals with too many digits:
+	- _distribution_size = 1000000000000000000000 (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#15)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+BinksBucks._decimals (../sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol#7) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xaf515471ff5391dbc758ca0a56fa3a89a6a9e3ac.sol analyzed (1 contracts with 100 detectors), 18 result(s) found

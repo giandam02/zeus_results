@@ -1,0 +1,50 @@
+'solc --version' running
+'solc /sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol:
+/sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol:40:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            msg.sender.transfer(this.balance);
+                                ^----------^
+
+
+BIRTHDAY_GIFT_1_ETH.PutGift(address)._reciver (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#13) lacks a zero-check on :
+		- reciver = _reciver (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#20)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BIRTHDAY_GIFT_1_ETH.GetGift() (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#34-42) uses timestamp for comparisons
+	Dangerous comparisons:
+	- reciver == msg.sender && now > unlockTime (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#38)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract BIRTHDAY_GIFT_1_ETH (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#3-55) is not in CapWords
+Function BIRTHDAY_GIFT_1_ETH.PutGift(address) (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#13-23) is not in mixedCase
+Parameter BIRTHDAY_GIFT_1_ETH.PutGift(address)._reciver (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#13) is not in mixedCase
+Function BIRTHDAY_GIFT_1_ETH.SetGiftTime(uint256) (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#25-32) is not in mixedCase
+Parameter BIRTHDAY_GIFT_1_ETH.SetGiftTime(uint256)._unixTime (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#25) is not in mixedCase
+Function BIRTHDAY_GIFT_1_ETH.GetGift() (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#34-42) is not in mixedCase
+Function BIRTHDAY_GIFT_1_ETH.CloseGift() (../sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol#44-51) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x2634baad203cba4aa4114c132b2e50a3a6027ff9.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

@@ -1,0 +1,394 @@
+'solc --version' running
+'solc /sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:13:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Manageable(address _manager) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:86:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Versionable (string _name, string _version, uint256 _identifier) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:115:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:377:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function SwissCryptoExchangeToken (address initialShareholderAddress, uint256 initialAmount, address _manager)
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:468:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function BaseCompany(string _name,  ... identifier) Manageable(_manager) {}
+  ^-------------------------------------------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:547:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function SwissCryptoExchangeCompany(address _manager) public BaseCompany("SwissCryptoExchangeCompany", "1.0.1", 101, _manager) {}
+  ^-------------------------------------------------------------------------------------------------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:59:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ActivatedContract(now);
+    ^--------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:70:5: Warning: Invoking events without "emit" prefix is deprecated.
+    DeactivatedContract(now);
+    ^----------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:135:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:242:5: Warning: Invoking events without "emit" prefix is deprecated.
+    UpgradedContract(contractIdentifier, oldContractAddress, newContractAddress);
+    ^--------------------------------------------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:278:5: Warning: Invoking events without "emit" prefix is deprecated.
+    RollbackedContract(contractIdentifier, fromContractAddress, toContractAddress);
+    ^----------------------------------------------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:418:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:434:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:448:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_companyAddress, _amount);
+    ^----------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:449:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(0x0, _companyAddress, _amount);
+    ^-------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:686:7: Warning: Invoking events without "emit" prefix is deprecated.
+      SaleEnded(now);
+      ^------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:698:5: Warning: Invoking events without "emit" prefix is deprecated.
+    ProcessedInvestment(investor, weiAmount, shares);
+    ^----------------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:717:5: Warning: Invoking events without "emit" prefix is deprecated.
+    SaleCompleted(currentSale.beneficiary, currentSale.weiRaised, currentSale.sharesSold);
+    ^-----------------------------------------------------------------------------------^
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol:748:5: Warning: Invoking events without "emit" prefix is deprecated.
+    SaleAborted(now);
+    ^--------------^
+
+
+Reentrancy in SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752):
+	External calls:
+	- require(bool)(token().transferFrom(investor,company,currentSale.sharesSold)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#742)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+	- require(bool)(token().transferFrom(company,shareholder,currentSale.sharesCap)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#745)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+	External calls sending eth:
+	- investor.transfer(currentSale.weiRaised) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#739)
+	State variables written after the call(s):
+	- currentSale.exists = false (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#751)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699) performs a multiplication on the result of a division:
+	- shares = weiAmount.mul(rate).div(1000000000000000000) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#662)
+	- excessWei = weiAmount.sub(shares.mul(1000000000000000000).div(rate)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#673)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648):
+	External calls:
+	- require(bool)(token().balanceOf(msg.sender) >= sharesCap) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#629)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+	- onlyMajority() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#621)
+		- totalSharesAmount = token().totalSupply() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#477)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+		- ownedShares = token().balanceOf(shareholder) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#478)
+	State variables written after the call(s):
+	- currentSale.creator = msg.sender (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#632)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.rate = rate (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#633)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.sharesCap = sharesCap (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#634)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.beneficiary = beneficiary (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#635)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.investor = investor (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#636)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.shareholder = msg.sender (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#637)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.weiRaised = 0 (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#638)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.sharesSold = 0 (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#639)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.ended = false (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#640)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+	- currentSale.exists = true (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#641)
+	SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527) can be used in cross function reentrancies:
+	- SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752)
+	- SwissCryptoExchangeCompany.currentSale (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#527)
+	- SwissCryptoExchangeCompany.fallback() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#593-604)
+	- SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721)
+	- SwissCryptoExchangeCompany.initializeNewSale(uint256,uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#613-648)
+	- SwissCryptoExchangeCompany.onlySaleCreator() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#568-571)
+	- SwissCryptoExchangeCompany.onlyWhenNotSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#576-579)
+	- SwissCryptoExchangeCompany.onlyWhenSelling() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#584-587)
+	- SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699)
+Reentrancy in ContractManagementSystem.rollbackContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#251-279):
+	External calls:
+	- require(bool)(contractIdentifier == Versionable(toContractAddress).identifier()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#263)
+	- require(bool)(! Activatable(toContractAddress).active() && existsManagedContract(contractIdentifier,toContractAddress)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#266)
+	- swapContractsStates(contractIdentifier,toContractAddress,fromContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#272)
+		- Activatable(oldContractAddress).deactivate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#292)
+		- Activatable(newContractAddress).activate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#296)
+	State variables written after the call(s):
+	- migrationLocks[contractIdentifier] = false (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#275)
+	ContractManagementSystem.migrationLocks (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#149) can be used in cross function reentrancies:
+	- ContractManagementSystem.onlyWithoutLock(uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#155-158)
+	- ContractManagementSystem.rollbackContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#251-279)
+	- ContractManagementSystem.upgradeContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#204-243)
+Reentrancy in ContractManagementSystem.upgradeContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#204-243):
+	External calls:
+	- require(bool)(! Activatable(newContractAddress).active()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#216)
+	- require(bool)(contractIdentifier == Versionable(newContractAddress).identifier()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#219)
+	- require(bool)(Activatable(oldContractAddress).active()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#229)
+	- swapContractsStates(contractIdentifier,newContractAddress,oldContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#233)
+		- Activatable(oldContractAddress).deactivate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#292)
+		- Activatable(newContractAddress).activate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#296)
+	State variables written after the call(s):
+	- swapContractsStates(contractIdentifier,newContractAddress,oldContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#233)
+		- activeContracts[contractIdentifier] = newContractAddress (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#299)
+	ContractManagementSystem.activeContracts (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#148) can be used in cross function reentrancies:
+	- ContractManagementSystem.activeContracts (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#148)
+	- ContractManagementSystem.getActiveContractAddress(uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#165-179)
+	- ContractManagementSystem.rollbackContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#251-279)
+	- ContractManagementSystem.swapContractsStates(uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#289-300)
+	- ContractManagementSystem.upgradeContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#204-243)
+	- managedContracts[contractIdentifier][newContractAddress] = true (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#236)
+	ContractManagementSystem.managedContracts (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#147) can be used in cross function reentrancies:
+	- ContractManagementSystem.existsManagedContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#187-196)
+	- ContractManagementSystem.managedContracts (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#147)
+	- ContractManagementSystem.upgradeContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#204-243)
+	- migrationLocks[contractIdentifier] = false (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#239)
+	ContractManagementSystem.migrationLocks (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#149) can be used in cross function reentrancies:
+	- ContractManagementSystem.onlyWithoutLock(uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#155-158)
+	- ContractManagementSystem.rollbackContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#251-279)
+	- ContractManagementSystem.upgradeContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#204-243)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Reentrancy in SwissCryptoExchangeToken.mint(uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#443-451):
+	External calls:
+	- _companyAddress = ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#445)
+	- onlyCompany() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#443)
+		- require(bool)(msg.sender == ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#393)
+	State variables written after the call(s):
+	- balances[_companyAddress] = balances[_companyAddress].add(_amount) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#447)
+	- totalSupply = totalSupply.add(_amount) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#446)
+Reentrancy in ContractManagementSystem.swapContractsStates(uint256,address,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#289-300):
+	External calls:
+	- Activatable(oldContractAddress).deactivate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#292)
+	- Activatable(newContractAddress).activate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#296)
+	State variables written after the call(s):
+	- activeContracts[contractIdentifier] = newContractAddress (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#299)
+Reentrancy in SwissCryptoExchangeToken.transfer(address,uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#411-420):
+	External calls:
+	- onlyCompany() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#411)
+		- require(bool)(msg.sender == ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#393)
+	State variables written after the call(s):
+	- balances[msg.sender] = balances[msg.sender].sub(_value) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#416)
+	- balances[_to] = balances[_to].add(_value) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#417)
+Reentrancy in SwissCryptoExchangeToken.transferFrom(address,address,uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428-436):
+	External calls:
+	- onlyCompany() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428)
+		- require(bool)(msg.sender == ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#393)
+	State variables written after the call(s):
+	- balances[_from] = balances[_from].sub(_value) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#432)
+	- balances[_to] = balances[_to].add(_value) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#433)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752):
+	External calls:
+	- require(bool)(token().transferFrom(investor,company,currentSale.sharesSold)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#742)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+	- require(bool)(token().transferFrom(company,shareholder,currentSale.sharesCap)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#745)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+	External calls sending eth:
+	- investor.transfer(currentSale.weiRaised) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#739)
+	Event emitted after the call(s):
+	- SaleAborted(now) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#748)
+Reentrancy in SwissCryptoExchangeToken.mint(uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#443-451):
+	External calls:
+	- _companyAddress = ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#445)
+	- onlyCompany() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#443)
+		- require(bool)(msg.sender == ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#393)
+	Event emitted after the call(s):
+	- Mint(_companyAddress,_amount) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#448)
+	- Transfer(0x0,_companyAddress,_amount) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#449)
+Reentrancy in SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699):
+	External calls:
+	- require(bool)(token().transfer(investor,shares)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#690)
+		- ContractManagementSystem(manager).getActiveContractAddress(TOKEN_CONTRACT_ID) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#487)
+	External calls sending eth:
+	- investor.transfer(excessWei) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#694)
+	Event emitted after the call(s):
+	- ProcessedInvestment(investor,weiAmount,shares) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#698)
+Reentrancy in ContractManagementSystem.rollbackContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#251-279):
+	External calls:
+	- require(bool)(contractIdentifier == Versionable(toContractAddress).identifier()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#263)
+	- require(bool)(! Activatable(toContractAddress).active() && existsManagedContract(contractIdentifier,toContractAddress)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#266)
+	- swapContractsStates(contractIdentifier,toContractAddress,fromContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#272)
+		- Activatable(oldContractAddress).deactivate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#292)
+		- Activatable(newContractAddress).activate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#296)
+	Event emitted after the call(s):
+	- RollbackedContract(contractIdentifier,fromContractAddress,toContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#278)
+Reentrancy in SwissCryptoExchangeToken.transfer(address,uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#411-420):
+	External calls:
+	- onlyCompany() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#411)
+		- require(bool)(msg.sender == ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#393)
+	Event emitted after the call(s):
+	- Transfer(msg.sender,_to,_value) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#418)
+Reentrancy in SwissCryptoExchangeToken.transferFrom(address,address,uint256) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428-436):
+	External calls:
+	- onlyCompany() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428)
+		- require(bool)(msg.sender == ContractManagementSystem(manager).getActiveContractAddress(COMPANY_CONTRACT_ID)) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#393)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_value) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#434)
+Reentrancy in ContractManagementSystem.upgradeContract(uint256,address) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#204-243):
+	External calls:
+	- require(bool)(! Activatable(newContractAddress).active()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#216)
+	- require(bool)(contractIdentifier == Versionable(newContractAddress).identifier()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#219)
+	- require(bool)(Activatable(oldContractAddress).active()) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#229)
+	- swapContractsStates(contractIdentifier,newContractAddress,oldContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#233)
+		- Activatable(oldContractAddress).deactivate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#292)
+		- Activatable(newContractAddress).activate() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#296)
+	Event emitted after the call(s):
+	- UpgradedContract(contractIdentifier,oldContractAddress,newContractAddress) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#242)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SwissCryptoExchangeToken.balanceOf(address)._owner (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#402) is not in mixedCase
+Parameter SwissCryptoExchangeToken.transfer(address,uint256)._to (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#411) is not in mixedCase
+Parameter SwissCryptoExchangeToken.transfer(address,uint256)._value (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#411) is not in mixedCase
+Parameter SwissCryptoExchangeToken.transferFrom(address,address,uint256)._from (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428) is not in mixedCase
+Parameter SwissCryptoExchangeToken.transferFrom(address,address,uint256)._to (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428) is not in mixedCase
+Parameter SwissCryptoExchangeToken.transferFrom(address,address,uint256)._value (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#428) is not in mixedCase
+Parameter SwissCryptoExchangeToken.mint(uint256)._amount (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#443) is not in mixedCase
+Parameter BaseCompany.isShareholder(address)._addr (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#503) is not in mixedCase
+Parameter BaseCompany.isMajorityShareholder(address)._addr (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#512) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in SwissCryptoExchangeCompany.abortSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#726-752):
+	External calls:
+	- investor.transfer(currentSale.weiRaised) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#739)
+	State variables written after the call(s):
+	- currentSale.exists = false (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#751)
+	Event emitted after the call(s):
+	- SaleAborted(now) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#748)
+Reentrancy in SwissCryptoExchangeCompany.finalizeSale() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#704-721):
+	External calls:
+	- currentSale.beneficiary.transfer(currentSale.weiRaised) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#714)
+	State variables written after the call(s):
+	- currentSale.exists = false (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#720)
+	Event emitted after the call(s):
+	- SaleCompleted(currentSale.beneficiary,currentSale.weiRaised,currentSale.sharesSold) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#717)
+Reentrancy in SwissCryptoExchangeCompany.processPayment() (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#653-699):
+	External calls:
+	- investor.transfer(excessWei) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#694)
+	Event emitted after the call(s):
+	- ProcessedInvestment(investor,weiAmount,shares) (../sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol#698)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x7270c5554b75734b3cd2a781205b84a350bc2334.sol analyzed (10 contracts with 100 detectors), 30 result(s) found

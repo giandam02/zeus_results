@@ -1,0 +1,105 @@
+'solc --version' running
+'solc /sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Bablorub.bytesToAddress(bytes) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#197-200) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Modifier Bablorub.withDeposit() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#116) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+Bablorub.transfer(address,uint256) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#179-195) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amount > 0 (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#181)
+	- amount > address(this).balance (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#187)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Bablorub.bytesToAddress(bytes) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#197-200) uses assembly
+	- INLINE ASM (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#198-199)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#37) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#37) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#46) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#46) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#51) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#51) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#57) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#57) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Bablorub.fallback() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#118-127):
+	External calls:
+	- register() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#122)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	- sendFee() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#123)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	State variables written after the call(s):
+	- sendFee() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#123)
+		- totalPaid = totalPaid.add(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#183)
+	- sendFee() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#123)
+		- user[receiver].paid = user[receiver].paid.add(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#185)
+Reentrancy in Bablorub.fallback() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#118-127):
+	External calls:
+	- register() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#122)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	- sendFee() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#123)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	- sendReferrer() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#124)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	State variables written after the call(s):
+	- sendReferrer() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#124)
+		- totalPaid = totalPaid.add(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#183)
+	- sendReferrer() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#124)
+		- user[receiver].paid = user[receiver].paid.add(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#185)
+		- user[referrer].earnOnReferrals = user[referrer].earnOnReferrals.add(amountReferrer) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#158)
+Reentrancy in Bablorub.fallback() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#118-127):
+	External calls:
+	- register() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#122)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	- sendFee() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#123)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	- sendReferrer() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#124)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	- sendPayment() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#125)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	State variables written after the call(s):
+	- updateInvestBalance() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#126)
+		- totalInvest = totalInvest.add(msg.value) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#176)
+	- sendPayment() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#125)
+		- totalPaid = totalPaid.add(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#183)
+	- sendPayment() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#125)
+		- user[msg.sender].timestamp = now (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#169)
+		- user[receiver].paid = user[receiver].paid.add(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#185)
+	- updateInvestBalance() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#126)
+		- user[msg.sender].balance = user[msg.sender].balance.add(msg.value) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#175)
+Reentrancy in Bablorub.sendPayment() (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#165-172):
+	External calls:
+	- transfer(msg.sender,getAvailableBalance(msg.sender)) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#168)
+		- receiver.transfer(amount) (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#190)
+	State variables written after the call(s):
+	- user[msg.sender].timestamp = now (../sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol#169)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x048f616fcc4dd825f4a0a3b095d2ef70046b30c3.sol analyzed (3 contracts with 100 detectors), 18 result(s) found

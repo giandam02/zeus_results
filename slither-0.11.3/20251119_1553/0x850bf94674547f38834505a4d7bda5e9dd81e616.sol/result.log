@@ -1,0 +1,92 @@
+'solc --version' running
+'solc /sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:23:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DistributeTokens( ERC20Basic _token ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:45:35: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if( msg.sender != owner ) throw;
+                                  ^---^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:46:69: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if( token.allowance(mainHolder,this) < amountToDistribute ) throw;
+                                                                    ^---^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:50:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if( totalHoldersTokens == 0 ) throw;
+                                      ^---^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:11:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint);
+  ^------------------------------------------------------^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint value);
+  ^----------------------------------------^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:14:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint value);
+  ^----------------------------------------------------------^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:15:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint);  
+  ^-------------------------------------------------------------------------^
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:23:5: Warning: No visibility specified. Defaulting to "public". 
+    function DistributeTokens( ERC20Basic _token ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:28:5: Warning: No visibility specified. Defaulting to "public". 
+    function checkExpectedTokens( address[] holdersList, uint[] expectedBalance, uint expectedTotalSupply ) constant returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol:44:5: Warning: No visibility specified. Defaulting to "public". 
+    function distribute( address mainHolder, uint amountToDistribute, address[] holdersList, uint[] expectedBalance, uint expectedTotalSupply ) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+DistributeTokens.distribute(address,uint256,address[],uint256[],uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#44-57) uses arbitrary from in transferFrom: token.transferFrom(mainHolder,holdersList[i],extraTokens) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+ERC20Basic (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#9-16) has incorrect ERC20 function interface:ERC20Basic.transfer(address,uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#12)
+ERC20Basic (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#9-16) has incorrect ERC20 function interface:ERC20Basic.transferFrom(address,address,uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#14)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+DistributeTokens.distribute(address,uint256,address[],uint256[],uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#44-57) uses a dangerous strict equality:
+	- totalHoldersTokens == 0 (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#50)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+DistributeTokens.checkExpectedTokens(address[],uint256[],uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#28-42) has external calls inside a loop: holderBalance = token.balanceOf(holdersList[i]) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#35)
+DistributeTokens.checkExpectedTokens(address[],uint256[],uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#28-42) has external calls inside a loop: holderBalance = token.balanceOf(holdersList[i]) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#35)
+	Calls stack containing the loop:
+		DistributeTokens.distribute(address,uint256,address[],uint256[],uint256)
+DistributeTokens.distribute(address,uint256,address[],uint256[],uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#44-57) has external calls inside a loop: token.transferFrom(mainHolder,holdersList[i],extraTokens) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Deprecated standard detected THROW (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#45):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#46):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#50):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.8 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.8 (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+distribute(address,uint256,address[],uint256[],uint256) should be declared external:
+	- DistributeTokens.distribute(address,uint256,address[],uint256[],uint256) (../sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol#44-57)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x850bf94674547f38834505a4d7bda5e9dd81e616.sol analyzed (2 contracts with 100 detectors), 13 result(s) found

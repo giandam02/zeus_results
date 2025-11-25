@@ -1,0 +1,142 @@
+'solc --version' running
+'solc /sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Slugroad.TradeMile() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#395-421) performs a multiplication on the result of a division:
+	- _mile = mile[msg.sender].div(MILE_REQ) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#401)
+	- mile[msg.sender] = mile[msg.sender].sub(_mile.mul(MILE_REQ)) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#415)
+Slugroad.ComputeMileDriven() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#520-526) performs a multiplication on the result of a division:
+	- _averageSpeed = (_speedNow.add(_speedThen)).div(2) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#524)
+	- _timeDriven.mul(_averageSpeed).div(HYPERSPEED_LENGTH) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#525)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in Slugroad.PayThrone() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#426-434):
+	External calls:
+	- ! SNAILTHRONE.call.value(_payThrone)() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#429)
+	Event emitted after the call(s):
+	- PaidThrone(msg.sender,_payThrone) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#433)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Slugroad.ClaimDiv() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#165-175) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _playerDiv > 0 (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#168)
+Slugroad.BecomeDriver() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#180-201) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now.add(HYPERSPEED_LENGTH) >= timer (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#187)
+Slugroad.TimeWarp() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#209-251) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(now >= timer,race isn't finished yet) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#211)
+Slugroad.BuySlug() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#256-283) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(now <= timer,race is over!) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#260)
+	- _slugBought >= 200 (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#280)
+Slugroad.SkipAhead() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#289-318) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(playerBalance[msg.sender] > 0,no ether to timetravel) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#292)
+	- require(bool,string)(now <= timer,race is over!) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#293)
+	- _slugHatched >= 200 (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#315)
+Slugroad.WithdrawBalance() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#323-332) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(playerBalance[msg.sender] > 0,no ether to withdraw) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#325)
+Slugroad.ThrowSlug() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#337-356) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(slugNest[msg.sender] >= THROW_SLUG_REQ,not enough slugs in nest) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#339)
+	- require(bool,string)(now <= timer,race is over!) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#340)
+Slugroad.TradeMile() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#395-421) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(mile[msg.sender] >= MILE_REQ,not enough miles for a reward) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#396)
+	- _mile > 20 (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#404)
+Slugroad.ComputeSpeed(uint256) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#501-515) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timer > _time.add(HYPERSPEED_LENGTH) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#504)
+	- timer.sub(_time) < RACE_TIMER_START (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#507)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Slugroad.StartRace() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#136-146) compares to a boolean constant:
+	-require(bool)(gameStarted == false) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#137)
+Slugroad.TimeWarp() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#209-251) compares to a boolean constant:
+	-require(bool,string)(gameStarted == true,game hasn't started yet) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#210)
+Slugroad.BuySlug() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#256-283) compares to a boolean constant:
+	-require(bool,string)(gameStarted == true,game hasn't started yet) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#257)
+Slugroad.SkipAhead() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#289-318) compares to a boolean constant:
+	-require(bool,string)(gameStarted == true,game hasn't started yet) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#290)
+Slugroad.ThrowSlug() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#337-356) compares to a boolean constant:
+	-require(bool,string)(gameStarted == true,game hasn't started yet) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#338)
+Slugroad.JumpOut() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#362-390) compares to a boolean constant:
+	-require(bool,string)(gameStarted == true,game hasn't started yet) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#363)
+Slugroad.ComputeSlugCost(bool) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#463-469) compares to a boolean constant:
+	-_isBuy == true (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#464)
+Slugroad.ComputeBuy(uint256,bool) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#475-483) compares to a boolean constant:
+	-_isBuy == true (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#477)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in Slugroad.PayThrone() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#426-434):
+	- ! SNAILTHRONE.call.value(_payThrone)() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#429)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Function Slugroad.StartRace() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#136-146) is not in mixedCase
+Function Slugroad.PotSplit(uint256) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#154-159) is not in mixedCase
+Parameter Slugroad.PotSplit(uint256)._msgValue (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#154) is not in mixedCase
+Function Slugroad.ClaimDiv() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#165-175) is not in mixedCase
+Function Slugroad.BecomeDriver() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#180-201) is not in mixedCase
+Function Slugroad.TimeWarp() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#209-251) is not in mixedCase
+Function Slugroad.BuySlug() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#256-283) is not in mixedCase
+Function Slugroad.SkipAhead() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#289-318) is not in mixedCase
+Function Slugroad.WithdrawBalance() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#323-332) is not in mixedCase
+Function Slugroad.ThrowSlug() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#337-356) is not in mixedCase
+Function Slugroad.JumpOut() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#362-390) is not in mixedCase
+Function Slugroad.TradeMile() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#395-421) is not in mixedCase
+Function Slugroad.PayThrone() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#426-434) is not in mixedCase
+Function Slugroad.ComputeHyperReward() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#453-456) is not in mixedCase
+Function Slugroad.ComputeSlugCost(bool) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#463-469) is not in mixedCase
+Parameter Slugroad.ComputeSlugCost(bool)._isBuy (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#463) is not in mixedCase
+Function Slugroad.ComputeBuy(uint256,bool) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#475-483) is not in mixedCase
+Parameter Slugroad.ComputeBuy(uint256,bool)._ether (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#475) is not in mixedCase
+Parameter Slugroad.ComputeBuy(uint256,bool)._isBuy (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#475) is not in mixedCase
+Function Slugroad.ComputeDiv(address) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#488-495) is not in mixedCase
+Parameter Slugroad.ComputeDiv(address)._player (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#488) is not in mixedCase
+Function Slugroad.ComputeSpeed(uint256) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#501-515) is not in mixedCase
+Parameter Slugroad.ComputeSpeed(uint256)._time (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#501) is not in mixedCase
+Function Slugroad.ComputeMileDriven() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#520-526) is not in mixedCase
+Function Slugroad.ComputeMileReward(uint256) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#531-533) is not in mixedCase
+Parameter Slugroad.ComputeMileReward(uint256)._reqMul (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#531) is not in mixedCase
+Function Slugroad.GetNest(address) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#538-540) is not in mixedCase
+Parameter Slugroad.GetNest(address)._player (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#538) is not in mixedCase
+Function Slugroad.GetMile(address) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#545-547) is not in mixedCase
+Parameter Slugroad.GetMile(address)._player (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#545) is not in mixedCase
+Function Slugroad.GetBalance(address) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#552-554) is not in mixedCase
+Parameter Slugroad.GetBalance(address)._player (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#552) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Slugroad.WithdrawBalance() (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#323-332):
+	External calls:
+	- msg.sender.transfer(_amount) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#329)
+	Event emitted after the call(s):
+	- WithdrewBalance(msg.sender,_amount) (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#331)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Slugroad.hyperSpeed (../sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol#98) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x71a42fd60323204912468cd32a8283ed5d45a28f.sol analyzed (2 contracts with 100 detectors), 57 result(s) found

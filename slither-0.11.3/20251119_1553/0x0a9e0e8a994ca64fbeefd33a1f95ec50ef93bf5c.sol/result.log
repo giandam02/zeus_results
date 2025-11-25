@@ -1,0 +1,58 @@
+'solc --version' running
+'solc /sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+BasicToken (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#75-118) contract sets array length with a user-controlled value:
+	- holders.push(_to) (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#103)
+StandardToken (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#150-261) contract sets array length with a user-controlled value:
+	- holders.push(_to) (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#174)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#1)
+	- ^0.4.24 (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#330)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#28) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#28) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#44) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#44) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#54) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#54) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#62) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#62) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#98) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#98) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#114) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#162) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#163) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#164) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#190) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#190) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#203) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#204) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#223) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#224) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#245) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#246) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol#312) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x0a9e0e8a994ca64fbeefd33a1f95ec50ef93bf5c.sol analyzed (7 contracts with 100 detectors), 27 result(s) found

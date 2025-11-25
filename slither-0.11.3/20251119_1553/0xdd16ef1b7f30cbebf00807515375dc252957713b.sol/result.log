@@ -1,0 +1,136 @@
+'solc --version' running
+'solc /sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:234:39: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 uncasedUserNameHash = keccak256(userName.lower());
+                                      ^-------------------------^
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:234:39: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        bytes32 uncasedUserNameHash = keccak256(userName.lower());
+                                      ^-------------------------^
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:242:39: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 uncasedUserNameHash = keccak256(userName.lower());
+                                      ^-------------------------^
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:242:39: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        bytes32 uncasedUserNameHash = keccak256(userName.lower());
+                                      ^-------------------------^
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:279:39: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 prefixedMessageHash = keccak256(prefix, messageHash);
+                                      ^----------------------------^
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:288:39: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 uncasedUserNameHash = keccak256(casedUserName.toSlice().copy().toString().lower());
+                                      ^----------------------------------------------------------^
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol:288:39: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        bytes32 uncasedUserNameHash = keccak256(casedUserName.toSlice().copy().toString().lower());
+                                      ^----------------------------------------------------------^
+
+
+Withdrawable.withdrawERC20Token(address,address) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#149-152) ignores return value by token.transfer(to,token.balanceOf(address(this))) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#151)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+StringUtils.toSlice(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#14-20) is declared view but contains assembly code
+StringUtils.toString(StringUtils.slice) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#36-43) is declared view but contains assembly code
+StringUtils.memcpy(uint256,uint256,uint256) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#80-97) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+RaindropClient.setHydroTokenAddress(address) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#217-219) should emit an event for: 
+	- hydroTokenAddress = _hydroTokenAddress (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#218) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Withdrawable.withdrawEther(address).to (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#144) lacks a zero-check on :
+		- to.transfer(address(this).balance) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#145)
+RaindropClient.setHydroTokenAddress(address)._hydroTokenAddress (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#217) lacks a zero-check on :
+		- hydroTokenAddress = _hydroTokenAddress (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#218)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in RaindropClient.setMinimumHydroStakes(uint256,uint256) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#222-230):
+	External calls:
+	- require(bool)(newMinimumHydroStakeUser <= (hydro.totalSupply() / 100 / 100)) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#226)
+	- require(bool)(newMinimumHydroStakeDelegatedUser <= (hydro.totalSupply() / 100 / 2)) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#227)
+	State variables written after the call(s):
+	- minimumHydroStakeDelegatedUser = newMinimumHydroStakeDelegatedUser (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#229)
+	- minimumHydroStakeUser = newMinimumHydroStakeUser (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#228)
+Reentrancy in RaindropClient.signUpDelegatedUser(string,address,uint8,bytes32,bytes32) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#190-196):
+	External calls:
+	- requireStake(msg.sender,minimumHydroStakeDelegatedUser) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#192)
+		- require(bool)(hydro.balanceOf(_address) >= stake) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#185)
+	State variables written after the call(s):
+	- _userSignUp(casedUserName,userAddress,true) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#195)
+		- nameDirectory[userAddress] = uncasedUserNameHash (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#292)
+	- _userSignUp(casedUserName,userAddress,true) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#195)
+		- userDirectory[uncasedUserNameHash] = User(casedUserName,userAddress,delegated,true) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#291)
+Reentrancy in RaindropClient.signUpUser(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#199-201):
+	External calls:
+	- requireStake(msg.sender,minimumHydroStakeUser) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#199)
+		- require(bool)(hydro.balanceOf(_address) >= stake) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#185)
+	State variables written after the call(s):
+	- _userSignUp(casedUserName,msg.sender,false) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#200)
+		- nameDirectory[userAddress] = uncasedUserNameHash (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#292)
+	- _userSignUp(casedUserName,msg.sender,false) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#200)
+		- userDirectory[uncasedUserNameHash] = User(casedUserName,userAddress,delegated,true) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#291)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in RaindropClient.signUpDelegatedUser(string,address,uint8,bytes32,bytes32) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#190-196):
+	External calls:
+	- requireStake(msg.sender,minimumHydroStakeDelegatedUser) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#192)
+		- require(bool)(hydro.balanceOf(_address) >= stake) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#185)
+	Event emitted after the call(s):
+	- UserSignUp(casedUserName,userAddress,delegated) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#294)
+		- _userSignUp(casedUserName,userAddress,true) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#195)
+Reentrancy in RaindropClient.signUpUser(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#199-201):
+	External calls:
+	- requireStake(msg.sender,minimumHydroStakeUser) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#199)
+		- require(bool)(hydro.balanceOf(_address) >= stake) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#185)
+	Event emitted after the call(s):
+	- UserSignUp(casedUserName,userAddress,delegated) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#294)
+		- _userSignUp(casedUserName,msg.sender,false) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#200)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+StringUtils.toSlice(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#14-20) uses assembly
+	- INLINE ASM (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#16-19)
+StringUtils.toString(StringUtils.slice) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#36-43) uses assembly
+	- INLINE ASM (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#39-41)
+StringUtils.memcpy(uint256,uint256,uint256) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#80-97) uses assembly
+	- INLINE ASM (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#83-86)
+	- INLINE ASM (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#92-97)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Struct StringUtils.slice (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#4-7) is not in CapWords
+Parameter StringUtils.lower(string)._base (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#55) is not in mixedCase
+Parameter RaindropClient.setHydroTokenAddress(address)._hydroTokenAddress (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#217) is not in mixedCase
+Parameter RaindropClient.getUserByAddress(address)._address (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#250) is not in mixedCase
+Parameter RaindropClient.isSigned(address,bytes32,uint8,bytes32,bytes32)._address (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#259) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+signUpDelegatedUser(string,address,uint8,bytes32,bytes32) should be declared external:
+	- RaindropClient.signUpDelegatedUser(string,address,uint8,bytes32,bytes32) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#190-196)
+signUpUser(string) should be declared external:
+	- RaindropClient.signUpUser(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#199-201)
+userNameTaken(string) should be declared external:
+	- RaindropClient.userNameTaken(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#233-236)
+getUserByName(string) should be declared external:
+	- RaindropClient.getUserByName(string) (../sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol#239-247)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xdd16ef1b7f30cbebf00807515375dc252957713b.sol analyzed (5 contracts with 100 detectors), 26 result(s) found

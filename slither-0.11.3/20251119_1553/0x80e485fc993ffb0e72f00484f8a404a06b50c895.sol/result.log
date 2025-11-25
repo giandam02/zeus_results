@@ -1,0 +1,156 @@
+'solc --version' running
+'solc /sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:213:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Ownable() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:319:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Crowdsale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:360:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function CCNCrowdsale (
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:107:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:142:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:158:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:180:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:192:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:232:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnerChanged(owner, _newOwner);
+        ^----------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:270:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Mint(_to, _amount);
+        ^----------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:271:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_owner, _to, _amount);
+        ^----------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:281:9: Warning: Invoking events without "emit" prefix is deprecated.
+        MintFinished();
+        ^------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:292:28: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            owner.transfer(this.balance);
+                           ^----------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:298:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_token, owner, balance);
+        ^------------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:394:10: Warning: Invoking events without "emit" prefix is deprecated.
+         TokenPurchase(_investor, weiAmount, tokens);
+         ^-----------------------------------------^
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol:465:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TokenLimitReached(tokenAllocated, addTokens);
+            ^------------------------------------------^
+
+
+MintableToken.claimTokens(address) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#289-299) ignores return value by token.transfer(owner,balance) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#297)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+CCNCrowdsale.setContractAdmin(address,bool,uint256) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#481-488) contains a tautology or contradiction:
+	- require(bool)(0 <= _index && _index < 3) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#483)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+CCNCrowdsale.mintForOwner(address).result (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#451) is written in both
+	result = false (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#452)
+	result = true (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#455)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#write-after-write
+
+Reentrancy in MintableToken.claimTokens(address) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#289-299):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#296)
+	- token.transfer(owner,balance) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#297)
+	Event emitted after the call(s):
+	- Transfer(_token,owner,balance) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#298)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+CCNCrowdsale.getPeriod(uint256) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#430-445) uses timestamp for comparisons
+	Dangerous comparisons:
+	- 1525737600 <= _currentDate && _currentDate <= 1527379199 (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#435)
+	- 1527379200 <= _currentDate && _currentDate <= 1530143999 (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#438)
+	- 1530489600 <= _currentDate (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#441)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+CCNCrowdsale.approveAllAdmin() (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#490-499) compares to a boolean constant:
+	-approveAdmin[admins[i]] == false (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#493)
+CCNCrowdsale.approveAllAdmin() (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#490-499) compares to a boolean constant:
+	-require(bool)(result == true) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#497)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+MintableToken.finishMinting() (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#279-283) is never used and should be removed
+Ownable.changeOwner(address) (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#230-234) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#99) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#99) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#116) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#133) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#133) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#133) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#156) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#156) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#168) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#168) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#178) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#178) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#184) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#184) is not in mixedCase
+Parameter Ownable.changeOwner(address)._newOwner (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#230) is not in mixedCase
+Parameter MintableToken.mint(address,uint256,address)._to (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#267) is not in mixedCase
+Parameter MintableToken.mint(address,uint256,address)._amount (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#267) is not in mixedCase
+Parameter MintableToken.mint(address,uint256,address)._owner (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#267) is not in mixedCase
+Parameter MintableToken.claimTokens(address)._token (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#289) is not in mixedCase
+Parameter CCNCrowdsale.buyTokens(address)._investor (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#385) is not in mixedCase
+Parameter CCNCrowdsale.getTotalAmountOfTokens(uint256)._weiAmount (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#403) is not in mixedCase
+Parameter CCNCrowdsale.getPeriod(uint256)._currentDate (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#430) is not in mixedCase
+Parameter CCNCrowdsale.mintForOwner(address)._wallet (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#451) is not in mixedCase
+Parameter CCNCrowdsale.getDeposited(address)._investor (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#458) is not in mixedCase
+Parameter CCNCrowdsale.validPurchaseTokens(uint256)._weiAmount (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#462) is not in mixedCase
+Parameter CCNCrowdsale.setRate(uint256)._newRate (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#471) is not in mixedCase
+Parameter CCNCrowdsale.setContractAdmin(address,bool,uint256)._admin (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#481) is not in mixedCase
+Parameter CCNCrowdsale.setContractAdmin(address,bool,uint256)._isAdmin (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#481) is not in mixedCase
+Parameter CCNCrowdsale.setContractAdmin(address,bool,uint256)._index (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#481) is not in mixedCase
+Parameter CCNCrowdsale.setApprove(bool)._isApprove (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#507) is not in mixedCase
+Parameter CCNCrowdsale.addToWhitelist(address)._beneficiary (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#515) is not in mixedCase
+Parameter CCNCrowdsale.addManyToWhitelist(address[])._beneficiaries (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#523) is not in mixedCase
+Parameter CCNCrowdsale.removeFromWhitelist(address)._beneficiary (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#534) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CCNCrowdsale.fundForSale (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#345) should be constant 
+CCNCrowdsale.fundForTeam (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#346) should be constant 
+CCNCrowdsale.fundIco (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#348) should be constant 
+CCNCrowdsale.fundPreIco (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#347) should be constant 
+ERC20.totalSupply (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#61) should be constant 
+ERC20.transfersEnabled (../sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol#63) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x80e485fc993ffb0e72f00484f8a404a06b50c895.sol analyzed (9 contracts with 100 detectors), 50 result(s) found

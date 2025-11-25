@@ -1,0 +1,132 @@
+'solc --version' running
+'solc /sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Crowdsale (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#340-528) contract sets array length with a user-controlled value:
+	- benefeciary.push(ben) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#459)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Crowdsale.evaluateTokens(uint256,address) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#422-448) performs a multiplication on the result of a division:
+	- ethersRefund = _value - (tokens / price * 10 ** 18) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#434)
+Crowdsale.evaluateTokens(uint256,address) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#422-448) performs a multiplication on the result of a division:
+	- tokens = _value * price / 10 ** 18 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#428)
+	- tokens = tokens + (tokens * bonus / 100) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#430)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Crowdsale.crowdSaleStage().result (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#489) is a local variable never initialized
+Crowdsale.addInvestor(address,uint256).ben (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#451) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Crowdsale.getCrowdsaleInfo() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#397-420) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now <= endPreSaleDate && preSaleRaised < preSaleGoal (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#401)
+	- startPreIcoDate <= now && now <= endPreIcoDate && preIcoRaised < preIcoGoal (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#406)
+	- startIcoDate <= now && now <= endIcoDate && icoRaised < total (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#411)
+Crowdsale.fallback() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#463-473) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(startPreSaleDate <= now && now <= endIcoDate) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#464)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#8) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#8) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#25) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#25) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#36) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#36) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#46) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#46) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#105) is not in mixedCase
+Parameter Rays.balanceOf(address)._owner (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#185) is not in mixedCase
+Parameter Rays.allowance(address,address)._owner (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#196) is not in mixedCase
+Parameter Rays.allowance(address,address)._spender (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#197) is not in mixedCase
+Parameter Rays.transfer(address,uint256)._to (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#211) is not in mixedCase
+Parameter Rays.transfer(address,uint256)._value (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#211) is not in mixedCase
+Parameter Rays.approve(address,uint256)._spender (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#230) is not in mixedCase
+Parameter Rays.approve(address,uint256)._value (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#230) is not in mixedCase
+Parameter Rays.transferFrom(address,address,uint256)._from (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#243) is not in mixedCase
+Parameter Rays.transferFrom(address,address,uint256)._to (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#244) is not in mixedCase
+Parameter Rays.transferFrom(address,address,uint256)._value (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#245) is not in mixedCase
+Parameter Rays.increaseApproval(address,uint256)._spender (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#271) is not in mixedCase
+Parameter Rays.increaseApproval(address,uint256)._addedValue (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#272) is not in mixedCase
+Parameter Rays.decreaseApproval(address,uint256)._spender (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#293) is not in mixedCase
+Parameter Rays.decreaseApproval(address,uint256)._subtractedValue (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#294) is not in mixedCase
+Function Rays._mint(address,uint256) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#316-321) is not in mixedCase
+Parameter Rays._mint(address,uint256)._account (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#316) is not in mixedCase
+Parameter Rays._mint(address,uint256)._amount (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#316) is not in mixedCase
+Function Rays._burn(address,uint256) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#329-336) is not in mixedCase
+Parameter Rays._burn(address,uint256)._account (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#329) is not in mixedCase
+Parameter Rays._burn(address,uint256)._amount (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#329) is not in mixedCase
+Parameter Crowdsale.evaluateTokens(uint256,address)._value (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#422) is not in mixedCase
+Parameter Crowdsale.evaluateTokens(uint256,address)._sender (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#422) is not in mixedCase
+Parameter Crowdsale.addInvestor(address,uint256)._sender (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#450) is not in mixedCase
+Parameter Crowdsale.addInvestor(address,uint256)._value (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#450) is not in mixedCase
+Parameter Crowdsale.showParticipantWei(address)._wallet (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#475) is not in mixedCase
+Variable Crowdsale.Stage (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#343) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Crowdsale.evaluateTokens(uint256,address) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#422-448):
+	External calls:
+	- _sender.transfer(ethersRefund) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#435)
+	- owner.transfer(_value - ethersRefund) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#437)
+	State variables written after the call(s):
+	- addInvestor(_sender,_value) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#446)
+		- benefeciary[i].amount = benefeciary[i].amount + _value - ethersRefund (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#454)
+		- benefeciary.push(ben) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#459)
+	- icoRaised += tokens (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#444)
+	- preIcoRaised += tokens (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#442)
+	- preSaleRaised += tokens (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#440)
+Reentrancy in Crowdsale.fallback() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#463-473):
+	External calls:
+	- token = evaluateTokens(msg.value,msg.sender) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#468)
+		- _sender.transfer(ethersRefund) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#435)
+		- owner.transfer(_value - ethersRefund) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#437)
+	State variables written after the call(s):
+	- balances[msg.sender] = balances[msg.sender].add(token * 10 ** 18) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#470)
+	- balances[owner] = balances[owner].sub(token * 10 ** 18) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#471)
+	Event emitted after the call(s):
+	- Transfer(owner,msg.sender,token * 10 ** 18) (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#472)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Crowdsale.constructor() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#375-395) uses literals with too many digits:
+	- preSaleGoal = 60000000 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#378)
+Crowdsale.constructor() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#375-395) uses literals with too many digits:
+	- preIcoGoal = 60000000 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#382)
+Crowdsale.constructor() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#375-395) uses literals with too many digits:
+	- icoGoal = 80000000 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#386)
+Crowdsale.constructor() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#375-395) uses literals with too many digits:
+	- reserved = (70000000 + 200000000 + 5000000 + 25000000) * 10 ** 18 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#393)
+Crowdsale.slitherConstructorConstantVariables() (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#340-528) uses literals with too many digits:
+	- INITIAL_SUPPLY = 500000000 * 10 ** 18 (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#164)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Loop condition i < benefeciary.length (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#452) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < benefeciary.length (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#476) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+Rays.decimals (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#163) should be constant 
+Rays.name (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#161) should be constant 
+Rays.symbol (../sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol#162) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xa174aeddeeb90a89ce8bc34b646d4fb708ee8b58.sol analyzed (5 contracts with 100 detectors), 56 result(s) found

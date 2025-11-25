@@ -1,0 +1,61 @@
+'solc --version' running
+'solc /sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol:
+/sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol:31:21: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+                    places[i].send(win);
+                    ^-----------------^
+
+
+Geniuz (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#5-39) contract sets array length with a user-controlled value:
+	- places.push(msg.sender) (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Geniuz.random(uint256) (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#15-21) uses a weak PRNG: "uint256(sha256()(abi.encodePacked(blockhash(uint256)(block.number - places.length - 1),msg.sender,seed += block.difficulty))) % lessThan (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#16-20)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+Geniuz.fallback() (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#23-37) ignores return value by places[i].send(win) (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#31)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Geniuz.fallback() (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#23-37) has external calls inside a loop: places[i].send(win) (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#31)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Geniuz.win (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#10) is set pre-construction with a non-constant function or state variable:
+	- depositValue * winPercent / 100
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in Geniuz.fallback() (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#23-37):
+	External calls:
+	- places[i].send(win) (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#31)
+	- promo.transfer(address(this).balance) (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#34)
+	State variables written after the call(s):
+	- delete places (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#35)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Geniuz.depositValue (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#7) should be constant 
+Geniuz.placeCount (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#8) should be constant 
+Geniuz.winPercent (../sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x2cf4ecf6785a7193183758e8e97f12ee5d67dfcd.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

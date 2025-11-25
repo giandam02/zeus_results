@@ -1,0 +1,107 @@
+'solc --version' running
+'solc /sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#1)
+	- ^0.4.23 (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#563)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in ERC827Token.approveAndCall(address,uint256,bytes) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#596-613):
+	- require(bool)(_spender.call.value(msg.value)(_data)) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#610)
+Low level call in ERC827Token.transferAndCall(address,uint256,bytes) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#625-641):
+	- require(bool)(_to.call.value(msg.value)(_data)) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#639)
+Low level call in ERC827Token.transferFromAndCall(address,address,uint256,bytes) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#654-669):
+	- require(bool)(_to.call.value(msg.value)(_data)) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#667)
+Low level call in ERC827Token.increaseApprovalAndCall(address,uint256,bytes) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#684-701):
+	- require(bool)(_spender.call.value(msg.value)(_data)) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#698)
+Low level call in ERC827Token.decreaseApprovalAndCall(address,uint256,bytes) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#716-733):
+	- require(bool)(_spender.call.value(msg.value)(_data)) (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#730)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#94) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#94) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#109) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#129) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#191) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#248) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#249) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#250) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#276) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#276) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#289) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#290) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#310) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#311) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#333) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#334) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#383) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#384) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#464) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#465) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._from (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#475) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#476) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#477) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#487) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#488) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#498) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._addedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#499) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#509) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#510) is not in mixedCase
+Parameter ERC827Token.approveAndCall(address,uint256,bytes)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#597) is not in mixedCase
+Parameter ERC827Token.approveAndCall(address,uint256,bytes)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#598) is not in mixedCase
+Parameter ERC827Token.approveAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#599) is not in mixedCase
+Parameter ERC827Token.transferAndCall(address,uint256,bytes)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#626) is not in mixedCase
+Parameter ERC827Token.transferAndCall(address,uint256,bytes)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#627) is not in mixedCase
+Parameter ERC827Token.transferAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#628) is not in mixedCase
+Parameter ERC827Token.transferFromAndCall(address,address,uint256,bytes)._from (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#655) is not in mixedCase
+Parameter ERC827Token.transferFromAndCall(address,address,uint256,bytes)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#656) is not in mixedCase
+Parameter ERC827Token.transferFromAndCall(address,address,uint256,bytes)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#657) is not in mixedCase
+Parameter ERC827Token.transferFromAndCall(address,address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#658) is not in mixedCase
+Parameter ERC827Token.increaseApprovalAndCall(address,uint256,bytes)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#685) is not in mixedCase
+Parameter ERC827Token.increaseApprovalAndCall(address,uint256,bytes)._addedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#686) is not in mixedCase
+Parameter ERC827Token.increaseApprovalAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#687) is not in mixedCase
+Parameter ERC827Token.decreaseApprovalAndCall(address,uint256,bytes)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#717) is not in mixedCase
+Parameter ERC827Token.decreaseApprovalAndCall(address,uint256,bytes)._subtractedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#718) is not in mixedCase
+Parameter ERC827Token.decreaseApprovalAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#719) is not in mixedCase
+Parameter ZeexToken.transfer(address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#749) is not in mixedCase
+Parameter ZeexToken.transfer(address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#749) is not in mixedCase
+Parameter ZeexToken.transferFrom(address,address,uint256)._from (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#753) is not in mixedCase
+Parameter ZeexToken.transferFrom(address,address,uint256)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#753) is not in mixedCase
+Parameter ZeexToken.transferFrom(address,address,uint256)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#753) is not in mixedCase
+Parameter ZeexToken.approveAndCall(address,uint256,bytes)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#759) is not in mixedCase
+Parameter ZeexToken.approveAndCall(address,uint256,bytes)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#759) is not in mixedCase
+Parameter ZeexToken.approveAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#759) is not in mixedCase
+Parameter ZeexToken.transferAndCall(address,uint256,bytes)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#763) is not in mixedCase
+Parameter ZeexToken.transferAndCall(address,uint256,bytes)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#763) is not in mixedCase
+Parameter ZeexToken.transferAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#763) is not in mixedCase
+Parameter ZeexToken.transferFromAndCall(address,address,uint256,bytes)._from (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#767) is not in mixedCase
+Parameter ZeexToken.transferFromAndCall(address,address,uint256,bytes)._to (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#767) is not in mixedCase
+Parameter ZeexToken.transferFromAndCall(address,address,uint256,bytes)._value (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#767) is not in mixedCase
+Parameter ZeexToken.transferFromAndCall(address,address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#767) is not in mixedCase
+Parameter ZeexToken.increaseApprovalAndCall(address,uint256,bytes)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#771) is not in mixedCase
+Parameter ZeexToken.increaseApprovalAndCall(address,uint256,bytes)._addedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#771) is not in mixedCase
+Parameter ZeexToken.increaseApprovalAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#771) is not in mixedCase
+Parameter ZeexToken.decreaseApprovalAndCall(address,uint256,bytes)._spender (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#775) is not in mixedCase
+Parameter ZeexToken.decreaseApprovalAndCall(address,uint256,bytes)._subtractedValue (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#775) is not in mixedCase
+Parameter ZeexToken.decreaseApprovalAndCall(address,uint256,bytes)._data (../sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol#775) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xe12edfe61d15de827be477859a201235a7f600ff.sol analyzed (13 contracts with 100 detectors), 73 result(s) found

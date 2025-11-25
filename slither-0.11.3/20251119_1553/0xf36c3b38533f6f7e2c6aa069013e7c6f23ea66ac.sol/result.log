@@ -1,0 +1,64 @@
+'solc --version' running
+'solc /sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CoinMed.setAdmin(address) (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#159-167) should emit an event for: 
+	- admin_address = new_admin_address (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#165) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+CoinMed.div(uint256,uint256) (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#202-205) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter CoinMed.balanceOf(address)._addr (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#29) is not in mixedCase
+Parameter CoinMed.transfer(address,uint256)._to (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#42) is not in mixedCase
+Parameter CoinMed.transfer(address,uint256)._value (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#43) is not in mixedCase
+Parameter CoinMed.transferFrom(address,address,uint256)._from (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#70) is not in mixedCase
+Parameter CoinMed.transferFrom(address,address,uint256)._to (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#71) is not in mixedCase
+Parameter CoinMed.transferFrom(address,address,uint256)._value (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#72) is not in mixedCase
+Parameter CoinMed.approve(address,uint256)._spender (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#91) is not in mixedCase
+Parameter CoinMed.approve(address,uint256)._value (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#92) is not in mixedCase
+Parameter CoinMed.allowance(address,address)._owner (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#103) is not in mixedCase
+Parameter CoinMed.allowance(address,address)._spender (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#104) is not in mixedCase
+Parameter CoinMed.increaseApproval(address,uint256)._spender (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#114) is not in mixedCase
+Parameter CoinMed.increaseApproval(address,uint256)._addedValue (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#115) is not in mixedCase
+Parameter CoinMed.decreaseApproval(address,uint256)._spender (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#126) is not in mixedCase
+Parameter CoinMed.decreaseApproval(address,uint256)._subtractedValue (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#127) is not in mixedCase
+Parameter CoinMed.setAdmin(address).new_admin_address (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#159) is not in mixedCase
+Variable CoinMed.admin_address (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#7) is not in mixedCase
+Variable CoinMed.account_address (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#8) is not in mixedCase
+Modifier CoinMed.admin_only() (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#153-157) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CoinMed.slitherConstructorVariables() (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#3-221) uses literals with too many digits:
+	- initSupply = 210000000 (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#17)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+CoinMed.account_address (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#8) should be constant 
+CoinMed.decimals (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#16) should be constant 
+CoinMed.initSupply (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#17) should be constant 
+CoinMed.name (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#14) should be constant 
+CoinMed.symbol (../sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol#15) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xf36c3b38533f6f7e2c6aa069013e7c6f23ea66ac.sol analyzed (1 contracts with 100 detectors), 28 result(s) found

@@ -1,0 +1,63 @@
+'solc --version' running
+'solc /sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+FLEBToken.changeOwner(address)._addr (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#22) lacks a zero-check on :
+		- owner = _addr (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#25)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#3) is not in CapWords
+Parameter FLEBToken.changeOwner(address)._addr (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#22) is not in mixedCase
+Parameter FLEBToken.transfer(address,uint256)._to (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#35) is not in mixedCase
+Parameter FLEBToken.transfer(address,uint256)._value (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#35) is not in mixedCase
+Parameter FLEBToken.balanceOf(address)._owner (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#46) is not in mixedCase
+Parameter FLEBToken.transferFrom(address,address,uint256)._from (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#59) is not in mixedCase
+Parameter FLEBToken.transferFrom(address,address,uint256)._to (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#59) is not in mixedCase
+Parameter FLEBToken.transferFrom(address,address,uint256)._value (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#59) is not in mixedCase
+Parameter FLEBToken.approve(address,uint256)._spender (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#81) is not in mixedCase
+Parameter FLEBToken.approve(address,uint256)._value (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#81) is not in mixedCase
+Parameter FLEBToken.allowance(address,address)._owner (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#88) is not in mixedCase
+Parameter FLEBToken.allowance(address,address)._spender (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#88) is not in mixedCase
+Parameter FLEBToken.approveAndCall(address,uint256,bytes)._spender (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#102) is not in mixedCase
+Parameter FLEBToken.approveAndCall(address,uint256,bytes)._value (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#102) is not in mixedCase
+Parameter FLEBToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#102) is not in mixedCase
+Parameter FLEBToken.burn(uint256)._value (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#118) is not in mixedCase
+Parameter FLEBToken.burnFrom(address,uint256)._from (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#134) is not in mixedCase
+Parameter FLEBToken.burnFrom(address,uint256)._value (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#134) is not in mixedCase
+Parameter FLEBToken.mint(address,uint256)._to (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#144) is not in mixedCase
+Parameter FLEBToken.mint(address,uint256)._amount (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#144) is not in mixedCase
+Parameter FLEBToken.mintSub(address,uint256)._to (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#157) is not in mixedCase
+Parameter FLEBToken.mintSub(address,uint256)._amount (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#157) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+FLEBToken.decimals (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#10) should be constant 
+FLEBToken.name (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#8) should be constant 
+FLEBToken.symbol (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+approveAndCall(address,uint256,bytes) should be declared external:
+	- FLEBToken.approveAndCall(address,uint256,bytes) (../sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol#102-109)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x82c46169b9f390ddfef57832a1d65f60e2878e22.sol analyzed (2 contracts with 100 detectors), 29 result(s) found

@@ -1,0 +1,575 @@
+'solc --version' running
+'solc /sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224) sends eth to arbitrary user
+	Dangerous calls:
+	- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+ReserveBag.depositTeamPerfit(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1245-1256) sends eth to arbitrary user
+	Dangerous calls:
+	- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ReserveBag (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#477-1391) contract sets array length with a user-controlled value:
+	- buyinfos.push(info) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#577)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#914)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#914)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	State variables written after the call(s):
+	- plyr_[_pID].gen = plyr_[_pID].gen.add(msg.value) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#939)
+	ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522) can be used in cross function reentrancies:
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325-1352)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerInfoByAddress(address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865-890)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123-1134)
+	- ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.receivePlayerInfo(uint256,address,bytes32) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059-1077)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- ReserveBag.withdrawEarnings(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1310-1320)
+Reentrancy in ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054):
+	External calls:
+	- _ethExt = distributeExternal(_ethUsed) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1035)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	State variables written after the call(s):
+	- keyPrice = keyPrice.mul(1000 + keyPriceIncreaseRatio).div(1000) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1046)
+	ReserveBag.keyPrice (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#500) can be used in cross function reentrancies:
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.getBuyPrice() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#762-765)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.keyPrice (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#500)
+	- _eventData_ = distributeInternal(_rID,_ethUsed,_ethExt,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1036)
+		- plyr_[firstPID].gen = _gen.add(plyr_[firstPID].gen) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1291)
+	ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522) can be used in cross function reentrancies:
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325-1352)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerInfoByAddress(address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865-890)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123-1134)
+	- ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.receivePlayerInfo(uint256,address,bytes32) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059-1077)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- ReserveBag.withdrawEarnings(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1310-1320)
+	- plyr_[_pID].gen = _ethLeft.add(plyr_[_pID].gen) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1049)
+	ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522) can be used in cross function reentrancies:
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325-1352)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerInfoByAddress(address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865-890)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123-1134)
+	- ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.receivePlayerInfo(uint256,address,bytes32) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059-1077)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- ReserveBag.withdrawEarnings(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1310-1320)
+	- _eventData_ = distributeInternal(_rID,_ethUsed,_ethExt,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1036)
+		- round_[_rID].pot = _pot.add(round_[_rID].pot) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1297)
+	ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531) can be used in cross function reentrancies:
+	- ReserveBag.activate() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1359-1373)
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.getTimeLeft() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#772-785)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531)
+	- ReserveBag.updateTimer(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1229-1243)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+Reentrancy in ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224):
+	External calls:
+	- depositTeamPerfit(_com) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1191)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	- mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1197)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	External calls sending eth:
+	- depositTeamPerfit(_com) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1191)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	State variables written after the call(s):
+	- endIndex = 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1218)
+	ReserveBag.endIndex (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#528) can be used in cross function reentrancies:
+	- ReserveBag.constructor(address,address,address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#535-545)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1148-1163)
+	- ReserveBag.pushBuyInfo(DRSDatasets.BuyInfo) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#575-590)
+	- rID_ ++ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1209)
+	ReserveBag.rID_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#498) can be used in cross function reentrancies:
+	- ReserveBag.activate() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1359-1373)
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325-1352)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerInfoByAddress(address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865-890)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.getTimeLeft() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#772-785)
+	- ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123-1134)
+	- ReserveBag.rID_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#498)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- round_[_rID].strt = now (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1211)
+	ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531) can be used in cross function reentrancies:
+	- ReserveBag.activate() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1359-1373)
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.getTimeLeft() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#772-785)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531)
+	- ReserveBag.updateTimer(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1229-1243)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- round_[_rID].end = now.add(rndMax_).add(rndGap_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1212)
+	ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531) can be used in cross function reentrancies:
+	- ReserveBag.activate() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1359-1373)
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.getTimeLeft() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#772-785)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531)
+	- ReserveBag.updateTimer(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1229-1243)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- round_[_rID].pot = _newPot (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1221)
+	ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531) can be used in cross function reentrancies:
+	- ReserveBag.activate() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1359-1373)
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.getTimeLeft() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#772-785)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.round_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#531)
+	- ReserveBag.updateTimer(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1229-1243)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- startIndex = 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1217)
+	ReserveBag.startIndex (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#527) can be used in cross function reentrancies:
+	- ReserveBag.constructor(address,address,address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#535-545)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1148-1163)
+	- ReserveBag.pushBuyInfo(DRSDatasets.BuyInfo) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#575-590)
+Reentrancy in ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#698)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#698)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	State variables written after the call(s):
+	- _eth = withdrawEarnings(_pID) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#701)
+		- plyr_[_pID].win = 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1315)
+		- plyr_[_pID].gen = 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1316)
+	ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522) can be used in cross function reentrancies:
+	- ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941)
+	- ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054)
+	- ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121)
+	- ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304)
+	- ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224)
+	- ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325-1352)
+	- ReserveBag.getCurrentRoundInfo() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#830-851)
+	- ReserveBag.getPlayerInfoByAddress(address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865-890)
+	- ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812)
+	- ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123-1134)
+	- ReserveBag.plyr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#522)
+	- ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992)
+	- ReserveBag.receivePlayerInfo(uint256,address,bytes32) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059-1077)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+	- ReserveBag.withdrawEarnings(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1310-1320)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+NameFilter.nameFilter(string) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#158-220) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Reentrancy in ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121):
+	External calls:
+	- _pID = playerBook.getPlayerID(msg.sender) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1102)
+	- _name = playerBook.getPlayerName(_pID) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1103)
+	State variables written after the call(s):
+	- pIDxAddr_[msg.sender] = _pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1106)
+	ReserveBag.pIDxAddr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#520) can be used in cross function reentrancies:
+	- ReserveBag.buyKey() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#613-629)
+	- ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121)
+	- ReserveBag.fallback() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#595-611)
+	- ReserveBag.getPlayerInfoByAddress(address) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865-890)
+	- ReserveBag.pIDxAddr_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#520)
+	- ReserveBag.reLoadXaddr(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#631-647)
+	- ReserveBag.receivePlayerInfo(uint256,address,bytes32) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059-1077)
+	- ReserveBag.registerName(string,bool) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#742-755)
+	- ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+ReserveBag.buyKey()._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#621) is a local variable never initialized
+ReserveBag.withdraw()._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#694) is a local variable never initialized
+ReserveBag.reLoadXaddr(uint256)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#643) is a local variable never initialized
+ReserveBag.fallback()._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#603) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+ReserveBag.registerName(string,bool) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#742-755) ignores return value by (_isNewPlayer,None) = playerBook.registerNameXaddrFromDapp.value(msg.value)(msg.sender,_name,address(0),_all) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#750)
+ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304) ignores return value by _eventData_.setGenInfo(info.addr,info.keyPrice) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1293)
+ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304) ignores return value by _eventData_.setGenAmount(_gen.add(_eventData_.genAmount)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1300)
+ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274-1304) ignores return value by _eventData_.setPotAmount(_pot) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1301)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+ReserveBag.mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1148-1163) has external calls inside a loop: drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	Calls stack containing the loop:
+		ReserveBag.fallback()
+		ReserveBag.buyCore(uint256,DRSDatasets.EventReturns)
+		ReserveBag.endRound(DRSDatasets.EventReturns)
+ReserveBag.mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1148-1163) has external calls inside a loop: drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	Calls stack containing the loop:
+		ReserveBag.buyKey()
+		ReserveBag.buyCore(uint256,DRSDatasets.EventReturns)
+		ReserveBag.endRound(DRSDatasets.EventReturns)
+ReserveBag.mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1148-1163) has external calls inside a loop: drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	Calls stack containing the loop:
+		ReserveBag.reLoadXaddr(uint256)
+		ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns)
+		ReserveBag.endRound(DRSDatasets.EventReturns)
+ReserveBag.mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1148-1163) has external calls inside a loop: drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	Calls stack containing the loop:
+		ReserveBag.withdraw()
+		ReserveBag.endRound(DRSDatasets.EventReturns)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054):
+	External calls:
+	- _ethExt = distributeExternal(_ethUsed) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1035)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	State variables written after the call(s):
+	- pushBuyInfo(DRSDatasets.BuyInfo(msg.sender,_name,_pID,keyPrice,keyBought)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1040)
+		- buyinfos.push(info) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#577)
+		- buyinfos[endIndex] = info (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#579)
+	- pushBuyInfo(DRSDatasets.BuyInfo(msg.sender,_name,_pID,keyPrice,keyBought)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1040)
+		- endIndex = (endIndex + 1) % (rewardInternal + 1) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#585)
+	- keyBought = keyBought.add(1) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1045)
+	- pushBuyInfo(DRSDatasets.BuyInfo(msg.sender,_name,_pID,keyPrice,keyBought)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1040)
+		- startIndex = (startIndex + 1) % (rewardInternal + 1) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#588)
+Reentrancy in ReserveBag.depositTeamPerfit(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1245-1256):
+	External calls:
+	- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	State variables written after the call(s):
+	- teamPerfitAmuont = teamPerfitAmuont.add(_eth) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1253)
+Reentrancy in ReserveBag.determinePID(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094-1121):
+	External calls:
+	- _pID = playerBook.getPlayerID(msg.sender) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1102)
+	- _name = playerBook.getPlayerName(_pID) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1103)
+	State variables written after the call(s):
+	- pIDxName_[_name] = _pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1111)
+	- plyrNames_[_pID][_name] = true (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1113)
+	- plyr_[_pID].addr = msg.sender (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1107)
+	- plyr_[_pID].name = _name (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1112)
+Reentrancy in ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224):
+	External calls:
+	- depositTeamPerfit(_com) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1191)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	State variables written after the call(s):
+	- plyr_[_winPID].win = _win.add(plyr_[_winPID].win) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1194)
+Reentrancy in ReserveBag.endRound(DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168-1224):
+	External calls:
+	- depositTeamPerfit(_com) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1191)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	- mintDRSCoin() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1197)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	External calls sending eth:
+	- depositTeamPerfit(_com) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1191)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	State variables written after the call(s):
+	- keyBought = 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1215)
+	- keyPrice = initKeyPrice (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1214)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#914)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#914)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	Event emitted after the call(s):
+	- DRSEvents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#921-935)
+Reentrancy in ReserveBag.buyKey() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#613-629):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#622)
+		- _pID = playerBook.getPlayerID(msg.sender) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1102)
+		- _name = playerBook.getPlayerName(_pID) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1103)
+	- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#628)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#628)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	Event emitted after the call(s):
+	- DRSEvents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#921-935)
+		- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#628)
+	- onBuyKeyFailure(_rID,_pID,_eth,keyPrice,now) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1001)
+		- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#628)
+	- DRSEvents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keyIndex,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount,_eventData_.potAmount,_eventData_.genAddr,_eventData_.genKeyPrice) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1331-1351)
+		- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#628)
+Reentrancy in ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997-1054):
+	External calls:
+	- _ethExt = distributeExternal(_ethUsed) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1035)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+	Event emitted after the call(s):
+	- DRSEvents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keyIndex,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount,_eventData_.potAmount,_eventData_.genAddr,_eventData_.genKeyPrice) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1331-1351)
+		- endTx(_pID,_ethUsed,_keyIndex,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1053)
+Reentrancy in ReserveBag.fallback() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#595-611):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#604)
+		- _pID = playerBook.getPlayerID(msg.sender) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1102)
+		- _name = playerBook.getPlayerName(_pID) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1103)
+	- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#610)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#610)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	Event emitted after the call(s):
+	- DRSEvents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#921-935)
+		- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#610)
+	- onBuyKeyFailure(_rID,_pID,_eth,keyPrice,now) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1001)
+		- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#610)
+	- DRSEvents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keyIndex,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount,_eventData_.potAmount,_eventData_.genAddr,_eventData_.genKeyPrice) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1331-1351)
+		- buyCore(_pID,_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#610)
+Reentrancy in ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#969)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#969)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	Event emitted after the call(s):
+	- DRSEvents.onReLoadAndDistribute(msg.sender,plyr_[_pID].name,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#976-989)
+Reentrancy in ReserveBag.registerName(string,bool) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#742-755):
+	External calls:
+	- (_isNewPlayer,None) = playerBook.registerNameXaddrFromDapp.value(msg.value)(msg.sender,_name,address(0),_all) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#750)
+	Event emitted after the call(s):
+	- DRSEvents.onNewName(_pID,_addr,_name,_isNewPlayer,_paid,now) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#754)
+Reentrancy in ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#698)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+		- drsCoin.mint(buyinfos[i].addr,buyinfos[i].keyPrice.mul(ethMintDRSCoinRate).div(100)) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1161)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#698)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#705)
+	Event emitted after the call(s):
+	- DRSEvents.onWithdrawAndDistribute(msg.sender,plyr_[_pID].name,_eth,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#713-727)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && ! round_[_rID].ended && round_[_rID].plyr != 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#691)
+ReserveBag.getTimeLeft() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#772-785) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now < round_[_rID].end (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#778)
+	- _now > round_[_rID].strt + rndGap_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#779)
+ReserveBag.getPlayerVaults(uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793-812) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && ! round_[_rID].ended && round_[_rID].plyr != 0 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#800)
+ReserveBag.buyCore(uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896-941) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now >= round_[_rID].strt.add(rndGap_) && (_now <= round_[_rID].end || round_[_rID].plyr == 0) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#904)
+	- _now > round_[_rID].end && ! round_[_rID].ended (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#911)
+ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947-992) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt.add(rndGap_) && (_now <= round_[_rID].end || round_[_rID].plyr == 0) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#954)
+	- _now > round_[_rID].end && ! round_[_rID].ended (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#966)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+NameFilter.nameFilter(string) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#158-220) uses assembly
+	- INLINE ASM (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#216-219)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+NameFilter.nameFilter(string) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#158-220) compares to a boolean constant:
+	-require(bool,string)(_hasNonNumber == true,string cannot be only numbers) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#213)
+NameFilter.nameFilter(string) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#158-220) compares to a boolean constant:
+	-_hasNonNumber == false && (_temp[i] < 0x30 || _temp[i] > 0x39) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#208)
+NameFilter.nameFilter(string) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#158-220) compares to a boolean constant:
+	-_hasNonNumber == false (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#190)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter NameFilter.nameFilter(string)._input (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#158) is not in mixedCase
+Parameter DRSDatasets.setNewPlayerFlag(DRSDatasets.EventReturns)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#256) is not in mixedCase
+Parameter DRSDatasets.setJoinedRoundFlag(DRSDatasets.EventReturns)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#261) is not in mixedCase
+Parameter DRSDatasets.setNewLeaderFlag(DRSDatasets.EventReturns)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#266) is not in mixedCase
+Parameter DRSDatasets.setRoundEndTime(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#271) is not in mixedCase
+Parameter DRSDatasets.setTimestamp(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#276) is not in mixedCase
+Parameter DRSDatasets.setPID(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#281) is not in mixedCase
+Parameter DRSDatasets.setPID(DRSDatasets.EventReturns,uint256)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#281) is not in mixedCase
+Parameter DRSDatasets.setWinPID(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#286) is not in mixedCase
+Parameter DRSDatasets.setWinPID(DRSDatasets.EventReturns,uint256)._winPID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#286) is not in mixedCase
+Parameter DRSDatasets.setRID(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#291) is not in mixedCase
+Parameter DRSDatasets.setRID(DRSDatasets.EventReturns,uint256)._rID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#291) is not in mixedCase
+Parameter DRSDatasets.setWinner(DRSDatasets.EventReturns,address,bytes32,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#296) is not in mixedCase
+Parameter DRSDatasets.setWinner(DRSDatasets.EventReturns,address,bytes32,uint256)._winnerAddr (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#296) is not in mixedCase
+Parameter DRSDatasets.setWinner(DRSDatasets.EventReturns,address,bytes32,uint256)._winnerName (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#296) is not in mixedCase
+Parameter DRSDatasets.setWinner(DRSDatasets.EventReturns,address,bytes32,uint256)._amountWon (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#296) is not in mixedCase
+Parameter DRSDatasets.setGenInfo(DRSDatasets.EventReturns,address,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#304) is not in mixedCase
+Parameter DRSDatasets.setGenInfo(DRSDatasets.EventReturns,address,uint256)._genAddr (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#304) is not in mixedCase
+Parameter DRSDatasets.setGenInfo(DRSDatasets.EventReturns,address,uint256)._genKeyPrice (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#304) is not in mixedCase
+Parameter DRSDatasets.setNewPot(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#310) is not in mixedCase
+Parameter DRSDatasets.setNewPot(DRSDatasets.EventReturns,uint256)._newPot (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#310) is not in mixedCase
+Parameter DRSDatasets.setGenAmount(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#315) is not in mixedCase
+Parameter DRSDatasets.setGenAmount(DRSDatasets.EventReturns,uint256)._genAmount (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#315) is not in mixedCase
+Parameter DRSDatasets.setPotAmount(DRSDatasets.EventReturns,uint256)._event (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#320) is not in mixedCase
+Parameter DRSDatasets.setPotAmount(DRSDatasets.EventReturns,uint256)._potAmount (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#320) is not in mixedCase
+Event DRSEvents.onNewName(uint256,address,bytes32,bool,uint256,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#364-375) is not in CapWords
+Event DRSEvents.onEndTx(uint256,uint256,bytes32,address,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256,address,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#378-398) is not in CapWords
+Event DRSEvents.onWithdraw(uint256,address,bytes32,uint256,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#401-408) is not in CapWords
+Event DRSEvents.onWithdrawAndDistribute(address,bytes32,uint256,uint256,uint256,address,bytes32,uint256,uint256,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#411-426) is not in CapWords
+Event DRSEvents.onBuyAndDistribute(address,bytes32,uint256,uint256,uint256,address,bytes32,uint256,uint256,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#430-445) is not in CapWords
+Event DRSEvents.onReLoadAndDistribute(address,bytes32,uint256,uint256,address,bytes32,uint256,uint256,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#449-463) is not in CapWords
+Event DRSEvents.onBuyKeyFailure(uint256,uint256,uint256,uint256,uint256) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#465-472) is not in CapWords
+Parameter ReserveBag.reLoadXaddr(uint256)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#631) is not in mixedCase
+Parameter ReserveBag.registerName(string,bool)._nameString (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#742) is not in mixedCase
+Parameter ReserveBag.registerName(string,bool)._all (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#742) is not in mixedCase
+Parameter ReserveBag.getPlayerVaults(uint256)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#793) is not in mixedCase
+Parameter ReserveBag.getPlayerInfoByAddress(address)._addr (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#865) is not in mixedCase
+Parameter ReserveBag.buyCore(uint256,DRSDatasets.EventReturns)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896) is not in mixedCase
+Parameter ReserveBag.buyCore(uint256,DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#896) is not in mixedCase
+Parameter ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947) is not in mixedCase
+Parameter ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947) is not in mixedCase
+Parameter ReserveBag.reLoadCore(uint256,uint256,DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#947) is not in mixedCase
+Parameter ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns)._rID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997) is not in mixedCase
+Parameter ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997) is not in mixedCase
+Parameter ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997) is not in mixedCase
+Parameter ReserveBag.core(uint256,uint256,uint256,DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#997) is not in mixedCase
+Parameter ReserveBag.receivePlayerInfo(uint256,address,bytes32)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059) is not in mixedCase
+Parameter ReserveBag.receivePlayerInfo(uint256,address,bytes32)._addr (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059) is not in mixedCase
+Parameter ReserveBag.receivePlayerInfo(uint256,address,bytes32)._name (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1059) is not in mixedCase
+Parameter ReserveBag.receivePlayerNameList(uint256,bytes32)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1082) is not in mixedCase
+Parameter ReserveBag.receivePlayerNameList(uint256,bytes32)._name (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1082) is not in mixedCase
+Parameter ReserveBag.determinePID(DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1094) is not in mixedCase
+Parameter ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123) is not in mixedCase
+Parameter ReserveBag.managePlayer(uint256,DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1123) is not in mixedCase
+Parameter ReserveBag.getWin(uint256)._pot (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1136) is not in mixedCase
+Parameter ReserveBag.getDRSCoinDividend(uint256)._pot (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1140) is not in mixedCase
+Parameter ReserveBag.getTeamPerfit(uint256)._pot (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1144) is not in mixedCase
+Parameter ReserveBag.endRound(DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1168) is not in mixedCase
+Parameter ReserveBag.updateTimer(uint256)._rID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1229) is not in mixedCase
+Parameter ReserveBag.depositTeamPerfit(uint256)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1245) is not in mixedCase
+Parameter ReserveBag.distributeExternal(uint256)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1261) is not in mixedCase
+Parameter ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns)._rID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274) is not in mixedCase
+Parameter ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274) is not in mixedCase
+Parameter ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns)._ethExt (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274) is not in mixedCase
+Parameter ReserveBag.distributeInternal(uint256,uint256,uint256,DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1274) is not in mixedCase
+Parameter ReserveBag.withdrawEarnings(uint256)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1310) is not in mixedCase
+Parameter ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns)._pID (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325) is not in mixedCase
+Parameter ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns)._eth (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325) is not in mixedCase
+Parameter ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns)._keyIndex (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325) is not in mixedCase
+Parameter ReserveBag.endTx(uint256,uint256,uint256,DRSDatasets.EventReturns)._eventData_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1325) is not in mixedCase
+Parameter ReserveBag.setTeamPerfitAddress(address)._newTeamPerfitAddress (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1379) is not in mixedCase
+Parameter ReserveBag.setPlayerBookAddress(address)._newPlayerBookAddress (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1383) is not in mixedCase
+Parameter ReserveBag.setDRSCoinAddress(address)._newDRSCoinAddress (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1387) is not in mixedCase
+Constant ReserveBag.initKeyPrice (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#490) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ReserveBag.rndMax_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#495) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#705)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#698)
+		- res = teamPerfit.deposit.value(_eth)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1251)
+		- drsCoin.profitEth.value(_drsCoinDividend)() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#1200)
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#705)
+	Event emitted after the call(s):
+	- DRSEvents.onWithdrawAndDistribute(msg.sender,plyr_[_pID].name,_eth,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.genAmount) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#713-727)
+Reentrancy in ReserveBag.withdraw() (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#671-740):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#734)
+	Event emitted after the call(s):
+	- DRSEvents.onWithdraw(_pID,msg.sender,plyr_[_pID].name,_eth,_now) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#738)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ReserveBag.drsCoinDividendRatio (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#512) should be constant 
+ReserveBag.ethMintDRSCoinRate (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#515) should be constant 
+ReserveBag.genRatio (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#510) should be constant 
+ReserveBag.keyPriceIncreaseRatio (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#509) should be constant 
+ReserveBag.rewardInternal (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#507) should be constant 
+ReserveBag.rndExtra_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#492) should be constant 
+ReserveBag.rndGap_ (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#493) should be constant 
+ReserveBag.teamPerfitRatio (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#513) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+registerName(string,bool) should be declared external:
+	- ReserveBag.registerName(string,bool) (../sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol#742-755)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x599bd943ec0babdc271a92a2303b20a140b93615.sol analyzed (8 contracts with 100 detectors), 130 result(s) found

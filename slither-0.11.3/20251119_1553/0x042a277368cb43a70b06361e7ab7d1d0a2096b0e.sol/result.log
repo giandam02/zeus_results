@@ -1,0 +1,91 @@
+'solc --version' running
+'solc /sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function FundariaBonusFund() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:46:13: Warning: Use of the "var" keyword is deprecated.
+            var bonusValue = ownedBonus[msg.sender];
+            ^------------^
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:63:13: Warning: Use of the "var" keyword is deprecated.
+            var bonusValue = ownedBonus[msg.sender];
+            ^------------^
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:48:13: Warning: Invoking events without "emit" prefix is deprecated.
+            BonusWithdrawn(msg.sender, bonusValue);
+            ^------------------------------------^
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:67:13: Warning: Invoking events without "emit" prefix is deprecated.
+            AccountFilledWithBonus(accountAddress, bonusValue, investorsAccounts[accountAddress]);
+            ^-----------------------------------------------------------------------------------^
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function FundariaBonusFund() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:28:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFundariaTokenBuyAddress(address _fundariaTokenBuyAddress) onlyCreator {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:32:5: Warning: No visibility specified. Defaulting to "public". 
+    function setRegisteringContractAddress(address _registeringContractAddress) onlyCreator {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:37:5: Warning: No visibility specified. Defaulting to "public". 
+    function setFinalTimestampOfBonusPeriod(uint _finalTimestampOfBonusPeriod) onlyCreator {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:44:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawBonus() onlyBonusOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:54:5: Warning: No visibility specified. Defaulting to "public". 
+    function registerInvestorAccount(address accountAddress) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:61:5: Warning: No visibility specified. Defaulting to "public". 
+    function fillInvestorAccountWithBonus(address accountAddress) onlyBonusOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol:73:5: Warning: No visibility specified. Defaulting to "public". 
+    function setOwnedBonus() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+FundariaBonusFund.setFinalTimestampOfBonusPeriod(uint256) (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#37-40) should emit an event for: 
+	- finalTimestampOfBonusPeriod = _finalTimestampOfBonusPeriod (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#39) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+FundariaBonusFund.setFundariaTokenBuyAddress(address)._fundariaTokenBuyAddress (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#28) lacks a zero-check on :
+		- fundariaTokenBuyAddress = _fundariaTokenBuyAddress (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#29)
+FundariaBonusFund.setRegisteringContractAddress(address)._registeringContractAddress (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#32) lacks a zero-check on :
+		- registeringContractAddress = _registeringContractAddress (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Modifier FundariaBonusFund.onlyCreator() (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#19-21) does not always execute _; or revert
+Modifier FundariaBonusFund.onlyBonusOwner() (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#24-26) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+FundariaBonusFund.withdrawBonus() (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#44-51) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > finalTimestampOfBonusPeriod (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#45)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter FundariaBonusFund.setFundariaTokenBuyAddress(address)._fundariaTokenBuyAddress (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#28) is not in mixedCase
+Parameter FundariaBonusFund.setRegisteringContractAddress(address)._registeringContractAddress (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#32) is not in mixedCase
+Parameter FundariaBonusFund.setFinalTimestampOfBonusPeriod(uint256)._finalTimestampOfBonusPeriod (../sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol#37) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x042a277368cb43a70b06361e7ab7d1d0a2096b0e.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

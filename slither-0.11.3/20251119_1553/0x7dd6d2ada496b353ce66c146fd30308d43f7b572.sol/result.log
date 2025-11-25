@@ -1,0 +1,42 @@
+'solc --version' running
+'solc /sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol:
+/sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol:15:3: Warning: Functions in interfaces should be declared external.
+  function getImplementation(string contractName) public view returns (address);
+  ^----------------------------------------------------------------------------^
+
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol#67) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+getImplementation(string) should be declared external:
+	- ImplementationProvider.getImplementation(string) (../sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol#15)
+addVersion(string,ImplementationProvider) should be declared external:
+	- Package.addVersion(string,ImplementationProvider) (../sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol#118-122)
+getImplementation(string,string) should be declared external:
+	- Package.getImplementation(string,string) (../sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol#139-142)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x7dd6d2ada496b353ce66c146fd30308d43f7b572.sol analyzed (3 contracts with 100 detectors), 6 result(s) found

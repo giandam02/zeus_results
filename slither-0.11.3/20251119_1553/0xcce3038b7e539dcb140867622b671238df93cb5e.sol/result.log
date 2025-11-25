@@ -1,0 +1,40 @@
+'solc --version' running
+'solc /sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint =0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- =0.4.25 (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#1)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter ETP.transfer(address,uint256)._to (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#19) is not in mixedCase
+Parameter ETP.transfer(address,uint256)._value (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#19) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ETP.transfer(address,uint256) (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#19-23) uses literals with too many digits:
+	- require(bool)(_value >= 100000000) (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#20)
+ETP.slitherConstructorVariables() (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#2-25) uses literals with too many digits:
+	- totalSupply = 1500000000 (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#6)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ETP.decimals (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#5) should be constant 
+ETP.name (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#3) should be constant 
+ETP.symbol (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#4) should be constant 
+ETP.totalSupply (../sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol#6) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xcce3038b7e539dcb140867622b671238df93cb5e.sol analyzed (1 contracts with 100 detectors), 10 result(s) found

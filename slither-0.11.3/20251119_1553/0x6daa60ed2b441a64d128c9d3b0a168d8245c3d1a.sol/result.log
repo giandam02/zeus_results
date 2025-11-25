@@ -1,0 +1,158 @@
+'solc --version' running
+'solc /sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:33:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:83:9: Warning: Use of the "var" keyword is deprecated.
+        var _allowance = allowed[_from][msg.sender];
+        ^------------^
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:123:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function UNICToken() public onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:177:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Crowdsale() public onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:67:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:87:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:95:11: Warning: Invoking events without "emit" prefix is deprecated.
+          Approval(msg.sender, _spender, _value);
+          ^------------------------------------^
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:123:33: Warning: Modifier-style base constructor call without arguments.
+    function UNICToken() public onlyOwner {
+                                ^-------^
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:177:31: Warning: Modifier-style base constructor call without arguments.
+  function Crowdsale() public onlyOwner {
+                              ^-------^
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol:123:33: Warning: Modifier-style base constructor call without arguments.
+    function UNICToken() public onlyOwner {
+                                ^-------^
+
+
+Reentrancy in Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223):
+	External calls:
+	- token.transfer(msg.sender,tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#216)
+	External calls sending eth:
+	- multisig.transfer(msg.value) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#214)
+	State variables written after the call(s):
+	- tokensSold = tokensSold.add(tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#217)
+	Crowdsale.tokensSold (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#166) can be used in cross function reentrancies:
+	- Crowdsale.Crowdsale() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#177-181)
+	- Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223)
+	- Crowdsale.tokensSold (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#166)
+	- tokensSoldWhitelist = tokensSoldWhitelist.add(tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#219)
+	Crowdsale.tokensSoldWhitelist (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#167) can be used in cross function reentrancies:
+	- Crowdsale.Crowdsale() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#177-181)
+	- Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223)
+	- Crowdsale.tokensSoldWhitelist (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223) ignores return value by token.transfer(msg.sender,tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#216)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223) performs a multiplication on the result of a division:
+	- tokens = rate.mul(msg.value).div(1000000000000000000) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#191)
+	- discountTokens = tokens.mul(firstRoundICODiscount).div(100) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#201)
+Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223) performs a multiplication on the result of a division:
+	- tokens = rate.mul(msg.value).div(1000000000000000000) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#191)
+	- discountTokens = tokens.mul(presaleDiscount).div(100) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#197)
+Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223) performs a multiplication on the result of a division:
+	- tokens = rate.mul(msg.value).div(1000000000000000000) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#191)
+	- discountTokens = tokens.mul(presaleWhitelistDiscount).div(100) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#195)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+UNICToken.setICOManager(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#128-131) should emit an event for: 
+	- icoManager = _newIcoManager (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#130) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= presaleStart && now <= presaleEnd (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#193)
+	- now >= firstRoundICOStart && now <= firstRoundICOEnd (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#200)
+	- (now >= presaleStart && now <= presaleEnd && presaleTokensLimit > tokensSold + tokensWithBonus && ((WhiteList[_buyer] == 1 && presaleWhitelistTokensLimit > tokensSoldWhitelist + tokensWithBonus) || WhiteList[_buyer] != 1)) || (now >= firstRoundICOStart && now <= firstRoundICOEnd && firstRoundICOTokensLimit > tokensSold + tokensWithBonus) || (now >= secondRoundICOStart && now <= secondRoundICOEnd && secondRoundICOTokensLimit > tokensSold + tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#207-211)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#30-41) is not in CapWords
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#63) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#63) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#72) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#81) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#81) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#81) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#92) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#92) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#100) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#100) is not in mixedCase
+Parameter UNICToken.setICOManager(address)._newIcoManager (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#128) is not in mixedCase
+Parameter UNICToken.setWhiteList(address)._contributor (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#133) is not in mixedCase
+Variable UNICToken.WhiteList (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#116) is not in mixedCase
+Parameter Crowdsale.buyTokens(address)._buyer (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187) is not in mixedCase
+Constant Crowdsale.multisig (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#146) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant Crowdsale.rate (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#147) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Crowdsale.buyTokens(address) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#187-223):
+	External calls:
+	- multisig.transfer(msg.value) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#214)
+	State variables written after the call(s):
+	- etherRaised = etherRaised.add(msg.value) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#215)
+	- tokensSold = tokensSold.add(tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#217)
+	- tokensSoldWhitelist = tokensSoldWhitelist.add(tokensWithBonus) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#219)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Crowdsale.slitherConstructorVariables() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#140-225) uses literals with too many digits:
+	- initialSupply = 250000000 * 10 ** uint256(decimals) (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#112)
+Crowdsale.slitherConstructorVariables() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#140-225) uses literals with too many digits:
+	- presaleTokensLimit = 4250000 * 1000000000000000000 (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#152)
+Crowdsale.slitherConstructorVariables() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#140-225) uses literals with too many digits:
+	- presaleWhitelistTokensLimit = 750000 * 1000000000000000000 (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#154)
+Crowdsale.slitherConstructorVariables() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#140-225) uses literals with too many digits:
+	- firstRoundICOTokensLimit = 6250000 * 1000000000000000000 (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#159)
+Crowdsale.slitherConstructorVariables() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#140-225) uses literals with too many digits:
+	- secondRoundICOTokensLimit = 43750000 * 1000000000000000000 (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#163)
+Crowdsale.slitherConstructorConstantVariables() (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#140-225) uses literals with too many digits:
+	- rate = 3400 * 1000000000000000000 (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#147)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Crowdsale.firstRoundICODiscount (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#158) should be constant 
+Crowdsale.firstRoundICOEnd (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#157) should be constant 
+Crowdsale.firstRoundICOStart (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#156) should be constant 
+Crowdsale.firstRoundICOTokensLimit (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#159) should be constant 
+Crowdsale.presaleDiscount (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#151) should be constant 
+Crowdsale.presaleEnd (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#150) should be constant 
+Crowdsale.presaleTokensLimit (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#152) should be constant 
+Crowdsale.presaleWhitelistDiscount (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#153) should be constant 
+Crowdsale.presaleWhitelistTokensLimit (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#154) should be constant 
+Crowdsale.secondRoundICOEnd (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#162) should be constant 
+Crowdsale.secondRoundICOStart (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#161) should be constant 
+Crowdsale.secondRoundICOTokensLimit (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#163) should be constant 
+UNICToken.initialSupply (../sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol#112) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x6daa60ed2b441a64d128c9d3b0a168d8245c3d1a.sol analyzed (8 contracts with 100 detectors), 46 result(s) found

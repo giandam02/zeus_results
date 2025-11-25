@@ -1,0 +1,96 @@
+'solc --version' running
+'solc /sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+fomoconnect.fallback() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#63-76) performs a multiplication on the result of a division:
+	- ownerWallet.transfer(msg.value.div(100).mul(5)) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#72)
+fomoconnect.fallback() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#63-76) performs a multiplication on the result of a division:
+	- ownerWallet2.transfer(msg.value.div(100).mul(5)) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#73)
+fomoconnect.getBalance(address) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#82-89) performs a multiplication on the result of a division:
+	- minutesCount = now.sub(joined[_address]).div(60) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#83)
+	- percent = investments[_address].mul(step).div(100) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#84)
+	- different = percent.mul(minutesCount).div(1440) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#85)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+fomoconnect.constructor(address)._bountyManager (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#28) lacks a zero-check on :
+		- bountyManager = _bountyManager (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#31)
+fomoconnect.transferOwnership(address,address).newOwnerWallet (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#53) lacks a zero-check on :
+		- ownerWallet = newOwnerWallet (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#57)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+fomoconnect.withdraw() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#98-111) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(joined[msg.sender] > 0) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#99)
+	- address(this).balance > balance (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#101)
+	- balance > 0 (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#102)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract fomoconnect (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#3-171) is not in CapWords
+Parameter fomoconnect.getBalance(address)._address (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#82) is not in mixedCase
+Parameter fomoconnect.checkWithdrawals(address)._investor (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#140) is not in mixedCase
+Parameter fomoconnect.checkInvestments(address)._investor (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#149) is not in mixedCase
+Parameter fomoconnect.checkReferral(address)._hunter (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#158) is not in mixedCase
+Parameter fomoconnect.updateReferral(address,uint256)._hunter (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#167) is not in mixedCase
+Parameter fomoconnect.updateReferral(address,uint256)._amount (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#167) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in fomoconnect.bounty() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#116-125):
+	External calls:
+	- msg.sender.transfer(refBalance) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#121)
+	Event emitted after the call(s):
+	- Bounty(msg.sender,refBalance) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#122)
+Reentrancy in fomoconnect.fallback() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#63-76):
+	External calls:
+	- withdraw() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#66)
+		- msg.sender.transfer(balance) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#104)
+	State variables written after the call(s):
+	- investments[msg.sender] = investments[msg.sender].add(msg.value) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#70)
+	- joined[msg.sender] = block.timestamp (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#71)
+	- withdrawals[msg.sender] = 0 (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#67)
+Reentrancy in fomoconnect.fallback() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#63-76):
+	External calls:
+	- withdraw() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#66)
+		- msg.sender.transfer(balance) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#104)
+	- ownerWallet.transfer(msg.value.div(100).mul(5)) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#72)
+	- ownerWallet2.transfer(msg.value.div(100).mul(5)) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#73)
+	State variables written after the call(s):
+	- step ++ (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#75)
+	Event emitted after the call(s):
+	- Invest(msg.sender,msg.value) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#74)
+Reentrancy in fomoconnect.withdraw() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#98-111):
+	External calls:
+	- msg.sender.transfer(balance) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#104)
+	Event emitted after the call(s):
+	- Withdraw(msg.sender,balance) (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#105)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+fomoconnect.slitherConstructorVariables() (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#3-171) uses literals with too many digits:
+	- minimum = 10000000000000000 (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#12)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+fomoconnect.minimum (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#12) should be constant 
+fomoconnect.ownerWallet2 (../sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol#15) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x4ab4ebf4ffafb874517c9feb2433c9f925463eed.sol analyzed (2 contracts with 100 detectors), 22 result(s) found

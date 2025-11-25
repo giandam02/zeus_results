@@ -1,0 +1,143 @@
+'solc --version' running
+'solc /sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:22:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:36:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function VoteFactory() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:57:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:67:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:71:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:75:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:92:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Vote() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:28:9: Warning: Invoking events without "emit" prefix is deprecated.
+        transferredOwner(newOwner);
+        ^------------------------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:33:20: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        owner.send(this.balance);
+                   ^----------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:33:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        owner.send(this.balance);
+        ^----------------------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:60:9: Warning: Invoking events without "emit" prefix is deprecated.
+        startedNewVote(msg.sender, duration, description, ++numPolls);
+        ^-----------------------------------------------------------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:85:9: Warning: Invoking events without "emit" prefix is deprecated.
+        voted(voteSender, isYes);
+        ^----------------------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:104:25: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        msg.sender.send(this.balance);
+                        ^----------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:104:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        msg.sender.send(this.balance);
+        ^---------------------------^
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:26:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferOwner(address newOwner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:31:5: Warning: No visibility specified. Defaulting to "public". 
+    function payOut() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:36:5: Warning: No visibility specified. Defaulting to "public". 
+    function VoteFactory() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:43:5: Warning: No visibility specified. Defaulting to "public". 
+    function() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:49:5: Warning: No visibility specified. Defaulting to "public". 
+    function newVote(uint duration, string description) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function vote(bool isYes, address voteSender) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function Vote() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:97:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function payOut() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Vote.payOut() (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#102-105) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.send(this.balance) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#104)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+VoteFactory.payOut() (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#31-34) ignores return value by owner.send(this.balance) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#33)
+Vote.payOut() (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#102-105) ignores return value by msg.sender.send(this.balance) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#104)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+VoteFactory.transferOwner(address).newOwner (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#26) lacks a zero-check on :
+		- owner = newOwner (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+VoteFactory.fallback() (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#43-47) uses timestamp for comparisons
+	Dangerous comparisons:
+	- nextEndTime < now + 600 (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#45)
+VoteFactory.startNewVote(uint256,string) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#54-61) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now <= nextEndTime (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#56)
+VoteFactory.vote(bool,address) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#63-86) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > nextEndTime (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#70)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Deprecated standard detected THROW (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#57):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#67):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#71):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#75):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#22):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.10 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.10 (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event VoteFactory.transferredOwner(address) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#16) is not in CapWords
+Event VoteFactory.startedNewVote(address,uint256,string,uint256) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#17) is not in CapWords
+Event VoteFactory.voted(address,bool) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#18) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+newVote(uint256,string) should be declared external:
+	- VoteFactory.newVote(uint256,string) (../sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol#49-52)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x0b6f6e073a08ab8fd458527c47ed83982ff26851.sol analyzed (2 contracts with 100 detectors), 18 result(s) found

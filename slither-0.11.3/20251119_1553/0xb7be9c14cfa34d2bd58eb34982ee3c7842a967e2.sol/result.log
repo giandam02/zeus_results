@@ -1,0 +1,70 @@
+'solc --version' running
+'solc /sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+TokenRecover.recoverERC20(address,uint256) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1203-1211) ignores return value by IERC20(tokenAddress).transfer(owner(),tokenAmount) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1210)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Address.isContract(address) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#537-548) is declared view but contains assembly code
+ERC165Checker._callERC165SupportsInterface(address,bytes4) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#664-696) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ERC20Detailed.constructor(string,string,uint8).name (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#51) shadows:
+	- ERC20Detailed.name() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#60-62) (function)
+ERC20Detailed.constructor(string,string,uint8).symbol (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#51) shadows:
+	- ERC20Detailed.symbol() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#67-69) (function)
+ERC20Detailed.constructor(string,string,uint8).decimals (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#51) shadows:
+	- ERC20Detailed.decimals() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#74-76) (function)
+ERC20Capped.constructor(uint256).cap (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#477) shadows:
+	- ERC20Capped.cap() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#487-489) (function)
+BaseToken.constructor(string,string,uint8,uint256,uint256).name (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1226) shadows:
+	- ERC20Detailed.name() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#60-62) (function)
+BaseToken.constructor(string,string,uint8,uint256,uint256).symbol (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1227) shadows:
+	- ERC20Detailed.symbol() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#67-69) (function)
+BaseToken.constructor(string,string,uint8,uint256,uint256).decimals (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1228) shadows:
+	- ERC20Detailed.decimals() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#74-76) (function)
+BaseToken.constructor(string,string,uint8,uint256,uint256).cap (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1229) shadows:
+	- ERC20Capped.cap() (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#487-489) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Address.isContract(address) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#537-548) uses assembly
+	- INLINE ASM (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#546-547)
+ERC165Checker._callERC165SupportsInterface(address,bytes4) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#664-696) uses assembly
+	- INLINE ASM (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#678-696)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ERC165._registerInterface(bytes4) (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#763-768) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Constant ERC165Checker._InterfaceId_Invalid (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#561) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC165Checker._InterfaceId_ERC165 (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#563) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC165._InterfaceId_ERC165 (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#728) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC1363._InterfaceId_ERC1363Transfer (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#944) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC1363._InterfaceId_ERC1363Approve (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#952) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+BaseToken.builtOn (../sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol#1223) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xb7be9c14cfa34d2bd58eb34982ee3c7842a967e2.sol analyzed (20 contracts with 100 detectors), 22 result(s) found

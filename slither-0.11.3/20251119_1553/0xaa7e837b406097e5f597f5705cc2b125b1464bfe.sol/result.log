@@ -1,0 +1,40 @@
+'solc --version' running
+'solc /sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Marble (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#7-101) has incorrect ERC20 function interface:Marble.transfer(address,uint256) (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#47-49)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Version constraint ^0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.16 (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#5)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Marble.transfer(address,uint256)._to (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#47) is not in mixedCase
+Parameter Marble.transfer(address,uint256)._value (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#47) is not in mixedCase
+Parameter Marble.balanceOf(address)._owner (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#79) is not in mixedCase
+Parameter Marble.burn(uint256)._value (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#90) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Marble.decimals (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#11) should be constant 
+Marble.name (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#9) should be constant 
+Marble.symbol (../sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol#10) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xaa7e837b406097e5f597f5705cc2b125b1464bfe.sol analyzed (1 contracts with 100 detectors), 10 result(s) found

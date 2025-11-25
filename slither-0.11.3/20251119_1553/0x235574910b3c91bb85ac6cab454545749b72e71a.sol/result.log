@@ -1,0 +1,51 @@
+'solc --version' running
+'solc /sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol:
+/sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol:23:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        owner.send(msg.value / 10); //Отправка 10% от вклада на адрес рекламного фонда контракта
+        ^------------------------^
+/sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol:28:9: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+        paymentAddress.send(paymentAmount); //Отправляем выплату
+        ^--------------------------------^
+
+
+SmartPromiseSEVEN.fallback() (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#22-33) performs a multiplication on the result of a division:
+	- paymentAmount = balances[msg.sender] * 7 / 100 * (block.number - timestamp[msg.sender]) / 5900 (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+SmartPromiseSEVEN.fallback() (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#22-33) ignores return value by owner.send(msg.value / 10) (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#23)
+SmartPromiseSEVEN.fallback() (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#22-33) ignores return value by paymentAddress.send(paymentAmount) (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#28)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in SmartPromiseSEVEN.fallback() (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#22-33):
+	External calls:
+	- owner.send(msg.value / 10) (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#23)
+	- paymentAddress.send(paymentAmount) (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#28)
+	State variables written after the call(s):
+	- balances[msg.sender] += msg.value (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#32)
+	- timestamp[msg.sender] = block.number (../sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol#31)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x235574910b3c91bb85ac6cab454545749b72e71a.sol analyzed (1 contracts with 100 detectors), 6 result(s) found

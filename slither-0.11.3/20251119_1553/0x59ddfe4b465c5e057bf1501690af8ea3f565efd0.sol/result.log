@@ -1,0 +1,43 @@
+'solc --version' running
+'solc /sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol:
+/sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol:32:3: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+		uint256[] entries = playerInfo[player].entries;
+		^---------------^
+
+
+Variable 'CashCow.checkBalance(address).entryBalence (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#43)' in CashCow.checkBalance(address) (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#30-65) potentially used before declaration: entryBalence = calculateBalance(entry % 100,(numberOfEntries - 1) % 100) (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#55)
+Variable 'CashCow.checkBalance(address).entryBalence (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#43)' in CashCow.checkBalance(address) (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#30-65) potentially used before declaration: totalBalance += entryBalence (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#56)
+Variable 'CashCow.checkBalance(address).entryBalence (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#43)' in CashCow.checkBalance(address) (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#30-65) potentially used before declaration: entryBalence = calculateBalance(lastCashOut % 100,(numberOfEntries - 1) % 100) (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#59)
+Variable 'CashCow.checkBalance(address).entryBalence (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#43)' in CashCow.checkBalance(address) (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#30-65) potentially used before declaration: totalBalance += entryBalence (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#60)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Version constraint ^0.4.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3
+	- LibrariesNotCallableFromPayableFunctions.
+It is used by:
+	- ^0.4.0 (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+CashCow.cycleLength (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#5) should be constant 
+CashCow.price (../sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol#6) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x59ddfe4b465c5e057bf1501690af8ea3f565efd0.sol analyzed (1 contracts with 100 detectors), 8 result(s) found

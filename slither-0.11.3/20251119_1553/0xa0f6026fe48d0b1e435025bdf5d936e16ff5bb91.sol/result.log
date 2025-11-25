@@ -1,0 +1,164 @@
+'solc --version' running
+'solc /sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:21:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:322:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Hydrocoin(address _paymentContract, uint256 _teamTransferFreeze, address _founders)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:398:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Crowdsale(uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet, uint256 _hardCap) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:478:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function HYCCrowdsalePreICO(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:41:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:151:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:207:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:223:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:245:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:256:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:292:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_to, _amount);
+    ^----------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:293:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(address(0), _to, _amount);
+    ^--------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:303:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MintFinished();
+    ^------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:331:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0x0, founders, 500000000 ether);
+        ^--------------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:335:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0x0, _paymentContract, 100000 ether);
+        ^-------------------------------------------^
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol:447:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+    ^-------------------------------------------------------^
+
+
+Reentrancy in Crowdsale.assignTokenContract(address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#418-425):
+	External calls:
+	- hardCap = hardCap.add(token.totalSupply()) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#421)
+	- hardCap > token.hardCap() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#422)
+	- hardCap = token.hardCap() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#423)
+	State variables written after the call(s):
+	- hardCap = token.hardCap() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#423)
+	Crowdsale.hardCap (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#385) can be used in cross function reentrancies:
+	- Crowdsale.Crowdsale(uint256,uint256,uint256,address,uint256) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#398-408)
+	- Crowdsale.assignTokenContract(address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#418-425)
+	- Crowdsale.hardCap (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#385)
+	- Crowdsale.validateHardCap() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#410-414)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Crowdsale.buyTokens(address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#434-450) ignores return value by token.mint(beneficiary,tokens) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#446)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Hydrocoin.Hydrocoin(address,uint256,address)._founders (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#322) lacks a zero-check on :
+		- founders = _founders (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#328)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in Crowdsale.buyTokens(address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#434-450):
+	External calls:
+	- validateHardCap() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#434)
+		- assert(bool)(token.totalSupply() <= hardCap) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#413)
+	State variables written after the call(s):
+	- weiRaised = weiRaised.add(weiAmount) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#444)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Crowdsale.buyTokens(address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#434-450):
+	External calls:
+	- token.mint(beneficiary,tokens) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#446)
+	- validateHardCap() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#434)
+		- assert(bool)(token.totalSupply() <= hardCap) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#413)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,beneficiary,weiAmount,tokens) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#447)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Crowdsale.validPurchase() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#459-463) uses timestamp for comparisons
+	Dangerous comparisons:
+	- withinPeriod = now >= startTime && now <= endTime (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#460)
+	- withinPeriod && nonZeroPurchase (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#462)
+Crowdsale.hasEnded() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#466-468) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > endTime (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#467)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter MultipleOwners.removeOwner(address)._owner (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#68) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#144) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#144) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#160) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#199) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#199) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#199) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#221) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#221) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#233) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#233) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#243) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#243) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#249) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#249) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#289) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#289) is not in mixedCase
+Parameter Hydrocoin.transfer(address,uint256)._to (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#349) is not in mixedCase
+Parameter Hydrocoin.transfer(address,uint256)._value (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#349) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Hydrocoin.Hydrocoin(address,uint256,address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#322-336) uses literals with too many digits:
+	- totalSupply = 500100000000000000000000000 (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#326)
+Hydrocoin.Hydrocoin(address,uint256,address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#322-336) uses literals with too many digits:
+	- balances[founders] = balances[founders].add(500000000000000000000000000) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#330)
+Hydrocoin.Hydrocoin(address,uint256,address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#322-336) uses literals with too many digits:
+	- Transfer(0x0,founders,500000000000000000000000000) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#331)
+Hydrocoin.Hydrocoin(address,uint256,address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#322-336) uses literals with too many digits:
+	- balances[_paymentContract] = balances[_paymentContract].add(100000000000000000000000) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#334)
+Hydrocoin.Hydrocoin(address,uint256,address) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#322-336) uses literals with too many digits:
+	- Transfer(0x0,_paymentContract,100000000000000000000000) (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#335)
+Hydrocoin.slitherConstructorVariables() (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#310-353) uses literals with too many digits:
+	- hardCap = 1000000000000000000000000000 (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#316)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Hydrocoin.decimals (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#313) should be constant 
+Hydrocoin.hardCap (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#316) should be constant 
+Hydrocoin.name (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#311) should be constant 
+Hydrocoin.symbol (../sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol#312) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xa0f6026fe48d0b1e435025bdf5d936e16ff5bb91.sol analyzed (11 contracts with 100 detectors), 38 result(s) found

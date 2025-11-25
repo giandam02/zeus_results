@@ -1,0 +1,117 @@
+'solc --version' running
+'solc /sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+BAIToken.claimToken(ERC20,address,uint256) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#285-288) ignores return value by token.transfer(_to,_value) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#286)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+BAIToken.isContract(address) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#309-313) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+BAIToken.lock(address,uint256,uint256,uint256,uint256) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221-232) performs a multiplication on the result of a division:
+	- lockupInfo[_holder] = LockupInfo(_releaseStart,_termOfRound,_amount.div(100).mul(_releaseRate),_amount) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#225)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Contract locking ether found:
+	Contract BAIToken (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#112-351) has payable functions:
+	 - BAIToken.fallback() (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#159-161)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Ownable.transferOwnership(address) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#56-59) should emit an event for: 
+	- newOwner = _newOwner (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#58) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+BAIToken.autoUnlock(address) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#315-320) uses timestamp for comparisons
+	Dangerous comparisons:
+	- lockupInfo[_holder].releaseTime <= now (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#316)
+BAIToken.releaseTimeLock(address) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#322-346) uses timestamp for comparisons
+	Dangerous comparisons:
+	- lockupInfo[_holder].releaseTime <= now (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#327)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+BAIToken.isContract(address) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#309-313) uses assembly
+	- INLINE ASM (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#311-312)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+BAIToken.lock(address,uint256,uint256,uint256,uint256) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221-232) compares to a boolean constant:
+	-require(bool)(locks[_holder] == false) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#222)
+BAIToken.unlock(address) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#234-245) compares to a boolean constant:
+	-require(bool)(locks[_holder] == true) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#235)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.22 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- OneOfTwoConstructorsSkipped.
+It is used by:
+	- ^0.4.22 (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#56) is not in mixedCase
+Parameter BAIToken.transfer(address,uint256)._to (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#167) is not in mixedCase
+Parameter BAIToken.transfer(address,uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#167) is not in mixedCase
+Parameter BAIToken.balanceOf(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#182) is not in mixedCase
+Parameter BAIToken.transferFrom(address,address,uint256)._from (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#186) is not in mixedCase
+Parameter BAIToken.transferFrom(address,address,uint256)._to (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#186) is not in mixedCase
+Parameter BAIToken.transferFrom(address,address,uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#186) is not in mixedCase
+Parameter BAIToken.approve(address,uint256)._spender (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#202) is not in mixedCase
+Parameter BAIToken.approve(address,uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#202) is not in mixedCase
+Parameter BAIToken.approveAndCall(address,uint256,bytes)._spender (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#208) is not in mixedCase
+Parameter BAIToken.approveAndCall(address,uint256,bytes)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#208) is not in mixedCase
+Parameter BAIToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#208) is not in mixedCase
+Parameter BAIToken.allowance(address,address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#217) is not in mixedCase
+Parameter BAIToken.allowance(address,address)._spender (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#217) is not in mixedCase
+Parameter BAIToken.lock(address,uint256,uint256,uint256,uint256)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221) is not in mixedCase
+Parameter BAIToken.lock(address,uint256,uint256,uint256,uint256)._amount (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221) is not in mixedCase
+Parameter BAIToken.lock(address,uint256,uint256,uint256,uint256)._releaseStart (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221) is not in mixedCase
+Parameter BAIToken.lock(address,uint256,uint256,uint256,uint256)._termOfRound (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221) is not in mixedCase
+Parameter BAIToken.lock(address,uint256,uint256,uint256,uint256)._releaseRate (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#221) is not in mixedCase
+Parameter BAIToken.unlock(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#234) is not in mixedCase
+Parameter BAIToken.freezeAccount(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#247) is not in mixedCase
+Parameter BAIToken.unfreezeAccount(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#254) is not in mixedCase
+Parameter BAIToken.showLockState(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#265) is not in mixedCase
+Parameter BAIToken.distribute(address,uint256)._to (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#269) is not in mixedCase
+Parameter BAIToken.distribute(address,uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#269) is not in mixedCase
+Parameter BAIToken.distributeWithLockup(address,uint256,uint256,uint256,uint256)._to (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#279) is not in mixedCase
+Parameter BAIToken.distributeWithLockup(address,uint256,uint256,uint256,uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#279) is not in mixedCase
+Parameter BAIToken.distributeWithLockup(address,uint256,uint256,uint256,uint256)._releaseStart (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#279) is not in mixedCase
+Parameter BAIToken.distributeWithLockup(address,uint256,uint256,uint256,uint256)._termOfRound (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#279) is not in mixedCase
+Parameter BAIToken.distributeWithLockup(address,uint256,uint256,uint256,uint256)._releaseRate (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#279) is not in mixedCase
+Parameter BAIToken.claimToken(ERC20,address,uint256)._to (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#285) is not in mixedCase
+Parameter BAIToken.claimToken(ERC20,address,uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#285) is not in mixedCase
+Parameter BAIToken.burn(uint256)._value (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#290) is not in mixedCase
+Parameter BAIToken.autoUnlock(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#315) is not in mixedCase
+Parameter BAIToken.releaseTimeLock(address)._holder (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#322) is not in mixedCase
+Variable BAIToken.MONTH (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#114) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+BAIToken.constructor() (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#149-157) uses literals with too many digits:
+	- initialSupply = 300000000000 (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#153)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+BAIToken.MONTH (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#114) is never used in BAIToken (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#112-351)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+BAIToken.MONTH (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#114) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+approveAndCall(address,uint256,bytes) should be declared external:
+	- BAIToken.approveAndCall(address,uint256,bytes) (../sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol#208-215)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xdc4c6478517d3653b9e8371187acb579f3739462.sol analyzed (6 contracts with 100 detectors), 52 result(s) found

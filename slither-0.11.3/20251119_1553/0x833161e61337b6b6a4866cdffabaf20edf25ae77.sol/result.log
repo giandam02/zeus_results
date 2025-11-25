@@ -1,0 +1,129 @@
+'solc --version' running
+'solc /sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:56:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Ownable() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:322:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function CBS(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:74:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnershipTransferred(owner, newOwner);
+        ^-----------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:129:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:149:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, _target, _mintedAmount);
+        ^---------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:171:9: Warning: Invoking events without "emit" prefix is deprecated.
+        MintedToken(_target, _mintedAmount);
+        ^---------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:230:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:246:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:272:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:293:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        ^-----------------------------------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:374:9: Warning: Invoking events without "emit" prefix is deprecated.
+        BuyToken(msg.sender, _value);
+        ^--------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:381:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TransferContractEth(_to, _value);
+        ^------------------------------^
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol:401:9: Warning: Invoking events without "emit" prefix is deprecated.
+        SellToken(msg.sender, _value, sellEth);
+        ^------------------------------------^
+
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#202-204) uses arbitrary from in transferFrom: assert(bool)(token.transferFrom(from,to,value)) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#203)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+CanReclaimToken.reclaimToken(ERC20Basic) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#182-185) ignores return value by token.transfer(owner,balance) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#184)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+CBS.BuyTokens(uint256) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#366-375) performs a multiplication on the result of a division:
+	- tokens = _value.div(buyPrice).mul(100) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#367)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+CBS.transferEther(address,uint256)._to (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#377) lacks a zero-check on :
+		- _to.transfer(_value) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#379)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#122) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#122) is not in mixedCase
+Parameter BasicToken.transferByInternal(address,address,uint256)._from (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#134) is not in mixedCase
+Parameter BasicToken.transferByInternal(address,address,uint256)._to (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#134) is not in mixedCase
+Parameter BasicToken.transferByInternal(address,address,uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#134) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#160) is not in mixedCase
+Parameter BasicToken.mintToken(address,uint256)._target (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#164) is not in mixedCase
+Parameter BasicToken.mintToken(address,uint256)._mintedAmount (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#164) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#222) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#222) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#222) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#244) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#244) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#256) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#256) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#270) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#270) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#286) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#286) is not in mixedCase
+Parameter CBS.setAllowBuy(bool)._allowBuy (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#346) is not in mixedCase
+Parameter CBS.setBuyPrices(uint256)._newBuyPrice (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#350) is not in mixedCase
+Parameter CBS.setAllowSell(bool)._allowSell (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#354) is not in mixedCase
+Parameter CBS.setSellPrices(uint256)._newSellPrice (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#358) is not in mixedCase
+Function CBS.BuyTokens(uint256) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#366-375) is not in mixedCase
+Parameter CBS.BuyTokens(uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#366) is not in mixedCase
+Parameter CBS.transferEther(address,uint256)._to (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#377) is not in mixedCase
+Parameter CBS.transferEther(address,uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#377) is not in mixedCase
+Parameter CBS.sellTokens(uint256)._value (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#387) is not in mixedCase
+Variable CBS.INITIAL_SUPPLY (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#312) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in CBS.sellTokens(uint256) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#387-404):
+	External calls:
+	- msg.sender.transfer(sellEth) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#402)
+	State variables written after the call(s):
+	- contractEth = contractEth.sub(sellEth) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#403)
+Reentrancy in CBS.transferEther(address,uint256) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#377-383):
+	External calls:
+	- _to.transfer(_value) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#379)
+	State variables written after the call(s):
+	- contractEth = contractEth.sub(_value) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#380)
+	Event emitted after the call(s):
+	- TransferContractEth(_to,_value) (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#381)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+CBS.version (../sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol#309) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x833161e61337b6b6a4866cdffabaf20edf25ae77.sol analyzed (9 contracts with 100 detectors), 38 result(s) found

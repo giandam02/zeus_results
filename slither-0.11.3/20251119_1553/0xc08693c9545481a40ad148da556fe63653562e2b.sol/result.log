@@ -1,0 +1,68 @@
+'solc --version' running
+'solc /sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+WhaleKiller2.fallback() (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#15-46) performs a multiplication on the result of a division:
+	- amount = invested[sender] * interest / 10000 * (now - timeInvest[sender]) / 86400 * (now - timeInvest[sender]) / 86400 (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#19)
+WhaleKiller2.ShowDepositInfo(address) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#47-50) performs a multiplication on the result of a division:
+	- _unpaidInterest = invested[_dep] * interest / 10000 * (now - timeInvest[_dep]) / 86400 * (now - timeInvest[_dep]) / 86400 (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#48)
+WhaleKiller2.ShowPercent(address) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#54-57) performs a multiplication on the result of a division:
+	- _percent = interest / 10000 * (now - timeInvest[_dep]) / 86400 * (now - timeInvest[_dep]) / 86400 (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+WhaleKiller2.fallback() (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#15-46) uses timestamp for comparisons
+	Dangerous comparisons:
+	- invested[sender] != 0 (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#18)
+	- amount >= address(this).balance (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#21)
+	- (rewards[sender] + amount) > invested[sender] * maxRoi / 100 (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#24)
+	- invested[sender] > invested[WhaleAddr] (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#42)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function WhaleKiller2.ShowDepositInfo(address) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#47-50) is not in mixedCase
+Parameter WhaleKiller2.ShowDepositInfo(address)._dep (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#47) is not in mixedCase
+Function WhaleKiller2.ShowWhaleAddress() (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#51-53) is not in mixedCase
+Function WhaleKiller2.ShowPercent(address) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#54-57) is not in mixedCase
+Parameter WhaleKiller2.ShowPercent(address)._dep (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#54) is not in mixedCase
+Variable WhaleKiller2.WhaleAddr (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#4) is not in mixedCase
+Constant WhaleKiller2.interest (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#5) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant WhaleKiller2.whalefee (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#6) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant WhaleKiller2.maxRoi (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#7) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in WhaleKiller2.fallback() (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#15-46):
+	External calls:
+	- sender.transfer(amount) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#31)
+	State variables written after the call(s):
+	- invested[sender] += (msg.value + amount) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#38)
+	- rewards[sender] += amount (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#32)
+	- timeInvest[sender] = now (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#37)
+Reentrancy in WhaleKiller2.fallback() (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#15-46):
+	External calls:
+	- sender.transfer(amount) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#31)
+	- WhaleAddr.transfer(msg.value * whalefee / 100) (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#41)
+	State variables written after the call(s):
+	- WhaleAddr = sender (../sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol#43)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xc08693c9545481a40ad148da556fe63653562e2b.sol analyzed (1 contracts with 100 detectors), 17 result(s) found

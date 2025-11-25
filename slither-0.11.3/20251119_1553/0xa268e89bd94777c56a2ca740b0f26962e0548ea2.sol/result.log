@@ -1,0 +1,91 @@
+'solc --version' running
+'solc /sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SELFDROPICO.fallback() (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#112-131) performs a multiplication on the result of a division:
+	- valueToGive = valueToGive.div(10000).mul(9999) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#125)
+SELFDROPICO.buyToken(address,uint256) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#133-154) performs a multiplication on the result of a division:
+	- toGive = tokenPerETH.mul(_invest) / 1000000000000000000 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#134)
+	- bonus = toGive * 50 / 100 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#147)
+SELFDROPICO.buyToken(address,uint256) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#133-154) performs a multiplication on the result of a division:
+	- toGive = tokenPerETH.mul(_invest) / 1000000000000000000 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#134)
+	- bonus = toGive * 30 / 100 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#144)
+SELFDROPICO.buyToken(address,uint256) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#133-154) performs a multiplication on the result of a division:
+	- toGive = tokenPerETH.mul(_invest) / 1000000000000000000 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#134)
+	- bonus = toGive * 20 / 100 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#141)
+SELFDROPICO.buyToken(address,uint256) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#133-154) performs a multiplication on the result of a division:
+	- toGive = tokenPerETH.mul(_invest) / 1000000000000000000 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#134)
+	- bonus = toGive * 10 / 100 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#138)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+SELFDROPICO.totalSupply (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#57) shadows:
+	- ERC20Basic.totalSupply (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#32)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+SELFDROPICO.transferOwnership(address) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#90-94) should emit an event for: 
+	- owner = newOwner (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#92) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+SELFDROPICO.fallback() (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#112-131) compares to a boolean constant:
+	-require(bool)(blacklist[investor] == false) (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#118)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+SELFDROPICO.totalRemaining (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#62) is set pre-construction with a non-constant function or state variable:
+	- totalSupply.sub(totalDistributed)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function SELFDROPICO.SLDR() (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#84-88) is not in mixedCase
+Parameter SELFDROPICO.distr(address,uint256)._to (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#102) is not in mixedCase
+Parameter SELFDROPICO.distr(address,uint256)._amount (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#102) is not in mixedCase
+Parameter SELFDROPICO.buyToken(address,uint256)._investor (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#133) is not in mixedCase
+Parameter SELFDROPICO.buyToken(address,uint256)._invest (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#133) is not in mixedCase
+Parameter SELFDROPICO.balanceOf(address)._owner (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#156) is not in mixedCase
+Parameter SELFDROPICO.transfer(address,uint256)._to (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#165) is not in mixedCase
+Parameter SELFDROPICO.transfer(address,uint256)._amount (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#165) is not in mixedCase
+Parameter SELFDROPICO.transferFrom(address,address,uint256)._from (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#176) is not in mixedCase
+Parameter SELFDROPICO.transferFrom(address,address,uint256)._to (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#176) is not in mixedCase
+Parameter SELFDROPICO.transferFrom(address,address,uint256)._amount (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#176) is not in mixedCase
+Parameter SELFDROPICO.approve(address,uint256)._spender (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#189) is not in mixedCase
+Parameter SELFDROPICO.approve(address,uint256)._value (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#189) is not in mixedCase
+Parameter SELFDROPICO.allowance(address,address)._owner (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#196) is not in mixedCase
+Parameter SELFDROPICO.allowance(address,address)._spender (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#196) is not in mixedCase
+Parameter SELFDROPICO.withdrawAltcoinTokens(address)._tokenContract (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#212) is not in mixedCase
+Parameter SELFDROPICO.burn(uint256)._value (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#218) is not in mixedCase
+Parameter SELFDROPICO.burnFrom(uint256,address)._value (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#228) is not in mixedCase
+Parameter SELFDROPICO.burnFrom(uint256,address)._burner (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#228) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+SELFDROPICO.SLDR() (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#84-88) uses literals with too many digits:
+	- teamtoken = 50000000e18 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#86)
+SELFDROPICO.slitherConstructorVariables() (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#45-237) uses literals with too many digits:
+	- totalSupply = 1000000000e18 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#57)
+SELFDROPICO.slitherConstructorVariables() (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#45-237) uses literals with too many digits:
+	- tokenPerETH = 1000000e18 (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#32) should be constant 
+SELFDROPICO.tokenPerETH (../sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol#59) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xa268e89bd94777c56a2ca740b0f26962e0548ea2.sol analyzed (5 contracts with 100 detectors), 35 result(s) found

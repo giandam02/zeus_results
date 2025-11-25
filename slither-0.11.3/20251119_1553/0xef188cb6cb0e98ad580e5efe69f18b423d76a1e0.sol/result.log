@@ -1,0 +1,185 @@
+'solc --version' running
+'solc /sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:70:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+ 	function Swap() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:74:20: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x22F0AF8D78851b72EE799e05F54A77001586B18A'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+	    newTokenAdd = 0x22f0af8d78851b72ee799e05f54a77001586b18a; 
+	                  ^----------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:150:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EtherReceived ( 1, _address , _value);
+        ^-----------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:155:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GXVCSentByEther ( 2, _address , etherstosend) ;
+        ^-------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:179:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GXVCReplay( 3, _address ); // Log "Done before";
+        ^-----------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:184:9: Warning: Invoking events without "emit" prefix is deprecated.
+        GXVCNoToken( 4, _address ); // Log "No GXC tokens found";
+        ^------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:189:6: Warning: Invoking events without "emit" prefix is deprecated.
+     TokensReceived( 5, _address , _value ); // Log balance detected
+     ^------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:196:6: Warning: Invoking events without "emit" prefix is deprecated.
+     GXVCSentByToken( 6, _address , gpxtosend ); // Log "New token sent";
+     ^----------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:204:2: Warning: Invoking events without "emit" prefix is deprecated.
+	SwapPaused(7);
+	^-----------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:209:2: Warning: Invoking events without "emit" prefix is deprecated.
+	SwapResumed(8);
+	^------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:224:5: Warning: Invoking events without "emit" prefix is deprecated.
+    EtherrateUpd(9,_rate);
+    ^-------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:230:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenrateUpd(10,_rate);
+    ^--------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:235:37: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require( collectorAddress.send( this.balance ) );
+                                    ^----------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:22:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value) returns (bool);
+  ^----------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:27:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:28:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value) returns (bool);
+  ^----------------------------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:29:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value) returns (bool);
+  ^--------------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:30:3: Warning: No visibility specified. Defaulting to "public". 
+  function burn(address spender, uint256 value) returns (bool); // Optional 
+  ^-----------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:36:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint);
+  ^------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:38:3: Warning: No visibility specified. Defaulting to "public". 
+  function name() constant returns (string _name);
+  ^----------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:39:3: Warning: No visibility specified. Defaulting to "public". 
+  function symbol() constant returns (string _symbol);
+  ^--------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:40:3: Warning: No visibility specified. Defaulting to "public". 
+  function decimals() constant returns (uint8 _decimals);
+  ^-----------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:41:3: Warning: No visibility specified. Defaulting to "public". 
+  function totalSupply() constant returns (uint256 _supply);
+  ^--------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:43:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint value) returns (bool ok);
+  ^----------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:44:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint value, bytes data) returns (bool ok);
+  ^----------------------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:45:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint value, bytes data, string custom_fallback) returns (bool ok);
+  ^----------------------------------------------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:46:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value) returns (bool);
+  ^----------------------------------------------------------------------------^
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:70:3: Warning: No visibility specified. Defaulting to "public". 
+ 	function Swap() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:127:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable { 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol:121:5: Warning: Function state mutability can be restricted to pure
+    function mul(uint x, uint y) internal returns (uint z) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Swap.makeSwapInternal() (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#134-160) uses arbitrary from in transferFrom: require(bool)(newTok.transferFrom(tokenSpender,_address,etherstosend)) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#153)
+Swap.makeSwap(address,uint256,bytes32) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#168-200) uses arbitrary from in transferFrom: require(bool)(newTok.transferFrom(tokenSpender,_address,gpxtosend)) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#194)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Swap.collectorAddress (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#54) is never initialized. It is used in:
+	- Swap.makeSwapInternal() (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#134-160)
+	- Swap.flushEthers() (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#234-236)
+Swap.collectorTokens (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#55) is never initialized. It is used in:
+	- Swap.flushTokens() (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#238-241)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+Swap.updateOldToken(address)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#212) lacks a zero-check on :
+		- oldTokenAdd = _address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#213)
+Swap.updateNewToken(address,address)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#216) lacks a zero-check on :
+		- newTokenAdd = _address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#217)
+Swap.updateNewToken(address,address)._spender (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#216) lacks a zero-check on :
+		- tokenSpender = _spender (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#218)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in Swap.makeSwap(address,uint256,bytes32) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#168-200):
+	External calls:
+	- require(bool)(newTok.transferFrom(tokenSpender,_address,gpxtosend)) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#194)
+	State variables written after the call(s):
+	- lastBlock = block.number + 1 (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#198)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Swap.makeSwap(address,uint256,bytes32) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#168-200):
+	External calls:
+	- require(bool)(newTok.transferFrom(tokenSpender,_address,gpxtosend)) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#194)
+	Event emitted after the call(s):
+	- GXVCSentByToken(6,_address,gpxtosend) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#196)
+Reentrancy in Swap.makeSwapInternal() (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#134-160):
+	External calls:
+	- require(bool)(newTok.transferFrom(tokenSpender,_address,etherstosend)) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#153)
+	Event emitted after the call(s):
+	- GXVCSentByEther(2,_address,etherstosend) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter ERC223.transfer(address,uint256,bytes,string).custom_fallback (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#45) is not in mixedCase
+Parameter Swap.makeSwap(address,uint256,bytes32)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#168) is not in mixedCase
+Parameter Swap.makeSwap(address,uint256,bytes32)._value (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#168) is not in mixedCase
+Parameter Swap.makeSwap(address,uint256,bytes32)._hash (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#168) is not in mixedCase
+Parameter Swap.updateOldToken(address)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#212) is not in mixedCase
+Parameter Swap.updateNewToken(address,address)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#216) is not in mixedCase
+Parameter Swap.updateNewToken(address,address)._spender (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#216) is not in mixedCase
+Parameter Swap.updateEthRate(uint256)._rate (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#222) is not in mixedCase
+Parameter Swap.updateTokenRate(uint256)._rate (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#228) is not in mixedCase
+Parameter Swap.addAuthorized(address)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#243) is not in mixedCase
+Parameter Swap.removeAuthorized(address)._address (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#248) is not in mixedCase
+Variable Swap.Etherrate (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#61) is not in mixedCase
+Variable Swap.Tokenrate (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#62) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Swap.makeSwapInternal() (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#134-160) uses literals with too many digits:
+	- etherstosend = mul(_value,Etherrate) / 100000000 (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#143)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Swap.collectorAddress (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#54) should be constant 
+Swap.collectorTokens (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#55) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+transfer(address,uint256,bytes) should be declared external:
+	- ERC223.transfer(address,uint256,bytes) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#44)
+transfer(address,uint256,bytes,string) should be declared external:
+	- ERC223.transfer(address,uint256,bytes,string) (../sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol#45)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xef188cb6cb0e98ad580e5efe69f18b423d76a1e0.sol analyzed (4 contracts with 100 detectors), 30 result(s) found

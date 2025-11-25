@@ -1,0 +1,889 @@
+'solc --version' running
+'solc /sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol:
+/sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol:1159:9: Warning: Return value of low-level calls not used.
+        flushDivs.call.value(_POOH)(bytes4(keccak256("donate()")));  
+        ^--------------------------------------------------------^
+/sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol:1260:13: Warning: Return value of low-level calls not used.
+            flushDivs.call.value(_POOH)(bytes4(keccak256("donate()")));
+            ^--------------------------------------------------------^
+/sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol:1429:10: Warning: Return value of low-level calls not used.
+         flushDivs.call.value(address(this).balance)(bytes4(keccak256("donate()")));
+         ^------------------------------------------------------------------------^
+/sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol:616:5: Warning: Function state mutability can be restricted to pure
+    function getBuyPrice()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) sends eth to arbitrary user
+	Dangerous calls:
+	- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+Reentrancy in POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#822)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#822)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- plyr_[_pID].gen = plyr_[_pID].gen.add(msg.value) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#846)
+	POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151) can be used in cross function reentrancies:
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312)
+	- POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275)
+	- POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350)
+	- POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092)
+	- POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390)
+	- POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100-1116)
+	- POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.reLoadXaddr(address,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390-425)
+	- POOHMOX.reLoadXid(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361-388)
+	- POOHMOX.reLoadXname(bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427-462)
+	- POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044)
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+	- POOHMOX.updateGenVault(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188-1199)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- POOHMOX.withdrawEarnings(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1346-1363)
+Reentrancy in POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959):
+	External calls:
+	- _eventData_ = distributeExternal(_rID,_pID,_eth,_affID,0,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#954)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+	State variables written after the call(s):
+	- _eventData_ = distributeInternal(_rID,_pID,_eth,0,_keys,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#955)
+		- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1336)
+	POOHMOX.plyrRnds_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#152) can be used in cross function reentrancies:
+	- POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974)
+	- POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707)
+	- POOHMOX.plyrRnds_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#152)
+	- POOHMOX.updateGenVault(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188-1199)
+	- POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340)
+	- _eventData_ = distributeInternal(_rID,_pID,_eth,0,_keys,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#955)
+		- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1331)
+		- round_[_rID].pot = _pot.add(_dust).add(round_[_rID].pot) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1301)
+	POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157) can be used in cross function reentrancies:
+	- POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416)
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.calcKeysReceived(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983-996)
+	- POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974)
+	- POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959)
+	- POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280-1308)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707)
+	- POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648)
+	- POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157)
+	- POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340)
+	- POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+Reentrancy in POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182):
+	External calls:
+	- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- rID_ ++ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1175)
+	POOHMOX.rID_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#145) can be used in cross function reentrancies:
+	- POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416)
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648)
+	- POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020)
+	- POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100-1116)
+	- POOHMOX.rID_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#145)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1162)
+	POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157) can be used in cross function reentrancies:
+	- POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416)
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.calcKeysReceived(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983-996)
+	- POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974)
+	- POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959)
+	- POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280-1308)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707)
+	- POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648)
+	- POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157)
+	- POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340)
+	- POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- round_[_rID].strt = now (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1177)
+	POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157) can be used in cross function reentrancies:
+	- POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416)
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.calcKeysReceived(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983-996)
+	- POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974)
+	- POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959)
+	- POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280-1308)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707)
+	- POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648)
+	- POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157)
+	- POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340)
+	- POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- round_[_rID].end = now.add(rndMax_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1178)
+	POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157) can be used in cross function reentrancies:
+	- POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416)
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.calcKeysReceived(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983-996)
+	- POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974)
+	- POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959)
+	- POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280-1308)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707)
+	- POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648)
+	- POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157)
+	- POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340)
+	- POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- round_[_rID].pot = _res (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1179)
+	POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157) can be used in cross function reentrancies:
+	- POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416)
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.calcKeysReceived(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983-996)
+	- POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974)
+	- POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959)
+	- POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280-1308)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707)
+	- POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648)
+	- POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.round_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#157)
+	- POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340)
+	- POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+Reentrancy in POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- _eth = withdrawEarnings(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#496)
+		- plyr_[_pID].gen = _earnings.add(plyr_[_pID].gen) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1195)
+		- plyr_[_pID].win = 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1357)
+		- plyr_[_pID].gen = 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1358)
+		- plyr_[_pID].aff = 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1359)
+	POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151) can be used in cross function reentrancies:
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312)
+	- POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275)
+	- POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350)
+	- POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092)
+	- POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390)
+	- POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100-1116)
+	- POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.reLoadXaddr(address,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390-425)
+	- POOHMOX.reLoadXid(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361-388)
+	- POOHMOX.reLoadXname(bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427-462)
+	- POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044)
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+	- POOHMOX.updateGenVault(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188-1199)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- POOHMOX.withdrawEarnings(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1346-1363)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+NameFilter.nameFilter(string) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1583-1643) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707) performs a multiplication on the result of a division:
+	- (((((round_[_rID].mask).add(((((round_[_rID].pot).mul(potSplit_[round_[_rID].team].gen)) / 100).mul(1000000000000000000)) / (round_[_rID].keys))).mul(plyrRnds_[_pID][_rID].keys)) / 1000000000000000000)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#706)
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) performs a multiplication on the result of a division:
+	- _gen = (_pot.mul(potSplit_[_winTID].gen)) / 100 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1139)
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1144)
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1144)
+	- _dust = _gen.sub((_ppt.mul(round_[_rID].keys)) / 1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1145)
+POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222) performs a multiplication on the result of a division:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1215)
+POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222) performs a multiplication on the result of a division:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1213)
+POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1330)
+	- _pearn = (_ppt.mul(_keys)) / (1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1335)
+POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1330)
+	- (_gen.sub((_ppt.mul(round_[_rID].keys)) / (1000000000000000000))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1339)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#285)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	State variables written after the call(s):
+	- plyr_[_pID].laff = _affID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#307)
+	POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151) can be used in cross function reentrancies:
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312)
+	- POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275)
+	- POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350)
+	- POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092)
+	- POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390)
+	- POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100-1116)
+	- POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.reLoadXaddr(address,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390-425)
+	- POOHMOX.reLoadXid(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361-388)
+	- POOHMOX.reLoadXname(bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427-462)
+	- POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044)
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+	- POOHMOX.updateGenVault(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188-1199)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- POOHMOX.withdrawEarnings(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1346-1363)
+Reentrancy in POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#255)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	State variables written after the call(s):
+	- plyr_[_pID].laff = _affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#270)
+	POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151) can be used in cross function reentrancies:
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312)
+	- POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275)
+	- POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350)
+	- POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092)
+	- POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390)
+	- POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100-1116)
+	- POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.reLoadXaddr(address,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390-425)
+	- POOHMOX.reLoadXid(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361-388)
+	- POOHMOX.reLoadXname(bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427-462)
+	- POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044)
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+	- POOHMOX.updateGenVault(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188-1199)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- POOHMOX.withdrawEarnings(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1346-1363)
+Reentrancy in POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#322)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	State variables written after the call(s):
+	- plyr_[_pID].laff = _affID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#344)
+	POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151) can be used in cross function reentrancies:
+	- POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848)
+	- POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312)
+	- POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275)
+	- POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350)
+	- POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092)
+	- POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267)
+	- POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182)
+	- POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390)
+	- POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238)
+	- POOHMOX.getCurrentRoundInfo() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#726-751)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696)
+	- POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100-1116)
+	- POOHMOX.plyr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#151)
+	- POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899)
+	- POOHMOX.reLoadXaddr(address,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390-425)
+	- POOHMOX.reLoadXid(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361-388)
+	- POOHMOX.reLoadXname(bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427-462)
+	- POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044)
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+	- POOHMOX.updateGenVault(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188-1199)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+	- POOHMOX.withdrawEarnings(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1346-1363)
+Reentrancy in POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092):
+	External calls:
+	- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+	- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+	- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	State variables written after the call(s):
+	- pIDxAddr_[msg.sender] = _pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1075)
+	POOHMOX.pIDxAddr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#149) can be used in cross function reentrancies:
+	- POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312)
+	- POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275)
+	- POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350)
+	- POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092)
+	- POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238)
+	- POOHMOX.getPlayerInfoByAddress(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766-790)
+	- POOHMOX.pIDxAddr_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#149)
+	- POOHMOX.reLoadXaddr(address,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390-425)
+	- POOHMOX.reLoadXid(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361-388)
+	- POOHMOX.reLoadXname(bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427-462)
+	- POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044)
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+	- POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) ignores return value by flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267) ignores return value by flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+POOHMOX.whenGameDies() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1422-1430) ignores return value by flushDivs.call.value(address(this).balance)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1429)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-low-level-calls
+
+POOHMOX.reLoadXname(bytes32,uint256)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#434) is a local variable never initialized
+POOHMOX.withdraw()._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#489) is a local variable never initialized
+POOHMOX.reLoadXid(uint256,uint256)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#368) is a local variable never initialized
+POOHMOX.reLoadXaddr(address,uint256)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#397) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+POOHMOX.constructor(address,address).whaleContract (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#168) lacks a zero-check on :
+		- flushDivs = whaleContract (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#171)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in POOHMOX.determinePID(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061-1092):
+	External calls:
+	- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+	- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+	- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	State variables written after the call(s):
+	- pIDxName_[_name] = _pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1080)
+	- plyrNames_[_pID][_name] = true (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1082)
+	- plyr_[_pID].addr = msg.sender (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1076)
+	- plyr_[_pID].name = _name (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1081)
+	- plyr_[_pID].laff = _laff (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1086)
+Reentrancy in POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267):
+	External calls:
+	- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+	State variables written after the call(s):
+	- plyr_[_affID].aff = _aff.add(plyr_[_affID].aff) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1249)
+Reentrancy in POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- _eth = withdrawEarnings(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#496)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1197)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#822)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#822)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#829-842)
+Reentrancy in POOHMOX.buyXaddr(address) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277-312):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#285)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#311)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#311)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1250)
+		- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#311)
+	- POOHMOXevents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#829-842)
+		- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#311)
+	- POOHMOXevents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount,_eventData_.potAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1374-1389)
+		- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#311)
+Reentrancy in POOHMOX.buyXid(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247-275):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#255)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	- buyCore(_pID,_affCode,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#274)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- buyCore(_pID,_affCode,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#274)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1250)
+		- buyCore(_pID,_affCode,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#274)
+	- POOHMOXevents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#829-842)
+		- buyCore(_pID,_affCode,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#274)
+	- POOHMOXevents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount,_eventData_.potAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1374-1389)
+		- buyCore(_pID,_affCode,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#274)
+Reentrancy in POOHMOX.buyXname(bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314-350):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#322)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#349)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#349)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1250)
+		- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#349)
+	- POOHMOXevents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#829-842)
+		- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#349)
+	- POOHMOXevents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount,_eventData_.potAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1374-1389)
+		- buyCore(_pID,_affID,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#349)
+Reentrancy in POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959):
+	External calls:
+	- _eventData_ = distributeExternal(_rID,_pID,_eth,_affID,0,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#954)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+	Event emitted after the call(s):
+	- POOHMOXevents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount,_eventData_.potAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1374-1389)
+		- endTx(_pID,0,_eth,_keys,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#958)
+Reentrancy in POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267):
+	External calls:
+	- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+	Event emitted after the call(s):
+	- POOHMOXevents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1250)
+Reentrancy in POOHMOX.fallback() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#223-238):
+	External calls:
+	- _eventData_ = determinePID(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#231)
+		- _pID = PlayerBook.getPlayerID(msg.sender) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1070)
+		- _name = PlayerBook.getPlayerName(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1071)
+		- _laff = PlayerBook.getPlayerLAff(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1072)
+	- buyCore(_pID,plyr_[_pID].laff,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#237)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- buyCore(_pID,plyr_[_pID].laff,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#237)
+		- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onAffiliatePayout(_affID,plyr_[_affID].addr,plyr_[_affID].name,_rID,_pID,_aff,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1250)
+		- buyCore(_pID,plyr_[_pID].laff,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#237)
+	- POOHMOXevents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#829-842)
+		- buyCore(_pID,plyr_[_pID].laff,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#237)
+	- POOHMOXevents.onEndTx(_eventData_.compressedData,_eventData_.compressedIDs,plyr_[_pID].name,msg.sender,_eth,_keys,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount,_eventData_.potAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1374-1389)
+		- buyCore(_pID,plyr_[_pID].laff,_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#237)
+Reentrancy in POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#878)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#878)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onReLoadAndDistribute(msg.sender,plyr_[_pID].name,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#885-897)
+Reentrancy in POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574):
+	External calls:
+	- (_isNewPlayer,_affID) = PlayerBook.registerNameXIDFromDapp.value(_paid)(_addr,_name,_affCode,_all) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#568)
+	Event emitted after the call(s):
+	- POOHMOXevents.onNewName(_pID,_addr,_name,_isNewPlayer,_affID,plyr_[_affID].addr,plyr_[_affID].name,_paid,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#573)
+Reentrancy in POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590):
+	External calls:
+	- (_isNewPlayer,_affID) = PlayerBook.registerNameXaddrFromDapp.value(msg.value)(msg.sender,_name,_affCode,_all) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#584)
+	Event emitted after the call(s):
+	- POOHMOXevents.onNewName(_pID,_addr,_name,_isNewPlayer,_affID,plyr_[_affID].addr,plyr_[_affID].name,_paid,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#589)
+Reentrancy in POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606):
+	External calls:
+	- (_isNewPlayer,_affID) = PlayerBook.registerNameXnameFromDapp.value(msg.value)(msg.sender,_name,_affCode,_all) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#600)
+	Event emitted after the call(s):
+	- POOHMOXevents.onNewName(_pID,_addr,_name,_isNewPlayer,_affID,plyr_[_affID].addr,plyr_[_affID].name,_paid,now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#605)
+Reentrancy in POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#500)
+	Event emitted after the call(s):
+	- POOHMOXevents.onWithdrawAndDistribute(msg.sender,plyr_[_pID].name,_eth,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#507-520)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#486)
+POOHMOX.getTimeLeft() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#630-648) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now < round_[_rID].end (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#641)
+	- _now > round_[_rID].strt + rndGap_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#642)
+POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#666)
+POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#810)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#818)
+POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#864)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#875)
+POOHMOX.calcKeysReceived(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983-996) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#992)
+POOHMOX.iWantXKeys(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004-1020) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1016)
+POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].plyr == 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1212)
+	- _newTime < (rndMax_).add(_now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1218)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+NameFilter.nameFilter(string) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1583-1643) uses assembly
+	- INLINE ASM (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1639-1642)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#486)
+POOHMOX.getPlayerVaults(uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657-696) compares to a boolean constant:
+	-now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#666)
+POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#818)
+POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#875)
+POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028-1044) compares to a boolean constant:
+	-plyrNames_[_pID][_name] == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1042)
+POOHMOX.receivePlayerNameList(uint256,bytes32) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1049-1055) compares to a boolean constant:
+	-plyrNames_[_pID][_name] == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1053)
+POOHMOX.activate() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1399-1416) compares to a boolean constant:
+	-require(bool)(activated_ == false) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1407)
+POOHMOX.isActivated() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#189-192) compares to a boolean constant:
+	-require(bool)(activated_ == true) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#190)
+NameFilter.nameFilter(string) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1583-1643) compares to a boolean constant:
+	-_hasNonNumber == false (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1615)
+NameFilter.nameFilter(string) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1583-1643) compares to a boolean constant:
+	-_hasNonNumber == false && (_temp[i] < 0x30 || _temp[i] > 0x39) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1631)
+NameFilter.nameFilter(string) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1583-1643) compares to a boolean constant:
+	-require(bool)(_hasNonNumber == true) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1636)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182):
+	- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+Low level call in POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228-1267):
+	- ! address(admin).call.value(_dev)() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1236)
+	- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1260)
+Low level call in POOHMOX.whenGameDies() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1422-1430):
+	- flushDivs.call.value(address(this).balance)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1429)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Event POOHMOXevents.onNewName(uint256,address,bytes32,bool,uint256,address,bytes32,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#5-16) is not in CapWords
+Event POOHMOXevents.onEndTx(uint256,uint256,bytes32,address,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#19-34) is not in CapWords
+Event POOHMOXevents.onWithdraw(uint256,address,bytes32,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#37-44) is not in CapWords
+Event POOHMOXevents.onWithdrawAndDistribute(address,bytes32,uint256,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#47-60) is not in CapWords
+Event POOHMOXevents.onBuyAndDistribute(address,bytes32,uint256,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#64-77) is not in CapWords
+Event POOHMOXevents.onReLoadAndDistribute(address,bytes32,uint256,uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#81-93) is not in CapWords
+Event POOHMOXevents.onAffiliatePayout(uint256,address,bytes32,uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#96-105) is not in CapWords
+Event POOHMOXevents.onPotSwapDeposit(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#108-112) is not in CapWords
+Parameter POOHMOX.buyXid(uint256)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#247) is not in mixedCase
+Parameter POOHMOX.buyXaddr(address)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#277) is not in mixedCase
+Parameter POOHMOX.buyXname(bytes32)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#314) is not in mixedCase
+Parameter POOHMOX.reLoadXid(uint256,uint256)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361) is not in mixedCase
+Parameter POOHMOX.reLoadXid(uint256,uint256)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#361) is not in mixedCase
+Parameter POOHMOX.reLoadXaddr(address,uint256)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390) is not in mixedCase
+Parameter POOHMOX.reLoadXaddr(address,uint256)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#390) is not in mixedCase
+Parameter POOHMOX.reLoadXname(bytes32,uint256)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427) is not in mixedCase
+Parameter POOHMOX.reLoadXname(bytes32,uint256)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#427) is not in mixedCase
+Parameter POOHMOX.registerNameXID(string,uint256,bool)._nameString (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560) is not in mixedCase
+Parameter POOHMOX.registerNameXID(string,uint256,bool)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560) is not in mixedCase
+Parameter POOHMOX.registerNameXID(string,uint256,bool)._all (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560) is not in mixedCase
+Parameter POOHMOX.registerNameXaddr(string,address,bool)._nameString (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576) is not in mixedCase
+Parameter POOHMOX.registerNameXaddr(string,address,bool)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576) is not in mixedCase
+Parameter POOHMOX.registerNameXaddr(string,address,bool)._all (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576) is not in mixedCase
+Parameter POOHMOX.registerNameXname(string,bytes32,bool)._nameString (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592) is not in mixedCase
+Parameter POOHMOX.registerNameXname(string,bytes32,bool)._affCode (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592) is not in mixedCase
+Parameter POOHMOX.registerNameXname(string,bytes32,bool)._all (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592) is not in mixedCase
+Parameter POOHMOX.getPlayerVaults(uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#657) is not in mixedCase
+Parameter POOHMOX.getPlayerVaultsHelper(uint256,uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701) is not in mixedCase
+Parameter POOHMOX.getPlayerVaultsHelper(uint256,uint256)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701) is not in mixedCase
+Parameter POOHMOX.getPlayerInfoByAddress(address)._addr (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#766) is not in mixedCase
+Parameter POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800) is not in mixedCase
+Parameter POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns)._affID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800) is not in mixedCase
+Parameter POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800) is not in mixedCase
+Parameter POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854) is not in mixedCase
+Parameter POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._affID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854) is not in mixedCase
+Parameter POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854) is not in mixedCase
+Parameter POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854) is not in mixedCase
+Parameter POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905) is not in mixedCase
+Parameter POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905) is not in mixedCase
+Parameter POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905) is not in mixedCase
+Parameter POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._affID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905) is not in mixedCase
+Parameter POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._team (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905) is not in mixedCase
+Parameter POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905) is not in mixedCase
+Parameter POOHMOX.calcUnMaskedEarnings(uint256,uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968) is not in mixedCase
+Parameter POOHMOX.calcUnMaskedEarnings(uint256,uint256)._rIDlast (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968) is not in mixedCase
+Parameter POOHMOX.calcKeysReceived(uint256,uint256)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983) is not in mixedCase
+Parameter POOHMOX.calcKeysReceived(uint256,uint256)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#983) is not in mixedCase
+Parameter POOHMOX.iWantXKeys(uint256)._keys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1004) is not in mixedCase
+Parameter POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028) is not in mixedCase
+Parameter POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256)._addr (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028) is not in mixedCase
+Parameter POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256)._name (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028) is not in mixedCase
+Parameter POOHMOX.receivePlayerInfo(uint256,address,bytes32,uint256)._laff (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1028) is not in mixedCase
+Parameter POOHMOX.receivePlayerNameList(uint256,bytes32)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1049) is not in mixedCase
+Parameter POOHMOX.receivePlayerNameList(uint256,bytes32)._name (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1049) is not in mixedCase
+Parameter POOHMOX.determinePID(POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1061) is not in mixedCase
+Parameter POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100) is not in mixedCase
+Parameter POOHMOX.managePlayer(uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1100) is not in mixedCase
+Parameter POOHMOX.endRound(POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121) is not in mixedCase
+Parameter POOHMOX.updateGenVault(uint256,uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188) is not in mixedCase
+Parameter POOHMOX.updateGenVault(uint256,uint256)._rIDlast (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1188) is not in mixedCase
+Parameter POOHMOX.updateTimer(uint256,uint256)._keys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204) is not in mixedCase
+Parameter POOHMOX.updateTimer(uint256,uint256)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204) is not in mixedCase
+Parameter POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228) is not in mixedCase
+Parameter POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228) is not in mixedCase
+Parameter POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228) is not in mixedCase
+Parameter POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._affID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228) is not in mixedCase
+Parameter POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._team (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228) is not in mixedCase
+Parameter POOHMOX.distributeExternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1228) is not in mixedCase
+Parameter POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280) is not in mixedCase
+Parameter POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280) is not in mixedCase
+Parameter POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280) is not in mixedCase
+Parameter POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._team (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280) is not in mixedCase
+Parameter POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._keys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280) is not in mixedCase
+Parameter POOHMOX.distributeInternal(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1280) is not in mixedCase
+Parameter POOHMOX.updateMasks(uint256,uint256,uint256,uint256)._rID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314) is not in mixedCase
+Parameter POOHMOX.updateMasks(uint256,uint256,uint256,uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314) is not in mixedCase
+Parameter POOHMOX.updateMasks(uint256,uint256,uint256,uint256)._gen (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314) is not in mixedCase
+Parameter POOHMOX.updateMasks(uint256,uint256,uint256,uint256)._keys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314) is not in mixedCase
+Parameter POOHMOX.withdrawEarnings(uint256)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1346) is not in mixedCase
+Parameter POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._pID (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368) is not in mixedCase
+Parameter POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._team (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368) is not in mixedCase
+Parameter POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368) is not in mixedCase
+Parameter POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._keys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368) is not in mixedCase
+Parameter POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns)._eventData_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368) is not in mixedCase
+Variable POOHMOX.PlayerBook (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#125) is not in mixedCase
+Constant POOHMOX.rndInc_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#139) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter KeysCalc.keysRec(uint256,uint256)._curEth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1504) is not in mixedCase
+Parameter KeysCalc.keysRec(uint256,uint256)._newEth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1504) is not in mixedCase
+Parameter KeysCalc.ethRec(uint256,uint256)._curKeys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1518) is not in mixedCase
+Parameter KeysCalc.ethRec(uint256,uint256)._sellKeys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1518) is not in mixedCase
+Parameter KeysCalc.keys(uint256)._eth (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1531) is not in mixedCase
+Parameter KeysCalc.eth(uint256)._keys (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1545) is not in mixedCase
+Parameter NameFilter.nameFilter(string)._input (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1583) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#822)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#822)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- plyr_[_pID].gen = plyr_[_pID].gen.add(msg.value) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#846)
+	Event emitted after the call(s):
+	- POOHMOXevents.onBuyAndDistribute(msg.sender,plyr_[_pID].name,msg.value,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#829-842)
+Reentrancy in POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182):
+	External calls:
+	- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	External calls sending eth:
+	- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- rID_ ++ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1175)
+	- round_[_rID].mask = _ppt.add(round_[_rID].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1162)
+	- round_[_rID].strt = now (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1177)
+	- round_[_rID].end = now.add(rndMax_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1178)
+	- round_[_rID].pot = _res (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1179)
+Reentrancy in POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#878)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#878)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	Event emitted after the call(s):
+	- POOHMOXevents.onReLoadAndDistribute(msg.sender,plyr_[_pID].name,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#885-897)
+Reentrancy in POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	State variables written after the call(s):
+	- _eth = withdrawEarnings(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#496)
+		- plyrRnds_[_pID][_rIDlast].mask = _earnings.add(plyrRnds_[_pID][_rIDlast].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1197)
+	- _eth = withdrawEarnings(_pID) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#496)
+		- plyr_[_pID].gen = _earnings.add(plyr_[_pID].gen) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1195)
+		- plyr_[_pID].win = 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1357)
+		- plyr_[_pID].gen = 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1358)
+		- plyr_[_pID].aff = 0 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1359)
+Reentrancy in POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534):
+	External calls:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#500)
+	External calls sending eth:
+	- _eventData_ = endRound(_eventData_) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#493)
+		- admin.transfer(_dev) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1157)
+		- flushDivs.call.value(_POOH)(bytes4(keccak256()(donate()))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1159)
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#500)
+	Event emitted after the call(s):
+	- POOHMOXevents.onWithdrawAndDistribute(msg.sender,plyr_[_pID].name,_eth,_eventData_.compressedData,_eventData_.compressedIDs,_eventData_.winnerAddr,_eventData_.winnerName,_eventData_.amountWon,_eventData_.newPot,_eventData_.POOHAmount,_eventData_.genAmount) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#507-520)
+Reentrancy in POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534):
+	External calls:
+	- plyr_[_pID].addr.transfer(_eth) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#529)
+	Event emitted after the call(s):
+	- POOHMOXevents.onWithdraw(_pID,msg.sender,plyr_[_pID].name,_eth,_now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#532)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+POOHMOX.withdraw() (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#468-534) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#503)
+POOHMOX.getPlayerVaultsHelper(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#701-707) uses literals with too many digits:
+	- (((((round_[_rID].mask).add(((((round_[_rID].pot).mul(potSplit_[round_[_rID].team].gen)) / 100).mul(1000000000000000000)) / (round_[_rID].keys))).mul(plyrRnds_[_pID][_rID].keys)) / 1000000000000000000)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#706)
+POOHMOX.buyCore(uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#800-848) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#825)
+POOHMOX.reLoadCore(uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#854-899) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (_now * 1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#881)
+POOHMOX.core(uint256,uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#905-959) uses literals with too many digits:
+	- _keys >= 1000000000000000000 (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#930)
+POOHMOX.calcUnMaskedEarnings(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#968-974) uses literals with too many digits:
+	- ((((round_[_rIDlast].mask).mul(plyrRnds_[_pID][_rIDlast].keys)) / (1000000000000000000)).sub(plyrRnds_[_pID][_rIDlast].mask)) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#973)
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) uses literals with too many digits:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1144)
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) uses literals with too many digits:
+	- _dust = _gen.sub((_ppt.mul(round_[_rID].keys)) / 1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1145)
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (round_[_rID].end * 1000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1165)
+POOHMOX.endRound(POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1121-1182) uses literals with too many digits:
+	- _eventData_.compressedIDs = _eventData_.compressedIDs + (_winPID * 100000000000000000000000000) + (_winTID * 100000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1166)
+POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222) uses literals with too many digits:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1213)
+POOHMOX.updateTimer(uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1204-1222) uses literals with too many digits:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1215)
+POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340) uses literals with too many digits:
+	- _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1330)
+POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340) uses literals with too many digits:
+	- _pearn = (_ppt.mul(_keys)) / (1000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1335)
+POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340) uses literals with too many digits:
+	- plyrRnds_[_pID][_rID].mask = (((round_[_rID].mask.mul(_keys)) / (1000000000000000000)).sub(_pearn)).add(plyrRnds_[_pID][_rID].mask) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1336)
+POOHMOX.updateMasks(uint256,uint256,uint256,uint256) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1314-1340) uses literals with too many digits:
+	- (_gen.sub((_ppt.mul(round_[_rID].keys)) / (1000000000000000000))) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1339)
+POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390) uses literals with too many digits:
+	- _eventData_.compressedData = _eventData_.compressedData + (now * 1000000000000000000) + (_team * 100000000000000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1371)
+POOHMOX.endTx(uint256,uint256,uint256,uint256,POOHMOXDatasets.EventReturns) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1368-1390) uses literals with too many digits:
+	- _eventData_.compressedIDs = _eventData_.compressedIDs + _pID + (rID_ * 10000000000000000000000000000000000000000000000000000) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#1372)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+POOHMOX.rndExtra_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#135) should be constant 
+POOHMOX.rndGap_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#136) should be constant 
+POOHMOX.rndInit_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#137) should be constant 
+POOHMOX.rndMax_ (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#138) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+registerNameXID(string,uint256,bool) should be declared external:
+	- POOHMOX.registerNameXID(string,uint256,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#560-574)
+registerNameXaddr(string,address,bool) should be declared external:
+	- POOHMOX.registerNameXaddr(string,address,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#576-590)
+registerNameXname(string,bytes32,bool) should be declared external:
+	- POOHMOX.registerNameXname(string,bytes32,bool) (../sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol#592-606)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x29171eeaa66a2565b8e26e5403e667258dcc1b3e.sol analyzed (7 contracts with 100 detectors), 189 result(s) found

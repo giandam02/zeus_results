@@ -1,0 +1,49 @@
+'solc --version' running
+'solc /sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#3) is not in CapWords
+Parameter INVECHCOIN.transfer(address,uint256)._to (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#57) is not in mixedCase
+Parameter INVECHCOIN.transfer(address,uint256)._value (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#57) is not in mixedCase
+Parameter INVECHCOIN.transferFrom(address,address,uint256)._from (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#63) is not in mixedCase
+Parameter INVECHCOIN.transferFrom(address,address,uint256)._to (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#63) is not in mixedCase
+Parameter INVECHCOIN.transferFrom(address,address,uint256)._value (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#63) is not in mixedCase
+Parameter INVECHCOIN.approve(address,uint256)._spender (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#71) is not in mixedCase
+Parameter INVECHCOIN.approve(address,uint256)._value (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#71) is not in mixedCase
+Parameter INVECHCOIN.approveAndCall(address,uint256,bytes)._spender (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#79) is not in mixedCase
+Parameter INVECHCOIN.approveAndCall(address,uint256,bytes)._value (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#79) is not in mixedCase
+Parameter INVECHCOIN.approveAndCall(address,uint256,bytes)._extraData (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#79) is not in mixedCase
+Parameter INVECHCOIN.burn(uint256)._value (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#90) is not in mixedCase
+Parameter INVECHCOIN.burnFrom(address,uint256)._from (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#99) is not in mixedCase
+Parameter INVECHCOIN.burnFrom(address,uint256)._value (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#99) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+INVECHCOIN.decimals (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+approveAndCall(address,uint256,bytes) should be declared external:
+	- INVECHCOIN.approveAndCall(address,uint256,bytes) (../sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol#79-87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x9367863796a1f0992a8c256fe83ef8bcd307c199.sol analyzed (2 contracts with 100 detectors), 18 result(s) found

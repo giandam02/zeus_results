@@ -1,0 +1,95 @@
+'solc --version' running
+'solc /sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:40:11: Warning: Invoking events without "emit" prefix is deprecated.
+          Farewell(msg.sender, selfPartner);
+          ^-------------------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:50:11: Warning: Invoking events without "emit" prefix is deprecated.
+          Farewell(to, targetPartner);
+          ^-------------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:56:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Partner(msg.sender, to);
+      ^---------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:63:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Propose(msg.sender, to);
+      ^---------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:72:5: Warning: Invoking events without "emit" prefix is deprecated.
+    CancelPropose(msg.sender, proposingTo);
+    ^------------------------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:79:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Message(msg.sender, target, message, index);
+    ^-----------------------------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:88:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Farewell(msg.sender, to);
+    ^----------------------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:134:15: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      first = keccak256(a);
+              ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:134:15: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+      first = keccak256(a);
+              ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:135:16: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      second = keccak256(b);
+               ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:135:16: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+      second = keccak256(b);
+               ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:137:15: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      first = keccak256(b);
+              ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:137:15: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+      first = keccak256(b);
+              ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:138:16: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      second = keccak256(a);
+               ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:138:16: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+      second = keccak256(a);
+               ^----------^
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol:152:5: Warning: Invoking events without "emit" prefix is deprecated.
+    HiddenMessages(msg.sender, partner[msg.sender], flag);
+    ^---------------------------------------------------^
+
+
+Love.addMessage(string) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#75-80) compares to a boolean constant:
+	-require(bool)(isPartner(msg.sender,target) == true) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#77)
+Love.getPartnerMessage(address,address,uint256) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#105-114) compares to a boolean constant:
+	-isHiddenMessages[key] == true (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#108)
+Love.getPartnerMessage(address,address,uint256) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#105-114) compares to a boolean constant:
+	-require(bool)(isPartner(a,b) == true) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#106)
+Love.partnerMessagesCount(address,address) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#116-123) compares to a boolean constant:
+	-require(bool)(isPartner(a,b) == true) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#117)
+Love.partnerMessagesCount(address,address) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#116-123) compares to a boolean constant:
+	-isHiddenMessages[key] == true (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#119)
+Love.setIsHiddenMessages(bool) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#148-153) compares to a boolean constant:
+	-require(bool)(isPartner(msg.sender,partner[msg.sender]) == true) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#149)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+addMessage(string) should be declared external:
+	- Love.addMessage(string) (../sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol#75-80)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x542a900357c9638ad6e944a57072c5d01f1c1ea7.sol analyzed (1 contracts with 100 detectors), 9 result(s) found

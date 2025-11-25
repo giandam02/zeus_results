@@ -1,0 +1,169 @@
+'solc --version' running
+'solc /sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Impossible to generate IR for DragonStorage.push (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#610-625):
+ 'NoneType' object has no attribute 'parameters'
+
+ERC721Token (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#332-485) contract sets array length with a user-controlled value:
+	- ownedTokens[_to].push(_tokenId) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#404)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+ERC721BasicToken._isContract(address) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#312-316) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ERC721BasicToken.ownerOf(uint256).owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#200) shadows:
+	- Ownable.owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#40) (state variable)
+ERC721BasicToken.exists(uint256).owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#206) shadows:
+	- Ownable.owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#40) (state variable)
+ERC721BasicToken._approve(address,address,uint256).owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#211) shadows:
+	- Ownable.owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#40) (state variable)
+ERC721BasicToken.isApprovedOrOwner(address,uint256).owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#275) shadows:
+	- Ownable.owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#40) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Ownable.transferOwnership(address).newOwner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#57) lacks a zero-check on :
+		- owner = newOwner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#60)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Variable 'ERC721Token._uint2str(uint256).i (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#470)' in ERC721Token._uint2str(uint256) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#468-484) potentially used before declaration: i == 0 (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#469)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+ERC721BasicToken._isContract(address) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#312-316) uses assembly
+	- INLINE ASM (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#314-315)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ERC721BasicToken._burn(address,uint256) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#285-289) is never used and should be removed
+ERC721BasicToken._mint(address,uint256) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#279-283) is never used and should be removed
+ERC721Token._burn(address,uint256) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#432-447) is never used and should be removed
+ERC721Token._mint(address,uint256) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#425-430) is never used and should be removed
+Ownable._validateAddress(address) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#44-46) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint 0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- 0.4.25 (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#1)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Upgradable.setInternalDependencies(address[])._newDependencies (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#97) is not in mixedCase
+Parameter Upgradable.setExternalDependencies(address[])._newDependencies (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#104) is not in mixedCase
+Parameter ERC721BasicToken.balanceOf(address)._owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#194) is not in mixedCase
+Parameter ERC721BasicToken.ownerOf(uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#199) is not in mixedCase
+Parameter ERC721BasicToken.exists(uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#205) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#221) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#221) is not in mixedCase
+Parameter ERC721BasicToken.remoteApprove(address,uint256)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#225) is not in mixedCase
+Parameter ERC721BasicToken.remoteApprove(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#225) is not in mixedCase
+Parameter ERC721BasicToken.getApproved(uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#229) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#234) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._approved (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#234) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#240) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._operator (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#240) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._from (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#244) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#244) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#244) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._from (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#257) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#258) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#259) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._from (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#265) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#266) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#267) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._data (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#268) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._spender (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#274) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#274) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#291) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#291) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#299) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#299) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._from (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#305) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#305) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._from (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#319) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#320) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#321) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._data (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#322) is not in mixedCase
+Parameter ERC721Token.tokenOfOwnerByIndex(address,uint256)._owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#379) is not in mixedCase
+Parameter ERC721Token.tokenOfOwnerByIndex(address,uint256)._index (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#379) is not in mixedCase
+Parameter ERC721Token.tokensOfOwner(address)._owner (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#384) is not in mixedCase
+Parameter ERC721Token.tokenByIndex(uint256)._index (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#396) is not in mixedCase
+Parameter ERC721Token.addTokenTo(address,uint256)._to (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#401) is not in mixedCase
+Parameter ERC721Token.addTokenTo(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#401) is not in mixedCase
+Parameter ERC721Token.removeTokenFrom(address,uint256)._from (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#408) is not in mixedCase
+Parameter ERC721Token.removeTokenFrom(address,uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#408) is not in mixedCase
+Parameter ERC721Token.supportsInterface(bytes4)._interfaceID (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#449) is not in mixedCase
+Parameter ERC721Token.tokenURI(uint256)._tokenId (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#459) is not in mixedCase
+Parameter ERC721Token.setUrl(string)._url (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#464) is not in mixedCase
+Constant ERC721Token.INTERFACE_SIGNATURE_ERC721TokenReceiver (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#336) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Token.INTERFACE_SIGNATURE_ERC721Metadata (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#337) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Token.INTERFACE_SIGNATURE_ERC721Enumerable (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#338) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter DragonStorage.getGenome(uint256)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#596) is not in mixedCase
+Parameter DragonStorage.getParents(uint256)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#600) is not in mixedCase
+Parameter DragonStorage.getDragonTypes(uint256)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#604) is not in mixedCase
+Parameter DragonStorage.setName(uint256,bytes32,bytes32)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#628) is not in mixedCase
+Parameter DragonStorage.setName(uint256,bytes32,bytes32)._name (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#629) is not in mixedCase
+Parameter DragonStorage.setName(uint256,bytes32,bytes32)._lowercase (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#630) is not in mixedCase
+Parameter DragonStorage.setTactics(uint256,uint8,uint8)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#636) is not in mixedCase
+Parameter DragonStorage.setTactics(uint256,uint8,uint8)._melee (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#636) is not in mixedCase
+Parameter DragonStorage.setTactics(uint256,uint8,uint8)._attack (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#636) is not in mixedCase
+Parameter DragonStorage.setWins(uint256,uint16)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#641) is not in mixedCase
+Parameter DragonStorage.setWins(uint256,uint16)._value (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#641) is not in mixedCase
+Parameter DragonStorage.setDefeats(uint256,uint16)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#645) is not in mixedCase
+Parameter DragonStorage.setDefeats(uint256,uint16)._value (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#645) is not in mixedCase
+Parameter DragonStorage.setMaxHealthAndMana(uint256,uint32,uint32)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#650) is not in mixedCase
+Parameter DragonStorage.setMaxHealthAndMana(uint256,uint32,uint32)._maxHealth (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#651) is not in mixedCase
+Parameter DragonStorage.setMaxHealthAndMana(uint256,uint32,uint32)._maxMana (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#652) is not in mixedCase
+Parameter DragonStorage.setRemainingHealthAndMana(uint256,uint32,uint32)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#659) is not in mixedCase
+Parameter DragonStorage.setRemainingHealthAndMana(uint256,uint32,uint32)._remainingHealth (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#660) is not in mixedCase
+Parameter DragonStorage.setRemainingHealthAndMana(uint256,uint32,uint32)._remainingMana (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#661) is not in mixedCase
+Parameter DragonStorage.resetHealthAndManaTimestamp(uint256)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#668) is not in mixedCase
+Parameter DragonStorage.setSkills(uint256,uint32,uint32,uint32,uint32,uint32)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#673) is not in mixedCase
+Parameter DragonStorage.setSkills(uint256,uint32,uint32,uint32,uint32,uint32)._attack (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#674) is not in mixedCase
+Parameter DragonStorage.setSkills(uint256,uint32,uint32,uint32,uint32,uint32)._defense (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#675) is not in mixedCase
+Parameter DragonStorage.setSkills(uint256,uint32,uint32,uint32,uint32,uint32)._stamina (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#676) is not in mixedCase
+Parameter DragonStorage.setSkills(uint256,uint32,uint32,uint32,uint32,uint32)._speed (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#677) is not in mixedCase
+Parameter DragonStorage.setSkills(uint256,uint32,uint32,uint32,uint32,uint32)._intelligence (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#678) is not in mixedCase
+Parameter DragonStorage.setLevel(uint256,uint8,uint8,uint16)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#687) is not in mixedCase
+Parameter DragonStorage.setLevel(uint256,uint8,uint8,uint16)._level (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#687) is not in mixedCase
+Parameter DragonStorage.setLevel(uint256,uint8,uint8,uint16)._experience (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#687) is not in mixedCase
+Parameter DragonStorage.setLevel(uint256,uint8,uint8,uint16)._dnaPoints (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#687) is not in mixedCase
+Parameter DragonStorage.setCoolness(uint256,uint32)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#693) is not in mixedCase
+Parameter DragonStorage.setCoolness(uint256,uint32)._coolness (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#693) is not in mixedCase
+Parameter DragonStorage.setGenome(uint256,uint256[4])._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#697) is not in mixedCase
+Parameter DragonStorage.setGenome(uint256,uint256[4])._genome (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#697) is not in mixedCase
+Parameter DragonStorage.setSpecialAttack(uint256,uint8)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#702) is not in mixedCase
+Parameter DragonStorage.setSpecialAttack(uint256,uint8)._dragonType (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#703) is not in mixedCase
+Parameter DragonStorage.setSpecialDefense(uint256,uint8)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#709) is not in mixedCase
+Parameter DragonStorage.setSpecialDefense(uint256,uint8)._dragonType (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#710) is not in mixedCase
+Parameter DragonStorage.setSpecialPeacefulSkill(uint256,uint8)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#716) is not in mixedCase
+Parameter DragonStorage.setSpecialPeacefulSkill(uint256,uint8)._class (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#717) is not in mixedCase
+Parameter DragonStorage.setBuff(uint256,uint8,uint32)._id (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#722) is not in mixedCase
+Parameter DragonStorage.setBuff(uint256,uint8,uint32)._class (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#722) is not in mixedCase
+Parameter DragonStorage.setBuff(uint256,uint8,uint32)._effect (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#722) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ERC721Token.tokenURIs (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#356) is never used in DragonStorage (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#542-726)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+setInternalDependencies(address[]) should be declared external:
+	- Upgradable.setInternalDependencies(address[]) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#97-102)
+setExternalDependencies(address[]) should be declared external:
+	- Upgradable.setExternalDependencies(address[]) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#104-107)
+onERC721Received(address,address,uint256,bytes) should be declared external:
+	- ERC721Receiver.onERC721Received(address,address,uint256,bytes) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#148-155)
+push(address,uint16,uint256[4],uint256[2],uint8[11]) should be declared external:
+	- DragonStorage.push(address,uint16,uint256[4],uint256[2],uint8[11]) (../sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol#610-625)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x960f401aed58668ef476ef02b2a2d43b83c261d8.sol analyzed (13 contracts with 100 detectors), 114 result(s) found

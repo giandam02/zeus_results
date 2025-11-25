@@ -1,0 +1,329 @@
+'solc --version' running
+'solc /sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:12:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Controlled() public { controller = msg.sender;}
+    ^------------------------------------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:149:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function MiniMeToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:615:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function DTXToken(address _tokenFactory) public MiniMeToken (
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:793:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function TokenSale(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:246:12: Warning: Invoking events without "emit" prefix is deprecated.
+           Transfer(_from, _to, _amount);
+           ^---------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:278:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _amount);
+        ^-------------------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:409:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewCloneToken(address(cloneToken), _snapshotBlock);
+        ^------------------------------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:429:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, _owner, _amount);
+        ^--------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:446:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_owner, 0, _amount);
+        ^--------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:544:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            controller.transfer(this.balance);
+                                ^----------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:551:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ClaimedTokens(_token, controller, balance);
+        ^----------------------------------------^
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol:994:66: Warning: Using "years" as a unit denomination is deprecated.
+    vestedAllowances[vaultAddress] = Vesting(lockedTokens, now + 3 years);
+                                                                 ^-----^
+
+
+MiniMeToken.claimTokens(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#542-552) ignores return value by token.transfer(controller,balance) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#550)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+TokenSale.totalVested (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#764) is never initialized. It is used in:
+	- TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926)
+	- TokenSale.doPayment(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#931-977)
+	- TokenSale.finalizeSale() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#987-1004)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+MiniMeToken.isContract(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#512-519) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+TokenSale.TokenSale(uint256,uint256,uint256,uint256,uint256,uint256,address,address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#793-836) performs a multiplication on the result of a division:
+	- lockedTokens = MAX_TOKENS.div(100).mul(30) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#831)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in MiniMeToken.approve(address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#263-280):
+	External calls:
+	- require(bool)(TokenController(controller).onApprove(msg.sender,_spender,_amount)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#274)
+	State variables written after the call(s):
+	- allowed[msg.sender][_spender] = _amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#277)
+	MiniMeToken.allowed (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#121) can be used in cross function reentrancies:
+	- MiniMeToken.allowance(address,address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#287-290)
+	- MiniMeToken.approve(address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#263-280)
+	- MiniMeToken.transferFrom(address,address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#188-203)
+Reentrancy in TokenSale.finalizeSale() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#987-1004):
+	External calls:
+	- require(bool)(tokenContract.generateTokens(vaultAddress,leftoverTokens)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1000)
+	- require(bool)(tokenContract.generateTokens(address(this),lockedTokens.add(totalVested))) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1001)
+	State variables written after the call(s):
+	- finalized = true (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1003)
+	TokenSale.finalized (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#779) can be used in cross function reentrancies:
+	- TokenSale.TokenSale(uint256,uint256,uint256,uint256,uint256,uint256,address,address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#793-836)
+	- TokenSale.finalizeSale() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#987-1004)
+	- TokenSale.finalized (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#779)
+	- TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904)
+	- TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926)
+Reentrancy in TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904):
+	External calls:
+	- require(bool)(tokenContract.generateTokens(_recipients[i],tokensToIssue)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#902)
+	State variables written after the call(s):
+	- totalIssuedEarlySale = totalIssuedEarlySale.add(tokensToIssue) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#900)
+	TokenSale.totalIssuedEarlySale (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#767) can be used in cross function reentrancies:
+	- TokenSale.doPayment(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#931-977)
+	- TokenSale.finalizeSale() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#987-1004)
+	- TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904)
+	- TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926)
+	- TokenSale.totalIssuedEarlySale (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#767)
+Reentrancy in TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926):
+	External calls:
+	- require(bool)(tokenContract.generateTokens(_recipients[i],_free[i])) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#920)
+	State variables written after the call(s):
+	- totalIssued = totalIssued.add(_free[i]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#918)
+	TokenSale.totalIssued (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#761) can be used in cross function reentrancies:
+	- TokenSale.doPayment(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#931-977)
+	- TokenSale.finalizeSale() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#987-1004)
+	- TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926)
+	- TokenSale.totalIssued (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#761)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926) ignores return value by totalVested.add(_locked[i]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#923)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+MiniMeToken.getValueAt(MiniMeToken.Checkpoint[],uint256).min (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#479) shadows:
+	- MiniMeToken.min(uint256,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#522-524) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Controlled.changeController(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#16-18) should emit an event for: 
+	- controller = _newController (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#17) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#876-889) should emit an event for: 
+	- startPresaleTime = _startPresaleTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#883) 
+	- endPresaleTime = _endPresaleTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#884) 
+	- startDayOneTime = _startDayOneTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#885) 
+	- endDayOneTime = _endDayOneTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#886) 
+	- startTime = _startTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#887) 
+	- endTime = _endTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#888) 
+TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904) should emit an event for: 
+	- totalIssuedEarlySale = totalIssuedEarlySale.add(tokensToIssue) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#900) 
+TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926) should emit an event for: 
+	- totalIssued = totalIssued.add(_free[i]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#918) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Controlled.changeController(address)._newController (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#16) lacks a zero-check on :
+		- controller = _newController (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#17)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904) has external calls inside a loop: require(bool)(tokenContract.generateTokens(_recipients[i],tokensToIssue)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#902)
+TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926) has external calls inside a loop: require(bool)(tokenContract.generateTokens(_recipients[i],_free[i])) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#920)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in TokenSale.doPayment(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#931-977):
+	External calls:
+	- require(bool)(tokenContract.controller() == address(this)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#936)
+	State variables written after the call(s):
+	- totalIssued = totalIssued.add(tokensToIssue) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#968)
+Reentrancy in TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926):
+	External calls:
+	- require(bool)(tokenContract.generateTokens(_recipients[i],_free[i])) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#920)
+	State variables written after the call(s):
+	- vestedAllowances[_recipients[i]] = Vesting(_locked[i],_cliffs[i]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#922)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in MiniMeToken.approve(address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#263-280):
+	External calls:
+	- require(bool)(TokenController(controller).onApprove(msg.sender,_spender,_amount)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#274)
+	Event emitted after the call(s):
+	- Approval(msg.sender,_spender,_amount) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#278)
+Reentrancy in MiniMeToken.claimTokens(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#542-552):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#549)
+	- token.transfer(controller,balance) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#550)
+	Event emitted after the call(s):
+	- ClaimedTokens(_token,controller,balance) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#551)
+Reentrancy in MiniMeToken.createCloneToken(string,uint8,string,uint256,bool) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#389-411):
+	External calls:
+	- cloneToken = tokenFactory.createCloneToken(this,_snapshotBlock,_cloneTokenName,_cloneDecimalUnits,_cloneTokenSymbol,_transfersEnabled) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#397-404)
+	- cloneToken.changeController(msg.sender) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#406)
+	Event emitted after the call(s):
+	- NewCloneToken(address(cloneToken),_snapshotBlock) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#409)
+Reentrancy in MiniMeToken.destroyTokens(address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#438-448):
+	External calls:
+	- curTotalSupply = totalSupply() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#440)
+		- parentToken.totalSupplyAt(min(_blockNumber,parentSnapShotBlock)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#364)
+	- previousBalanceFrom = balanceOf(_owner) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#442)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#339)
+	Event emitted after the call(s):
+	- Transfer(_owner,0,_amount) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#446)
+Reentrancy in MiniMeToken.doTransfer(address,address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#211-249):
+	External calls:
+	- previousBalanceFrom = balanceOfAt(_from,block.number) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#225)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#339)
+	- require(bool)(TokenController(controller).onTransfer(_from,_to,_amount)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#232)
+	- previousBalanceTo = balanceOfAt(_to,block.number) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#241)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#339)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#246)
+Reentrancy in MiniMeToken.generateTokens(address,uint256) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#421-431):
+	External calls:
+	- curTotalSupply = totalSupply() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#423)
+		- parentToken.totalSupplyAt(min(_blockNumber,parentSnapShotBlock)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#364)
+	- previousBalanceTo = balanceOf(_owner) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#425)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#339)
+	Event emitted after the call(s):
+	- Transfer(0,_owner,_amount) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#429)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenSale.TokenSale(uint256,uint256,uint256,uint256,uint256,uint256,address,address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#793-836) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_startPresaleTime > now) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#804)
+	- require(bool)(_endPresaleTime > now) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#805)
+	- require(bool)(_startDayOneTime > now) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#806)
+	- require(bool)(_endDayOneTime > now) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#807)
+	- require(bool)(_startTime > now) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#808)
+	- require(bool)(_endTime > now) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#809)
+TokenSale.doPayment(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#931-977) uses timestamp for comparisons
+	Dangerous comparisons:
+	- isPresale = startPresaleTime <= now && endPresaleTime >= now (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#939)
+	- isDayOne = startDayOneTime <= now && endDayOneTime >= now (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#940)
+	- isSale = startTime <= now && endTime >= now (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#941)
+	- require(bool)(isPresale || isDayOne || isSale) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#944)
+TokenSale.finalizeSale() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#987-1004) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > endTime || totalIssued >= HARD_CAP) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#989)
+TokenSale.claimLockedTokens(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1006-1012) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(vestedAllowances[_owner].cliff > 0 && vestedAllowances[_owner].amount > 0) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1007)
+	- require(bool)(now >= vestedAllowances[_owner].cliff) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1008)
+	- require(bool)(tokenContract.transfer(_owner,amount)) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1011)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+MiniMeToken.isContract(address) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#512-519) uses assembly
+	- INLINE ASM (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#515-518)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904) has costly operations inside a loop:
+	- totalIssuedEarlySale = totalIssuedEarlySale.add(tokensToIssue) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#900)
+TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926) has costly operations inside a loop:
+	- totalIssued = totalIssued.add(_free[i]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#918)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Controlled.changeController(address)._newController (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#16) is not in mixedCase
+Parameter MiniMeToken.transfer(address,uint256)._to (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#177) is not in mixedCase
+Parameter MiniMeToken.transfer(address,uint256)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#177) is not in mixedCase
+Parameter MiniMeToken.transferFrom(address,address,uint256)._from (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#188) is not in mixedCase
+Parameter MiniMeToken.transferFrom(address,address,uint256)._to (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#188) is not in mixedCase
+Parameter MiniMeToken.transferFrom(address,address,uint256)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#188) is not in mixedCase
+Parameter MiniMeToken.doTransfer(address,address,uint256)._from (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#211) is not in mixedCase
+Parameter MiniMeToken.doTransfer(address,address,uint256)._to (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#211) is not in mixedCase
+Parameter MiniMeToken.doTransfer(address,address,uint256)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#211) is not in mixedCase
+Parameter MiniMeToken.balanceOf(address)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#253) is not in mixedCase
+Parameter MiniMeToken.approve(address,uint256)._spender (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#263) is not in mixedCase
+Parameter MiniMeToken.approve(address,uint256)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#263) is not in mixedCase
+Parameter MiniMeToken.allowance(address,address)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#287) is not in mixedCase
+Parameter MiniMeToken.allowance(address,address)._spender (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#287) is not in mixedCase
+Parameter MiniMeToken.approveAndCall(address,uint256,bytes)._spender (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#299) is not in mixedCase
+Parameter MiniMeToken.approveAndCall(address,uint256,bytes)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#299) is not in mixedCase
+Parameter MiniMeToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#299) is not in mixedCase
+Parameter MiniMeToken.balanceOfAt(address,uint256)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#328) is not in mixedCase
+Parameter MiniMeToken.balanceOfAt(address,uint256)._blockNumber (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#328) is not in mixedCase
+Parameter MiniMeToken.totalSupplyAt(uint256)._blockNumber (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#354) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._cloneTokenName (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#390) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._cloneDecimalUnits (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#391) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._cloneTokenSymbol (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#392) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._snapshotBlock (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#393) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._transfersEnabled (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#394) is not in mixedCase
+Parameter MiniMeToken.generateTokens(address,uint256)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#421) is not in mixedCase
+Parameter MiniMeToken.generateTokens(address,uint256)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#421) is not in mixedCase
+Parameter MiniMeToken.destroyTokens(address,uint256)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#438) is not in mixedCase
+Parameter MiniMeToken.destroyTokens(address,uint256)._amount (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#438) is not in mixedCase
+Parameter MiniMeToken.enableTransfers(bool)._transfersEnabled (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#457) is not in mixedCase
+Parameter MiniMeToken.getValueAt(MiniMeToken.Checkpoint[],uint256)._block (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#469) is not in mixedCase
+Parameter MiniMeToken.updateValueAtNow(MiniMeToken.Checkpoint[],uint256)._value (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#496) is not in mixedCase
+Parameter MiniMeToken.isContract(address)._addr (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#512) is not in mixedCase
+Parameter MiniMeToken.claimTokens(address)._token (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#542) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._parentToken (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#589) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._snapshotBlock (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#590) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._tokenName (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#591) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._decimalUnits (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#592) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._tokenSymbol (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#593) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._transfersEnabled (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#594) is not in mixedCase
+Parameter TokenSale.proxyPayment(address)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#848) is not in mixedCase
+Parameter TokenSale.onTransfer(address,address,uint256)._from (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#854) is not in mixedCase
+Parameter TokenSale.onApprove(address,address,uint256)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#863) is not in mixedCase
+Parameter TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256)._startPresaleTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#877) is not in mixedCase
+Parameter TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256)._endPresaleTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#878) is not in mixedCase
+Parameter TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256)._startDayOneTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#879) is not in mixedCase
+Parameter TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256)._endDayOneTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#880) is not in mixedCase
+Parameter TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256)._startTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#881) is not in mixedCase
+Parameter TokenSale.updateDates(uint256,uint256,uint256,uint256,uint256,uint256)._endTime (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#882) is not in mixedCase
+Parameter TokenSale.handleEarlySaleBuyers(address[],uint256[])._recipients (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892) is not in mixedCase
+Parameter TokenSale.handleEarlySaleBuyers(address[],uint256[])._ethAmounts (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892) is not in mixedCase
+Parameter TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[])._recipients (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#908) is not in mixedCase
+Parameter TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[])._free (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#909) is not in mixedCase
+Parameter TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[])._locked (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#910) is not in mixedCase
+Parameter TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[])._cliffs (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#911) is not in mixedCase
+Parameter TokenSale.doPayment(address)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#931) is not in mixedCase
+Parameter TokenSale.changeTokenController(address)._newController (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#980) is not in mixedCase
+Parameter TokenSale.claimLockedTokens(address)._owner (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#1006) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TokenSale.slitherConstructorConstantVariables() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#733-1029) uses literals with too many digits:
+	- MAX_TOKENS = 225000000 * 10 ** 18 (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#752)
+TokenSale.slitherConstructorConstantVariables() (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#733-1029) uses literals with too many digits:
+	- HARD_CAP = 108000000 * 10 ** 18 (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#755)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+MiniMeToken.version (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#89) should be constant 
+TokenSale.totalVested (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#764) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- ApproveAndCallFallBack.receiveApproval(address,uint256,address,bytes) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#78)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- MiniMeToken.approveAndCall(address,uint256,bytes) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#299-311)
+createCloneToken(address,uint256,string,uint8,string,bool) should be declared external:
+	- MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#588-608)
+handleEarlySaleBuyers(address[],uint256[]) should be declared external:
+	- TokenSale.handleEarlySaleBuyers(address[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#892-904)
+handleExternalBuyers(address[],uint256[],uint256[],uint256[]) should be declared external:
+	- TokenSale.handleExternalBuyers(address[],uint256[],uint256[],uint256[]) (../sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol#907-926)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x439b54caf661c21e6b231d972d7eaa98f199590f.sol analyzed (9 contracts with 100 detectors), 101 result(s) found

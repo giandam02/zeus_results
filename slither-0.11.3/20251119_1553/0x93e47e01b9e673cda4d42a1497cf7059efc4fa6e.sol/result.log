@@ -1,0 +1,114 @@
+'solc --version' running
+'solc /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:49:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:68:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Token() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:47:3: Warning: This declaration shadows a builtin symbol.
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:78:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);
+        ^-------------------------------^
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:88:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:68:5: Warning: No visibility specified. Defaulting to "public". 
+    function Token() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:72:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:81:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:91:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:96:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) constant returns(uint256 remaining) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:100:5: Warning: No visibility specified. Defaulting to "public". 
+    function getBalanceOf(address _who) returns(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:35:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:38:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:41:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:44:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:47:3: Warning: Function state mutability can be restricted to pure
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:100:5: Warning: Function state mutability can be restricted to view
+    function getBalanceOf(address _who) returns(uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Token (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#55-104) has incorrect ERC20 function interface:Token.transfer(address,uint256) (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#72-79)
+Token (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#55-104) has incorrect ERC20 function interface:Token.transferFrom(address,address,uint256) (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#81-89)
+Token (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#55-104) has incorrect ERC20 function interface:Token.approve(address,uint256) (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#91-93)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+safeMath.assert(bool) (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#47-51) (function) shadows built-in symbol"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#builtin-symbol-shadowing
+
+Deprecated standard detected THROW (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#49):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint >=0.4.4 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored.
+It is used by:
+	- >=0.4.4 (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#11)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract safeMath (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#14-52) is not in CapWords
+Parameter Token.transfer(address,uint256)._to (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#72) is not in mixedCase
+Parameter Token.transfer(address,uint256)._value (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#72) is not in mixedCase
+Parameter Token.transferFrom(address,address,uint256)._from (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#81) is not in mixedCase
+Parameter Token.transferFrom(address,address,uint256)._to (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#81) is not in mixedCase
+Parameter Token.transferFrom(address,address,uint256)._value (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#81) is not in mixedCase
+Parameter Token.approve(address,uint256)._spender (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#91) is not in mixedCase
+Parameter Token.approve(address,uint256)._value (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#91) is not in mixedCase
+Parameter Token.allowance(address,address)._owner (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#96) is not in mixedCase
+Parameter Token.allowance(address,address)._spender (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#96) is not in mixedCase
+Parameter Token.getBalanceOf(address)._who (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#100) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Token.slitherConstructorVariables() (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#55-104) uses literals with too many digits:
+	- totalSupply = 1000000000000 (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#60)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Token.decimals (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#59) should be constant 
+Token.name (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#57) should be constant 
+Token.standard (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#56) should be constant 
+Token.symbol (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#58) should be constant 
+Token.totalSupply (../sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol#60) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol analyzed (2 contracts with 100 detectors), 24 result(s) found

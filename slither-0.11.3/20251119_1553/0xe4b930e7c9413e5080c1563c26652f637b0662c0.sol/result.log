@@ -1,0 +1,71 @@
+'solc --version' running
+'solc /sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:26:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:44:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Migrations() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:88:9: Warning: Use of the "var" keyword is deprecated.
+        var allowanceAmount = allowances[from][msg.sender];
+        ^-----------------^
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:119:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TradeHKD() public onlyOwner{
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:83:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender,to,value);
+        ^---------------------------^
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:92:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(from, to, value);
+        ^-----------------------^
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:98:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, value);
+        ^----------------------------------^
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:119:32: Warning: Modifier-style base constructor call without arguments.
+    function TradeHKD() public onlyOwner{
+                               ^-------^
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol:121:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0,MAIN_HOLDER_ADDR,TotalTokenSupply);
+        ^-------------------------------------------^
+
+
+Ownable.transferOwnership(address) (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#33-36) should emit an event for: 
+	- owner = newOwner (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#35) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Modifier Migrations.restricted() (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#41-43) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+Version constraint ^0.4.17 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.17 (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Migrations.upgrade(address).new_address (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#50) is not in mixedCase
+Variable Migrations.last_completed_migration (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#40) is not in mixedCase
+Variable TradeHKD.TotalTokenSupply (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#113) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TradeHKD.TotalTokenSupply (../sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol#113) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xe4b930e7c9413e5080c1563c26652f637b0662c0.sol analyzed (6 contracts with 100 detectors), 8 result(s) found

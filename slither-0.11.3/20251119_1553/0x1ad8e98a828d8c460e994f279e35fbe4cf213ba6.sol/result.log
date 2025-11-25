@@ -1,0 +1,59 @@
+'solc --version' running
+'solc /sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CommitGoodToken.maxSupply (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#256) is set pre-construction with a non-constant function or state variable:
+	- 200000000 * (10 ** uint256(decimals))
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#95) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#95) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#110) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#132) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#132) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#132) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#154) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#154) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#166) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#166) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#180) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#180) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#196) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#196) is not in mixedCase
+Parameter CommitGoodToken.setMintAgent(address,bool)._addr (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#283) is not in mixedCase
+Parameter CommitGoodToken.setMintAgent(address,bool)._state (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#283) is not in mixedCase
+Parameter CommitGoodToken.mint(address,uint256)._addr (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#294) is not in mixedCase
+Parameter CommitGoodToken.mint(address,uint256)._amount (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#294) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CommitGoodToken.slitherConstructorVariables() (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#249-312) uses literals with too many digits:
+	- maxSupply = 200000000 * (10 ** uint256(decimals)) (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+CommitGoodToken.decimals (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#254) should be constant 
+CommitGoodToken.name (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#253) should be constant 
+CommitGoodToken.symbol (../sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol#252) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x1ad8e98a828d8c460e994f279e35fbe4cf213ba6.sol analyzed (7 contracts with 100 detectors), 25 result(s) found

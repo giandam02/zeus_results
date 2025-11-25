@@ -1,0 +1,81 @@
+'solc --version' running
+'solc /sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CoinTho.setAdmin(address) (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#261-269) should emit an event for: 
+	- admin_address = new_admin_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#267) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+CoinTho.buyTokens(address) (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#168-228) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp >= direct_drop_range_start && block.timestamp <= direct_drop_range_end) (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#181)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter CoinTho.balanceOf(address)._addr (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#31) is not in mixedCase
+Parameter CoinTho.transfer(address,uint256)._to (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#44) is not in mixedCase
+Parameter CoinTho.transfer(address,uint256)._value (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#45) is not in mixedCase
+Parameter CoinTho.transferFrom(address,address,uint256)._from (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#72) is not in mixedCase
+Parameter CoinTho.transferFrom(address,address,uint256)._to (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#73) is not in mixedCase
+Parameter CoinTho.transferFrom(address,address,uint256)._value (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#74) is not in mixedCase
+Parameter CoinTho.approve(address,uint256)._spender (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#93) is not in mixedCase
+Parameter CoinTho.approve(address,uint256)._value (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#94) is not in mixedCase
+Parameter CoinTho.allowance(address,address)._owner (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#105) is not in mixedCase
+Parameter CoinTho.allowance(address,address)._spender (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#106) is not in mixedCase
+Parameter CoinTho.increaseApproval(address,uint256)._spender (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#116) is not in mixedCase
+Parameter CoinTho.increaseApproval(address,uint256)._addedValue (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#117) is not in mixedCase
+Parameter CoinTho.decreaseApproval(address,uint256)._spender (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#128) is not in mixedCase
+Parameter CoinTho.decreaseApproval(address,uint256)._subtractedValue (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#129) is not in mixedCase
+Parameter CoinTho.buyTokens(address)._beneficiary (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#168) is not in mixedCase
+Parameter CoinTho.burn(uint256)._value (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#235) is not in mixedCase
+Parameter CoinTho.setAdmin(address).new_admin_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#261) is not in mixedCase
+Variable CoinTho.admin_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#7) is not in mixedCase
+Variable CoinTho.account_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#8) is not in mixedCase
+Variable CoinTho.direct_drop_switch (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#150) is not in mixedCase
+Variable CoinTho.direct_drop_rate (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#151) is not in mixedCase
+Variable CoinTho.direct_drop_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#152) is not in mixedCase
+Variable CoinTho.direct_drop_withdraw_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#153) is not in mixedCase
+Variable CoinTho.direct_drop_range (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#155) is not in mixedCase
+Variable CoinTho.direct_drop_range_start (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#156) is not in mixedCase
+Variable CoinTho.direct_drop_range_end (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#157) is not in mixedCase
+Modifier CoinTho.admin_only() (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#255-259) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CoinTho.slitherConstructorVariables() (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#3-336) uses literals with too many digits:
+	- initSupply = 2000000000 (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#17)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+CoinTho.account_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#8) should be constant 
+CoinTho.decimals (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#16) should be constant 
+CoinTho.direct_drop_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#152) should be constant 
+CoinTho.direct_drop_range (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#155) should be constant 
+CoinTho.direct_drop_range_end (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#157) should be constant 
+CoinTho.direct_drop_range_start (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#156) should be constant 
+CoinTho.direct_drop_rate (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#151) should be constant 
+CoinTho.direct_drop_withdraw_address (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#153) should be constant 
+CoinTho.initSupply (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#17) should be constant 
+CoinTho.name (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#14) should be constant 
+CoinTho.symbol (../sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol#15) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xa5a4e0f19aa936bed6d1b99b26c557d1e16ce5c3.sol analyzed (1 contracts with 100 detectors), 43 result(s) found

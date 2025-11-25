@@ -1,0 +1,116 @@
+'solc --version' running
+'solc /sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 30 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#199)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 25 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#197)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 20 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#195)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 50 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#191)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 40 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#189)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 30 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#187)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 20 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#185)
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) performs a multiplication on the result of a division:
+	- tokens = tokensPerEth.mul(msg.value) / 1000000000000000000 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#178)
+	- countbonus = tokens * 10 / 100 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#183)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Labtorum.totalSupply (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#82) shadows:
+	- ERC20Basic.totalSupply (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+Labtorum.transferOwnership(address) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#111-115) should emit an event for: 
+	- owner = newOwner (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#113) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < deadline && now < presaledeadline (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#181)
+	- now < deadline && now > presaledeadline (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#193)
+	- now >= deadline && now >= presaledeadline (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#208)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Labtorum.Distribute(address,uint256) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#132-146) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#137)
+	Calls stack containing the loop:
+		Labtorum.DistributeAirdropMultiple(address[],uint256)
+Labtorum.Distribute(address,uint256) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#132-146) has costly operations inside a loop:
+	- distributionFinished = true (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#140)
+	Calls stack containing the loop:
+		Labtorum.DistributeAirdropMultiple(address[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Labtorum.getTokens() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#165-222) has a high cyclomatic complexity (15).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Labtorum.distr(address,uint256)._to (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#123) is not in mixedCase
+Parameter Labtorum.distr(address,uint256)._amount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#123) is not in mixedCase
+Function Labtorum.Distribute(address,uint256) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#132-146) is not in mixedCase
+Parameter Labtorum.Distribute(address,uint256)._participant (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#132) is not in mixedCase
+Parameter Labtorum.Distribute(address,uint256)._amount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#132) is not in mixedCase
+Function Labtorum.DistributeAirdrop(address,uint256) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#148-150) is not in mixedCase
+Parameter Labtorum.DistributeAirdrop(address,uint256)._participant (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#148) is not in mixedCase
+Parameter Labtorum.DistributeAirdrop(address,uint256)._amount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#148) is not in mixedCase
+Function Labtorum.DistributeAirdropMultiple(address[],uint256) (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#152-154) is not in mixedCase
+Parameter Labtorum.DistributeAirdropMultiple(address[],uint256)._addresses (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#152) is not in mixedCase
+Parameter Labtorum.DistributeAirdropMultiple(address[],uint256)._amount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#152) is not in mixedCase
+Parameter Labtorum.updateTokensPerEth(uint256)._tokensPerEth (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#156) is not in mixedCase
+Parameter Labtorum.balanceOf(address)._owner (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#224) is not in mixedCase
+Parameter Labtorum.transfer(address,uint256)._to (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#233) is not in mixedCase
+Parameter Labtorum.transfer(address,uint256)._amount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#233) is not in mixedCase
+Parameter Labtorum.transferFrom(address,address,uint256)._from (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#244) is not in mixedCase
+Parameter Labtorum.transferFrom(address,address,uint256)._to (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#244) is not in mixedCase
+Parameter Labtorum.transferFrom(address,address,uint256)._amount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#244) is not in mixedCase
+Parameter Labtorum.approve(address,uint256)._spender (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#257) is not in mixedCase
+Parameter Labtorum.approve(address,uint256)._value (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#257) is not in mixedCase
+Parameter Labtorum.allowance(address,address)._owner (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#264) is not in mixedCase
+Parameter Labtorum.allowance(address,address)._spender (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#264) is not in mixedCase
+Parameter Labtorum.withdraw(uint256)._wdamount (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#280) is not in mixedCase
+Parameter Labtorum.burn(uint256)._value (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#285) is not in mixedCase
+Parameter Labtorum.withdrawForeignTokens(address)._tokenContract (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#293) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Labtorum.slitherConstructorVariables() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#68-299) uses literals with too many digits:
+	- totalSupply = 3000000000e8 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#82)
+Labtorum.slitherConstructorVariables() (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#68-299) uses literals with too many digits:
+	- tokensPerEth = 300000e8 (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#85)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol#55) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x1bd4e709a076fb71ea1014293a739f2b19ca565d.sol analyzed (5 contracts with 100 detectors), 44 result(s) found

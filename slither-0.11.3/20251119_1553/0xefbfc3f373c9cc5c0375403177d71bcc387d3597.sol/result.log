@@ -1,0 +1,58 @@
+'solc --version' running
+'solc /sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol:
+/sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol:11:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            msg.sender.transfer(this.balance);
+                                ^----------^
+/sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol:21:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            msg.sender.transfer(this.balance);
+                                ^----------^
+
+
+ETH_GIFT.GetGift(bytes) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#5-13) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.transfer(this.balance) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#11)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ETH_GIFT.SetReciver(address)._reciver (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#47) lacks a zero-check on :
+		- reciver = _reciver (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#52)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract ETH_GIFT (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#3-68) is not in CapWords
+Function ETH_GIFT.GetGift(bytes) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#5-13) is not in mixedCase
+Function ETH_GIFT.GetGift() (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#15-23) is not in mixedCase
+Function ETH_GIFT.GetHash(bytes) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#33) is not in mixedCase
+Function ETH_GIFT.SetPass(bytes32) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#35-45) is not in mixedCase
+Function ETH_GIFT.SetReciver(address) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#47-54) is not in mixedCase
+Parameter ETH_GIFT.SetReciver(address)._reciver (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#47) is not in mixedCase
+Function ETH_GIFT.PassHasBeenSet(bytes32) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#56-63) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+GetHash(bytes) should be declared external:
+	- ETH_GIFT.GetHash(bytes) (../sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xefbfc3f373c9cc5c0375403177d71bcc387d3597.sol analyzed (1 contracts with 100 detectors), 13 result(s) found

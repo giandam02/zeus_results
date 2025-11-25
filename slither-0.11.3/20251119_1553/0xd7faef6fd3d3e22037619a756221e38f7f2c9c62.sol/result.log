@@ -1,0 +1,53 @@
+'solc --version' running
+'solc /sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CreateBlogger (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#3-15) contract sets array length with a user-controlled value:
+	- deployedBlogs.push(newBlogger) (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#8)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Blogger.constructor(address).sender (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#38) lacks a zero-check on :
+		- author = sender (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#39)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Blogger.withdraw() (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#71-77) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(withdrawalDate < now) (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#72)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.20 (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in Blogger.requestRefund() (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#56-69):
+	External calls:
+	- record.funder.transfer(record.value) (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#61)
+	State variables written after the call(s):
+	- didGive[msg.sender] = false (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#63)
+	- donationRecords[msg.sender] = clearRecords (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#68)
+Reentrancy in Blogger.withdraw() (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#71-77):
+	External calls:
+	- author.transfer(address(this).balance) (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#74)
+	State variables written after the call(s):
+	- withdrawalDate = now + 2592000 (../sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol#75)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xd7faef6fd3d3e22037619a756221e38f7f2c9c62.sol analyzed (2 contracts with 100 detectors), 7 result(s) found

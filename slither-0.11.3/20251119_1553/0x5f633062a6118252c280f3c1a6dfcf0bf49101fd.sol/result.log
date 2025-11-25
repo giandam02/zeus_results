@@ -1,0 +1,91 @@
+'solc --version' running
+'solc /sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+XBORNID.getTokens() (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#138-159) performs a multiplication on the result of a division:
+	- value = value.div(100000).mul(99999) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#158)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+XBORNID.totalSupply (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#67) shadows:
+	- ERC20Basic.totalSupply (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+XBORNID.transferOwnership(address) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#109-113) should emit an event for: 
+	- owner = newOwner (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#111) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+XBORNID.onlyWhitelist() (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#99-102) compares to a boolean constant:
+	-require(bool)(blacklist[msg.sender] == false) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#100)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+XBORNID.doAirdrop(address,uint256) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#161-177) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#168)
+	Calls stack containing the loop:
+		XBORNID.adminClaimAirdropMultiple(address[],uint256)
+XBORNID.doAirdrop(address,uint256) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#161-177) has costly operations inside a loop:
+	- distributionFinished = true (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#171)
+	Calls stack containing the loop:
+		XBORNID.adminClaimAirdropMultiple(address[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+XBORNID.totalRemaining (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#71) is set pre-construction with a non-constant function or state variable:
+	- totalSupply.sub(totalDistributed)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter XBORNID.distr(address,uint256)._to (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#121) is not in mixedCase
+Parameter XBORNID.distr(address,uint256)._amount (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#121) is not in mixedCase
+Parameter XBORNID.doAirdrop(address,uint256)._participant (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#161) is not in mixedCase
+Parameter XBORNID.doAirdrop(address,uint256)._amount (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#161) is not in mixedCase
+Parameter XBORNID.adminClaimAirdrop(address,uint256)._participant (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#179) is not in mixedCase
+Parameter XBORNID.adminClaimAirdrop(address,uint256)._amount (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#179) is not in mixedCase
+Parameter XBORNID.adminClaimAirdropMultiple(address[],uint256)._addresses (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#183) is not in mixedCase
+Parameter XBORNID.adminClaimAirdropMultiple(address[],uint256)._amount (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#183) is not in mixedCase
+Parameter XBORNID.balanceOf(address)._owner (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#187) is not in mixedCase
+Parameter XBORNID.transfer(address,uint256)._to (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#196) is not in mixedCase
+Parameter XBORNID.transfer(address,uint256)._amount (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#196) is not in mixedCase
+Parameter XBORNID.transferFrom(address,address,uint256)._from (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#206) is not in mixedCase
+Parameter XBORNID.transferFrom(address,address,uint256)._to (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#206) is not in mixedCase
+Parameter XBORNID.transferFrom(address,address,uint256)._amount (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#206) is not in mixedCase
+Parameter XBORNID.approve(address,uint256)._spender (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#218) is not in mixedCase
+Parameter XBORNID.approve(address,uint256)._value (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#218) is not in mixedCase
+Parameter XBORNID.allowance(address,address)._owner (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#225) is not in mixedCase
+Parameter XBORNID.allowance(address,address)._spender (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#225) is not in mixedCase
+Parameter XBORNID.burn(uint256)._value (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#240) is not in mixedCase
+Parameter XBORNID.withdrawForeignTokens(address)._tokenContract (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#250) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+XBORNID.getTokens() (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#138-159) uses literals with too many digits:
+	- value = value.div(100000).mul(99999) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#158)
+XBORNID.slitherConstructorVariables() (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#52-256) uses literals with too many digits:
+	- totalSupply = 100000000e18 (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#67)
+XBORNID.slitherConstructorVariables() (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#52-256) uses literals with too many digits:
+	- totalDistributed = 30000000e18 (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#69)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#33) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+adminClaimAirdropMultiple(address[],uint256) should be declared external:
+	- XBORNID.adminClaimAirdropMultiple(address[],uint256) (../sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol#183-185)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x5f633062a6118252c280f3c1a6dfcf0bf49101fd.sol analyzed (6 contracts with 100 detectors), 34 result(s) found

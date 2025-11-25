@@ -1,0 +1,36 @@
+'solc --version' running
+'solc /sb/0xab37aa061d166e253083720fe9c2055f7f4f9952.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SecretKeeper.getMessage(address) (../sb/0xab37aa061d166e253083720fe9c2055f7f4f9952.sol#14-20) uses timestamp for comparisons
+	Dangerous comparisons:
+	- keeper[msgOwner].startTimeStamp + keeper[msgOwner].period * 60 * 60 < now (../sb/0xab37aa061d166e253083720fe9c2055f7f4f9952.sol#15)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint >=0.4.22<0.6.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- OneOfTwoConstructorsSkipped.
+It is used by:
+	- >=0.4.22<0.6.0 (../sb/0xab37aa061d166e253083720fe9c2055f7f4f9952.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+setMessage(uint256,string) should be declared external:
+	- SecretKeeper.setMessage(uint256,string) (../sb/0xab37aa061d166e253083720fe9c2055f7f4f9952.sol#11-13)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xab37aa061d166e253083720fe9c2055f7f4f9952.sol analyzed (1 contracts with 100 detectors), 4 result(s) found

@@ -1,0 +1,227 @@
+'solc --version' running
+'solc /sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:1282:48: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0xeb7B89b0A5a1fe000C684F5be34aE78672043BDa'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+        address[1] memory addresses = [address(0xeb7b89b0a5a1fe000c684f5be34ae78672043bda)];
+                                               ^----------------------------------------^
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:231:5: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    address _beneficiary,
+    ^------------------^
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:232:5: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    uint256 _weiAmount
+    ^----------------^
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:273:5: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    address _beneficiary,
+    ^------------------^
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:274:5: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    uint256 _weiAmount
+    ^----------------^
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:215:3: Warning: Function state mutability can be restricted to pure
+  function _preValidatePurchase(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:230:3: Warning: Function state mutability can be restricted to pure
+  function _postValidatePurchase(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:272:3: Warning: Function state mutability can be restricted to pure
+  function _updatePurchasingState(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol:968:3: Warning: Function state mutability can be restricted to pure
+  function finalization() internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Crowdsale._deliverTokens(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#244-251) ignores return value by token.transfer(_beneficiary,_tokenAmount) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#250)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+FreezableToken.toKey(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#773-780) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Reentrancy in TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298):
+	External calls:
+	- MainToken(token).pause() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1278)
+	- MainToken(token).mint(addresses[i],amounts[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1288)
+	- MainToken(token).mintAndFreeze(addresses[i],amounts[i],freezes[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1290)
+	State variables written after the call(s):
+	- transferOwnership(TARGET_USER) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1295)
+		- owner = _newOwner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#357)
+	Ownable.owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#308) can be used in cross function reentrancies:
+	- Ownable._transferOwnership(address) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#354-358)
+	- Ownable.constructor() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#322-324)
+	- Ownable.onlyOwner() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#329-332)
+	- Ownable.owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#308)
+	- Ownable.renounceOwnership() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#337-340)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298) ignores return value by MainToken(token).mint(addresses[i],amounts[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1288)
+TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298) ignores return value by MainToken(token).mintAndFreeze(addresses[i],amounts[i],freezes[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1290)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298) has external calls inside a loop: MainToken(token).mint(addresses[i],amounts[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1288)
+TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298) has external calls inside a loop: MainToken(token).mintAndFreeze(addresses[i],amounts[i],freezes[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1290)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Crowdsale.buyTokens(address) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#181-204):
+	External calls:
+	- _processPurchase(_beneficiary,tokens) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#192)
+		- token.transfer(_beneficiary,_tokenAmount) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#250)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,_beneficiary,weiAmount,tokens) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#193-198)
+Reentrancy in TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298):
+	External calls:
+	- MainToken(token).pause() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1278)
+	- MainToken(token).mint(addresses[i],amounts[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1288)
+	- MainToken(token).mintAndFreeze(addresses[i],amounts[i],freezes[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1290)
+	Event emitted after the call(s):
+	- Initialized() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1297)
+	- OwnershipTransferred(owner,_newOwner) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#356)
+		- transferOwnership(TARGET_USER) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1295)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TimedCrowdsale.constructor(uint256,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#386-393) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_openingTime >= block.timestamp) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#388)
+	- require(bool)(_closingTime >= _openingTime) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#389)
+TimedCrowdsale.hasClosed() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#399-402) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp > closingTime (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#401)
+FreezableToken.releaseOnce() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#734-756) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(uint64(block.timestamp) > head) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#738)
+FreezableToken.releaseAll() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#762-771) uses timestamp for comparisons
+	Dangerous comparisons:
+	- release != 0 && block.timestamp > release (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#766)
+FreezableToken.freeze(address,uint64) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#782-813) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_until > block.timestamp) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#783)
+MainCrowdsale.hasStarted() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1075-1077) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= openingTime (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1076)
+MainCrowdsale.hasClosed() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1087-1089) uses timestamp for comparisons
+	Dangerous comparisons:
+	- super.hasClosed() || capReached() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1088)
+BonusableCrowdsale.getBonusRate(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1135-1169) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timeInBound = (timeStartsBounds[i] <= now) && (now < timeEndsBounds[i]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1148)
+	- weiRaisedInBound && timeInBound (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1149)
+TemplateCrowdsale.constructor(MintableToken) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1265-1271) uses timestamp for comparisons
+	Dangerous comparisons:
+	- START_TIME > now (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1267)
+TemplateCrowdsale.setEndTime(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1305-1313) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now < closingTime) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1307)
+	- require(bool)(now < _endTime) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1309)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+FreezableToken.toKey(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#773-780) uses assembly
+	- INLINE ASM (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#776-780)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+FreezableToken.releaseOnce() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#734-756) has costly operations inside a loop:
+	- delete freezings[currentKey] (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#744)
+	Calls stack containing the loop:
+		FreezableToken.releaseAll()
+FreezableToken.releaseOnce() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#734-756) has costly operations inside a loop:
+	- delete chains[headKey] (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#750)
+	Calls stack containing the loop:
+		FreezableToken.releaseAll()
+FreezableToken.releaseOnce() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#734-756) has costly operations inside a loop:
+	- delete chains[currentKey] (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#753)
+	Calls stack containing the loop:
+		FreezableToken.releaseAll()
+WhitelistedCrowdsale.removeAddressesFromWhitelist(address[]) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1219-1224) has costly operations inside a loop:
+	- delete whitelist[_addresses[i]] (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1221)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+CappedCrowdsale._preValidatePurchase(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1005-1013) is never used and should be removed
+Crowdsale._deliverTokens(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#244-251) is never used and should be removed
+Crowdsale._getTokenAmount(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#286-290) is never used and should be removed
+MainCrowdsale._getTokenAmount(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1114-1118) is never used and should be removed
+TimedCrowdsale._preValidatePurchase(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#409-417) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#19)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Crowdsale.buyTokens(address)._beneficiary (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#181) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#346) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#446) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#446) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#461) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#487) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#488) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#489) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#515) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#515) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#528) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#529) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#549) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#550) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#572) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#573) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#621) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#622) is not in mixedCase
+Parameter FreezableToken.balanceOf(address)._owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#664) is not in mixedCase
+Parameter FreezableToken.actualBalanceOf(address)._owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#673) is not in mixedCase
+Parameter FreezableToken.freezingBalanceOf(address)._owner (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#677) is not in mixedCase
+Parameter FreezableToken.freezingCount(address)._addr (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#685) is not in mixedCase
+Parameter FreezableToken.getFreezing(address,uint256)._addr (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#698) is not in mixedCase
+Parameter FreezableToken.getFreezing(address,uint256)._index (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#698) is not in mixedCase
+Parameter FreezableToken.freezeTo(address,uint256,uint64)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#716) is not in mixedCase
+Parameter FreezableToken.freezeTo(address,uint256,uint64)._amount (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#716) is not in mixedCase
+Parameter FreezableToken.freezeTo(address,uint256,uint64)._until (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#716) is not in mixedCase
+Parameter FreezableToken.freeze(address,uint64)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#782) is not in mixedCase
+Parameter FreezableToken.freeze(address,uint64)._until (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#782) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#829) is not in mixedCase
+Parameter FreezableMintableToken.mintAndFreeze(address,uint256,uint64)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#902) is not in mixedCase
+Parameter FreezableMintableToken.mintAndFreeze(address,uint256,uint64)._amount (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#902) is not in mixedCase
+Parameter FreezableMintableToken.mintAndFreeze(address,uint256,uint64)._until (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#902) is not in mixedCase
+Parameter MainToken.transferFrom(address,address,uint256)._from (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1058) is not in mixedCase
+Parameter MainToken.transferFrom(address,address,uint256)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1058) is not in mixedCase
+Parameter MainToken.transferFrom(address,address,uint256)._value (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1058) is not in mixedCase
+Parameter MainToken.transfer(address,uint256)._to (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1063) is not in mixedCase
+Parameter MainToken.transfer(address,uint256)._value (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1063) is not in mixedCase
+Parameter BonusableCrowdsale.getBonusRate(uint256)._weiAmount (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1135) is not in mixedCase
+Parameter WhitelistedCrowdsale.addAddressToWhitelist(address)._address (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1193) is not in mixedCase
+Parameter WhitelistedCrowdsale.addAddressesToWhitelist(address[])._addresses (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1201) is not in mixedCase
+Parameter WhitelistedCrowdsale.removeAddressFromWhitelist(address)._address (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1211) is not in mixedCase
+Parameter WhitelistedCrowdsale.removeAddressesFromWhitelist(address[])._addresses (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1219) is not in mixedCase
+Parameter WhitelistedCrowdsale.isWhitelisted(address)._address (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1229) is not in mixedCase
+Parameter TemplateCrowdsale.setEndTime(uint256)._endTime (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1305) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+FreezableToken.toKey(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#773-780) uses literals with too many digits:
+	- result = 0x5749534800000000000000000000000000000000000000000000000000000000 (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#775)
+BonusableCrowdsale.getBonusRate(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1135-1169) uses literals with too many digits:
+	- weiRaisedStartsBounds = (uint256(12500000000000000)) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1140)
+BonusableCrowdsale.getBonusRate(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1135-1169) uses literals with too many digits:
+	- weiRaisedEndsBounds = (uint256(75000000000000000000000)) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1141)
+BonusableCrowdsale.getBonusRate(uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1135-1169) uses literals with too many digits:
+	- weiAmountBounds = (uint256(100000000000000000000),uint256(100000000000000000000),uint256(10000000000000000000)) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1157)
+TemplateCrowdsale.constructor(MintableToken) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1265-1271) uses literals with too many digits:
+	- CappedCrowdsale(125000000000000000000000) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1268)
+TemplateCrowdsale.init() (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1273-1298) uses literals with too many digits:
+	- amounts = (uint256(3000000000000000000)) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1283)
+TemplateCrowdsale._preValidatePurchase(address,uint256) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1325-1336) uses literals with too many digits:
+	- require(bool)(msg.value <= 200000000000000000000000) (../sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol#1333)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xbfc9154a280f28b0962d8cce9951e3c8ffca096d.sol analyzed (22 contracts with 100 detectors), 83 result(s) found

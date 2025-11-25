@@ -1,0 +1,105 @@
+'solc --version' running
+'solc /sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+JoycoinSale.sendTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238-255) ignores return value by token.transfer(_recipients[i],_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#248)
+JoycoinSale.sendBonusTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#257-273) ignores return value by token.transfer(_recipients[i],_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#267)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+JoycoinSale.finishSale() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#208-219) uses a dangerous strict equality:
+	- require(bool)((round3StartAt > 0 && now > (round3StartAt + round3Duration)) || token.balanceOf(address(this)) == 0) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#209)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in JoycoinSale.sendTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238-255):
+	External calls:
+	- token.transfer(_recipients[i],_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#248)
+	State variables written after the call(s):
+	- tokensSold = tokensSold.add(_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#249)
+	JoycoinSale.tokensSold (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#166) can be used in cross function reentrancies:
+	- JoycoinSale.finishSale() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#208-219)
+	- JoycoinSale.sendTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238-255)
+	- JoycoinSale.tokensSold (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#166)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+JoycoinSale.finishSale() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#208-219) ignores return value by token.burnUnsold() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#215)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+JoycoinSale.sendTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238-255) has external calls inside a loop: token.transfer(_recipients[i],_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#248)
+JoycoinSale.sendBonusTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#257-273) has external calls inside a loop: token.transfer(_recipients[i],_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#267)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in JoycoinSale.finishSale() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#208-219):
+	External calls:
+	- require(bool)((round3StartAt > 0 && now > (round3StartAt + round3Duration)) || token.balanceOf(address(this)) == 0) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#209)
+	State variables written after the call(s):
+	- finishedAt = now (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#213)
+	- isFinished = true (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#212)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in JoycoinSale.finishSale() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#208-219):
+	External calls:
+	- require(bool)((round3StartAt > 0 && now > (round3StartAt + round3Duration)) || token.balanceOf(address(this)) == 0) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#209)
+	- token.balanceOf(address(this)) > 0 (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#214)
+	- token.burnUnsold() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#215)
+	Event emitted after the call(s):
+	- Finish(now) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#217)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+JoycoinSale.finishSale() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#208-219) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)((round3StartAt > 0 && now > (round3StartAt + round3Duration)) || token.balanceOf(address(this)) == 0) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#209)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+JoycoinSale.sendTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238-255) has costly operations inside a loop:
+	- tokensSold = tokensSold.add(_values[i]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#249)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter JoycoinSale.addWalletToWhitelist(address)._wallet (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#180) is not in mixedCase
+Parameter JoycoinSale.removeWalletFromWhitelist(address)._wallet (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#185) is not in mixedCase
+Parameter JoycoinSale.addWalletsToWhitelist(address[])._wallets (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#190) is not in mixedCase
+Parameter JoycoinSale.removeWalletsFromWhitelist(address[])._wallets (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#199) is not in mixedCase
+Parameter JoycoinSale.setRound(uint256)._round (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#226) is not in mixedCase
+Parameter JoycoinSale.sendTokens(address[],uint256[])._recipients (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238) is not in mixedCase
+Parameter JoycoinSale.sendTokens(address[],uint256[])._values (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238) is not in mixedCase
+Parameter JoycoinSale.sendBonusTokens(address[],uint256[])._recipients (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#257) is not in mixedCase
+Parameter JoycoinSale.sendBonusTokens(address[],uint256[])._values (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#257) is not in mixedCase
+Constant JoycoinSale.round3Duration (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#159) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JoycoinSale.softCap (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#160) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+JoycoinSale.slitherConstructorConstantVariables() (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#153-275) uses literals with too many digits:
+	- softCap = 140000000 * 10 ** 8 (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#160)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+addWalletsToWhitelist(address[]) should be declared external:
+	- JoycoinSale.addWalletsToWhitelist(address[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#190-197)
+removeWalletsFromWhitelist(address[]) should be declared external:
+	- JoycoinSale.removeWalletsFromWhitelist(address[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#199-206)
+sendTokens(address[],uint256[]) should be declared external:
+	- JoycoinSale.sendTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#238-255)
+sendBonusTokens(address[],uint256[]) should be declared external:
+	- JoycoinSale.sendBonusTokens(address[],uint256[]) (../sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol#257-273)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xe9808c7a95e9c50ddcc4339516c188ad5dacf88e.sol analyzed (4 contracts with 100 detectors), 29 result(s) found

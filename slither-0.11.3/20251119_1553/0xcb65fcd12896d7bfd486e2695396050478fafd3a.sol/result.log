@@ -1,0 +1,65 @@
+'solc --version' running
+'solc /sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SolidToken.setTransferEnablingDate(uint256) (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#411-414) should emit an event for: 
+	- transferEnablingDate = date (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#412) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+SolidToken.enableTransfer() (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#420-423) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(transferEnablingDate != 0 && now >= transferEnablingDate) (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#421)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#62) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#164) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#164) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#179) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#230) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#231) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#232) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#258) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#258) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#271) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#272) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#292) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#293) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#315) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#316) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#366) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#367) is not in mixedCase
+Parameter SolidToken.mint(address,uint256)._to (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#434) is not in mixedCase
+Parameter SolidToken.mint(address,uint256)._amount (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#434) is not in mixedCase
+Parameter SolidToken.transfer(address,uint256)._to (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#445) is not in mixedCase
+Parameter SolidToken.transfer(address,uint256)._value (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#445) is not in mixedCase
+Parameter SolidToken.transferFrom(address,address,uint256)._from (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#458) is not in mixedCase
+Parameter SolidToken.transferFrom(address,address,uint256)._to (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#458) is not in mixedCase
+Parameter SolidToken.transferFrom(address,address,uint256)._value (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#458) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+SolidToken.slitherConstructorConstantVariables() (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#393-466) uses literals with too many digits:
+	- SUPPLY_CAP = 4000000 * DECIMAL_PLACES (../sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol#400)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xcb65fcd12896d7bfd486e2695396050478fafd3a.sol analyzed (8 contracts with 100 detectors), 29 result(s) found

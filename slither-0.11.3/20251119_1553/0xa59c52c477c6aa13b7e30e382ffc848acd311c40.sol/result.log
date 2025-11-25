@@ -1,0 +1,77 @@
+'solc --version' running
+'solc /sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+DailyLimitModule.today() (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#444-450) uses a weak PRNG: "now - (now % 86400) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#449)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+Contract locking ether found:
+	Contract ModuleManager (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#79-171) has payable functions:
+	 - EtherPaymentFallback.fallback() (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#14-19)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Reentrancy in DailyLimitModule.executeDailyLimit(address,address,uint256) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#409-425):
+	External calls:
+	- require(bool,string)(OwnerManager(manager).isOwner(msg.sender),Method can only be called by an owner) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#413)
+	State variables written after the call(s):
+	- require(bool,string)(isUnderLimit(token,amount),Daily limit has been reached) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#417)
+		- dailyLimit.lastDay = today() (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#433)
+		- dailyLimit.spentToday = 0 (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#434)
+	- dailyLimits[token].spentToday += amount (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#418)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+DailyLimitModule.isUnderLimit(address,uint256) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#427-440) uses timestamp for comparisons
+	Dangerous comparisons:
+	- today() > dailyLimit.lastDay (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#432)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Executor.executeCall(address,uint256,bytes,uint256) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#41-49) uses assembly
+	- INLINE ASM (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#46-49)
+Executor.executeDelegateCall(address,bytes,uint256) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#51-59) uses assembly
+	- INLINE ASM (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#56-59)
+Executor.executeCreate(bytes) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#61-69) uses assembly
+	- INLINE ASM (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#66-69)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ModuleManager.setupModules(address,bytes) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#88-96) is never used and should be removed
+OwnerManager.setupOwners(address[],uint256) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#188-212) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter OwnerManager.setupOwners(address[],uint256)._owners (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#188) is not in mixedCase
+Parameter OwnerManager.setupOwners(address[],uint256)._threshold (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#188) is not in mixedCase
+Parameter OwnerManager.addOwnerWithThreshold(address,uint256)._threshold (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#218) is not in mixedCase
+Parameter OwnerManager.removeOwner(address,address,uint256)._threshold (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#240) is not in mixedCase
+Parameter OwnerManager.changeThreshold(uint256)._threshold (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#284) is not in mixedCase
+Parameter MasterCopy.changeMasterCopy(address)._masterCopy (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#340) is not in mixedCase
+Parameter DailyLimitModule.setup(address[],uint256[])._dailyLimits (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#386) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+execTransactionFromModule(address,uint256,bytes,Enum.Operation) should be declared external:
+	- ModuleManager.execTransactionFromModule(address,uint256,bytes,Enum.Operation) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#135-143)
+setup(address[],uint256[]) should be declared external:
+	- DailyLimitModule.setup(address[],uint256[]) (../sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol#386-392)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xa59c52c477c6aa13b7e30e382ffc848acd311c40.sol analyzed (9 contracts with 100 detectors), 20 result(s) found

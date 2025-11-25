@@ -1,0 +1,131 @@
+'solc --version' running
+'solc /sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol:
+/sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol:72:5: Warning: Function state mutability can be restricted to pure
+    function transfer(address, uint) public {}
+    ^----------------------------------------^
+
+
+EthertoteToken (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#69-73) has incorrect ERC20 function interface:EthertoteToken.transfer(address,uint256) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#72)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+TokenSale.burnUnsoldTokens() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#201-206) uses a dangerous strict equality:
+	- require(bool)(tokenSaleHasFinished() == true) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#203)
+TokenSale.pauseTokenSale() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#211-222) uses a dangerous strict equality:
+	- require(bool)(tokenSaleHasFinished() == false) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#213)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+TokenSale.delayOpeningTime(uint256) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#439-445) should emit an event for: 
+	- openingTime = _openingTime (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#440) 
+	- closingTime = openingTime.add(604800) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#441) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in TokenSale.buyTokens(address) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#290-335):
+	External calls:
+	- require(bool)(tokenSaleTokenBalance() > 0) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#304)
+		- token.balanceOf(thisContractAddress) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#186)
+	- require(bool)(tokens <= tokenSaleTokenBalance()) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#318)
+		- token.balanceOf(thisContractAddress) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#186)
+	State variables written after the call(s):
+	- weiRaised = weiRaised.add(weiAmount) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#321)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TokenSale.burnUnsoldTokens() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#201-206):
+	External calls:
+	- token.transfer(tokenBurnAddress,tokenSaleTokenBalance()) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#204)
+		- token.balanceOf(thisContractAddress) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#186)
+	Event emitted after the call(s):
+	- TokensBurned(tokens sent to TokenBurn contract,now) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#205)
+Reentrancy in TokenSale.buyTokens(address) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#290-335):
+	External calls:
+	- require(bool)(tokenSaleTokenBalance() > 0) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#304)
+		- token.balanceOf(thisContractAddress) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#186)
+	- require(bool)(tokens <= tokenSaleTokenBalance()) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#318)
+		- token.balanceOf(thisContractAddress) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#186)
+	- processPurchase(buyer,tokens) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#323)
+		- token.transfer(buyer,tokenAmount) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#375)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,buyer,weiAmount,tokens) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#324-329)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenSale.tokenSaleHasFinished() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#195-197) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > closingTime (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#196)
+TokenSale.burnUnsoldTokens() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#201-206) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(tokenSaleHasFinished() == true) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#203)
+TokenSale.pauseTokenSale() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#211-222) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(tokenSaleHasFinished() == false) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#213)
+TokenSale.buyTokens(address) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#290-335) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(openingTime <= block.timestamp) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#293)
+	- require(bool)(block.timestamp < closingTime) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#294)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+TokenSale.burnUnsoldTokens() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#201-206) compares to a boolean constant:
+	-require(bool)(tokenSaleIsPaused == false) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#202)
+TokenSale.burnUnsoldTokens() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#201-206) compares to a boolean constant:
+	-require(bool)(tokenSaleHasFinished() == true) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#203)
+TokenSale.pauseTokenSale() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#211-222) compares to a boolean constant:
+	-require(bool)(tokenSaleIsPaused == false) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#216)
+TokenSale.pauseTokenSale() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#211-222) compares to a boolean constant:
+	-require(bool)(tokenSaleHasFinished() == false) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#213)
+TokenSale.resumeTokenSale() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#225-251) compares to a boolean constant:
+	-require(bool)(tokenSaleIsPaused == true) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#228)
+TokenSale.buyTokens(address) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#290-335) compares to a boolean constant:
+	-require(bool)(tokenSaleIsPaused == false) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#307)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+TokenSale.maxWeiRaised (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#125) is set pre-construction with a non-constant function or state variable:
+	- maxEthRaised.mul(1000000000000000000)
+TokenSale.closingTime (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#130) is set pre-construction with a non-constant function or state variable:
+	- openingTime.add(604800)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#12)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter TokenSale.getAnyAddressTokenBalance(address)._address (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#190) is not in mixedCase
+Parameter TokenSale.delayOpeningTime(uint256)._openingTime (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#439) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TokenSale.slitherConstructorVariables() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#80-449) uses literals with too many digits:
+	- maxWeiRaised = maxEthRaised.mul(1000000000000000000) (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#125)
+TokenSale.slitherConstructorVariables() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#80-449) uses literals with too many digits:
+	- rate = 1000000000000000 (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#134)
+TokenSale.slitherConstructorVariables() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#80-449) uses literals with too many digits:
+	- minSpend = 100000000000000000 (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#137)
+TokenSale.slitherConstructorVariables() (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#80-449) uses literals with too many digits:
+	- maxSpend = 100000000000000000000 (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#138)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+TokenSale.ethRaisedAddress (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#97) should be constant 
+TokenSale.maxEthRaised (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#120) should be constant 
+TokenSale.maxSpend (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#138) should be constant 
+TokenSale.minSpend (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#137) should be constant 
+TokenSale.rate (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#134) should be constant 
+TokenSale.tokenBurnAddress (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#93) should be constant 
+TokenSale.tokenContractAddress (../sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol#89) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x202f291e30fe4aa626792ae01c35eaf7153b44b9.sol analyzed (3 contracts with 100 detectors), 34 result(s) found

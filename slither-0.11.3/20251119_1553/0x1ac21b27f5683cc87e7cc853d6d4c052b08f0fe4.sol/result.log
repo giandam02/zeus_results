@@ -1,0 +1,382 @@
+'solc --version' running
+'solc /sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:536:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function EthernautsStorage() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1199:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function EthernautsLogic() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1269:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function EthernautsUpgrade() public
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:166:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AuctionCreated(
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:178:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AuctionCancelled(_tokenId);
+        ^------------------------^
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:239:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AuctionSuccessful(_tokenId, price, msg.sender);
+        ^--------------------------------------------^
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1058:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _to, _tokenId);
+        ^---------------------------------^
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Build(
+        ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1219:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ContractUpgrade(_v2Address);
+        ^-------------------------^
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1247:22: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        _to.transfer(this.balance);
+                     ^----------^
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1252:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol:1395:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Upgrade(_tokenId);
+        ^---------------^
+
+
+ClockAuctionBase._bid(uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#183-242) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.transfer(bidExcess) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#236)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ClockAuctionBase.nonFungibleContract (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#126) is never initialized. It is used in:
+	- ClockAuctionBase._owns(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#142-144)
+	- ClockAuctionBase._transfer(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#150-153)
+ClockAuctionBase.ownerCut (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#130) is never initialized. It is used in:
+	- ClockAuctionBase._computeCut(uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#325-332)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+ClockAuctionBase._computeCut(uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#325-332) performs a multiplication on the result of a division:
+	- SafeMath.mul(_price,SafeMath.div(ownerCut,10000)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#331)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+EthernautsStorage.getTokenList(address,uint8,uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#894-927) uses a dangerous strict equality:
+	- totalAssets == 0 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#899)
+EthernautsStorage.getTokenList(address,uint8,uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#894-927) uses a dangerous strict equality:
+	- (asset.state != uint8(AssetState.Used)) && (assetIndexToOwner[tokenId] == _owner || _owner == address(0)) && (asset.attributes & hasAttributes == hasAttributes) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#911-913)
+EthernautsStorage.hasAllAttrs(uint256,bytes2) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#840-842) uses a dangerous strict equality:
+	- assets[_tokenId].attributes & _attributes == _attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#841)
+EthernautsStorage.isCategory(uint256,uint8) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#854-856) uses a dangerous strict equality:
+	- assets[_tokenId].category == _category (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#855)
+EthernautsStorage.isState(uint256,uint8) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#861-863) uses a dangerous strict equality:
+	- assets[_tokenId].state == _state (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#862)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Contract locking ether found:
+	Contract EthernautsStorage (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#534-928) has payable functions:
+	 - EthernautsStorage.fallback() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#552-554)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Reentrancy in EthernautsLogic.unpause() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1235-1243):
+	External calls:
+	- require(bool)(ethernautsStorage.contractsGrantedAccess(address(this)) == true) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1239)
+	State variables written after the call(s):
+	- super.unpause() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1242)
+		- paused = false (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#516)
+	EthernautsAccessControl.paused (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#420) can be used in cross function reentrancies:
+	- EthernautsLogic.EthernautsLogic() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1199-1208)
+	- EthernautsAccessControl.pause() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#506-508)
+	- EthernautsAccessControl.paused (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#420)
+	- EthernautsAccessControl.unpause() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#514-517)
+	- EthernautsAccessControl.whenNotPaused() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#493-496)
+	- EthernautsAccessControl.whenPaused() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#499-502)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+EthernautsUpgrade.upgradeShip(uint256,uint256[5])._objectsStats (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1309) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+EthernautsOwnership.isExploring(uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1182-1187) ignores return value by (None,None,None,None,None,cooldownEndBlock,cooldown,None) = ethernautsStorage.assets(_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1185)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+EthernautsAccessControl.setCEO(address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#451-455) should emit an event for: 
+	- ceoAddress = _newCEO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#454) 
+	- ceoAddress = _newCEO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#454) 
+EthernautsAccessControl.setCTO(address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#459-467) should emit an event for: 
+	- ctoAddress = _newCTO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#466) 
+	- ctoAddress = _newCTO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#466) 
+EthernautsAccessControl.setCOO(address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#471-479) should emit an event for: 
+	- cooAddress = _newCOO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#478) 
+EthernautsAccessControl.setOracle(address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#483-488) should emit an event for: 
+	- oracleAddress = _newOracle (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#487) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+EthernautsLogic.setNewAddress(address)._v2Address (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1216) lacks a zero-check on :
+		- newContractAddress = _v2Address (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1218)
+EthernautsLogic.withdrawBalances(address)._to (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1246) lacks a zero-check on :
+		- _to.transfer(this.balance) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1247)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+EthernautsUpgrade.upgradeShip(uint256,uint256[5]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292-1396) has external calls inside a loop: require(bool)(msg.sender == ethernautsStorage.ownerOf(_objects[i])) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1320)
+EthernautsUpgrade.upgradeShip(uint256,uint256[5]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292-1396) has external calls inside a loop: require(bool)(ethernautsStorage.isCategory(_objects[i],uint8(AssetCategory.Object))) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1322)
+EthernautsUpgrade.upgradeShip(uint256,uint256[5]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292-1396) has external calls inside a loop: _objectsStats[i] = ethernautsStorage.getStats(_objects[i]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1328)
+EthernautsUpgrade.upgradeShip(uint256,uint256[5]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292-1396) has external calls inside a loop: ethernautsStorage.updateState(_objects[i],uint8(AssetState.Used)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1388)
+EthernautsOwnership._approve(uint256,address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#996-998) has external calls inside a loop: ethernautsStorage.approve(_tokenId,_approved) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#997)
+	Calls stack containing the loop:
+		EthernautsUpgrade.upgradeShip(uint256,uint256[5])
+ClockAuctionBase._owns(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#142-144) has external calls inside a loop: (nonFungibleContract.ownerOf(_tokenId) == _claimant) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#143)
+	Calls stack containing the loop:
+		EthernautsUpgrade.upgradeShip(uint256,uint256[5])
+		EthernautsOwnership._transferFrom(address,address,uint256)
+EthernautsOwnership._approvedFor(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#987-989) has external calls inside a loop: ethernautsStorage.approvedFor(_tokenId) == _claimant (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#988)
+	Calls stack containing the loop:
+		EthernautsUpgrade.upgradeShip(uint256,uint256[5])
+		EthernautsOwnership._transferFrom(address,address,uint256)
+EthernautsOwnership._transferFrom(address,address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1068-1085) has external calls inside a loop: ethernautsStorage.transfer(_from,_to,_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1084)
+	Calls stack containing the loop:
+		EthernautsUpgrade.upgradeShip(uint256,uint256[5])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in EthernautsLogic.setEthernautsStorageContract(address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1224-1228):
+	External calls:
+	- require(bool)(candidateContract.isEthernautsStorage()) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1226)
+	State variables written after the call(s):
+	- ethernautsStorage = candidateContract (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1227)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in ClockAuctionBase._cancelAuction(uint256,address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#175-179):
+	External calls:
+	- _transfer(_seller,_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#177)
+		- nonFungibleContract.transfer(_receiver,_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#152)
+	Event emitted after the call(s):
+	- AuctionCancelled(_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#178)
+Reentrancy in EthernautsOwnership.approve(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1044-1059):
+	External calls:
+	- require(bool)(_owns(msg.sender,_tokenId)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1052)
+		- ethernautsStorage.ownerOf(_tokenId) == _claimant (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#981)
+	- _approve(_tokenId,_to) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1055)
+		- ethernautsStorage.approve(_tokenId,_approved) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#997)
+	Event emitted after the call(s):
+	- Approval(msg.sender,_to,_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1058)
+Reentrancy in EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1142-1178):
+	External calls:
+	- tokenID = ethernautsStorage.createAsset(_creatorTokenID,msg.sender,_price,_assetID,_category,uint8(AssetState.Available),_attributes,_stats,0,0) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1156-1167)
+	Event emitted after the call(s):
+	- Build(msg.sender,tokenID,_assetID,_price) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1170-1175)
+Reentrancy in EthernautsUpgrade.upgradeShip(uint256,uint256[5]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292-1396):
+	External calls:
+	- require(bool)(ethernautsStorage.isCategory(_tokenId,uint8(AssetCategory.Ship))) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1294)
+	- require(bool)(ethernautsStorage.isState(_tokenId,uint8(AssetState.Available))) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1297)
+	- require(bool)(msg.sender == ethernautsStorage.ownerOf(_tokenId)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1300)
+	- require(bool)(! isExploring(_tokenId)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1303)
+		- (None,None,None,None,None,cooldownEndBlock,cooldown,None) = ethernautsStorage.assets(_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1185)
+	- _shipStats = ethernautsStorage.getStats(_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1307)
+	- upgradesToTokenIndex = new uint256[](ethernautsStorage.totalSupply()) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1315)
+	- require(bool)(msg.sender == ethernautsStorage.ownerOf(_objects[i])) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1320)
+	- require(bool)(! isExploring(_objects[i])) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1321)
+		- (None,None,None,None,None,cooldownEndBlock,cooldown,None) = ethernautsStorage.assets(_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1185)
+	- require(bool)(ethernautsStorage.isCategory(_objects[i],uint8(AssetCategory.Object))) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1322)
+	- _objectsStats[i] = ethernautsStorage.getStats(_objects[i]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1328)
+	- ethernautsStorage.updateStats(_tokenId,_shipStats) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1384)
+	- ethernautsStorage.updateState(_objects[i],uint8(AssetState.Used)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1388)
+	- _approve(_objects[i],address(this)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1391)
+		- ethernautsStorage.approve(_tokenId,_approved) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#997)
+	- _transferFrom(msg.sender,address(this),_objects[i]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1392)
+		- ethernautsStorage.approvedFor(_tokenId) == _claimant (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#988)
+		- (nonFungibleContract.ownerOf(_tokenId) == _claimant) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#143)
+		- ethernautsStorage.transfer(_from,_to,_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1084)
+	Event emitted after the call(s):
+	- Upgrade(_tokenId) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1395)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ClockAuctionBase._bid(uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#183-242) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_bidAmount >= price) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#198)
+	- price > 0 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#209)
+ClockAuctionBase._currentPrice(ClockAuctionBase.Auction) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#260-280) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > _auction.startedAt (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#270)
+ClockAuctionBase._computeCurrentPrice(uint256,uint256,uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#286-321) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _secondsPassed >= _duration (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#301)
+EthernautsStorage.hasAllAttrs(uint256,bytes2) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#840-842) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assets[_tokenId].attributes & _attributes == _attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#841)
+EthernautsStorage.hasAnyAttrs(uint256,bytes2) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#847-849) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assets[_tokenId].attributes & _attributes != 0x0 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#848)
+EthernautsStorage.isCategory(uint256,uint8) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#854-856) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assets[_tokenId].category == _category (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#855)
+EthernautsStorage.isState(uint256,uint8) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#861-863) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assets[_tokenId].state == _state (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#862)
+EthernautsStorage.getTokenList(address,uint8,uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#894-927) uses timestamp for comparisons
+	Dangerous comparisons:
+	- totalAssets == 0 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#899)
+	- tokenId < totalAssets && resultIndex < count (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#908)
+	- (asset.state != uint8(AssetState.Used)) && (assetIndexToOwner[tokenId] == _owner || _owner == address(0)) && (asset.attributes & hasAttributes == hasAttributes) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#911-913)
+	- totalAssets > count (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#903)
+EthernautsOwnership.isExploring(uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1182-1187) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (cooldown > now) || (cooldownEndBlock > uint64(block.number)) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1186)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+EthernautsStorage.onlyGrantedContracts() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#574-577) compares to a boolean constant:
+	-require(bool)(contractsGrantedAccess[msg.sender] == true) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#575)
+EthernautsLogic.unpause() (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1235-1243) compares to a boolean constant:
+	-require(bool)(ethernautsStorage.contractsGrantedAccess(address(this)) == true) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1239)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+ClockAuctionBase._addAuction(uint256,ClockAuctionBase.Auction) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#159-172) is never used and should be removed
+ClockAuctionBase._bid(uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#183-242) is never used and should be removed
+ClockAuctionBase._cancelAuction(uint256,address) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#175-179) is never used and should be removed
+ClockAuctionBase._computeCurrentPrice(uint256,uint256,uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#286-321) is never used and should be removed
+ClockAuctionBase._computeCut(uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#325-332) is never used and should be removed
+ClockAuctionBase._currentPrice(ClockAuctionBase.Auction) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#260-280) is never used and should be removed
+ClockAuctionBase._isOnAuction(ClockAuctionBase.Auction) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#252-254) is never used and should be removed
+ClockAuctionBase._removeAuction(uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#246-248) is never used and should be removed
+ClockAuctionBase._transfer(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#150-153) is never used and should be removed
+EthernautsOwnership._owns(address,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#980-982) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Constant EthernautsBase.InterfaceSignature_ERC721 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#348-359) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable EthernautsBase.ATTR_SEEDED (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#384) is not in mixedCase
+Variable EthernautsBase.ATTR_PRODUCIBLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#385) is not in mixedCase
+Variable EthernautsBase.ATTR_EXPLORABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#386) is not in mixedCase
+Variable EthernautsBase.ATTR_LEASABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#387) is not in mixedCase
+Variable EthernautsBase.ATTR_PERMANENT (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#388) is not in mixedCase
+Variable EthernautsBase.ATTR_CONSUMABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#389) is not in mixedCase
+Variable EthernautsBase.ATTR_TRADABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#390) is not in mixedCase
+Variable EthernautsBase.ATTR_GOLDENGOOSE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#391) is not in mixedCase
+Parameter EthernautsAccessControl.setCEO(address)._newCEO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#451) is not in mixedCase
+Parameter EthernautsAccessControl.setCTO(address)._newCTO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#459) is not in mixedCase
+Parameter EthernautsAccessControl.setCOO(address)._newCOO (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#471) is not in mixedCase
+Parameter EthernautsAccessControl.setOracle(address)._newOracle (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#483) is not in mixedCase
+Parameter EthernautsStorage.grantAccess(address)._v2Address (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#561) is not in mixedCase
+Parameter EthernautsStorage.removeAccess(address)._v2Address (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#568) is not in mixedCase
+Parameter EthernautsStorage.setPrice(uint256,uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#667) is not in mixedCase
+Parameter EthernautsStorage.setPrice(uint256,uint256)._price (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#667) is not in mixedCase
+Parameter EthernautsStorage.approve(uint256,address)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#674) is not in mixedCase
+Parameter EthernautsStorage.approve(uint256,address)._approved (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#674) is not in mixedCase
+Parameter EthernautsStorage.transfer(address,address,uint256)._from (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#682) is not in mixedCase
+Parameter EthernautsStorage.transfer(address,address,uint256)._to (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#682) is not in mixedCase
+Parameter EthernautsStorage.transfer(address,address,uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#682) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._creatorTokenID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#707) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._owner (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#708) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._price (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#709) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._ID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#710) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._category (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#711) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._state (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#712) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#713) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._stats (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#714) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._cooldown (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#715) is not in mixedCase
+Parameter EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64)._cooldownEndBlock (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#716) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#766) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._creatorTokenID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#767) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._price (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#768) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._ID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#769) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._category (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#770) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._state (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#771) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#772) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._stats (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#773) is not in mixedCase
+Parameter EthernautsStorage.editAsset(uint256,uint256,uint256,uint16,uint8,uint8,uint8,uint8[10],uint16)._cooldown (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#774) is not in mixedCase
+Parameter EthernautsStorage.updateStats(uint256,uint8[10])._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#801) is not in mixedCase
+Parameter EthernautsStorage.updateStats(uint256,uint8[10])._stats (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#801) is not in mixedCase
+Parameter EthernautsStorage.updateState(uint256,uint8)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#808) is not in mixedCase
+Parameter EthernautsStorage.updateState(uint256,uint8)._state (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#808) is not in mixedCase
+Parameter EthernautsStorage.setAssetCooldown(uint256,uint256,uint64)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#815) is not in mixedCase
+Parameter EthernautsStorage.setAssetCooldown(uint256,uint256,uint64)._cooldown (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#815) is not in mixedCase
+Parameter EthernautsStorage.setAssetCooldown(uint256,uint256,uint64)._cooldownEndBlock (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#815) is not in mixedCase
+Parameter EthernautsStorage.getStats(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#827) is not in mixedCase
+Parameter EthernautsStorage.priceOf(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#833) is not in mixedCase
+Parameter EthernautsStorage.hasAllAttrs(uint256,bytes2)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#840) is not in mixedCase
+Parameter EthernautsStorage.hasAllAttrs(uint256,bytes2)._attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#840) is not in mixedCase
+Parameter EthernautsStorage.hasAnyAttrs(uint256,bytes2)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#847) is not in mixedCase
+Parameter EthernautsStorage.hasAnyAttrs(uint256,bytes2)._attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#847) is not in mixedCase
+Parameter EthernautsStorage.isCategory(uint256,uint8)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#854) is not in mixedCase
+Parameter EthernautsStorage.isCategory(uint256,uint8)._category (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#854) is not in mixedCase
+Parameter EthernautsStorage.isState(uint256,uint8)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#861) is not in mixedCase
+Parameter EthernautsStorage.isState(uint256,uint8)._state (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#861) is not in mixedCase
+Parameter EthernautsStorage.ownerOf(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#868) is not in mixedCase
+Parameter EthernautsStorage.balanceOf(address)._owner (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#876) is not in mixedCase
+Parameter EthernautsStorage.approvedFor(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#882) is not in mixedCase
+Parameter EthernautsStorage.getTokenList(address,uint8,uint256,uint256)._owner (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#894) is not in mixedCase
+Parameter EthernautsStorage.getTokenList(address,uint8,uint256,uint256)._withAttributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#894) is not in mixedCase
+Parameter EthernautsOwnership.supportsInterface(bytes4)._interfaceID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#972) is not in mixedCase
+Parameter EthernautsOwnership.balanceOf(address)._owner (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1003) is not in mixedCase
+Parameter EthernautsOwnership.transfer(address,uint256)._to (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1014) is not in mixedCase
+Parameter EthernautsOwnership.transfer(address,uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1015) is not in mixedCase
+Parameter EthernautsOwnership.approve(address,uint256)._to (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1045) is not in mixedCase
+Parameter EthernautsOwnership.approve(address,uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1046) is not in mixedCase
+Parameter EthernautsOwnership.transferFrom(address,address,uint256)._from (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1095) is not in mixedCase
+Parameter EthernautsOwnership.transferFrom(address,address,uint256)._to (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1096) is not in mixedCase
+Parameter EthernautsOwnership.transferFrom(address,address,uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1097) is not in mixedCase
+Parameter EthernautsOwnership.takeOwnership(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1108) is not in mixedCase
+Parameter EthernautsOwnership.ownerOf(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1125) is not in mixedCase
+Parameter EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10])._creatorTokenID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1143) is not in mixedCase
+Parameter EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10])._price (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1144) is not in mixedCase
+Parameter EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10])._assetID (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1145) is not in mixedCase
+Parameter EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10])._category (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1146) is not in mixedCase
+Parameter EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10])._attributes (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1147) is not in mixedCase
+Parameter EthernautsOwnership.createNewAsset(uint256,uint256,uint16,uint8,uint8,uint8[10])._stats (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1148) is not in mixedCase
+Parameter EthernautsOwnership.isExploring(uint256)._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1182) is not in mixedCase
+Constant EthernautsOwnership.InterfaceSignature_ERC165 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#950) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter EthernautsLogic.setNewAddress(address)._v2Address (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1216) is not in mixedCase
+Parameter EthernautsLogic.setEthernautsStorageContract(address)._CStorageAddress (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1224) is not in mixedCase
+Parameter EthernautsLogic.withdrawBalances(address)._to (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1246) is not in mixedCase
+Parameter EthernautsUpgrade.upgradeShip(uint256,uint256[5])._tokenId (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292) is not in mixedCase
+Parameter EthernautsUpgrade.upgradeShip(uint256,uint256[5])._objects (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1292) is not in mixedCase
+Variable EthernautsUpgrade.STATS_CAPOUT (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1277) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ClockAuctionBase._bid(uint256,uint256) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#183-242):
+	External calls:
+	- seller.transfer(sellerProceeds) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#224)
+	- msg.sender.transfer(bidExcess) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#236)
+	Event emitted after the call(s):
+	- AuctionSuccessful(_tokenId,price,msg.sender) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#239)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+EthernautsBase.InterfaceSignature_ERC721 (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#348-359) is never used in EthernautsStorage (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#534-928)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+ClockAuctionBase.nonFungibleContract (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#126) should be constant 
+ClockAuctionBase.ownerCut (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#130) should be constant 
+EthernautsBase.ATTR_CONSUMABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#389) should be constant 
+EthernautsBase.ATTR_EXPLORABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#386) should be constant 
+EthernautsBase.ATTR_GOLDENGOOSE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#391) should be constant 
+EthernautsBase.ATTR_LEASABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#387) should be constant 
+EthernautsBase.ATTR_PERMANENT (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#388) should be constant 
+EthernautsBase.ATTR_PRODUCIBLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#385) should be constant 
+EthernautsBase.ATTR_SEEDED (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#384) should be constant 
+EthernautsBase.ATTR_TRADABLE (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#390) should be constant 
+EthernautsStorage.isEthernautsStorage (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#637) should be constant 
+EthernautsUpgrade.STATS_CAPOUT (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#1277) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64) should be declared external:
+	- EthernautsStorage.createAsset(uint256,address,uint256,uint16,uint8,uint8,uint8,uint8[10],uint256,uint64) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#706-751)
+updateStats(uint256,uint8[10]) should be declared external:
+	- EthernautsStorage.updateStats(uint256,uint8[10]) (../sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol#801-803)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x1ac21b27f5683cc87e7cc853d6d4c052b08f0fe4.sol analyzed (9 contracts with 100 detectors), 159 result(s) found

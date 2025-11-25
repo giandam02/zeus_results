@@ -1,0 +1,47 @@
+'solc --version' running
+'solc /sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#78) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#78) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#93) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#131) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#131) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#131) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#153) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#153) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#165) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#165) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#179) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#179) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#195) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#195) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CaiCaiToken.slitherConstructorConstantVariables() (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#208-220) uses literals with too many digits:
+	- INITIAL_SUPPLY = 1000000000 * (10 ** uint256(decimals)) (../sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol#212)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x24f4677a6344cb0a708ff5230f0322714a75a1ea.sol analyzed (6 contracts with 100 detectors), 17 result(s) found

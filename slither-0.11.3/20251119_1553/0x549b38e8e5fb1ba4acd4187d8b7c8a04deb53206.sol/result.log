@@ -1,0 +1,109 @@
+'solc --version' running
+'solc /sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:33:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function LotteryAdmin(address _ethereumLottery) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:42:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Deposit(msg.sender, msg.value);
+        ^----------------------------^
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:4:5: Warning: No visibility specified. Defaulting to "public". 
+    function admin() constant returns (address);
+    ^------------------------------------------^
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function needsInitialization() constant returns (bool);
+    ^-----------------------------------------------------^
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function initLottery(uint _jackpot, uint _numTickets, uint _ticketPrice);
+    ^-----------------------------------------------------------------------^
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function LotteryAdmin(address _ethereumLottery) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:41:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:45:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowsAllowance() constant returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:49:5: Warning: No visibility specified. Defaulting to "public". 
+    function requestAllowance() onlyAdminOrOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:56:5: Warning: No visibility specified. Defaulting to "public". 
+    function needsInitialization() constant returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:64:5: Warning: No visibility specified. Defaulting to "public". 
+    function initLottery(uint _nextProfile, uint _jackpot,
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:72:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint _value) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:76:5: Warning: No visibility specified. Defaulting to "public". 
+    function setConfiguration(uint _dailyAdminAllowance) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:80:5: Warning: No visibility specified. Defaulting to "public". 
+    function setLottery(address _ethereumLottery) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:84:5: Warning: No visibility specified. Defaulting to "public". 
+    function setAdmin(address _admin) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:88:5: Warning: No visibility specified. Defaulting to "public". 
+    function proposeOwner(address _owner) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:92:5: Warning: No visibility specified. Defaulting to "public". 
+    function acceptOwnership() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol:98:5: Warning: No visibility specified. Defaulting to "public". 
+    function destruct() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+LotteryAdmin.setAdmin(address) (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#84-86) should emit an event for: 
+	- admin = _admin (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#85) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+LotteryAdmin.LotteryAdmin(address)._ethereumLottery (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#33) lacks a zero-check on :
+		- ethereumLottery = _ethereumLottery (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#36)
+LotteryAdmin.setLottery(address)._ethereumLottery (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#80) lacks a zero-check on :
+		- ethereumLottery = _ethereumLottery (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#81)
+LotteryAdmin.setAdmin(address)._admin (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#84) lacks a zero-check on :
+		- admin = _admin (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#85)
+LotteryAdmin.proposeOwner(address)._owner (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#88) lacks a zero-check on :
+		- proposedOwner = _owner (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#89)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+LotteryAdmin.allowsAllowance() (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#45-47) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now - lastAllowancePaymentTimestamp >= 86400 (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#46)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter LotteryAdmin.initLottery(uint256,uint256,uint256,uint256)._nextProfile (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#64) is not in mixedCase
+Parameter LotteryAdmin.initLottery(uint256,uint256,uint256,uint256)._jackpot (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#64) is not in mixedCase
+Parameter LotteryAdmin.initLottery(uint256,uint256,uint256,uint256)._numTickets (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#65) is not in mixedCase
+Parameter LotteryAdmin.initLottery(uint256,uint256,uint256,uint256)._ticketPrice (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#65) is not in mixedCase
+Parameter LotteryAdmin.withdraw(uint256)._value (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#72) is not in mixedCase
+Parameter LotteryAdmin.setConfiguration(uint256)._dailyAdminAllowance (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#76) is not in mixedCase
+Parameter LotteryAdmin.setLottery(address)._ethereumLottery (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#80) is not in mixedCase
+Parameter LotteryAdmin.setAdmin(address)._admin (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#84) is not in mixedCase
+Parameter LotteryAdmin.proposeOwner(address)._owner (../sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol#88) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x549b38e8e5fb1ba4acd4187d8b7c8a04deb53206.sol analyzed (2 contracts with 100 detectors), 17 result(s) found

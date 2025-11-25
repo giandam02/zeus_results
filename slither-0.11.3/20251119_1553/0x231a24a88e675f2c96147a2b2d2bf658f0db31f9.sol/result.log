@@ -1,0 +1,108 @@
+'solc --version' running
+'solc /sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol:
+/sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol:726:48: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x792b667cf7AFba92f65f9De4d04358293dFf4BD0'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+        address[1] memory addresses = [address(0x792b667cf7afba92f65f9de4d04358293dff4bd0)];
+                                               ^----------------------------------------^
+
+
+FreezableToken.toKey(address,uint256) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#519-526) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+FreezableToken.releaseOnce() (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#480-502) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(uint64(block.timestamp) > head) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#484)
+FreezableToken.releaseAll() (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#508-517) uses timestamp for comparisons
+	Dangerous comparisons:
+	- release != 0 && block.timestamp > release (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#512)
+FreezableToken.freeze(address,uint64) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#528-559) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_until > block.timestamp) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#529)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+FreezableToken.toKey(address,uint256) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#519-526) uses assembly
+	- INLINE ASM (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#522-526)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+FreezableToken.releaseOnce() (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#480-502) has costly operations inside a loop:
+	- delete freezings[currentKey] (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#490)
+	Calls stack containing the loop:
+		FreezableToken.releaseAll()
+FreezableToken.releaseOnce() (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#480-502) has costly operations inside a loop:
+	- delete chains[headKey] (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#496)
+	Calls stack containing the loop:
+		FreezableToken.releaseAll()
+FreezableToken.releaseOnce() (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#480-502) has costly operations inside a loop:
+	- delete chains[currentKey] (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#499)
+	Calls stack containing the loop:
+		FreezableToken.releaseAll()
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#19)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#111) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#111) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#126) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#172) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#173) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#174) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#200) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#200) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#213) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#214) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#234) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#235) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#257) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#258) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#321) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#367) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#368) is not in mixedCase
+Parameter FreezableToken.balanceOf(address)._owner (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#410) is not in mixedCase
+Parameter FreezableToken.actualBalanceOf(address)._owner (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#419) is not in mixedCase
+Parameter FreezableToken.freezingBalanceOf(address)._owner (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#423) is not in mixedCase
+Parameter FreezableToken.freezingCount(address)._addr (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#431) is not in mixedCase
+Parameter FreezableToken.getFreezing(address,uint256)._addr (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#444) is not in mixedCase
+Parameter FreezableToken.getFreezing(address,uint256)._index (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#444) is not in mixedCase
+Parameter FreezableToken.freezeTo(address,uint256,uint64)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#462) is not in mixedCase
+Parameter FreezableToken.freezeTo(address,uint256,uint64)._amount (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#462) is not in mixedCase
+Parameter FreezableToken.freezeTo(address,uint256,uint64)._until (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#462) is not in mixedCase
+Parameter FreezableToken.freeze(address,uint64)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#528) is not in mixedCase
+Parameter FreezableToken.freeze(address,uint64)._until (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#528) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#575) is not in mixedCase
+Parameter FreezableMintableToken.mintAndFreeze(address,uint256,uint64)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#648) is not in mixedCase
+Parameter FreezableMintableToken.mintAndFreeze(address,uint256,uint64)._amount (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#648) is not in mixedCase
+Parameter FreezableMintableToken.mintAndFreeze(address,uint256,uint64)._until (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#648) is not in mixedCase
+Parameter MainToken.transferFrom(address,address,uint256)._from (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#706) is not in mixedCase
+Parameter MainToken.transferFrom(address,address,uint256)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#706) is not in mixedCase
+Parameter MainToken.transferFrom(address,address,uint256)._value (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#706) is not in mixedCase
+Parameter MainToken.transfer(address,uint256)._to (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#711) is not in mixedCase
+Parameter MainToken.transfer(address,uint256)._value (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#711) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+FreezableToken.toKey(address,uint256) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#519-526) uses literals with too many digits:
+	- result = 0x5749534800000000000000000000000000000000000000000000000000000000 (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#521)
+MainToken.init() (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#717-744) uses literals with too many digits:
+	- amounts = (uint256(100000000000000000000000000000)) (../sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol#727)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x231a24a88e675f2c96147a2b2d2bf658f0db31f9.sol analyzed (13 contracts with 100 detectors), 49 result(s) found

@@ -1,0 +1,124 @@
+'solc --version' running
+'solc /sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:21:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (crowdsaleClosed || amount < 0.1 ether) throw;
+                                                   ^---^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:38:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:47:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:56:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:27:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FundTransfer(msg.sender, amount, true);
+        ^------------------------------------^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:29:13: Warning: Invoking events without "emit" prefix is deprecated.
+            FundTransfer(beneficiary, amount, false);
+            ^--------------------------------------^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:3:17: Warning: No visibility specified. Defaulting to "public". 
+contract token {function transfer(address receiver, uint amount){ }}
+                ^-------------------------------------------------^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:3:35: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+contract token {function transfer(address receiver, uint amount){ }}
+                                  ^--------------^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:3:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+contract token {function transfer(address receiver, uint amount){ }}
+                                                    ^---------^
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:19:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:33:5: Warning: No visibility specified. Defaulting to "public". 
+    function closeCrowdsale(bool closeType){
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:42:5: Warning: No visibility specified. Defaulting to "public". 
+    function getUnsoldTokensVal(uint val_) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:51:5: Warning: No visibility specified. Defaulting to "public". 
+    function checkAdmin() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol:3:17: Warning: Function state mutability can be restricted to pure
+contract token {function transfer(address receiver, uint amount){ }}
+                ^-------------------------------------------------^
+
+
+token (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#3) has incorrect ERC20 function interface:token.transfer(address,uint256) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#3)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Reentrancy in Crowdsale.fallback() (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#19-31):
+	External calls:
+	- tokenReward.transfer(msg.sender,tokensForSending) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#25)
+	State variables written after the call(s):
+	- tokensCounter += tokensForSending (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Crowdsale.fallback() (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#19-31):
+	External calls:
+	- tokenReward.transfer(msg.sender,tokensForSending) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#25)
+	Event emitted after the call(s):
+	- FundTransfer(msg.sender,amount,true) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#27)
+Reentrancy in Crowdsale.fallback() (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#19-31):
+	External calls:
+	- tokenReward.transfer(msg.sender,tokensForSending) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#25)
+	External calls sending eth:
+	- beneficiary.send(amount) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#28)
+	Event emitted after the call(s):
+	- FundTransfer(beneficiary,amount,false) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#29)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Deprecated standard detected THROW (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#21):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#38):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#47):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#56):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.8 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.8 (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract token (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#3) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Crowdsale.fallback() (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#19-31):
+	External calls:
+	- beneficiary.send(amount) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#28)
+	Event emitted after the call(s):
+	- FundTransfer(beneficiary,amount,false) (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#29)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Crowdsale.slitherConstructorVariables() (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#5-60) uses literals with too many digits:
+	- price = 33300000000 (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#14)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Crowdsale.beneficiary (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#11) should be constant 
+Crowdsale.price (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#14) should be constant 
+Crowdsale.tokenReward (../sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol#10) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xf8eb1928b7b247e5ab607785afe869d7daf78a6f.sol analyzed (2 contracts with 100 detectors), 16 result(s) found

@@ -1,0 +1,48 @@
+'solc --version' running
+'solc /sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Gift.SetTime(uint256) (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#18-22) should emit an event for: 
+	- unlockTime = _unixTime (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#20) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Gift.Put(address)._receiver (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#10) lacks a zero-check on :
+		- receiver = _receiver (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#13)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Gift.Get() (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#24-28) uses timestamp for comparisons
+	Dangerous comparisons:
+	- receiver == msg.sender && now >= unlockTime (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#25)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.22 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- OneOfTwoConstructorsSkipped.
+It is used by:
+	- ^0.4.22 (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function Gift.Put(address) (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#10-16) is not in mixedCase
+Parameter Gift.Put(address)._receiver (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#10) is not in mixedCase
+Function Gift.SetTime(uint256) (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#18-22) is not in mixedCase
+Parameter Gift.SetTime(uint256)._unixTime (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#18) is not in mixedCase
+Function Gift.Get() (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#24-28) is not in mixedCase
+Function Gift.Close() (../sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol#30-34) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xb91a6c5c6362b10db6440d690e5391bb1eabe591.sol analyzed (1 contracts with 100 detectors), 11 result(s) found

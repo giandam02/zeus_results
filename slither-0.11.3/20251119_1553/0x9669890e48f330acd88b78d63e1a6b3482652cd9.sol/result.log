@@ -1,0 +1,93 @@
+'solc --version' running
+'solc /sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ECRecovery.recover(bytes32,bytes) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#10-46) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+PrivateToken.constructor(address,string,string,uint8,uint256)._admin (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#471) lacks a zero-check on :
+		- admin = _admin (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#473)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in PrivateToken.deposit(address) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#434-445):
+	External calls:
+	- require(bool)(originToken.deposit(_depositor,_value)) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#440)
+	Event emitted after the call(s):
+	- Deposit(_depositor,_value) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#441)
+	- Transfer(_depositor,address(0),_value) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#444)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+PrivateToken.isDepositAllowed() (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#425-429) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(msg.sender == admin || block.timestamp > unLockTime) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#428)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+ECRecovery.recover(bytes32,bytes) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#10-46) uses assembly
+	- INLINE ASM (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#28-35)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#330-360) compares to a boolean constant:
+	-require(bool)(signatures[_signature] == false) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#342)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.13 (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#92) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#92) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#107) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#186) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#187) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#188) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#213) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#213) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#226) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#227) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#246) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#247) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#268) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#269) is not in mixedCase
+Parameter DepositFromPrivateToken.deposit(address,uint256)._depositor (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#303) is not in mixedCase
+Parameter DepositFromPrivateToken.deposit(address,uint256)._value (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#303) is not in mixedCase
+Parameter BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256)._signature (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#331) is not in mixedCase
+Parameter BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256)._to (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#332) is not in mixedCase
+Parameter BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256)._value (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#333) is not in mixedCase
+Parameter BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256)._fee (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#334) is not in mixedCase
+Parameter BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256)._nonce (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#335) is not in mixedCase
+Parameter BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256)._validUntil (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#336) is not in mixedCase
+Parameter BCNTToken.transferPreSignedHashing(address,address,uint256,uint256,uint256,uint256)._token (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#372) is not in mixedCase
+Parameter BCNTToken.transferPreSignedHashing(address,address,uint256,uint256,uint256,uint256)._to (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#373) is not in mixedCase
+Parameter BCNTToken.transferPreSignedHashing(address,address,uint256,uint256,uint256,uint256)._value (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#374) is not in mixedCase
+Parameter BCNTToken.transferPreSignedHashing(address,address,uint256,uint256,uint256,uint256)._fee (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#375) is not in mixedCase
+Parameter BCNTToken.transferPreSignedHashing(address,address,uint256,uint256,uint256,uint256)._nonce (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#376) is not in mixedCase
+Parameter BCNTToken.transferPreSignedHashing(address,address,uint256,uint256,uint256,uint256)._validUntil (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#377) is not in mixedCase
+Parameter PrivateToken.deposit(address)._depositor (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#434) is not in mixedCase
+Parameter PrivateToken.startPublicSale(uint256)._unLockTime (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#451) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+BCNTToken.slitherConstructorConstantVariables() (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#311-406) uses literals with too many digits:
+	- INITIAL_SUPPLY = 1000000000 * (10 ** uint256(decimals)) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#317)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+transferPreSigned(bytes,address,uint256,uint256,uint256,uint256) should be declared external:
+	- BCNTToken.transferPreSigned(bytes,address,uint256,uint256,uint256,uint256) (../sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol#330-360)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x9669890e48f330acd88b78d63e1a6b3482652cd9.sol analyzed (9 contracts with 100 detectors), 40 result(s) found

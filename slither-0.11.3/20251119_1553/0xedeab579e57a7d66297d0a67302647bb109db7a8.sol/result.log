@@ -1,0 +1,140 @@
+'solc --version' running
+'solc /sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+BreakTheBank.sell(uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#222-297) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#234)
+	- _dividends = SafeMath.add(_dividends,(_referralBonus * 50 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#272)
+BreakTheBank.sell(uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#222-297) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#234)
+	- referralBalance_[tier2] = SafeMath.add(referralBalance_[tier2],(_referralBonus * 30 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#261)
+BreakTheBank.sell(uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#222-297) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#234)
+	- _dividends = SafeMath.add(_dividends,(_referralBonus * 20 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#268)
+BreakTheBank.sell(uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#222-297) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#234)
+	- referralBalance_[referralOf_[tier2]] = SafeMath.add(referralBalance_[referralOf_[tier2]],(_referralBonus * 20 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#265)
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) performs a multiplication on the result of a division:
+	- _fee = _fee - (_fee - (_amountOfTokens * (_dividends * magnitude / (tokenSupply_)))) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#629)
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#556)
+	- _dividends = SafeMath.add(_dividends,(_referralBonus * 50 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#608)
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#556)
+	- referralBalance_[tier2] = SafeMath.add(referralBalance_[tier2],(_referralBonus * 30 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#595)
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#556)
+	- _dividends = SafeMath.add(_dividends,(_referralBonus * 20 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#603)
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) performs a multiplication on the result of a division:
+	- _referralBonus = SafeMath.div(_undividedDividends,2) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#556)
+	- referralBalance_[referralOf_[tier2]] = SafeMath.add(referralBalance_[referralOf_[tier2]],(_referralBonus * 20 / 100)) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#600)
+BreakTheBank.tokensToEthereum_(uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#690-712) performs a multiplication on the result of a division:
+	- _etherReceived = (SafeMath.sub((((tokenPriceInitial_ + (tokenPriceIncremental_ * (_tokenSupply / 1e18))) - tokenPriceIncremental_) * (tokens_ - 1e18)),(tokenPriceIncremental_ * ((tokens_ ** 2 - tokens_) / 1e18)) / 2) / 1e18) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#698-710)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+BreakTheBank.setAdministrator(address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#353-358) should emit an event for: 
+	- owner = _newAdmin (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#357) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+BreakTheBank.setStakingRequirement(uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#363-368) should emit an event for: 
+	- stakingRequirement = _amountOfTokens (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#367) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+BreakTheBank.withdraw()._customerAddress (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#202) lacks a zero-check on :
+		- _customerAddress.transfer(_dividends) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#213)
+BreakTheBank.setAdministrator(address)._newAdmin (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#353) lacks a zero-check on :
+		- owner = _newAdmin (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#357)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) compares to a boolean constant:
+	-whitelisted_[msg.sender] == false && whitelist_ == true (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#548)
+BreakTheBank.purchaseTokens(uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539-648) compares to a boolean constant:
+	-_referredBy != 0x0000000000000000000000000000000000000000 && _referredBy != _customerAddress && tokenBalanceLedger_[_referredBy] >= stakingRequirement && referralOf_[_customerAddress] == 0x0000000000000000000000000000000000000000 && alreadyBought[_customerAddress] == false (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#574-585)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.20 (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event BreakTheBank.onTokenPurchase(address,uint256,uint256,address) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#40-45) is not in CapWords
+Event BreakTheBank.onTokenSell(address,uint256,uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#47-51) is not in CapWords
+Event BreakTheBank.onReinvestment(address,uint256,uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#53-57) is not in CapWords
+Event BreakTheBank.onWithdraw(address,uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#59-62) is not in CapWords
+Parameter BreakTheBank.buy(address)._referredBy (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#135) is not in mixedCase
+Parameter BreakTheBank.sell(uint256)._amountOfTokens (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#222) is not in mixedCase
+Parameter BreakTheBank.transfer(address,uint256)._toAddress (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#303) is not in mixedCase
+Parameter BreakTheBank.transfer(address,uint256)._amountOfTokens (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#303) is not in mixedCase
+Parameter BreakTheBank.setAdministrator(address)._newAdmin (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#353) is not in mixedCase
+Parameter BreakTheBank.setStakingRequirement(uint256)._amountOfTokens (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#363) is not in mixedCase
+Parameter BreakTheBank.setName(string)._name (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#373) is not in mixedCase
+Parameter BreakTheBank.setSymbol(string)._symbol (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#383) is not in mixedCase
+Parameter BreakTheBank.myDividends(bool)._includeReferralBonus (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#433) is not in mixedCase
+Parameter BreakTheBank.balanceOf(address)._customerAddress (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#445) is not in mixedCase
+Parameter BreakTheBank.dividendsOf(address)._customerAddress (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#456) is not in mixedCase
+Parameter BreakTheBank.calculateTokensReceived(uint256)._ethereumToSpend (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#505) is not in mixedCase
+Parameter BreakTheBank.calculateEthereumReceived(uint256)._tokensToSell (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#520) is not in mixedCase
+Parameter BreakTheBank.purchaseTokens(uint256,address)._incomingEthereum (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539) is not in mixedCase
+Parameter BreakTheBank.purchaseTokens(uint256,address)._referredBy (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#539) is not in mixedCase
+Parameter BreakTheBank.ethereumToTokens_(uint256)._ethereum (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#655) is not in mixedCase
+Parameter BreakTheBank.tokensToEthereum_(uint256)._tokens (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#690) is not in mixedCase
+Constant BreakTheBank.dividendFee_ (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#83) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant BreakTheBank.tokenPriceInitial_ (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#84) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant BreakTheBank.tokenPriceIncremental_ (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#85) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant BreakTheBank.magnitude (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#86) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in BreakTheBank.transfer(address,uint256) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#303-331):
+	External calls:
+	- withdraw() (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#315)
+		- _customerAddress.transfer(_dividends) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#213)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] -= int256(profitPerShare_ * _amountOfTokens) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#322)
+	- payoutsTo_[_toAddress] += int256(profitPerShare_ * _amountOfTokens) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#323)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.sub(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#318)
+	- tokenBalanceLedger_[_toAddress] = SafeMath.add(tokenBalanceLedger_[_toAddress],_amountOfTokens) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#319)
+	Event emitted after the call(s):
+	- Transfer(_customerAddress,_toAddress,_amountOfTokens) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#326)
+Reentrancy in BreakTheBank.withdraw() (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#197-217):
+	External calls:
+	- _customerAddress.transfer(_dividends) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#213)
+	Event emitted after the call(s):
+	- onWithdraw(_customerAddress,_dividends) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#216)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+BreakTheBank.slitherConstructorConstantVariables() (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#3-725) uses literals with too many digits:
+	- tokenPriceInitial_ = 100000000000 (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#84)
+BreakTheBank.slitherConstructorConstantVariables() (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#3-725) uses literals with too many digits:
+	- tokenPriceIncremental_ = 10000000000 (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#85)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+BreakTheBank.limit (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#106) is never used in BreakTheBank (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#3-725)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+BreakTheBank.limit (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#106) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+setName(string) should be declared external:
+	- BreakTheBank.setName(string) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#373-378)
+setSymbol(string) should be declared external:
+	- BreakTheBank.setSymbol(string) (../sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol#383-388)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xedeab579e57a7d66297d0a67302647bb109db7a8.sol analyzed (2 contracts with 100 detectors), 51 result(s) found

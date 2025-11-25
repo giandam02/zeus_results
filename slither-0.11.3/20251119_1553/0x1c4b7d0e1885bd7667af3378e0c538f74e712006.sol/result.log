@@ -1,0 +1,76 @@
+'solc --version' running
+'solc /sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+IOGToken.emergencyERC20Drain(ERC20,uint256) (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#468-471) ignores return value by token.transfer(owner,amount) (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#470)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+IOGToken.canTransferIfLocked(address) (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#418-423) uses a dangerous strict equality:
+	- 0 == addressLocks[_sender] (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#419)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+IOGToken.canTransferIfLocked(address) (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#418-423) uses timestamp for comparisons
+	Dangerous comparisons:
+	- 0 == addressLocks[_sender] (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#419)
+	- (now >= addressLocks[_sender]) (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#422)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#102) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#219) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#219) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#234) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#260) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#261) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#262) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#287) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#287) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#300) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#301) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#320) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#321) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#342) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#343) is not in mixedCase
+Parameter IOGToken.canTransferIfLocked(address)._sender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#418) is not in mixedCase
+Parameter IOGToken.timeLock(address,uint256,uint256)._to (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#425) is not in mixedCase
+Parameter IOGToken.timeLock(address,uint256,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#425) is not in mixedCase
+Parameter IOGToken.transfer(address,uint256)._to (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#432) is not in mixedCase
+Parameter IOGToken.transfer(address,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#432) is not in mixedCase
+Parameter IOGToken.transferFrom(address,address,uint256)._from (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#436) is not in mixedCase
+Parameter IOGToken.transferFrom(address,address,uint256)._to (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#436) is not in mixedCase
+Parameter IOGToken.transferFrom(address,address,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#436) is not in mixedCase
+Parameter IOGToken.approve(address,uint256)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#440) is not in mixedCase
+Parameter IOGToken.approve(address,uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#440) is not in mixedCase
+Parameter IOGToken.increaseApproval(address,uint256)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#444) is not in mixedCase
+Parameter IOGToken.increaseApproval(address,uint256)._addedValue (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#444) is not in mixedCase
+Parameter IOGToken.decreaseApproval(address,uint256)._spender (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#448) is not in mixedCase
+Parameter IOGToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#448) is not in mixedCase
+Parameter IOGToken.burn(uint256)._value (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#453) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+IOGToken.slitherConstructorConstantVariables() (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#361-473) uses literals with too many digits:
+	- TOTAL_SUPPLY = 2200000000 * (10 ** uint256(decimals)) (../sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol#371)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x1c4b7d0e1885bd7667af3378e0c538f74e712006.sol analyzed (8 contracts with 100 detectors), 36 result(s) found

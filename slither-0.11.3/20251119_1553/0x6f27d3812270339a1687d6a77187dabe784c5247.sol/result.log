@@ -1,0 +1,287 @@
+'solc --version' running
+'solc /sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:37:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function Ownable() public {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:95:3: Warning: Use of the "var" keyword is deprecated.
+		var _allowance = allowed[_from][msg.sender];
+		^------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:147:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function SIGToken(uint256 _freezeTransferTime) public {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:193:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function SIGICO(uint256 _startTime, uint256 _endTime, uint256 _rate) public {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:48:3: Warning: Invoking events without "emit" prefix is deprecated.
+		OwnershipTransferred(owner, newOwner);
+		^-----------------------------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:78:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Transfer(msg.sender, _to, _value);
+		^-------------------------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:99:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Transfer(_from, _to, _value);
+		^--------------------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:106:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Approval(msg.sender, _spender, _value);
+		^------------------------------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:130:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Mint(_to, _amount);
+		^----------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:136:3: Warning: Invoking events without "emit" prefix is deprecated.
+		MintFinished();
+		^------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:234:3: Warning: Invoking events without "emit" prefix is deprecated.
+		TokenPurchase(msg.sender, buyer, round, rate, msg.value, tokens, bonus);
+		^---------------------------------------------------------------------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:263:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Finalized();
+		^---------^
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol:300:3: Warning: Invoking events without "emit" prefix is deprecated.
+		ChangeRate(now, rate, _rate, totalSupply);
+		^---------------------------------------^
+
+
+SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242) performs a multiplication on the result of a division:
+	- tokens = rate.mul(msg.value).div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#216)
+	- tokens2mint = tokens.mul(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#232)
+SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242) performs a multiplication on the result of a division:
+	- tokens = rate.mul(msg.value).div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#216)
+	- bonus = tokens.mul(10).div(100) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#227)
+SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242) performs a multiplication on the result of a division:
+	- tokens = rate.mul(msg.value).div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#216)
+	- bonus = tokens.mul(20).div(100) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#223)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- tokens = totalSupply.mul(PercentageForFounders).div(100 - PercentageForFounders) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#270)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- tokens = totalSupply.mul(PercentageForFounders).div(100 - PercentageForFounders) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#270)
+	- tokens2mint = tokens.mul(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#271)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- tokens = totalSupply.mul(PercentageForFounders).div(100 - PercentageForFounders) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#270)
+	- Restricted[1] = tokens.mul(3) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#275)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- tokens = totalSupply.mul(PercentageForDevelopers).div(100 - PercentageForDevelopers) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#277)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- tokens = totalSupply.mul(PercentageForDevelopers).div(100 - PercentageForDevelopers) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#277)
+	- tokens2mint = tokens.mul(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#278)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- tokens = totalSupply.mul(PercentageForOther).div(100 - PercentageForOther) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#282)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- tokens = totalSupply.mul(PercentageForOther).div(100 - PercentageForOther) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#282)
+	- tokens2mint = tokens.mul(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#283)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- tokens = totalSupply.mul(PercentageForReserveFund).div(100 - PercentageForReserveFund) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#287)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) performs a multiplication on the result of a division:
+	- tokens = totalSupply.mul(PercentageForReserveFund).div(100 - PercentageForReserveFund) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#287)
+	- tokens2mint = tokens.mul(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#288)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in SIGICO.finalize() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#259-265):
+	External calls:
+	- finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#262)
+		- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+		- token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+		- token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+		- token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+		- token.mint(DeveloperTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#279)
+		- token.mint(OtherTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#284)
+		- token.mint(ReserveFundAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#289)
+		- token.finishMinting() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#292)
+	State variables written after the call(s):
+	- isFinalized = true (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#264)
+	SIGICO.isFinalized (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#161) can be used in cross function reentrancies:
+	- SIGICO.changeRate(uint256) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#295-303)
+	- SIGICO.finalize() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#259-265)
+	- SIGICO.getRestrictedTokens(uint8) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#305-309)
+	- SIGICO.isFinalized (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#161)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242) ignores return value by token.mint(buyer,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#233)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.mint(DeveloperTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#279)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.mint(OtherTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#284)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.mint(ReserveFundAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#289)
+SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293) ignores return value by token.finishMinting() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#292)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Reentrancy in SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242):
+	External calls:
+	- token.mint(buyer,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#233)
+	State variables written after the call(s):
+	- Buyers[buyer] = true (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#238)
+	- TotalBuyers += 1 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#237)
+Reentrancy in SIGICO.changeRate(uint256) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#295-303):
+	External calls:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#298)
+	State variables written after the call(s):
+	- rate = _rate (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#301)
+	- tokenCost = uint256(1000000000000000000).div(_rate) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#299)
+Reentrancy in SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293):
+	External calls:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+	- token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+	- token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+	State variables written after the call(s):
+	- Restricted[1] = tokens.mul(3) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#275)
+Reentrancy in SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293):
+	External calls:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+	- token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+	- token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+	- token.mint(DeveloperTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#279)
+	State variables written after the call(s):
+	- Restricted[2] = tokens (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#280)
+Reentrancy in SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293):
+	External calls:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+	- token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+	- token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+	- token.mint(DeveloperTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#279)
+	- token.mint(OtherTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#284)
+	State variables written after the call(s):
+	- Restricted[3] = tokens (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#285)
+Reentrancy in SIGICO.finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#267-293):
+	External calls:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+	- token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+	- token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+	- token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+	- token.mint(DeveloperTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#279)
+	- token.mint(OtherTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#284)
+	- token.mint(ReserveFundAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#289)
+	State variables written after the call(s):
+	- Restricted[4] = tokens (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#290)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242):
+	External calls:
+	- token.mint(buyer,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#233)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,buyer,round,rate,msg.value,tokens,bonus) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#234)
+Reentrancy in SIGICO.changeRate(uint256) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#295-303):
+	External calls:
+	- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#298)
+	Event emitted after the call(s):
+	- ChangeRate(now,rate,_rate,totalSupply) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#300)
+Reentrancy in SIGICO.finalize() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#259-265):
+	External calls:
+	- finalization() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#262)
+		- totalSupply = token.totalSupply().div(1000000000000000000) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#268)
+		- token.mint(FundOwnerAddr_1,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#272)
+		- token.mint(FundOwnerAddr_2,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#273)
+		- token.mint(FundOwnerAddr_3,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#274)
+		- token.mint(DeveloperTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#279)
+		- token.mint(OtherTokensStoreAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#284)
+		- token.mint(ReserveFundAddr,tokens2mint) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#289)
+		- token.finishMinting() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#292)
+	Event emitted after the call(s):
+	- Finalized() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#263)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+BasicToken.transfer(address,uint256) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#73-80) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now >= freezeTransferTime) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#75)
+StandardToken.transferFrom(address,address,uint256) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#91-101) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now >= freezeTransferTime) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#93)
+SIGICO.SIGICO(uint256,uint256,uint256) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#193-206) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_startTime >= now) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#194)
+SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < Round1 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#221)
+	- now > Round1 && now < Round2 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#225)
+SIGICO.validPurchase() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#248-253) uses timestamp for comparisons
+	Dangerous comparisons:
+	- withinPeriod = now >= startTime && now <= endTime (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#249)
+	- withinPeriod && nonZeroPurchase && haveEnoughEther (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#252)
+SIGICO.hasEnded() (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#255-257) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > endTime (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+SIGICO.buyTokens(address) (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#212-242) compares to a boolean constant:
+	-Buyers[buyer] != true (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#236)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#73) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#73) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#82) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#91) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#91) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#91) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#103) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#103) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#110) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#110) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#127) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#127) is not in mixedCase
+Parameter SIGICO.changeRate(uint256)._rate (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#295) is not in mixedCase
+Parameter SIGICO.getRestrictedTokens(uint8)._who (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#305) is not in mixedCase
+Parameter SIGICO.getBonusTokens(uint8)._round (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#311) is not in mixedCase
+Variable SIGICO.Round1 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#163) is not in mixedCase
+Variable SIGICO.Round2 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#164) is not in mixedCase
+Variable SIGICO.SafeAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#166) is not in mixedCase
+Variable SIGICO.FundOwnerAddr_1 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#168) is not in mixedCase
+Variable SIGICO.FundOwnerAddr_2 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#169) is not in mixedCase
+Variable SIGICO.FundOwnerAddr_3 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#170) is not in mixedCase
+Variable SIGICO.ReserveFundAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#172) is not in mixedCase
+Variable SIGICO.DeveloperTokensStoreAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#174) is not in mixedCase
+Variable SIGICO.OtherTokensStoreAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#175) is not in mixedCase
+Variable SIGICO.TotalBuyers (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#178) is not in mixedCase
+Variable SIGICO.PercentageForFounders (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#179) is not in mixedCase
+Variable SIGICO.PercentageForReserveFund (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#180) is not in mixedCase
+Variable SIGICO.PercentageForDevelopers (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#181) is not in mixedCase
+Variable SIGICO.PercentageForOther (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#182) is not in mixedCase
+Variable SIGICO.Buyers (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#185) is not in mixedCase
+Variable SIGICO.BonusTokens (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#186) is not in mixedCase
+Variable SIGICO.Restricted (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#187) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+SIGICO.DeveloperTokensStoreAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#174) should be constant 
+SIGICO.FundOwnerAddr_1 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#168) should be constant 
+SIGICO.FundOwnerAddr_2 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#169) should be constant 
+SIGICO.FundOwnerAddr_3 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#170) should be constant 
+SIGICO.OtherTokensStoreAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#175) should be constant 
+SIGICO.PercentageForDevelopers (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#181) should be constant 
+SIGICO.PercentageForFounders (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#179) should be constant 
+SIGICO.PercentageForOther (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#182) should be constant 
+SIGICO.PercentageForReserveFund (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#180) should be constant 
+SIGICO.ReserveFundAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#172) should be constant 
+SIGICO.Round1 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#163) should be constant 
+SIGICO.Round2 (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#164) should be constant 
+SIGICO.SafeAddr (../sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol#166) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x6f27d3812270339a1687d6a77187dabe784c5247.sol analyzed (9 contracts with 100 detectors), 84 result(s) found

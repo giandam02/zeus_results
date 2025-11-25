@@ -1,0 +1,207 @@
+'solc --version' running
+'solc /sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:35:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:43:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:83:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TTC(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:98:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_to == 0x0) throw;                               // Prevent transfer to 0x0 address. Use burn() instead
+                        ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:99:20: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (_value <= 0) throw; 
+		                 ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:111:20: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (_value <= 0) throw; 
+		                 ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:119:25: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_to == 0x0) throw;                                // Prevent transfer to 0x0 address. Use burn() instead
+                        ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:120:20: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (_value <= 0) throw; 
+		                 ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:121:40: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough
+                                       ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:122:55: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows
+                                                      ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:123:52: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (_value > allowance[_from][msg.sender]) throw;     // Check allowance
+                                                   ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:133:45: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[msg.sender] < _value) throw;            // Check if the sender has enough
+                                            ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:134:20: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (_value <= 0) throw; 
+		                 ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:142:42: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (balanceOf[_freeze] < _value) throw;            // Check if the sender has enough
+                                         ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:143:23: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+	    if (_value <= 0) throw; 
+	                     ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:151:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (freezeOf[_unfreeze] < _value) throw;            // Check if the sender has enough
+                                          ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:152:20: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (_value <= 0) throw; 
+		                 ^---^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:33:3: Warning: This declaration shadows a builtin symbol.
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:106:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place
+        ^-------------------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:128:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:137:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(msg.sender, _value);
+        ^----------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:146:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Freeze(_freeze, _value);
+        ^---------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:155:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Unfreeze(_unfreeze, _value);
+        ^-------------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:163:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0, this, mintedAmount);
+        ^-----------------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:164:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(this, target, mintedAmount);
+        ^----------------------------------^
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:83:5: Warning: No visibility specified. Defaulting to "public". 
+    function TTC(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:97:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:109:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:118:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:132:5: Warning: No visibility specified. Defaulting to "public". 
+    function burn(uint256 _value) returns (bool success) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:141:2: Warning: No visibility specified. Defaulting to "public". 
+	function freeze(address _freeze,uint256 _value) onlyOwner returns (bool success) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:150:2: Warning: No visibility specified. Defaulting to "public". 
+	function unfreeze(address _unfreeze,uint256 _value) onlyOwner returns (bool success) {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:171:2: Warning: No visibility specified. Defaulting to "public". 
+	function() payable {
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol:33:3: Warning: Function state mutability can be restricted to pure
+  function assert(bool assertion) internal {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TTC (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#56-174) has incorrect ERC20 function interface:TTC.transfer(address,uint256) (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#97-107)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Contract locking ether found:
+	Contract TTC (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#56-174) has payable functions:
+	 - TTC.fallback() (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#171-172)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+SafeMath.assert(bool) (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#33-37) (function) shadows built-in symbol"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#builtin-symbol-shadowing
+
+owned.transferOwnership(address) (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#52-54) should emit an event for: 
+	- owner = newOwner (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#53) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+owned.transferOwnership(address).newOwner (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#52) lacks a zero-check on :
+		- owner = newOwner (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+SafeMath.safeDiv(uint256,uint256) (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#15-20) is never used and should be removed
+SafeMath.safeMul(uint256,uint256) (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#9-13) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#35):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#98):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#99):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#111):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#119):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#120):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#121):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#122):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#123):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#133):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#134):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#142):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#143):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#151):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#152):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.12 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.12 (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#40-55) is not in CapWords
+Parameter TTC.transfer(address,uint256)._to (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#97) is not in mixedCase
+Parameter TTC.transfer(address,uint256)._value (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#97) is not in mixedCase
+Parameter TTC.approve(address,uint256)._spender (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#109) is not in mixedCase
+Parameter TTC.approve(address,uint256)._value (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#109) is not in mixedCase
+Parameter TTC.transferFrom(address,address,uint256)._from (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#118) is not in mixedCase
+Parameter TTC.transferFrom(address,address,uint256)._to (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#118) is not in mixedCase
+Parameter TTC.transferFrom(address,address,uint256)._value (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#118) is not in mixedCase
+Parameter TTC.burn(uint256)._value (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#132) is not in mixedCase
+Parameter TTC.freeze(address,uint256)._freeze (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#141) is not in mixedCase
+Parameter TTC.freeze(address,uint256)._value (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#141) is not in mixedCase
+Parameter TTC.unfreeze(address,uint256)._unfreeze (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#150) is not in mixedCase
+Parameter TTC.unfreeze(address,uint256)._value (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#150) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TTC.TTC() (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#83-94) uses literals with too many digits:
+	- totalSupply = 10000000000 * 10 ** uint256(decimals) (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#88)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+TTC.decimals (../sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol#59) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x4a0b4540317d156d89a8465041569ad68102d6cd.sol analyzed (3 contracts with 100 detectors), 39 result(s) found

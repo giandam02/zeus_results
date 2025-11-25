@@ -1,0 +1,60 @@
+'solc --version' running
+'solc /sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+x104.bytesToAddress(bytes) (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#51-56) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+x104.fallback() (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#59-116) performs a multiplication on the result of a division:
+	- amount = invested[msg.sender] * percentage / 100 * (block.number - atBlock[msg.sender]) / 5900 (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#76)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+x104.fallback().transferAmount (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#64) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+x104.bytesToAddress(bytes) (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#51-56) uses assembly
+	- INLINE ASM (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#52-55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract x104 (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#35-118) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in x104.fallback() (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#59-116):
+	External calls:
+	- support.transfer(msg.value / 10) (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#66)
+	State variables written after the call(s):
+	- prizeFund = 0 (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#88)
+	- referrers[msg.sender] = referrerAddress (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#96)
+	- totalInvestors ++ (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#83)
+Reentrancy in x104.fallback() (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#59-116):
+	External calls:
+	- support.transfer(msg.value / 10) (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#66)
+	- referrers[msg.sender].transfer(msg.value / 10) (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#101)
+	State variables written after the call(s):
+	- atBlock[msg.sender] = block.number (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#109)
+	- invested[msg.sender] += msg.value (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#110)
+	- lastInvestedAt = block.number (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#105)
+	- lastInvestor = msg.sender (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#104)
+	- totalInvested += msg.value (../sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol#111)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xfa5641fbab180bbfcf905871e68e7b3079b1e917.sol analyzed (1 contracts with 100 detectors), 9 result(s) found

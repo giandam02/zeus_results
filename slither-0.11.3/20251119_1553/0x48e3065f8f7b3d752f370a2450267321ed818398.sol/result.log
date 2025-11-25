@@ -1,0 +1,217 @@
+'solc --version' running
+'solc /sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+KittyPillar (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#8-352) contract sets array length with a user-controlled value:
+	- playerRounds_[_pId][currentRId_].push(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#170)
+KittyPillar (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#8-352) contract sets array length with a user-controlled value:
+	- pillarRounds_[_pillarIdx][currentRId_].kittyIds.push(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#199)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219) uses a weak PRNG: "_contribution = ((getKittyPower(genes) % maxPower_) + minPower) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#188)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219) performs a multiplication on the result of a division:
+	- totalDeveloperCut_ = totalDeveloperCut_.add((joinFee_ / 100).mul(4)) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#202)
+KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219) performs a multiplication on the result of a division:
+	- round_[currentRId_].pot = round_[currentRId_].pot.add((joinFee_ / 100).mul(96)) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#203)
+KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284) performs a multiplication on the result of a division:
+	- numFirstMovers = numWinners / 2 (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#238)
+	- (numFirstMovers * 2) < numWinners (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#241)
+KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284) performs a multiplication on the result of a division:
+	- avgTokensPerWinner = round_[currentRId_].pot / numWinners (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#245)
+	- tokensPerFirstMovers = avgTokensPerWinner.add(avgTokensPerWinner.mul(2) / 10) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#248)
+KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284) performs a multiplication on the result of a division:
+	- numFirstMovers = numWinners / 2 (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#238)
+	- tokensPerFollowers = (round_[currentRId_].pot - (numFirstMovers.mul(tokensPerFirstMovers))) / (numWinners - numFirstMovers) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#251)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219):
+	External calls:
+	- (None,None,None,None,None,None,None,None,None,genes) = kittyCore.getKitty(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#187)
+	State variables written after the call(s):
+	- endRound(_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#217)
+		- currentRId_ = currentRId_.add(1) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#279)
+	KittyPillar.currentRId_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#76) can be used in cross function reentrancies:
+	- KittyPillar.constructor(address) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#93-104)
+	- KittyPillar.currentRId_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#76)
+	- KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284)
+	- KittyPillar.joinPillar(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136-166)
+	- KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219)
+	- KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114-133)
+	- pillarRounds_[_pillarIdx][currentRId_].totalContributions = pillarRounds_[_pillarIdx][currentRId_].totalContributions.add(_contribution) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#198)
+	KittyPillar.pillarRounds_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#84) can be used in cross function reentrancies:
+	- KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284)
+	- KittyPillar.getPillarRoundsKitties(uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#106-108)
+	- KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219)
+	- KittyPillar.pillarRounds_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#84)
+	- pillarRounds_[_pillarIdx][currentRId_].kittyIds.push(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#199)
+	KittyPillar.pillarRounds_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#84) can be used in cross function reentrancies:
+	- KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284)
+	- KittyPillar.getPillarRoundsKitties(uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#106-108)
+	- KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219)
+	- KittyPillar.pillarRounds_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#84)
+	- round_[currentRId_].pot = round_[currentRId_].pot.add((joinFee_ / 100).mul(96)) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#203)
+	KittyPillar.round_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#77) can be used in cross function reentrancies:
+	- KittyPillar.constructor(address) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#93-104)
+	- KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284)
+	- KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219)
+	- KittyPillar.round_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#77)
+	- endRound(_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#217)
+		- round_[currentRId_].pillarWon = _wonPillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#268)
+		- round_[currentRId_].timeEnded = now (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#269)
+		- round_[currentRId_].ended = true (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#270)
+		- round_[currentRId_].pot = 0 (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#280)
+		- round_[currentRId_].targetContributions = contributionTarget_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#281)
+		- round_[currentRId_].timeStarted = now (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#282)
+		- round_[currentRId_].ended = false (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#283)
+	KittyPillar.round_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#77) can be used in cross function reentrancies:
+	- KittyPillar.constructor(address) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#93-104)
+	- KittyPillar.endRound(uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232-284)
+	- KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219)
+	- KittyPillar.round_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114-133) contains a tautology or contradiction:
+	- require(bool,string)((_pillarIdx >= 0) && (_pillarIdx <= 2),there is no such pillar here) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#117)
+KittyPillar.joinPillar(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136-166) contains a tautology or contradiction:
+	- require(bool,string)((_pillarIdx >= 0) && (_pillarIdx <= 2),there is no such pillar here) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#141)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219) ignores return value by (None,None,None,None,None,None,None,None,None,genes) = kittyCore.getKitty(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#187)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+KittyPillar.transferOwnership(address) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#332-335) should emit an event for: 
+	- owner = newOwner (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#334) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+KittyPillar.setJoinFee(uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#312-314) should emit an event for: 
+	- joinFee_ = _joinFee (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#313) 
+KittyPillar.setPlayConfigs(uint256,uint256,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#316-321) should emit an event for: 
+	- contributionTarget_ = _contributionTarget (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#318) 
+	- maxPower_ = _maxPower (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#319) 
+	- minPower_ = _minPower (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#320) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+KittyPillar.constructor(address)._kittyCoreAddress (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#93) lacks a zero-check on :
+		- kittyCoreAddress = _kittyCoreAddress (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#95)
+KittyPillar.setKittyCoreAddress(address)._kittyCoreAddress (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#323) lacks a zero-check on :
+		- kittyCoreAddress = _kittyCoreAddress (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#324)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in KittyPillar.joinPillar(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136-166):
+	External calls:
+	- require(bool,string)(msg.sender == kittyCore.ownerOf(_kittyId),sender not owner of kitty) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#143)
+	State variables written after the call(s):
+	- currentPId_ = currentPId_.add(1) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#152)
+	- pIdByAddress_[msg.sender] = currentPId_ (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#153)
+	- players_[currentPId_].ownerAddr = msg.sender (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#154)
+Reentrancy in KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219):
+	External calls:
+	- (None,None,None,None,None,None,None,None,None,genes) = kittyCore.getKitty(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#187)
+	State variables written after the call(s):
+	- kittyRounds_[_kittyId][currentRId_].pillar = _pillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#192)
+	- kittyRounds_[_kittyId][currentRId_].contribution = _contribution (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#193)
+	- kittyRounds_[_kittyId][currentRId_].kittyOwnerPId = _pId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#194)
+	- kittyRounds_[_kittyId][currentRId_].timeStamp = joinedTime (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#195)
+	- endRound(_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#217)
+		- players_[kittyRounds_[kittyId][currentRId_].kittyOwnerPId].totalEth = players_[kittyRounds_[kittyId][currentRId_].kittyOwnerPId].totalEth.add(tokensPerFirstMovers) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#258)
+		- players_[kittyRounds_[kittyId][currentRId_].kittyOwnerPId].totalEth = players_[kittyRounds_[kittyId][currentRId_].kittyOwnerPId].totalEth.add(tokensPerFollowers) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#261)
+	- totalDeveloperCut_ = totalDeveloperCut_.add((joinFee_ / 100).mul(4)) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#202)
+Reentrancy in KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114-133):
+	External calls:
+	- require(bool,string)(msg.sender == kittyCore.ownerOf(_kittyId),sender not owner of kitty) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#119)
+	State variables written after the call(s):
+	- players_[_pId].totalEth = players_[_pId].totalEth.sub(joinFee_) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#130)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in KittyPillar.joinPillar(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136-166):
+	External calls:
+	- require(bool,string)(msg.sender == kittyCore.ownerOf(_kittyId),sender not owner of kitty) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#143)
+	Event emitted after the call(s):
+	- PlayerJoined(msg.sender,_pId,now) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#157-162)
+Reentrancy in KittyPillar.joinPillar(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136-166):
+	External calls:
+	- require(bool,string)(msg.sender == kittyCore.ownerOf(_kittyId),sender not owner of kitty) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#143)
+	- joinPillarCore(_pId,_kittyId,_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#165)
+		- (None,None,None,None,None,None,None,None,None,genes) = kittyCore.getKitty(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#187)
+	Event emitted after the call(s):
+	- KittyJoined(msg.sender,_kittyId,_pillarIdx,_contribution,currentRId_,joinedTime) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#205-213)
+		- joinPillarCore(_pId,_kittyId,_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#165)
+	- RoundEnded(currentRId_,_wonPillarIdx,round_[currentRId_].timeEnded) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#272-276)
+		- joinPillarCore(_pId,_kittyId,_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#165)
+Reentrancy in KittyPillar.joinPillarCore(uint256,uint256,uint8) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168-219):
+	External calls:
+	- (None,None,None,None,None,None,None,None,None,genes) = kittyCore.getKitty(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#187)
+	Event emitted after the call(s):
+	- KittyJoined(msg.sender,_kittyId,_pillarIdx,_contribution,currentRId_,joinedTime) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#205-213)
+	- RoundEnded(currentRId_,_wonPillarIdx,round_[currentRId_].timeEnded) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#272-276)
+		- endRound(_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#217)
+Reentrancy in KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114-133):
+	External calls:
+	- require(bool,string)(msg.sender == kittyCore.ownerOf(_kittyId),sender not owner of kitty) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#119)
+	- joinPillarCore(_pId,_kittyId,_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#132)
+		- (None,None,None,None,None,None,None,None,None,genes) = kittyCore.getKitty(_kittyId) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#187)
+	Event emitted after the call(s):
+	- KittyJoined(msg.sender,_kittyId,_pillarIdx,_contribution,currentRId_,joinedTime) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#205-213)
+		- joinPillarCore(_pId,_kittyId,_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#132)
+	- RoundEnded(currentRId_,_wonPillarIdx,round_[currentRId_].timeEnded) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#272-276)
+		- joinPillarCore(_pId,_kittyId,_pillarIdx) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#132)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter KittyPillar.getPillarRoundsKitties(uint8,uint256)._pillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#106) is not in mixedCase
+Parameter KittyPillar.getPillarRoundsKitties(uint8,uint256)._rId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#106) is not in mixedCase
+Parameter KittyPillar.getPlayerRoundsKitties(uint256,uint256)._pId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#110) is not in mixedCase
+Parameter KittyPillar.getPlayerRoundsKitties(uint256,uint256)._rId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#110) is not in mixedCase
+Parameter KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256)._kittyId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114) is not in mixedCase
+Parameter KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256)._pillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114) is not in mixedCase
+Parameter KittyPillar.joinPillarWithEarnings(uint256,uint8,uint256)._rId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#114) is not in mixedCase
+Parameter KittyPillar.joinPillar(uint256,uint8,uint256)._kittyId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136) is not in mixedCase
+Parameter KittyPillar.joinPillar(uint256,uint8,uint256)._pillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136) is not in mixedCase
+Parameter KittyPillar.joinPillar(uint256,uint8,uint256)._rId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#136) is not in mixedCase
+Parameter KittyPillar.joinPillarCore(uint256,uint256,uint8)._pId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168) is not in mixedCase
+Parameter KittyPillar.joinPillarCore(uint256,uint256,uint8)._kittyId (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168) is not in mixedCase
+Parameter KittyPillar.joinPillarCore(uint256,uint256,uint8)._pillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#168) is not in mixedCase
+Parameter KittyPillar.endRound(uint8)._wonPillarIdx (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#232) is not in mixedCase
+Parameter KittyPillar.setJoinFee(uint256)._joinFee (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#312) is not in mixedCase
+Parameter KittyPillar.setPlayConfigs(uint256,uint256,uint256)._contributionTarget (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#316) is not in mixedCase
+Parameter KittyPillar.setPlayConfigs(uint256,uint256,uint256)._maxPower (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#316) is not in mixedCase
+Parameter KittyPillar.setPlayConfigs(uint256,uint256,uint256)._minPower (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#316) is not in mixedCase
+Parameter KittyPillar.setKittyCoreAddress(address)._kittyCoreAddress (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#323) is not in mixedCase
+Parameter KittyPillar.setPaused(bool)._paused (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#337) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in KittyPillar.withdrawWinnings() (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#286-304):
+	External calls:
+	- msg.sender.transfer(withdrawalSum) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#295)
+	Event emitted after the call(s):
+	- Withdrawal(msg.sender,_pId,withdrawalSum,now) (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#297-303)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+KittyPillar.slitherConstructorVariables() (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#8-352) uses literals with too many digits:
+	- joinFee_ = 10000000000000000 (../sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol#65)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x48e3065f8f7b3d752f370a2450267321ed818398.sol analyzed (4 contracts with 100 detectors), 48 result(s) found

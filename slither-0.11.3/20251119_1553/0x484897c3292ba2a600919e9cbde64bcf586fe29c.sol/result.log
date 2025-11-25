@@ -1,0 +1,73 @@
+'solc --version' running
+'solc /sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:9:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if(responseHash == keccak256(_response) && msg.value > 2 ether)
+                           ^------------------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:9:28: Warning: The provided argument of type string calldata is not implicitly convertible to expected type bytes memory.
+        if(responseHash == keccak256(_response) && msg.value > 2 ether)
+                           ^------------------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:11:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            msg.sender.transfer(this.balance);
+                                ^----------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:23:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+            responseHash = keccak256(_response);
+                           ^------------------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:23:28: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+            responseHash = keccak256(_response);
+                           ^------------------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:29:29: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        msg.sender.transfer(this.balance);
+                            ^----------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:44:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        require(admin[keccak256(msg.sender)]);
+                      ^-------------------^
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol:44:23: Warning: The provided argument of type address is not implicitly convertible to expected type bytes memory.
+        require(admin[keccak256(msg.sender)]);
+                      ^-------------------^
+
+
+PLAY_iQUIZ.Stop() (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#28-30) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.transfer(this.balance) (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#29)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract PLAY_iQUIZ (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#3-50) is not in CapWords
+Function PLAY_iQUIZ.Try(string) (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#5-13) is not in mixedCase
+Parameter PLAY_iQUIZ.Try(string)._response (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#5) is not in mixedCase
+Function PLAY_iQUIZ.Start(string,string) (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#21-26) is not in mixedCase
+Parameter PLAY_iQUIZ.Start(string,string)._question (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#21) is not in mixedCase
+Parameter PLAY_iQUIZ.Start(string,string)._response (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#21) is not in mixedCase
+Function PLAY_iQUIZ.Stop() (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#28-30) is not in mixedCase
+Function PLAY_iQUIZ.New(string,bytes32) (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#32-35) is not in mixedCase
+Parameter PLAY_iQUIZ.New(string,bytes32)._question (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#32) is not in mixedCase
+Parameter PLAY_iQUIZ.New(string,bytes32)._responseHash (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#32) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Start(string,string) should be declared external:
+	- PLAY_iQUIZ.Start(string,string) (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#21-26)
+New(string,bytes32) should be declared external:
+	- PLAY_iQUIZ.New(string,bytes32) (../sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol#32-35)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x484897c3292ba2a600919e9cbde64bcf586fe29c.sol analyzed (1 contracts with 100 detectors), 15 result(s) found

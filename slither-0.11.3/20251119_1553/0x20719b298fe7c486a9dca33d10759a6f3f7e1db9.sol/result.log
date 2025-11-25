@@ -1,0 +1,380 @@
+'solc --version' running
+'solc /sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:193:5: Warning: Functions in interfaces should be declared external.
+    function pay(uint index, uint256 _amount, address _from, bytes oracleData) public returns (bool);
+    ^-----------------------------------------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:194:5: Warning: Functions in interfaces should be declared external.
+    function rcn() public view returns (Token);
+    ^-----------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:195:5: Warning: Functions in interfaces should be declared external.
+    function getOracle(uint256 index) public view returns (Oracle);
+    ^-------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:196:5: Warning: Functions in interfaces should be declared external.
+    function getAmount(uint256 index) public view returns (uint256);
+    ^--------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:197:5: Warning: Functions in interfaces should be declared external.
+    function getCurrency(uint256 index) public view returns (bytes32);
+    ^----------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:198:5: Warning: Functions in interfaces should be declared external.
+    function convertRate(Oracle oracle, bytes32 currency, bytes data, uint256 amount) public view returns (uint256);
+    ^--------------------------------------------------------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:199:5: Warning: Functions in interfaces should be declared external.
+    function lend(uint index, bytes oracleData, Cosigner cosigner, bytes cosignerData) public returns (bool);
+    ^-------------------------------------------------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:200:5: Warning: Functions in interfaces should be declared external.
+    function transfer(address to, uint256 index) public returns (bool);
+    ^-----------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:201:5: Warning: Functions in interfaces should be declared external.
+    function getPendingAmount(uint256 index) public returns (uint256);
+    ^----------------------------------------------------------------^
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:319:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        return getOptimalSell(
+               ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol:336:16: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        return getOptimalSell(
+               ^ (Relevant source part starts here and spans across multiple lines).
+
+
+ConverterRamp.transfer(Token,address,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#400-410) sends eth to arbitrary user
+	Dangerous calls:
+	- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+ConverterRamp.convertSafe(TokenConverter,Token,Token,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#471-487) sends eth to arbitrary user
+	Dangerous calls:
+	- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+Oracle.encodeCurrency(string) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#82-87) is declared view but contains assembly code
+Oracle.decodeCurrency(bytes32) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#92-102) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ConverterRamp.executeOptimalPay(bytes32[4],bytes,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#489-517) performs a multiplication on the result of a division:
+	- toPay = (rcnToPay * (10 ** (18 - decimals + (18 * 2)) / rate)) / 10 ** 18 (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#508)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+ConverterRamp.convertSafe(TokenConverter,Token,Token,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#471-487) uses a dangerous strict equality:
+	- require(bool,string)(boughtAmount == toToken.balanceOf(this) - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+ConverterRamp.convertSafe(TokenConverter,Token,Token,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#471-487) uses a dangerous strict equality:
+	- require(bool,string)(boughtAmount == address(this).balance - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+ConverterRamp.lend(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#345-384) uses a dangerous strict equality:
+	- require(bool,string)(rcn.balanceOf(this) == initialBalance,The contract balance should not change) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#382)
+ConverterRamp.pay(TokenConverter,Token,bytes32[4],bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#265-308) uses a dangerous strict equality:
+	- require(bool,string)(rcn.balanceOf(this) == initialBalance,Converter balance has incremented) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#306)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Ownable.transferTo(address) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#29-33) should emit an event for: 
+	- owner = _to (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#31) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+ConverterRamp.withdrawEther(address,uint256)._to (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#577) lacks a zero-check on :
+		- _to.transfer(_amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#580)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469) has external calls inside a loop: returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Calls stack containing the loop:
+		ConverterRamp.pay(TokenConverter,Token,bytes32[4],bytes,uint256[3])
+ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469) has external calls inside a loop: returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Calls stack containing the loop:
+		ConverterRamp.requiredLendSell(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3])
+ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469) has external calls inside a loop: returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Calls stack containing the loop:
+		ConverterRamp.requiredPaySell(TokenConverter,Token,bytes32[4],bytes,uint256[3])
+ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469) has external calls inside a loop: returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Calls stack containing the loop:
+		ConverterRamp.lend(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469):
+	External calls:
+	- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+	- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Event emitted after the call(s):
+	- RunAutoMargin(cl,increment) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#463)
+Reentrancy in ConverterRamp.lend(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#345-384):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#353)
+	- initialBalance = rcn.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#354)
+	- requiredRcn = getRequiredRcnLend(loanParams,oracleData,cosignerData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#355)
+		- required += cosigner.cost(engine,index,cosignerData,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#553)
+		- required += engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,engine.getAmount(index)) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#555)
+	Event emitted after the call(s):
+	- RequiredRcn(requiredRcn) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#356)
+Reentrancy in ConverterRamp.lend(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#345-384):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#353)
+	- initialBalance = rcn.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#354)
+	- requiredRcn = getRequiredRcnLend(loanParams,oracleData,cosignerData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#355)
+		- required += cosigner.cost(engine,index,cosignerData,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#553)
+		- required += engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,engine.getAmount(index)) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#555)
+	- optimalSell = getOptimalSell(converter,fromToken,rcn,requiredRcn,convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#358)
+		- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+		- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Event emitted after the call(s):
+	- OptimalSell(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#359)
+	- RunAutoMargin(cl,increment) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#463)
+		- optimalSell = getOptimalSell(converter,fromToken,rcn,requiredRcn,convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#358)
+Reentrancy in ConverterRamp.lend(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#345-384):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#353)
+	- initialBalance = rcn.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#354)
+	- requiredRcn = getRequiredRcnLend(loanParams,oracleData,cosignerData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#355)
+		- required += cosigner.cost(engine,index,cosignerData,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#553)
+		- required += engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,engine.getAmount(index)) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#555)
+	- optimalSell = getOptimalSell(converter,fromToken,rcn,requiredRcn,convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#358)
+		- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+		- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#361)
+		- require(bool,string)(token.transferFrom(msg.sender,this,amount),Error pulling Token amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#396)
+	- bought = convertSafe(converter,fromToken,rcn,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#362)
+		- require(bool,string)(fromToken.approve(converter,amount),Error approving token transfer) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#477)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+		- require(bool,string)(fromToken.approve(converter,0),Error removing token approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#485)
+		- prevBalance = toToken.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#478)
+		- require(bool,string)(boughtAmount == toToken.balanceOf(this) - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+	- require(bool,string)(rcn.approve(address(loanParams[0]),bought),Error approving lend token transfer) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#365)
+	- require(bool,string)(executeLend(loanParams,oracleData,cosignerData),Error lending the loan) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#366)
+		- engine.lend(index,oracleData,Cosigner(address(params[I_LEND_COSIGNER])),cosignerData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#526)
+	- require(bool,string)(rcn.approve(address(loanParams[0]),0),Error removing approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#367)
+	- require(bool,string)(executeTransfer(loanParams,msg.sender),Error transfering the loan) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#368)
+		- NanoLoanEngine(address(params[I_ENGINE])).transfer(to,uint256(params[1])) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#533)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+		- require(bool,string)(fromToken.approve(converter,amount),Error approving token transfer) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#477)
+		- require(bool,string)(token.transfer(to,amount),Error sending tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#408)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+		- require(bool,string)(fromToken.approve(converter,0),Error removing token approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#485)
+		- prevBalance = toToken.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#478)
+		- require(bool,string)(boughtAmount == toToken.balanceOf(this) - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+	External calls sending eth:
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#361)
+		- msg.sender.transfer(msg.value - amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#393)
+	- bought = convertSafe(converter,fromToken,rcn,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#362)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+		- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	Event emitted after the call(s):
+	- RequiredRebuy(toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#426)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+	- Return(toToken,msg.sender,bought) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#427)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+	- Return(fromToken,msg.sender,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#430)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+Reentrancy in ConverterRamp.pay(TokenConverter,Token,bytes32[4],bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#265-308):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#272)
+	- initialBalance = rcn.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#274)
+	- requiredRcn = getRequiredRcnPay(loanParams,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#275)
+		- engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#565)
+	Event emitted after the call(s):
+	- RequiredRcn(requiredRcn) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#276)
+Reentrancy in ConverterRamp.pay(TokenConverter,Token,bytes32[4],bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#265-308):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#272)
+	- initialBalance = rcn.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#274)
+	- requiredRcn = getRequiredRcnPay(loanParams,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#275)
+		- engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#565)
+	- optimalSell = getOptimalSell(converter,fromToken,rcn,requiredRcn,convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#278)
+		- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+		- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Event emitted after the call(s):
+	- OptimalSell(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#279)
+	- RunAutoMargin(cl,increment) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#463)
+		- optimalSell = getOptimalSell(converter,fromToken,rcn,requiredRcn,convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#278)
+Reentrancy in ConverterRamp.pay(TokenConverter,Token,bytes32[4],bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#265-308):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#272)
+	- initialBalance = rcn.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#274)
+	- requiredRcn = getRequiredRcnPay(loanParams,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#275)
+		- engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#565)
+	- optimalSell = getOptimalSell(converter,fromToken,rcn,requiredRcn,convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#278)
+		- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+		- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#281)
+		- require(bool,string)(token.transferFrom(msg.sender,this,amount),Error pulling Token amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#396)
+	- bought = convertSafe(converter,fromToken,rcn,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#282)
+		- require(bool,string)(fromToken.approve(converter,amount),Error approving token transfer) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#477)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+		- require(bool,string)(fromToken.approve(converter,0),Error removing token approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#485)
+		- prevBalance = toToken.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#478)
+		- require(bool,string)(boughtAmount == toToken.balanceOf(this) - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+	- require(bool,string)(executeOptimalPay({params:loanParams,oracleData:oracleData,rcnToPay:bought}),Error paying the loan) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#285-292)
+		- oracle = engine.getOracle(index) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#496)
+		- currency = engine.getCurrency(index) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#505)
+		- (rate,decimals) = oracle.getRate(currency,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#507)
+		- rcn = engine.rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#511)
+		- require(bool,string)(rcn.approve(engine,rcnToPay),Error on payment approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#512)
+		- require(bool,string)(engine.pay(index,toPay,address(params[I_PAY_FROM]),oracleData),Error paying the loan) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#513)
+		- require(bool,string)(rcn.approve(engine,0),Error removing the payment approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#514)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+		- require(bool,string)(fromToken.approve(converter,amount),Error approving token transfer) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#477)
+		- require(bool,string)(token.transfer(to,amount),Error sending tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#408)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+		- require(bool,string)(fromToken.approve(converter,0),Error removing token approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#485)
+		- prevBalance = toToken.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#478)
+		- require(bool,string)(boughtAmount == toToken.balanceOf(this) - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+	External calls sending eth:
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#281)
+		- msg.sender.transfer(msg.value - amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#393)
+	- bought = convertSafe(converter,fromToken,rcn,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#282)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+		- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	Event emitted after the call(s):
+	- RequiredRebuy(toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#426)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+	- Return(toToken,msg.sender,bought) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#427)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+	- Return(fromToken,msg.sender,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#430)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+Reentrancy in ConverterRamp.rebuyAndReturn(TokenConverter,Token,Token,uint256,uint256,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#412-439):
+	External calls:
+	- bought = convertSafe(converter,fromToken,toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#425)
+		- require(bool,string)(fromToken.approve(converter,amount),Error approving token transfer) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#477)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+		- require(bool,string)(fromToken.approve(converter,0),Error removing token approve) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#485)
+		- prevBalance = toToken.balanceOf(this) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#478)
+		- require(bool,string)(boughtAmount == toToken.balanceOf(this) - prevBalance,Bought amound does does not match) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#481-484)
+	External calls sending eth:
+	- bought = convertSafe(converter,fromToken,toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#425)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	Event emitted after the call(s):
+	- RequiredRebuy(toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#426)
+	- Return(toToken,msg.sender,bought) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#427)
+Reentrancy in ConverterRamp.requiredLendSell(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#310-326):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#318)
+	- getOptimalSell(converter,fromToken,rcn,getRequiredRcnLend(loanParams,oracleData,cosignerData),convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#319-325)
+		- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+		- required += cosigner.cost(engine,index,cosignerData,oracleData) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#553)
+		- required += engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,engine.getAmount(index)) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#555)
+		- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Event emitted after the call(s):
+	- RunAutoMargin(cl,increment) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#463)
+		- getOptimalSell(converter,fromToken,rcn,getRequiredRcnLend(loanParams,oracleData,cosignerData),convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#319-325)
+Reentrancy in ConverterRamp.requiredPaySell(TokenConverter,Token,bytes32[4],bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#328-343):
+	External calls:
+	- rcn = NanoLoanEngine(address(loanParams[I_ENGINE])).rcn() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#335)
+	- getOptimalSell(converter,fromToken,rcn,getRequiredRcnPay(loanParams,oracleData),convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#336-342)
+		- sellRate = (10 ** 18 * converter.getReturn(toToken,fromToken,requiredTo)) / requiredTo (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#448)
+		- engine.convertRate(engine.getOracle(index),engine.getCurrency(index),oracleData,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#565)
+		- returnRebuy = converter.getReturn(fromToken,toToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#458)
+	Event emitted after the call(s):
+	- RunAutoMargin(cl,increment) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#463)
+		- getOptimalSell(converter,fromToken,rcn,getRequiredRcnPay(loanParams,oracleData),convertRules[I_MARGIN_SPEND]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#336-342)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Oracle.encodeCurrency(string) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#82-87) uses assembly
+	- INLINE ASM (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#84-87)
+Oracle.decodeCurrency(bytes32) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#92-102) uses assembly
+	- INLINE ASM (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#95-102)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferTo(address)._to (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#29) is not in mixedCase
+Variable Engine.VERSION (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#106) is not in mixedCase
+Variable Engine.VERSION_NAME (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#107) is not in mixedCase
+Parameter ConverterRamp.withdrawTokens(Token,address,uint256)._token (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#569) is not in mixedCase
+Parameter ConverterRamp.withdrawTokens(Token,address,uint256)._to (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#570) is not in mixedCase
+Parameter ConverterRamp.withdrawTokens(Token,address,uint256)._amount (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#571) is not in mixedCase
+Parameter ConverterRamp.withdrawEther(address,uint256)._to (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#577) is not in mixedCase
+Parameter ConverterRamp.withdrawEther(address,uint256)._amount (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#578) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ConverterRamp.lend(TokenConverter,Token,bytes32[3],bytes,bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#345-384):
+	External calls:
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#361)
+		- msg.sender.transfer(msg.value - amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#393)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+		- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+	External calls sending eth:
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#361)
+		- msg.sender.transfer(msg.value - amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#393)
+	- bought = convertSafe(converter,fromToken,rcn,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#362)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+		- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	Event emitted after the call(s):
+	- RequiredRebuy(toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#426)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+	- Return(toToken,msg.sender,bought) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#427)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+	- Return(fromToken,msg.sender,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#430)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#370-380)
+Reentrancy in ConverterRamp.pay(TokenConverter,Token,bytes32[4],bytes,uint256[3]) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#265-308):
+	External calls:
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#281)
+		- msg.sender.transfer(msg.value - amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#393)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+		- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+	External calls sending eth:
+	- pullAmount(fromToken,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#281)
+		- msg.sender.transfer(msg.value - amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#393)
+	- bought = convertSafe(converter,fromToken,rcn,optimalSell) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#282)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+		- to.transfer(amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#406)
+		- boughtAmount = converter.convert.value(sendEth)(fromToken,toToken,amount,1) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#480)
+	Event emitted after the call(s):
+	- RequiredRebuy(toToken,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#426)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+	- Return(toToken,msg.sender,bought) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#427)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+	- Return(fromToken,msg.sender,amount) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#430)
+		- require(bool,string)(rebuyAndReturn({converter:converter,fromToken:rcn,toToken:fromToken,amount:rcn.balanceOf(this) - initialBalance,spentAmount:optimalSell,convertRules:convertRules}),Error rebuying the tokens) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#294-304)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469) uses literals with too many digits:
+	- increment = applyRate(requiredTo / 100000,sellRate) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#452)
+ConverterRamp.getOptimalSell(TokenConverter,Token,Token,uint256,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#441-469) uses literals with too many digits:
+	- applyRate(requiredTo,sellRate).safeMult(uint256(100000).safeAdd(extraSell)) / 100000 (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#467)
+ConverterRamp.slitherConstructorConstantVariables() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#241-585) uses literals with too many digits:
+	- AUTO_MARGIN = 1000001 (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#245)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Oracle (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#43-103) does not implement functions:
+	- Oracle.getRate(bytes32,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#62)
+	- Oracle.url() (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+getRate(bytes32,bytes) should be declared external:
+	- Oracle.getRate(bytes32,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#62)
+addCurrency(string) should be declared external:
+	- Oracle.addCurrency(string) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#71-77)
+cost(address,uint256,bytes,bytes) should be declared external:
+	- Cosigner.cost(address,uint256,bytes,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#165)
+requestCosign(Engine,uint256,bytes,bytes) should be declared external:
+	- Cosigner.requestCosign(Engine,uint256,bytes,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#174)
+claim(address,uint256,bytes) should be declared external:
+	- Cosigner.claim(address,uint256,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#182)
+pay(uint256,uint256,address,bytes) should be declared external:
+	- NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#193)
+convertRate(Oracle,bytes32,bytes,uint256) should be declared external:
+	- NanoLoanEngine.convertRate(Oracle,bytes32,bytes,uint256) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#198)
+lend(uint256,bytes,Cosigner,bytes) should be declared external:
+	- NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol#199)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x20719b298fe7c486a9dca33d10759a6f3f7e1db9.sol analyzed (9 contracts with 100 detectors), 51 result(s) found

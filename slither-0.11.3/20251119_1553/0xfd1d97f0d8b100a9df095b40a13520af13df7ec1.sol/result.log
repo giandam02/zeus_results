@@ -1,0 +1,663 @@
+'solc --version' running
+'solc /sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+AddressUtils.isContract(address) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#225-236) is declared view but contains assembly code
+MetaToken._getSigner(bytes32,bytes) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1454-1476) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+PermissionedToken.allowance(address,address).owner (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#973) shadows:
+	- Ownable.owner (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#62) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Ownable.transferOwnership(address) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#101-104) should emit an event for: 
+	- pendingOwner = _newOwner (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#103) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+WhitelistedToken.constructor(address,address)._cusd (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1056) lacks a zero-check on :
+		- cusdAddress = _cusd (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1061)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398-1410):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1401)
+	State variables written after the call(s):
+	- replayNonce[signer] ++ (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1403)
+Reentrancy in MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346-1359):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1350)
+	- userNotBlacklisted(_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1347)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	State variables written after the call(s):
+	- replayNonce[signer] ++ (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1352)
+Reentrancy in MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373-1385):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1376)
+	- userNotBlacklisted(_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	State variables written after the call(s):
+	- replayNonce[signer] ++ (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1378)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in PermissionedToken._burn(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1003-1012):
+	External calls:
+	- require(bool,string)(_amount <= balanceOf(_tokensOf),not enough balance to burn) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1005)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+	- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+Reentrancy in CarbonDollar._burnCarbonDollar(address,address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1282-1294):
+	External calls:
+	- require(bool,string)(isWhitelisted(_stablecoin),Stablecoin must be whitelisted prior to burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1283)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+	- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1285)
+	- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(_stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1288)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+	- _burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1290)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+		- _burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1290)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+		- _burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1290)
+Reentrancy in CarbonDollar._burnCarbonDollar(address,address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1282-1294):
+	External calls:
+	- require(bool,string)(isWhitelisted(_stablecoin),Stablecoin must be whitelisted prior to burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1283)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+	- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1285)
+	- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(_stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1288)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+	- _burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1290)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	- whitelisted.burn(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1291)
+	- _mint(address(this),chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1292)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	Event emitted after the call(s):
+	- BurnedCUSD(_tokensOf,feedAmount,chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1293)
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mint(address(this),chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1292)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mint(address(this),chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1292)
+Reentrancy in PermissionedToken._decreaseApproval(address,uint256,address) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#988-996):
+	External calls:
+	- oldValue = allowance(_tokenHolder,_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#989)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	- tokenStorage.setAllowance(_tokenHolder,_spender,0) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#991)
+	- tokenStorage.subAllowance(_tokenHolder,_spender,_subtractedValue) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#993)
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#995)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	Event emitted after the call(s):
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#995)
+Reentrancy in PermissionedToken._increaseApproval(address,uint256,address) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#998-1001):
+	External calls:
+	- tokenStorage.addAllowance(_tokenHolder,_spender,_addedValue) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#999)
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1000)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	Event emitted after the call(s):
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1000)
+Reentrancy in PermissionedToken._mint(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1014-1020):
+	External calls:
+	- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+	- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	Event emitted after the call(s):
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+Reentrancy in WhitelistedToken._mintCUSD(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1099-1104):
+	External calls:
+	- CarbonDollar(cusdAddress).mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1101)
+	- _mint(cusdAddress,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1102)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	Event emitted after the call(s):
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mint(cusdAddress,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1102)
+	- MintedToCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1103)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mint(cusdAddress,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1102)
+Reentrancy in PermissionedToken._transfer(address,address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1022-1029):
+	External calls:
+	- require(bool,string)(_amount <= balanceOf(_from),not enough balance to transfer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1024)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+	- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+Reentrancy in PermissionedToken.approve(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#850-855):
+	External calls:
+	- tokenStorage.setAllowance(msg.sender,_spender,_value) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#852)
+	- userNotBlacklisted(_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#851)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#851)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Approval(msg.sender,_spender,_value) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#853)
+Reentrancy in PermissionedToken.approveBlacklistedAddressSpender(address) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#905-909):
+	External calls:
+	- tokenStorage.setAllowance(_blacklistedAccount,msg.sender,balanceOf(_blacklistedAccount)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#907)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- ApprovedBlacklistedAddressSpender(_blacklistedAccount,msg.sender,balanceOf(_blacklistedAccount)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#908)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- userBlacklisted(_blacklistedAccount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#906)
+		- require(bool,string)(regulator.isBlacklistedUser(_user),User must be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#811)
+	- requiresPermission() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#906)
+		- require(bool,string)(regulator.hasUserPermission(msg.sender,msg.sig),User does not have permission to execute function) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#785)
+	Event emitted after the call(s):
+	- ApprovedBlacklistedAddressSpender(_blacklistedAccount,msg.sender,balanceOf(_blacklistedAccount)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#908)
+Reentrancy in PermissionedToken.burn(uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#841-843):
+	External calls:
+	- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#842)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#841)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+		- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#842)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+		- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#842)
+Reentrancy in CarbonDollar.burnCarbonDollar(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1226-1228):
+	External calls:
+	- _burnCarbonDollar(msg.sender,stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1227)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1285)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+		- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(_stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1288)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+		- whitelisted.burn(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1291)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1226)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+		- _burnCarbonDollar(msg.sender,stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1227)
+	- BurnedCUSD(_tokensOf,feedAmount,chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1293)
+		- _burnCarbonDollar(msg.sender,stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1227)
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _burnCarbonDollar(msg.sender,stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1227)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _burnCarbonDollar(msg.sender,stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1227)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+		- _burnCarbonDollar(msg.sender,stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1227)
+Reentrancy in CarbonDollar.convertCarbonDollar(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1205-1219):
+	External calls:
+	- require(bool,string)(isWhitelisted(stablecoin),Stablecoin must be whitelisted prior to setting conversion fee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1206)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+	- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1208)
+	- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1212)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+	- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1214)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1205)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+		- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1214)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+		- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1214)
+Reentrancy in CarbonDollar.convertCarbonDollar(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1205-1219):
+	External calls:
+	- require(bool,string)(isWhitelisted(stablecoin),Stablecoin must be whitelisted prior to setting conversion fee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1206)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+	- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1208)
+	- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1212)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+	- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1214)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	- require(bool)(whitelisted.transfer(msg.sender,feedAmount)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1215)
+	- whitelisted.burn(chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1216)
+	- _mint(address(this),chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1217)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1205)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- ConvertedToWT(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1218)
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mint(address(this),chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1217)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mint(address(this),chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1217)
+Reentrancy in WhitelistedToken.convertWT(uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1080-1085):
+	External calls:
+	- require(bool,string)(balanceOf(msg.sender) >= _amount,Conversion amount should be less than balance) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1081)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1082)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1080)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+		- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1082)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+		- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1082)
+Reentrancy in WhitelistedToken.convertWT(uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1080-1085):
+	External calls:
+	- require(bool,string)(balanceOf(msg.sender) >= _amount,Conversion amount should be less than balance) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1081)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _burn(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1082)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+	- _mintCUSD(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1083)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- CarbonDollar(cusdAddress).mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1101)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1080)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- ConvertedToCUSD(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1084)
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mintCUSD(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1083)
+	- MintedToCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1103)
+		- _mintCUSD(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1083)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mintCUSD(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1083)
+Reentrancy in PermissionedToken.decreaseApproval(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#881-885):
+	External calls:
+	- _decreaseApproval(_spender,_subtractedValue,msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#883)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+		- tokenStorage.setAllowance(_tokenHolder,_spender,0) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#991)
+		- tokenStorage.subAllowance(_tokenHolder,_spender,_subtractedValue) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#993)
+	- userNotBlacklisted(_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#882)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#882)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#995)
+		- _decreaseApproval(_spender,_subtractedValue,msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#883)
+Reentrancy in PermissionedToken.destroyBlacklistedTokens(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#893-897):
+	External calls:
+	- tokenStorage.subBalance(_who,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#894)
+	- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#895)
+	- userBlacklisted(_who) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#893)
+		- require(bool,string)(regulator.isBlacklistedUser(_user),User must be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#811)
+	- requiresPermission() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#893)
+		- require(bool,string)(regulator.hasUserPermission(msg.sender,msg.sig),User does not have permission to execute function) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#785)
+	Event emitted after the call(s):
+	- DestroyedBlacklistedTokens(_who,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#896)
+Reentrancy in PermissionedToken.increaseApproval(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#866-870):
+	External calls:
+	- _increaseApproval(_spender,_addedValue,msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#868)
+		- tokenStorage.addAllowance(_tokenHolder,_spender,_addedValue) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#999)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	- userNotBlacklisted(_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#867)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#867)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1000)
+		- _increaseApproval(_spender,_addedValue,msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#868)
+Reentrancy in MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398-1410):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1401)
+	- require(bool,string)((_amount + _reward) <= balanceOf(signer),not enough balance to burn and reward relayer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1406)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+		- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1285)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+		- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(_stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1288)
+		- whitelisted.burn(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1291)
+	Event emitted after the call(s):
+	- Burn(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1010)
+		- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+	- BurnedCUSD(_tokensOf,feedAmount,chargedFee) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1293)
+		- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+	- Transfer(_tokensOf,address(0),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1011)
+		- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+Reentrancy in MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398-1410):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1401)
+	- require(bool,string)((_amount + _reward) <= balanceOf(signer),not enough balance to burn and reward relayer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1406)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _burnCarbonDollar(signer,_stablecoin,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1407)
+		- tokenStorage_CD.fees(stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1271)
+		- tokenStorage_CD.defaultFee() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1279)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.subBalance(_tokensOf,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1008)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+		- require(bool,string)(whitelisted.balanceOf(address(this)) >= _amount,Carbon escrow account in WT0 doesn't have enough tokens for burning) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1285)
+		- tokenStorage.subTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1009)
+		- chargedFee = tokenStorage_CD.computeFee(_amount,computeFeeRate(_stablecoin)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1288)
+		- whitelisted.burn(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1291)
+	- _transfer(msg.sender,signer,_reward) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1408)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+		- _transfer(msg.sender,signer,_reward) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1408)
+Reentrancy in MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346-1359):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1350)
+	- require(bool,string)(_reward <= balanceOf(signer),not enough balance to reward relayer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1355)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _increaseApproval(_spender,_addedValue,signer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1356)
+		- tokenStorage.addAllowance(_tokenHolder,_spender,_addedValue) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#999)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	- userNotBlacklisted(_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1347)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Approval(_tokenHolder,_spender,allowance(_tokenHolder,_spender)) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1000)
+		- _increaseApproval(_spender,_addedValue,signer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1356)
+Reentrancy in MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346-1359):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1350)
+	- require(bool,string)(_reward <= balanceOf(signer),not enough balance to reward relayer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1355)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _increaseApproval(_spender,_addedValue,signer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1356)
+		- tokenStorage.addAllowance(_tokenHolder,_spender,_addedValue) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#999)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	- _transfer(msg.sender,signer,_reward) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1357)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	- userNotBlacklisted(_spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1347)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+		- _transfer(msg.sender,signer,_reward) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1357)
+Reentrancy in MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373-1385):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1376)
+	- require(bool,string)((_amount + _reward) <= balanceOf(signer),not enough balance to transfer and reward relayer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1381)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _transfer(_to,signer,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1382)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	- userNotBlacklisted(_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+		- _transfer(_to,signer,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1382)
+Reentrancy in MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373-1385):
+	External calls:
+	- require(bool,string)(! regulator.isBlacklistedUser(signer),signer is blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1376)
+	- require(bool,string)((_amount + _reward) <= balanceOf(signer),not enough balance to transfer and reward relayer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1381)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- _transfer(_to,signer,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1382)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	- _transfer(msg.sender,signer,_reward) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1383)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	- userNotBlacklisted(_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+		- _transfer(msg.sender,signer,_reward) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1383)
+Reentrancy in PermissionedToken.mint(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#832-834):
+	External calls:
+	- _mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#833)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	- userNotBlacklisted(_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#832)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	- requiresPermission() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#832)
+		- require(bool,string)(regulator.hasUserPermission(msg.sender,msg.sig),User does not have permission to execute function) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#785)
+	Event emitted after the call(s):
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#833)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#833)
+Reentrancy in CarbonDollar.mint(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1195-1197):
+	External calls:
+	- _mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1196)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	- requiresWhitelistedToken() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1195)
+		- tokenStorage_CD.whitelist(_stablecoin) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1262)
+	Event emitted after the call(s):
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1196)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1196)
+Reentrancy in WhitelistedToken.mintCUSD(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1071-1073):
+	External calls:
+	- _mintCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1072)
+		- tokenStorage.addTotalSupply(_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1016)
+		- CarbonDollar(cusdAddress).mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1101)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1017)
+	- requiresPermission() (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1071)
+		- require(bool,string)(regulator.hasUserPermission(msg.sender,msg.sig),User does not have permission to execute function) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#785)
+	- userNotBlacklisted(_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1071)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Mint(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1018)
+		- _mintCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1072)
+	- MintedToCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1103)
+		- _mintCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1072)
+	- Transfer(address(0),_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1019)
+		- _mintCUSD(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1072)
+Reentrancy in CarbonDollar.releaseCarbonDollar(uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1235-1242):
+	External calls:
+	- require(bool,string)(_amount <= balanceOf(address(this)),not enough balance to transfer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1236)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+	- tokenStorage.subBalance(address(this),_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1238)
+	- tokenStorage.addBalance(msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1239)
+	Event emitted after the call(s):
+	- Transfer(address(this),msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1240)
+Reentrancy in PermissionedToken.transfer(address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#919-922):
+	External calls:
+	- _transfer(_to,msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#920)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	- userNotBlacklisted(_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#919)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	- userNotBlacklisted(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#919)
+		- require(bool,string)(! regulator.isBlacklistedUser(_user),User must not be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#819)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+		- _transfer(_to,msg.sender,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#920)
+Reentrancy in PermissionedToken.transferFrom(address,address,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#936-942):
+	External calls:
+	- require(bool,string)(_amount <= allowance(_from,msg.sender),not enough allowance to transfer) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#938)
+		- tokenStorage.allowances(owner,spender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#974)
+	- _transfer(_to,_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#939)
+		- tokenStorage.balances(_addr) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#982)
+		- tokenStorage.addBalance(_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1026)
+		- tokenStorage.subBalance(_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1027)
+	- transferFromConditionsRequired(_from,_to) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#937)
+		- require(bool,string)(! regulator.isBlacklistedUser(_to),Recipient cannot be blacklisted) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#794)
+		- is_origin_blacklisted = regulator.isBlacklistedUser(_from) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#799)
+		- sender_can_spend_from_blacklisted_address = regulator.isBlacklistSpender(msg.sender) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#802)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1028)
+		- _transfer(_to,_from,_amount) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#939)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+AddressUtils.isContract(address) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#225-236) uses assembly
+	- INLINE ASM (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#234-235)
+MetaToken._getSigner(bytes32,bytes) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1454-1476) uses assembly
+	- INLINE ASM (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1461-1466)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#101) is not in mixedCase
+Parameter CarbonDollarStorage.setDefaultFee(uint256)._fee (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#148) is not in mixedCase
+Parameter CarbonDollarStorage.setFee(address,uint256)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#159) is not in mixedCase
+Parameter CarbonDollarStorage.setFee(address,uint256)._fee (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#159) is not in mixedCase
+Parameter CarbonDollarStorage.removeFee(address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#169) is not in mixedCase
+Parameter CarbonDollarStorage.addStablecoin(address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#179) is not in mixedCase
+Parameter CarbonDollarStorage.removeStablecoin(address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#187) is not in mixedCase
+Parameter CarbonDollarStorage.computeStablecoinFee(uint256,address)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#198) is not in mixedCase
+Parameter CarbonDollarStorage.computeStablecoinFee(uint256,address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#198) is not in mixedCase
+Parameter CarbonDollarStorage.computeFee(uint256,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#208) is not in mixedCase
+Parameter CarbonDollarStorage.computeFee(uint256,uint256)._fee (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#208) is not in mixedCase
+Parameter PermissionedTokenStorage.addAllowance(address,address,uint256)._tokenHolder (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#255) is not in mixedCase
+Parameter PermissionedTokenStorage.addAllowance(address,address,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#255) is not in mixedCase
+Parameter PermissionedTokenStorage.addAllowance(address,address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#255) is not in mixedCase
+Parameter PermissionedTokenStorage.subAllowance(address,address,uint256)._tokenHolder (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#259) is not in mixedCase
+Parameter PermissionedTokenStorage.subAllowance(address,address,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#259) is not in mixedCase
+Parameter PermissionedTokenStorage.subAllowance(address,address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#259) is not in mixedCase
+Parameter PermissionedTokenStorage.setAllowance(address,address,uint256)._tokenHolder (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#263) is not in mixedCase
+Parameter PermissionedTokenStorage.setAllowance(address,address,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#263) is not in mixedCase
+Parameter PermissionedTokenStorage.setAllowance(address,address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#263) is not in mixedCase
+Parameter PermissionedTokenStorage.addBalance(address,uint256)._addr (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#267) is not in mixedCase
+Parameter PermissionedTokenStorage.addBalance(address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#267) is not in mixedCase
+Parameter PermissionedTokenStorage.subBalance(address,uint256)._addr (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#271) is not in mixedCase
+Parameter PermissionedTokenStorage.subBalance(address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#271) is not in mixedCase
+Parameter PermissionedTokenStorage.setBalance(address,uint256)._addr (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#275) is not in mixedCase
+Parameter PermissionedTokenStorage.setBalance(address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#275) is not in mixedCase
+Parameter PermissionedTokenStorage.addTotalSupply(uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#279) is not in mixedCase
+Parameter PermissionedTokenStorage.subTotalSupply(uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#283) is not in mixedCase
+Parameter PermissionedTokenStorage.setTotalSupply(uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#287) is not in mixedCase
+Parameter RegulatorStorage.addPermission(bytes4,string,string,string)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#482) is not in mixedCase
+Parameter RegulatorStorage.addPermission(bytes4,string,string,string)._permissionName (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#483) is not in mixedCase
+Parameter RegulatorStorage.addPermission(bytes4,string,string,string)._permissionDescription (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#484) is not in mixedCase
+Parameter RegulatorStorage.addPermission(bytes4,string,string,string)._contractName (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#485) is not in mixedCase
+Parameter RegulatorStorage.removePermission(bytes4)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#495) is not in mixedCase
+Parameter RegulatorStorage.setUserPermission(address,bytes4)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#504) is not in mixedCase
+Parameter RegulatorStorage.setUserPermission(address,bytes4)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#504) is not in mixedCase
+Parameter RegulatorStorage.removeUserPermission(address,bytes4)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#513) is not in mixedCase
+Parameter RegulatorStorage.removeUserPermission(address,bytes4)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#513) is not in mixedCase
+Parameter RegulatorStorage.addValidator(address)._validator (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#522) is not in mixedCase
+Parameter RegulatorStorage.removeValidator(address)._validator (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#531) is not in mixedCase
+Parameter RegulatorStorage.isValidator(address)._validator (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#540) is not in mixedCase
+Parameter RegulatorStorage.isPermission(bytes4)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#548) is not in mixedCase
+Parameter RegulatorStorage.getPermission(bytes4)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#557) is not in mixedCase
+Parameter RegulatorStorage.hasUserPermission(address,bytes4)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#572) is not in mixedCase
+Parameter RegulatorStorage.hasUserPermission(address,bytes4)._methodsignature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#572) is not in mixedCase
+Parameter Regulator.setMinter(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#614) is not in mixedCase
+Parameter Regulator.removeMinter(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#622) is not in mixedCase
+Parameter Regulator.setBlacklistSpender(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#630) is not in mixedCase
+Parameter Regulator.removeBlacklistSpender(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#640) is not in mixedCase
+Parameter Regulator.setBlacklistDestroyer(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#650) is not in mixedCase
+Parameter Regulator.removeBlacklistDestroyer(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#661) is not in mixedCase
+Parameter Regulator.setBlacklistedUser(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#672) is not in mixedCase
+Parameter Regulator.removeBlacklistedUser(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#681) is not in mixedCase
+Parameter Regulator.isBlacklistedUser(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#689) is not in mixedCase
+Parameter Regulator.isBlacklistSpender(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#698) is not in mixedCase
+Parameter Regulator.isBlacklistDestroyer(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#706) is not in mixedCase
+Parameter Regulator.isMinter(address)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#714) is not in mixedCase
+Parameter PermissionedToken.mint(address,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#832) is not in mixedCase
+Parameter PermissionedToken.mint(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#832) is not in mixedCase
+Parameter PermissionedToken.burn(uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#841) is not in mixedCase
+Parameter PermissionedToken.approve(address,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#850) is not in mixedCase
+Parameter PermissionedToken.approve(address,uint256)._value (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#850) is not in mixedCase
+Parameter PermissionedToken.increaseApproval(address,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#866) is not in mixedCase
+Parameter PermissionedToken.increaseApproval(address,uint256)._addedValue (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#866) is not in mixedCase
+Parameter PermissionedToken.decreaseApproval(address,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#881) is not in mixedCase
+Parameter PermissionedToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#881) is not in mixedCase
+Parameter PermissionedToken.destroyBlacklistedTokens(address,uint256)._who (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#893) is not in mixedCase
+Parameter PermissionedToken.destroyBlacklistedTokens(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#893) is not in mixedCase
+Parameter PermissionedToken.approveBlacklistedAddressSpender(address)._blacklistedAccount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#905) is not in mixedCase
+Parameter PermissionedToken.transfer(address,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#919) is not in mixedCase
+Parameter PermissionedToken.transfer(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#919) is not in mixedCase
+Parameter PermissionedToken.transferFrom(address,address,uint256)._from (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#936) is not in mixedCase
+Parameter PermissionedToken.transferFrom(address,address,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#936) is not in mixedCase
+Parameter PermissionedToken.transferFrom(address,address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#936) is not in mixedCase
+Parameter PermissionedToken.setRegulator(address)._newRegulator (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#950) is not in mixedCase
+Parameter PermissionedToken.balanceOf(address)._addr (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#981) is not in mixedCase
+Parameter WhitelistedToken.mintCUSD(address,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1071) is not in mixedCase
+Parameter WhitelistedToken.mintCUSD(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1071) is not in mixedCase
+Parameter WhitelistedToken.convertWT(uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1080) is not in mixedCase
+Parameter WhitelistedToken.setCUSDAddress(address)._cusd (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1091) is not in mixedCase
+Parameter CarbonDollar.listToken(address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1146) is not in mixedCase
+Parameter CarbonDollar.unlistToken(address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1154) is not in mixedCase
+Parameter CarbonDollar.setFee(address,uint256)._newFee (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1163) is not in mixedCase
+Parameter CarbonDollar.setDefaultFee(uint256)._newFee (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1183) is not in mixedCase
+Parameter CarbonDollar.mint(address,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1195) is not in mixedCase
+Parameter CarbonDollar.mint(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1195) is not in mixedCase
+Parameter CarbonDollar.convertCarbonDollar(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1205) is not in mixedCase
+Parameter CarbonDollar.burnCarbonDollar(address,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1226) is not in mixedCase
+Parameter CarbonDollar.releaseCarbonDollar(uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1235) is not in mixedCase
+Parameter CarbonDollar.isWhitelisted(address)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1261) is not in mixedCase
+Variable CarbonDollar.tokenStorage_CD (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1129) is not in mixedCase
+Parameter MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346) is not in mixedCase
+Parameter MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256)._addedValue (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346) is not in mixedCase
+Parameter MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256)._signature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346) is not in mixedCase
+Parameter MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256)._nonce (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346) is not in mixedCase
+Parameter MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256)._reward (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346) is not in mixedCase
+Parameter MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373) is not in mixedCase
+Parameter MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373) is not in mixedCase
+Parameter MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256)._signature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373) is not in mixedCase
+Parameter MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256)._nonce (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373) is not in mixedCase
+Parameter MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256)._reward (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373) is not in mixedCase
+Parameter MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398) is not in mixedCase
+Parameter MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398) is not in mixedCase
+Parameter MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256)._signature (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398) is not in mixedCase
+Parameter MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256)._nonce (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398) is not in mixedCase
+Parameter MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256)._reward (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398) is not in mixedCase
+Parameter MetaToken.metaTransferHash(address,uint256,uint256,uint256)._to (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1420) is not in mixedCase
+Parameter MetaToken.metaTransferHash(address,uint256,uint256,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1420) is not in mixedCase
+Parameter MetaToken.metaTransferHash(address,uint256,uint256,uint256)._nonce (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1420) is not in mixedCase
+Parameter MetaToken.metaTransferHash(address,uint256,uint256,uint256)._reward (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1420) is not in mixedCase
+Parameter MetaToken.metaApproveHash(address,uint256,uint256,uint256)._spender (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1432) is not in mixedCase
+Parameter MetaToken.metaApproveHash(address,uint256,uint256,uint256)._addedValue (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1432) is not in mixedCase
+Parameter MetaToken.metaApproveHash(address,uint256,uint256,uint256)._nonce (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1432) is not in mixedCase
+Parameter MetaToken.metaApproveHash(address,uint256,uint256,uint256)._reward (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1432) is not in mixedCase
+Parameter MetaToken.metaBurnHash(address,uint256,uint256,uint256)._stablecoin (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1444) is not in mixedCase
+Parameter MetaToken.metaBurnHash(address,uint256,uint256,uint256)._amount (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1444) is not in mixedCase
+Parameter MetaToken.metaBurnHash(address,uint256,uint256,uint256)._nonce (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1444) is not in mixedCase
+Parameter MetaToken.metaBurnHash(address,uint256,uint256,uint256)._reward (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1444) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+addPermission(bytes4,string,string,string) should be declared external:
+	- RegulatorStorage.addPermission(bytes4,string,string,string) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#481-489)
+metaIncreaseApproval(address,uint256,bytes,uint256,uint256) should be declared external:
+	- MetaToken.metaIncreaseApproval(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1346-1359)
+metaTransfer(address,uint256,bytes,uint256,uint256) should be declared external:
+	- MetaToken.metaTransfer(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1373-1385)
+metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256) should be declared external:
+	- MetaToken.metaBurnCarbonDollar(address,uint256,bytes,uint256,uint256) (../sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol#1398-1410)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xfd1d97f0d8b100a9df095b40a13520af13df7ec1.sol analyzed (15 contracts with 100 detectors), 165 result(s) found

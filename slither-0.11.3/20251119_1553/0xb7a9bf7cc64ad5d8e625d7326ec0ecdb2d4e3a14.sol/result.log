@@ -1,0 +1,67 @@
+'solc --version' running
+'solc /sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+EIE.burn(uint256) (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#169-190) performs a multiplication on the result of a division:
+	- amount = invested[msg.sender] * 4 / 100 * (block.number - atBlock[msg.sender]) / 5900 (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#180)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+EIE._transfer(address,address,uint256) (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#77-93) uses a dangerous strict equality:
+	- assert(bool)(balanceOf[_from] + balanceOf[_to] == previousBalances) (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#92)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Contract locking ether found:
+	Contract EIE (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#26-201) has payable functions:
+	 - EIE.fallback() (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#193-199)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#24) is not in CapWords
+Parameter EIE.transfer(address,uint256)._to (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#103) is not in mixedCase
+Parameter EIE.transfer(address,uint256)._value (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#103) is not in mixedCase
+Parameter EIE.transferFrom(address,address,uint256)._from (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#121) is not in mixedCase
+Parameter EIE.transferFrom(address,address,uint256)._to (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#121) is not in mixedCase
+Parameter EIE.transferFrom(address,address,uint256)._value (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#121) is not in mixedCase
+Parameter EIE.approve(address,uint256)._spender (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#136) is not in mixedCase
+Parameter EIE.approve(address,uint256)._value (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#136) is not in mixedCase
+Parameter EIE.approveAndCall(address,uint256,bytes)._spender (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#152) is not in mixedCase
+Parameter EIE.approveAndCall(address,uint256,bytes)._value (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#152) is not in mixedCase
+Parameter EIE.approveAndCall(address,uint256,bytes)._extraData (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#152) is not in mixedCase
+Parameter EIE.burn(uint256)._value (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#169) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+EIE.fallback() (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#193-199) uses literals with too many digits:
+	- _issue(1000000000000000000) (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#198)
+EIE.slitherConstructorVariables() (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#26-201) uses literals with too many digits:
+	- totalSupply = 1000000000000000000000000 (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#32)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+EIE.decimals (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#30) should be constant 
+EIE.name (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#28) should be constant 
+EIE.symbol (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#29) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+approveAndCall(address,uint256,bytes) should be declared external:
+	- EIE.approveAndCall(address,uint256,bytes) (../sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol#152-160)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xb7a9bf7cc64ad5d8e625d7326ec0ecdb2d4e3a14.sol analyzed (2 contracts with 100 detectors), 23 result(s) found

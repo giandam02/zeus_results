@@ -1,0 +1,172 @@
+'solc --version' running
+'solc /sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+NameFilter.nameFilter(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#354-416) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+MSFun.deleteProposal(MSFun.Data,bytes32) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#252-268) deletes MSFun.ProposalData (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#157-167) which contains a mapping:
+	-delete self.proposal_[_whatProposal] (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#267)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deletion-on-mapping-containing-a-structure
+
+PlayerBook.registerNameXaddr(string,address,bool)._affID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#782) is a local variable never initialized
+PlayerBook.registerNameXaddrFromDapp(address,bytes32,address,bool)._affID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1054) is a local variable never initialized
+PlayerBook.registerNameXnameFromDapp(address,bytes32,bytes32,bool)._affID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1090) is a local variable never initialized
+PlayerBook.registerNameXname(string,bytes32,bool)._affID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#822) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+PlayerBook.setRegistrationFee(uint256) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1134-1141) should emit an event for: 
+	- registrationFee_ = _fee (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1139) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	Calls stack containing the loop:
+		PlayerBook.registerNameXID(string,uint256,bool)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	Calls stack containing the loop:
+		PlayerBook.registerNameXaddr(string,address,bool)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	Calls stack containing the loop:
+		PlayerBook.registerNameXname(string,bytes32,bool)
+PlayerBook.addMeToGame(uint256) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#848-865) has external calls inside a loop: games_[_gameID].receivePlayerNameList(_pID,plyrNameList_[_pID][ii]) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#864)
+PlayerBook.addMeToAllGames() (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#871-890) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_laff) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#884)
+PlayerBook.addMeToAllGames() (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#871-890) has external calls inside a loop: games_[i].receivePlayerNameList(_pID,plyrNameList_[_pID][ii]) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#887)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	Calls stack containing the loop:
+		PlayerBook.registerNameXIDFromDapp(address,bytes32,uint256,bool)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	Calls stack containing the loop:
+		PlayerBook.registerNameXaddrFromDapp(address,bytes32,address,bool)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) has external calls inside a loop: games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	Calls stack containing the loop:
+		PlayerBook.registerNameXnameFromDapp(address,bytes32,bytes32,bool)
+PlayerBook.addGame(address,string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1114-1132) has external calls inside a loop: games_[gID_].receivePlayerInfo(pid,plyr_[pid].addr,plyr_[pid].name,0) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1129)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944):
+	External calls:
+	- games_[i].receivePlayerInfo(_pID,_addr,_name,_affID) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#940)
+	External calls sending eth:
+	- affWallet.transfer(address(this).balance) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#936)
+	Event emitted after the call(s):
+	- onNewName(_pID,_addr,_name,_isNewPlayer,_affID,plyr_[_affID].addr,plyr_[_affID].name,msg.value,now) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#943)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+NameFilter.nameFilter(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#354-416) uses assembly
+	- INLINE ASM (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#412-415)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+MSFun.multiSig(MSFun.Data,uint256,bytes32) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#172-248) compares to a boolean constant:
+	-self.proposal_[_whatProposal].admin[_whichAdmin] == false (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#223)
+NameFilter.nameFilter(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#354-416) compares to a boolean constant:
+	-require(bool,string)(_hasNonNumber == true,string cannot be only numbers) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#409)
+NameFilter.nameFilter(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#354-416) compares to a boolean constant:
+	-_hasNonNumber == false && (_temp[i] < 0x30 || _temp[i] > 0x39) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#404)
+NameFilter.nameFilter(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#354-416) compares to a boolean constant:
+	-_hasNonNumber == false (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#386)
+PlayerBook.useMyOldName(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#898-911) compares to a boolean constant:
+	-require(bool,string)(plyrNames_[_pID][_name] == true,umm... thats not a name you own) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#907)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) compares to a boolean constant:
+	-plyrNames_[_pID][_name] == false (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#927)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) compares to a boolean constant:
+	-require(bool,string)(plyrNames_[_pID][_name] == true,sorry that names already taken) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#922)
+PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944) compares to a boolean constant:
+	-_all == true (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#938)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter MSFun.multiSig(MSFun.Data,uint256,bytes32)._requiredSignatures (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#172) is not in mixedCase
+Parameter MSFun.multiSig(MSFun.Data,uint256,bytes32)._whatFunction (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#172) is not in mixedCase
+Parameter MSFun.deleteProposal(MSFun.Data,bytes32)._whatFunction (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#252) is not in mixedCase
+Parameter MSFun.whatProposal(bytes32)._whatFunction (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#274) is not in mixedCase
+Parameter MSFun.checkMsgData(MSFun.Data,bytes32)._whatFunction (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#286) is not in mixedCase
+Parameter MSFun.checkCount(MSFun.Data,bytes32)._whatFunction (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#296) is not in mixedCase
+Parameter MSFun.checkSigner(MSFun.Data,bytes32,uint256)._whatFunction (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#306) is not in mixedCase
+Parameter MSFun.checkSigner(MSFun.Data,bytes32,uint256)._signer (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#306) is not in mixedCase
+Parameter NameFilter.nameFilter(string)._input (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#354) is not in mixedCase
+Event PlayerBook.onNewName(uint256,address,bytes32,bool,uint256,address,bytes32,uint256,uint256) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#672-683) is not in CapWords
+Parameter PlayerBook.addSuperPlayer(address,bytes32)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#620) is not in mixedCase
+Parameter PlayerBook.addSuperPlayer(address,bytes32)._name (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#620) is not in mixedCase
+Parameter PlayerBook.checkIfNameValid(string)._nameStr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#688) is not in mixedCase
+Parameter PlayerBook.registerNameXID(string,uint256,bool)._nameString (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#725) is not in mixedCase
+Parameter PlayerBook.registerNameXID(string,uint256,bool)._affCode (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#725) is not in mixedCase
+Parameter PlayerBook.registerNameXID(string,uint256,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#725) is not in mixedCase
+Parameter PlayerBook.registerNameXaddr(string,address,bool)._nameString (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#760) is not in mixedCase
+Parameter PlayerBook.registerNameXaddr(string,address,bool)._affCode (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#760) is not in mixedCase
+Parameter PlayerBook.registerNameXaddr(string,address,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#760) is not in mixedCase
+Parameter PlayerBook.registerNameXname(string,bytes32,bool)._nameString (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#800) is not in mixedCase
+Parameter PlayerBook.registerNameXname(string,bytes32,bool)._affCode (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#800) is not in mixedCase
+Parameter PlayerBook.registerNameXname(string,bytes32,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#800) is not in mixedCase
+Parameter PlayerBook.addMeToGame(uint256)._gameID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#848) is not in mixedCase
+Parameter PlayerBook.useMyOldName(string)._nameString (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#898) is not in mixedCase
+Parameter PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool)._pID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917) is not in mixedCase
+Parameter PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917) is not in mixedCase
+Parameter PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool)._affID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917) is not in mixedCase
+Parameter PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool)._name (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917) is not in mixedCase
+Parameter PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool)._isNewPlayer (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917) is not in mixedCase
+Parameter PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917) is not in mixedCase
+Parameter PlayerBook.determinePID(address)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#949) is not in mixedCase
+Parameter PlayerBook.getPlayerID(address)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#969) is not in mixedCase
+Parameter PlayerBook.getPlayerName(uint256)._pID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#977) is not in mixedCase
+Parameter PlayerBook.getPlayerLAff(uint256)._pID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#984) is not in mixedCase
+Parameter PlayerBook.getPlayerAddr(uint256)._pID (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#991) is not in mixedCase
+Parameter PlayerBook.registerNameXIDFromDapp(address,bytes32,uint256,bool)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1005) is not in mixedCase
+Parameter PlayerBook.registerNameXIDFromDapp(address,bytes32,uint256,bool)._name (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1005) is not in mixedCase
+Parameter PlayerBook.registerNameXIDFromDapp(address,bytes32,uint256,bool)._affCode (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1005) is not in mixedCase
+Parameter PlayerBook.registerNameXIDFromDapp(address,bytes32,uint256,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1005) is not in mixedCase
+Parameter PlayerBook.registerNameXaddrFromDapp(address,bytes32,address,bool)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1037) is not in mixedCase
+Parameter PlayerBook.registerNameXaddrFromDapp(address,bytes32,address,bool)._name (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1037) is not in mixedCase
+Parameter PlayerBook.registerNameXaddrFromDapp(address,bytes32,address,bool)._affCode (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1037) is not in mixedCase
+Parameter PlayerBook.registerNameXaddrFromDapp(address,bytes32,address,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1037) is not in mixedCase
+Parameter PlayerBook.registerNameXnameFromDapp(address,bytes32,bytes32,bool)._addr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1073) is not in mixedCase
+Parameter PlayerBook.registerNameXnameFromDapp(address,bytes32,bytes32,bool)._name (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1073) is not in mixedCase
+Parameter PlayerBook.registerNameXnameFromDapp(address,bytes32,bytes32,bool)._affCode (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1073) is not in mixedCase
+Parameter PlayerBook.registerNameXnameFromDapp(address,bytes32,bytes32,bool)._all (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1073) is not in mixedCase
+Parameter PlayerBook.addGame(address,string)._gameAddress (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1114) is not in mixedCase
+Parameter PlayerBook.addGame(address,string)._gameNameStr (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1114) is not in mixedCase
+Parameter PlayerBook.setRegistrationFee(uint256)._fee (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1134) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in PlayerBook.registerNameCore(uint256,address,uint256,bytes32,bool,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#917-944):
+	External calls:
+	- affWallet.transfer(address(this).balance) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#936)
+	Event emitted after the call(s):
+	- onNewName(_pID,_addr,_name,_isNewPlayer,_affID,plyr_[_affID].addr,plyr_[_affID].name,msg.value,now) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#943)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+PlayerBook.affWallet (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#579) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+checkIfNameValid(string) should be declared external:
+	- PlayerBook.checkIfNameValid(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#688-698)
+registerNameXaddr(string,address,bool) should be declared external:
+	- PlayerBook.registerNameXaddr(string,address,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#760-798)
+registerNameXname(string,bytes32,bool) should be declared external:
+	- PlayerBook.registerNameXname(string,bytes32,bool) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#800-838)
+useMyOldName(string) should be declared external:
+	- PlayerBook.useMyOldName(string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#898-911)
+addGame(address,string) should be declared external:
+	- PlayerBook.addGame(address,string) (../sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol#1114-1132)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x1a7badbc3a718aacd2723a73d01f34daf5b69dab.sol analyzed (7 contracts with 100 detectors), 86 result(s) found

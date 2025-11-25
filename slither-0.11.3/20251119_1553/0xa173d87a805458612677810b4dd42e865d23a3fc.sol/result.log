@@ -1,0 +1,125 @@
+'solc --version' running
+'solc /sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol:
+/sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol:60:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _owner) view returns (uint);
+    ^-----------------------------------------------------^
+/sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol:61:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint _value) returns (bool);
+    ^---------------------------------------------------------^
+/sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol:62:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint _value) returns (bool);
+    ^----------------------------------------------------------------------------^
+/sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol:63:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint _value) returns (bool);
+    ^-------------------------------------------------------------^
+/sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol:64:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) view returns (uint);
+    ^-----------------------------------------------------------------------^
+
+
+TokenVestingWithConstantPercent.vestedAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#164-177) performs a multiplication on the result of a division:
+	- now.sub(cliff).div(vestingPeriod).mul(periodPercent) > 100 (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#171)
+TokenVestingWithConstantPercent.vestedAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#164-177) performs a multiplication on the result of a division:
+	- _amount = totalBalance.mul(now.sub(cliff).div(vestingPeriod).mul(periodPercent)).div(100) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#175)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in TokenVestingWithConstantPercent.release() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#149-157):
+	External calls:
+	- unreleased = releasableAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#151)
+		- currentBalance = token.balanceOf(this) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#165)
+	- require(bool,string)(token.transfer(beneficiary,unreleased),revert on transfer failure) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#154)
+	State variables written after the call(s):
+	- released = released.add(unreleased) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#155)
+	BaseTokenVesting.released (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#95) can be used in cross function reentrancies:
+	- TokenVestingWithConstantPercent.releasableAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#160-162)
+	- TokenVestingWithConstantPercent.release() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#149-157)
+	- BaseTokenVesting.released (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#95)
+	- TokenVestingWithConstantPercent.vestedAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#164-177)
+Reentrancy in TokenVestingWithFloatingPercent.release() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#206-214):
+	External calls:
+	- unreleased = releasableAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#208)
+		- currentBalance = token.balanceOf(this) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#221)
+	- require(bool,string)(token.transfer(beneficiary,unreleased),revert on transfer failure) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#211)
+	State variables written after the call(s):
+	- released = released.add(unreleased) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#212)
+	BaseTokenVesting.released (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#95) can be used in cross function reentrancies:
+	- TokenVestingWithFloatingPercent.releasableAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#216-218)
+	- TokenVestingWithFloatingPercent.release() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#206-214)
+	- BaseTokenVesting.released (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#95)
+	- TokenVestingWithFloatingPercent.vestedAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#220-242)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Reentrancy in TokenVestingWithConstantPercent.release() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#149-157):
+	External calls:
+	- unreleased = releasableAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#151)
+		- currentBalance = token.balanceOf(this) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#165)
+	- require(bool,string)(token.transfer(beneficiary,unreleased),revert on transfer failure) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#154)
+	Event emitted after the call(s):
+	- Released(unreleased) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#156)
+Reentrancy in TokenVestingWithFloatingPercent.release() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#206-214):
+	External calls:
+	- unreleased = releasableAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#208)
+		- currentBalance = token.balanceOf(this) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#221)
+	- require(bool,string)(token.transfer(beneficiary,unreleased),revert on transfer failure) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#211)
+	Event emitted after the call(s):
+	- Released(unreleased) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#213)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenVestingWithConstantPercent.vestedAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#164-177) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < cliff || ! vestingHasStarted (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#168)
+	- now.sub(cliff).div(vestingPeriod).mul(periodPercent) > 100 (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#171)
+TokenVestingWithFloatingPercent.vestedAmount() (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#220-242) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < cliff || ! vestingHasStarted (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#224)
+	- _periodPercentsIndex > periodPercents.length.sub(1) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#229)
+	- _periodPercentsIndex >= 1 (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#233)
+	- i < _periodPercentsIndex - 1 (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#235)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+BaseTokenVesting.sendTokens(address,uint256) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#120-123) compares to a boolean constant:
+	-require(bool,string)(vestingHasStarted == false,send tokens only if vesting has not been started) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#121)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BaseTokenVesting.sendTokens(address,uint256)._to (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#120) is not in mixedCase
+Parameter BaseTokenVesting.sendTokens(address,uint256)._amount (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#120) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithConstantPercent(address,uint256,uint256,address,uint256)._benificiary (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#252) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithConstantPercent(address,uint256,uint256,address,uint256)._cliff (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#253) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithConstantPercent(address,uint256,uint256,address,uint256)._vestingPeriod (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#254) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithConstantPercent(address,uint256,uint256,address,uint256)._tokenAddress (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#255) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithConstantPercent(address,uint256,uint256,address,uint256)._periodPercent (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#256) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[])._benificiary (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#274) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[])._cliff (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#275) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[])._vestingPeriod (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#276) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[])._tokenAddress (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#277) is not in mixedCase
+Parameter TokenVestingFactory.createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[])._periodPercents (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#278) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[]) should be declared external:
+	- TokenVestingFactory.createVestingContractWithFloatingPercent(address,uint256,uint256,address,uint256[]) (../sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol#273-293)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xa173d87a805458612677810b4dd42e865d23a3fc.sol analyzed (7 contracts with 100 detectors), 24 result(s) found

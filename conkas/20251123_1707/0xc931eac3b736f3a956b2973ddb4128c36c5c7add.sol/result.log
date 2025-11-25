@@ -1,0 +1,57 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol:120:32:
+    |
+120 | 	function balanceOf(address a) constant returns (uint) {
+    | 	                              ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol:124:25:
+    |
+124 | 	function totalSupply() constant returns (uint) {
+    | 	                       ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol:128:55:
+    |
+128 | 	function allowance(address _owner, address _spender) constant returns (uint) {
+    | 	                                                     ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol:234:25:
+    |
+234 | 	function totalSupply() constant returns (uint) {
+    | 	                       ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol:238:33:
+    |
+238 | 	function balanceOf(address _a) constant returns (uint) {
+    | 	                               ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+   --> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol:242:55:
+    |
+242 | 	function allowance(address _owner, address _spender) constant returns (uint) {
+    | 	                                                     ^^^^^^^^
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> /sb/0xc931eac3b736f3a956b2973ddb4128c36c5c7add.sol

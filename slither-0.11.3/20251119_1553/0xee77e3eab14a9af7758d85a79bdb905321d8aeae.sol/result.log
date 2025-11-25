@@ -1,0 +1,92 @@
+'solc --version' running
+'solc /sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137) ignores return value by _token.transferFrom(this,transactionTo_,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#132)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+XEXHolder.confirmTransaction(uint256,bool) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#110-123) uses a dangerous strict equality:
+	- require(bool)(transactionNonce_ == _nonce) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#111)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137):
+	External calls:
+	- _token.approve(this,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#131)
+	- _token.transferFrom(this,transactionTo_,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#132)
+	State variables written after the call(s):
+	- clearTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#136)
+		- transactionTo_ = address(0) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#141)
+	XEXHolder.transactionTo_ (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#21) can be used in cross function reentrancies:
+	- XEXHolder.clearTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#139-143)
+	- XEXHolder.showTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#106-108)
+	- XEXHolder.startTransaction(address,uint256) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#95-104)
+	- XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137)
+	- clearTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#136)
+		- transactionValue_ = 0 (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#142)
+	XEXHolder.transactionValue_ (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#22) can be used in cross function reentrancies:
+	- XEXHolder.clearTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#139-143)
+	- XEXHolder.showTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#106-108)
+	- XEXHolder.startTransaction(address,uint256) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#95-104)
+	- XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137) ignores return value by _token.approve(this,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#131)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+XEXHolder.constructor(address)._token (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#35) lacks a zero-check on :
+		- token_ = _token (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#36)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137):
+	External calls:
+	- _token.approve(this,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#131)
+	- _token.transferFrom(this,transactionTo_,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#132)
+	State variables written after the call(s):
+	- clearTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#136)
+		- transactionNonce_ = 0 (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#140)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in XEXHolder.submitTransaction() (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#125-137):
+	External calls:
+	- _token.approve(this,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#131)
+	- _token.transferFrom(this,transactionTo_,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#132)
+	Event emitted after the call(s):
+	- TransactionSubmitted(transactionTo_,transactionValue_) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#134)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+XEXHolder.confirmTransaction(uint256,bool) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#110-123) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(transactionNonce_ == _nonce) (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#111)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter XEXHolder.isHolder(address)._address (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#48) is not in mixedCase
+Parameter XEXHolder.setHolder(address,address,address)._address1 (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#55) is not in mixedCase
+Parameter XEXHolder.setHolder(address,address,address)._address2 (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#55) is not in mixedCase
+Parameter XEXHolder.setHolder(address,address,address)._address3 (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#55) is not in mixedCase
+Parameter XEXHolder.resetHolder(bool)._vote (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#82) is not in mixedCase
+Parameter XEXHolder.startTransaction(address,uint256)._address (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#95) is not in mixedCase
+Parameter XEXHolder.startTransaction(address,uint256)._value (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#95) is not in mixedCase
+Parameter XEXHolder.confirmTransaction(uint256,bool)._nonce (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#110) is not in mixedCase
+Parameter XEXHolder.confirmTransaction(uint256,bool)._vote (../sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol#110) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xee77e3eab14a9af7758d85a79bdb905321d8aeae.sol analyzed (2 contracts with 100 detectors), 19 result(s) found

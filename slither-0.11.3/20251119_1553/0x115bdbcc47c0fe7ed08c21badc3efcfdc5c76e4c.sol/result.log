@@ -1,0 +1,72 @@
+'solc --version' running
+'solc /sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:8:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if(responseHash == keccak256(_response) && msg.value > 3 ether)
+                           ^------------------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:8:28: Warning: The provided argument of type string calldata is not implicitly convertible to expected type bytes memory.
+        if(responseHash == keccak256(_response) && msg.value > 3 ether)
+                           ^------------------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:10:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            msg.sender.transfer(this.balance);
+                                ^----------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:23:12: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if(keccak256(_questionerPin)==questionerPin) 
+           ^-----------------------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:23:12: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        if(keccak256(_questionerPin)==questionerPin) 
+           ^-----------------------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:25:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+            responseHash = keccak256(_response);
+                           ^------------------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:25:28: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+            responseHash = keccak256(_response);
+                           ^------------------^
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol:34:29: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        msg.sender.transfer(this.balance);
+                            ^----------^
+
+
+ENIGMA.newQuestioner(address).newAddress (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#44) lacks a zero-check on :
+		- questionSender = newAddress (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#45)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function ENIGMA.Try(string) (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#5-12) is not in mixedCase
+Parameter ENIGMA.Try(string)._response (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#5) is not in mixedCase
+Function ENIGMA.ActivateContract(bytes32,string,string) (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#22-30) is not in mixedCase
+Parameter ENIGMA.ActivateContract(bytes32,string,string)._questionerPin (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#22) is not in mixedCase
+Parameter ENIGMA.ActivateContract(bytes32,string,string)._question (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#22) is not in mixedCase
+Parameter ENIGMA.ActivateContract(bytes32,string,string)._response (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#22) is not in mixedCase
+Function ENIGMA.StopGame() (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#32-35) is not in mixedCase
+Function ENIGMA.NewQuestion(string,bytes32) (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#37-42) is not in mixedCase
+Parameter ENIGMA.NewQuestion(string,bytes32)._question (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#37) is not in mixedCase
+Parameter ENIGMA.NewQuestion(string,bytes32)._responseHash (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#37) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ActivateContract(bytes32,string,string) should be declared external:
+	- ENIGMA.ActivateContract(bytes32,string,string) (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#22-30)
+NewQuestion(string,bytes32) should be declared external:
+	- ENIGMA.NewQuestion(string,bytes32) (../sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol#37-42)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x115bdbcc47c0fe7ed08c21badc3efcfdc5c76e4c.sol analyzed (1 contracts with 100 detectors), 15 result(s) found

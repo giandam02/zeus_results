@@ -1,0 +1,128 @@
+'solc --version' running
+'solc /sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:100:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TokenSyndicate(address _tokenContractAddress,
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:132:9: Warning: Invoking events without "emit" prefix is deprecated.
+        LogInvest(msg.sender, msg.value);       // create an event
+        ^------------------------------^
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:154:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance >= totalPresale);
+                ^----------^
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:156:39: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        tokenContract.buyTokens.value(this.balance)();
+                                      ^----------^
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:163:9: Warning: Invoking events without "emit" prefix is deprecated.
+        LogTokenPurchase(totalPresale, tokenContract.tokenSaleBalanceOf(this));
+        ^--------------------------------------------------------------------^
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:194:9: Warning: Invoking events without "emit" prefix is deprecated.
+        LogWithdrawTokens(msg.sender, tokens);
+        ^-----------------------------------^
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:209:9: Warning: Invoking events without "emit" prefix is deprecated.
+        LogRefund(msg.sender, totalValue);
+        ^-------------------------------^
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:100:5: Warning: No visibility specified. Defaulting to "public". 
+    function TokenSyndicate(address _tokenContractAddress,
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:4:5: Warning: Function state mutability can be restricted to pure
+    function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:10:5: Warning: Function state mutability can be restricted to pure
+    function div(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:17:5: Warning: Function state mutability can be restricted to pure
+    function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol:22:5: Warning: Function state mutability can be restricted to pure
+    function add(uint256 a, uint256 b) internal constant returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in TokenSyndicate.buyTokens() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#153-164):
+	External calls:
+	- tokenContract.buyTokens.value(this.balance)() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#156)
+	- tokenExchangeRate = tokenContract.getCurrentPrice(this) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#159)
+	External calls sending eth:
+	- tokenContract.buyTokens.value(this.balance)() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#156)
+	State variables written after the call(s):
+	- tokensPurchased = true (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#161)
+	TokenSyndicate.tokensPurchased (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#59) can be used in cross function reentrancies:
+	- TokenSyndicate.TokenSyndicate(address,address,uint256) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#100-117)
+	- TokenSyndicate.buyTokens() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#153-164)
+	- TokenSyndicate.onlyWhenTokensNotPurchased() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#83-85)
+	- TokenSyndicate.onlyWhenTokensPurchased() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#86-88)
+	- TokenSyndicate.tokensPurchased (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#59)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+TokenSyndicate.TokenSyndicate(address,address,uint256)._tokenContractAddress (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#100) lacks a zero-check on :
+		- tokenContractAddress = _tokenContractAddress (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#103)
+TokenSyndicate.TokenSyndicate(address,address,uint256)._owner (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#101) lacks a zero-check on :
+		- owner = _owner (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#104)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in TokenSyndicate.buyTokens() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#153-164):
+	External calls:
+	- tokenContract.buyTokens.value(this.balance)() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#156)
+	- tokenExchangeRate = tokenContract.getCurrentPrice(this) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#159)
+	External calls sending eth:
+	- tokenContract.buyTokens.value(this.balance)() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#156)
+	State variables written after the call(s):
+	- tokenExchangeRate = tokenContract.getCurrentPrice(this) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#159)
+Reentrancy in TokenSyndicate.withdrawSyndicateTokens() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#170-173):
+	External calls:
+	- assert(bool)(tokenContract.withdraw()) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#171)
+	State variables written after the call(s):
+	- syndicateTokensWithdrawn = true (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#172)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TokenSyndicate.buyTokens() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#153-164):
+	External calls:
+	- tokenContract.buyTokens.value(this.balance)() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#156)
+	- tokenExchangeRate = tokenContract.getCurrentPrice(this) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#159)
+	- LogTokenPurchase(totalPresale,tokenContract.tokenSaleBalanceOf(this)) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#163)
+	External calls sending eth:
+	- tokenContract.buyTokens.value(this.balance)() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#156)
+	Event emitted after the call(s):
+	- LogTokenPurchase(totalPresale,tokenContract.tokenSaleBalanceOf(this)) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#163)
+Reentrancy in TokenSyndicate.withdrawTokens() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#180-195):
+	External calls:
+	- assert(bool)(tokenContract.transfer(msg.sender,tokens)) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#193)
+	Event emitted after the call(s):
+	- LogWithdrawTokens(msg.sender,tokens) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#194)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.10 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.10 (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter TokenSyndicate.balanceOf(address)._purchaser (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#138) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in TokenSyndicate.refund() (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#201-210):
+	External calls:
+	- msg.sender.transfer(totalValue) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#208)
+	Event emitted after the call(s):
+	- LogRefund(msg.sender,totalValue) (../sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol#209)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xe5ed4bd856790dde4de0dd411afcd0221256fd08.sol analyzed (3 contracts with 100 detectors), 11 result(s) found

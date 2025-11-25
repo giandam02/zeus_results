@@ -1,0 +1,107 @@
+'solc --version' running
+'solc /sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:66:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:158:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TeamLocker(address _token, address[] _beneficiaries, uint256[] _ratios, uint256 _genTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:183:42: Warning: Using "years" as a unit denomination is deprecated.
+        uint256 lockTime2 = add(genTime, 1 years); // 1 year
+                                         ^-----^
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:66:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:84:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:158:5: Warning: No visibility specified. Defaulting to "public". 
+    function TeamLocker(address _token, address[] _beneficiaries, uint256[] _ratios, uint256 _genTime) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:10:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:16:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:23:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:28:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:34:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:38:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:42:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol:46:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#131-133) uses arbitrary from in transferFrom: assert(bool)(token.transferFrom(from,to,value)) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#132)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+SafeMath.mul(uint256,uint256) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#10-14) uses a dangerous strict equality:
+	- assert(bool)(a == 0 || c / a == b) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#12)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Ownable.transferOwnership(address) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#84-87) should emit an event for: 
+	- owner = newOwner (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#86) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+TeamLocker.setGenTime(uint256) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#210-213) should emit an event for: 
+	- genTime = _genTime (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#212) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in TeamLocker.release() (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#177-207):
+	External calls:
+	- balance = token.balanceOf(address(this)) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#179)
+	State variables written after the call(s):
+	- collectedTokens = add(collectedTokens,grantAmount) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#198)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+TeamLocker.release() (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#177-207) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= lockTime1 (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#187)
+	- now >= lockTime2 (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#191)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+SafeMath.max256(uint256,uint256) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#42-44) is never used and should be removed
+SafeMath.max64(uint64,uint64) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#34-36) is never used and should be removed
+SafeMath.min256(uint256,uint256) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#46-48) is never used and should be removed
+SafeMath.min64(uint64,uint64) (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#38-40) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter TeamLocker.setGenTime(uint256)._genTime (../sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol#210) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xc5ab5caf9f0b3b895f64ad8ebfee8ceb2bf641ae.sol analyzed (6 contracts with 100 detectors), 13 result(s) found

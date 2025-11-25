@@ -1,0 +1,179 @@
+'solc --version' running
+'solc /sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:86:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function CoinoorCrowdsale(address _tokenAddress, address _beneficiary, address _creator, address _marketing, address _bounty, uint256 _start) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:206:30: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        beneficiary.transfer(this.balance);
+                             ^----------^
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:4:5: Warning: No visibility specified. Defaulting to "public". 
+    function issue(address _recipient, uint256 _value) returns (bool);
+    ^----------------------------------------------------------------^
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint256);
+    ^------------------------------------------------^
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:6:5: Warning: No visibility specified. Defaulting to "public". 
+    function unlock() returns (bool);
+    ^-------------------------------^
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:86:5: Warning: No visibility specified. Defaulting to "public". 
+    function CoinoorCrowdsale(address _tokenAddress, address _beneficiary, address _creator, address _marketing, address _bounty, uint256 _start) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:100:5: Warning: No visibility specified. Defaulting to "public". 
+    function init() atStage(Stages.Deploying) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:131:5: Warning: No visibility specified. Defaulting to "public". 
+    function confirmBeneficiary() onlyBeneficiary {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:143:5: Warning: No visibility specified. Defaulting to "public". 
+    function toTokens(uint256 _wei) returns (uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:191:5: Warning: No visibility specified. Defaulting to "public". 
+    function endCrowdsale() atStage(Stages.InProgress) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:205:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw() onlyBeneficiary atStage(Stages.Ended) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:213:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable atStage(Stages.InProgress) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol:143:5: Warning: Function state mutability can be restricted to view
+    function toTokens(uint256 _wei) returns (uint256 amount) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in CoinoorCrowdsale.fallback() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#213-248):
+	External calls:
+	- token.totalSupply() + valueInTokens >= maxSupply (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#235)
+	State variables written after the call(s):
+	- stage = Stages.Ended (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#236)
+	CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43) can be used in cross function reentrancies:
+	- CoinoorCrowdsale.atStage(CoinoorCrowdsale.Stages) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#59-63)
+	- CoinoorCrowdsale.endCrowdsale() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#191-198)
+	- CoinoorCrowdsale.fallback() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#213-248)
+	- CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123)
+	- CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43)
+	- CoinoorCrowdsale.toTokens(uint256) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#143-184)
+Reentrancy in CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123):
+	External calls:
+	- ! token.issue(beneficiary,4900000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#104)
+	State variables written after the call(s):
+	- stage = Stages.Deploying (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#110)
+	CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43) can be used in cross function reentrancies:
+	- CoinoorCrowdsale.atStage(CoinoorCrowdsale.Stages) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#59-63)
+	- CoinoorCrowdsale.endCrowdsale() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#191-198)
+	- CoinoorCrowdsale.fallback() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#213-248)
+	- CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123)
+	- CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43)
+	- CoinoorCrowdsale.toTokens(uint256) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#143-184)
+Reentrancy in CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123):
+	External calls:
+	- ! token.issue(beneficiary,4900000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#104)
+	- ! token.issue(creator,2500000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#109)
+	State variables written after the call(s):
+	- stage = Stages.Deploying (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#115)
+	CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43) can be used in cross function reentrancies:
+	- CoinoorCrowdsale.atStage(CoinoorCrowdsale.Stages) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#59-63)
+	- CoinoorCrowdsale.endCrowdsale() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#191-198)
+	- CoinoorCrowdsale.fallback() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#213-248)
+	- CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123)
+	- CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43)
+	- CoinoorCrowdsale.toTokens(uint256) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#143-184)
+Reentrancy in CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123):
+	External calls:
+	- ! token.issue(beneficiary,4900000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#104)
+	- ! token.issue(creator,2500000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#109)
+	- ! token.issue(marketing,2500000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#114)
+	State variables written after the call(s):
+	- stage = Stages.Deploying (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#120)
+	CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43) can be used in cross function reentrancies:
+	- CoinoorCrowdsale.atStage(CoinoorCrowdsale.Stages) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#59-63)
+	- CoinoorCrowdsale.endCrowdsale() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#191-198)
+	- CoinoorCrowdsale.fallback() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#213-248)
+	- CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123)
+	- CoinoorCrowdsale.stage (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#43)
+	- CoinoorCrowdsale.toTokens(uint256) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#143-184)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+CoinoorCrowdsale.CoinoorCrowdsale(address,address,address,address,address,uint256)._beneficiary (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#86) lacks a zero-check on :
+		- beneficiary = _beneficiary (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#88)
+CoinoorCrowdsale.CoinoorCrowdsale(address,address,address,address,address,uint256)._creator (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#86) lacks a zero-check on :
+		- creator = _creator (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#89)
+CoinoorCrowdsale.CoinoorCrowdsale(address,address,address,address,address,uint256)._marketing (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#86) lacks a zero-check on :
+		- marketing = _marketing (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#90)
+CoinoorCrowdsale.CoinoorCrowdsale(address,address,address,address,address,uint256)._bounty (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#86) lacks a zero-check on :
+		- bounty = _bounty (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#91)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+CoinoorCrowdsale.toTokens(uint256) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#143-184) uses timestamp for comparisons
+	Dangerous comparisons:
+	- stage != Stages.Ended && now >= start && now <= end (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#145)
+	- now <= start + ratePreICOEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#148)
+	- now <= start + rateWaitingEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#153)
+	- now <= start + rateAngelDayEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#158)
+	- now <= start + rateFirstWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#163)
+	- now <= start + rateSecondWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#168)
+	- now <= start + rateThirdWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#173)
+	- now <= start + rateLastWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#178)
+CoinoorCrowdsale.endCrowdsale() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#191-198) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > end) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#192)
+CoinoorCrowdsale.fallback() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#213-248) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now >= start) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#216)
+	- require(bool)(now <= end) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#219)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter CoinoorCrowdsale.toTokens(uint256)._wei (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#143) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123) uses literals with too many digits:
+	- ! token.issue(beneficiary,4900000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#104)
+CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123) uses literals with too many digits:
+	- ! token.issue(creator,2500000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#109)
+CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123) uses literals with too many digits:
+	- ! token.issue(marketing,2500000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#114)
+CoinoorCrowdsale.init() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#100-123) uses literals with too many digits:
+	- ! token.issue(bounty,100000 * 10 ** 8) (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#119)
+CoinoorCrowdsale.slitherConstructorVariables() (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#9-250) uses literals with too many digits:
+	- maxSupply = 65000000 * 10 ** 8 (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#17)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+CoinoorCrowdsale.maxSupply (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#17) should be constant 
+CoinoorCrowdsale.minAcceptedAmount (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#18) should be constant 
+CoinoorCrowdsale.rateAngelDay (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#23) should be constant 
+CoinoorCrowdsale.rateAngelDayEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#31) should be constant 
+CoinoorCrowdsale.rateFirstWeek (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#24) should be constant 
+CoinoorCrowdsale.rateFirstWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#32) should be constant 
+CoinoorCrowdsale.rateLastWeek (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#27) should be constant 
+CoinoorCrowdsale.rateLastWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#35) should be constant 
+CoinoorCrowdsale.ratePreICO (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#21) should be constant 
+CoinoorCrowdsale.ratePreICOEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#29) should be constant 
+CoinoorCrowdsale.rateSecondWeek (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#25) should be constant 
+CoinoorCrowdsale.rateSecondWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#33) should be constant 
+CoinoorCrowdsale.rateThirdWeek (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#26) should be constant 
+CoinoorCrowdsale.rateThirdWeekEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#34) should be constant 
+CoinoorCrowdsale.rateWaiting (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#22) should be constant 
+CoinoorCrowdsale.rateWaitingEnd (../sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol#30) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x36cddd1281258e4373ad313a995272f525cc4e63.sol analyzed (2 contracts with 100 detectors), 35 result(s) found

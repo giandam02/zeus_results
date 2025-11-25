@@ -1,0 +1,138 @@
+'solc --version' running
+'solc /sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SuperBank.withdraw() (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#161-217) performs a multiplication on the result of a division:
+	- _canAmount = ((invested_m[msg.sender].amount.mul(5) / 100).mul(_blockSub) / 5900) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#180)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+SuperBank.changeOwner(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#293-298) should emit an event for: 
+	- owner = newOwner (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#297) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156) should emit an event for: 
+	- total = total.add(_eth) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#109) 
+	- safeFund = safeFund.add(_safeAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#110) 
+	- floatFund = floatFund.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#142) 
+	- bonus = 0 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#149) 
+	- bonus = bonus.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#155) 
+SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288) should emit an event for: 
+	- bonus = 0 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#240) 
+	- lastPrice = 0 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#242) 
+	- lastPrice = _ethUse (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#260) 
+	- floatFund = floatFund.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#286) 
+	- bonus = bonus.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#287) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+SuperBank.bid(address).leader_t (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#239) lacks a zero-check on :
+		- leader_t.transfer(bonus_t) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#244)
+SuperBank.changeOwner(address).newOwner (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#293) lacks a zero-check on :
+		- owner = newOwner (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#297)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156) uses timestamp for comparisons
+	Dangerous comparisons:
+	- bonusEndTime != 0 && bonusEndTime < _now (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#145)
+SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288) uses timestamp for comparisons
+	Dangerous comparisons:
+	- bonusEndTime != 0 && bonusEndTime < _now (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#236)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SuperBank.invest(uint8,address)._type (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67) is not in mixedCase
+Parameter SuperBank.invest(uint8,address)._ref (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67) is not in mixedCase
+Parameter SuperBank.bid(address)._ref (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222) is not in mixedCase
+Variable SuperBank.invested_m (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#28) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288):
+	External calls:
+	- leader_t.transfer(bonus_t) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#244)
+	- msg.sender.transfer(_eth.sub(_ethUse)) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#255)
+	State variables written after the call(s):
+	- bonusEndTime = _now + 43200 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#258)
+	- lastPrice = _ethUse (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#260)
+	- leader = msg.sender (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#259)
+Reentrancy in SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288):
+	External calls:
+	- leader_t.transfer(bonus_t) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#244)
+	- msg.sender.transfer(_eth.sub(_ethUse)) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#255)
+	- _ref.transfer(_promoteAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#277)
+	- owner.transfer(_teamAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#282)
+	State variables written after the call(s):
+	- bonus = bonus.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#287)
+	- floatFund = floatFund.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#286)
+Reentrancy in SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156):
+	External calls:
+	- withdraw() (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#84)
+		- msg.sender.transfer(_realAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#215)
+	State variables written after the call(s):
+	- invested_m[msg.sender].amount = _eth.add(invested_m[msg.sender].amount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#105)
+	- invested_m[msg.sender].safeAmount = _safeAmount.add(invested_m[msg.sender].safeAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#106)
+	- invested_m[msg.sender].maxWithdraw = _returnAmount.add(invested_m[msg.sender].maxWithdraw) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#107)
+	- people = people.add(1) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#88)
+	- safeFund = safeFund.add(_safeAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#110)
+	- startBlockNo = block.number (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#115)
+	- total = total.add(_eth) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#109)
+Reentrancy in SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156):
+	External calls:
+	- withdraw() (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#84)
+		- msg.sender.transfer(_realAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#215)
+	- _ref.transfer(_promoteAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#133)
+	- owner.transfer(_teamAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#138)
+	State variables written after the call(s):
+	- bonus = 0 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#149)
+	- bonusEndTime = 0 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#152)
+	- floatFund = floatFund.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#142)
+	- lastPrice = 0 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#151)
+	- leader = address(0) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#150)
+Reentrancy in SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156):
+	External calls:
+	- withdraw() (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#84)
+		- msg.sender.transfer(_realAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#215)
+	- _ref.transfer(_promoteAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#133)
+	- owner.transfer(_teamAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#138)
+	- leader_t.transfer(bonus_t) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#153)
+	State variables written after the call(s):
+	- bonus = bonus.add(_otherAmount) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#155)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+SuperBank.constructor() (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#32-39) uses literals with too many digits:
+	- startTotal = 1000000000000000000000 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#38)
+SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156) uses literals with too many digits:
+	- require(bool,string)(msg.value >= 1000000000,not enough ether) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#82)
+SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156) uses literals with too many digits:
+	- _refTotal < 5000000000000000000 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#121)
+SuperBank.invest(uint8,address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#67-156) uses literals with too many digits:
+	- _refTotal < 20000000000000000000 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#125)
+SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288) uses literals with too many digits:
+	- _maxPrice = (1000000000000000000).add(lastPrice) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#247)
+SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288) uses literals with too many digits:
+	- require(bool,string)(_eth >= (100000000000000000).add(lastPrice),Need more Ether) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#249)
+SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288) uses literals with too many digits:
+	- _refTotal < 5000000000000000000 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#265)
+SuperBank.bid(address) (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#222-288) uses literals with too many digits:
+	- _refTotal < 20000000000000000000 (../sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol#269)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xa577db7575a197ea811a31bb7600fc47d3a44df7.sol analyzed (2 contracts with 100 detectors), 27 result(s) found

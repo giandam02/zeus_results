@@ -1,0 +1,49 @@
+'solc --version' running
+'solc /sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+NetkillerBatchToken.transferOwnership(address) (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#58-62) should emit an event for: 
+	- owner = newOwner (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#60) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter NetkillerBatchToken.setLock(bool)._lock (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#54) is not in mixedCase
+Parameter NetkillerBatchToken.transfer(address,uint256)._to (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#76) is not in mixedCase
+Parameter NetkillerBatchToken.transfer(address,uint256)._value (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#76) is not in mixedCase
+Parameter NetkillerBatchToken.transferFrom(address,address,uint256)._from (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#81) is not in mixedCase
+Parameter NetkillerBatchToken.transferFrom(address,address,uint256)._to (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#81) is not in mixedCase
+Parameter NetkillerBatchToken.transferFrom(address,address,uint256)._value (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#81) is not in mixedCase
+Parameter NetkillerBatchToken.approve(address,uint256)._spender (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#88) is not in mixedCase
+Parameter NetkillerBatchToken.approve(address,uint256)._value (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#88) is not in mixedCase
+Parameter NetkillerBatchToken.burn(uint256)._value (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#94) is not in mixedCase
+Parameter NetkillerBatchToken.burnFrom(address,uint256)._from (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#102) is not in mixedCase
+Parameter NetkillerBatchToken.burnFrom(address,uint256)._value (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#102) is not in mixedCase
+Parameter NetkillerBatchToken.transferBatch(address[],uint256)._to (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#124) is not in mixedCase
+Parameter NetkillerBatchToken.transferBatch(address[],uint256)._value (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#124) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+transferBatch(address[],uint256) should be declared external:
+	- NetkillerBatchToken.transferBatch(address[],uint256) (../sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol#124-129)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x663aa8fa46e4ed867a3a8945422031ec2482ce13.sol analyzed (1 contracts with 100 detectors), 17 result(s) found

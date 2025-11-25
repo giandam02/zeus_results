@@ -1,0 +1,78 @@
+'solc --version' running
+'solc /sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:56:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function BatchTransferContract(address _owner) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:74:26: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(total <= this.balance);
+                         ^----------^
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:94:40: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint amount = ethAmount.min256(this.balance);
+                                       ^----------^
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:60:5: Warning: No visibility specified. Defaulting to "public". 
+    function () payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:4:3: Warning: Function state mutability can be restricted to pure
+  function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:8:3: Warning: Function state mutability can be restricted to pure
+  function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:16:3: Warning: Function state mutability can be restricted to pure
+  function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:22:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:28:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:35:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol:40:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+BatchTransferContract.BatchTransferContract(address)._owner (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#56) lacks a zero-check on :
+		- owner = _owner (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#57)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BatchTransferContract.batchRefund(address[],uint256[]) (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#64-81) has external calls inside a loop: investors[i].transfer(ethAmounts[i]) (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#78)
+BatchTransferContract.batchRefundzFixed(address[],uint256) (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#83-89) has external calls inside a loop: investors[i].transfer(ethAmount) (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+batchRefund(address[],uint256[]) should be declared external:
+	- BatchTransferContract.batchRefund(address[],uint256[]) (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#64-81)
+batchRefundzFixed(address[],uint256) should be declared external:
+	- BatchTransferContract.batchRefundzFixed(address[],uint256) (../sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol#83-89)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x424e54b7bef72a1a9e3d3daa369e40d20c3b0292.sol analyzed (3 contracts with 100 detectors), 7 result(s) found

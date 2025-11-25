@@ -1,0 +1,223 @@
+'solc --version' running
+'solc /sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol:
+/sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol:179:13: Warning: Return value of low-level calls not used.
+            feeCollector.call.value(fee)();
+            ^----------------------------^
+
+
+TwoCoinsOneMoonGame (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#5-244) contract sets array length with a user-controlled value:
+	- history.push(Event({winner:winner,newMoonLevel:moonLevel,block:block.number,blueCap:marketCapBlue,redCap:marketCapRed})) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#204)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in TwoCoinsOneMoonGame.withdraw() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#175-185):
+	External calls:
+	- feeCollector.call.value(fee)() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#179)
+	State variables written after the call(s):
+	- balance[msg.sender] = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#183)
+	TwoCoinsOneMoonGame.balance (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#41) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.balance (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#41)
+	- TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201)
+	- TwoCoinsOneMoonGame.getBetAmountETH(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#133-141)
+	- TwoCoinsOneMoonGame.withdraw() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#175-185)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+TwoCoinsOneMoonGame.getBetAmountGNC(uint256,uint256,uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#75-119) performs a multiplication on the result of a division:
+	- betAmountGNC = betAmountGNC * 170 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#112)
+	- betAmountGNC = betAmountGNC * 200 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#115)
+TwoCoinsOneMoonGame.getBetAmountGNC(uint256,uint256,uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#75-119) performs a multiplication on the result of a division:
+	- betAmountGNC = betAmountGNC * 135 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#109)
+	- betAmountGNC = betAmountGNC * 170 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#112)
+TwoCoinsOneMoonGame.getBetAmountGNC(uint256,uint256,uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#75-119) performs a multiplication on the result of a division:
+	- betAmountGNC = betAmountGNC * 115 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#106)
+	- betAmountGNC = betAmountGNC * 135 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#109)
+TwoCoinsOneMoonGame.getBetAmountGNC(uint256,uint256,uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#75-119) performs a multiplication on the result of a division:
+	- betAmountGNC = betAmountGNC * 105 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#103)
+	- betAmountGNC = betAmountGNC * 115 / 100 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#106)
+TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201) performs a multiplication on the result of a division:
+	- balance[bettorsRed[i].account] += 10 ** 18 * bettorsRed[i].amount / marketCapRed * jackpotBlue / 10 ** 18 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#198)
+TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201) performs a multiplication on the result of a division:
+	- balance[bettorsBlue[i].account] += 10 ** 18 * bettorsBlue[i].amount / marketCapBlue * jackpotRed / 10 ** 18 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#192)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157) uses a dangerous strict equality:
+	- require(bool)(! isPaused || marketCapBlue > 0 || actionBlock == lastActionBlock) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#144)
+TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173) uses a dangerous strict equality:
+	- require(bool)(! isPaused || marketCapRed > 0 || actionBlock == lastActionBlock) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#160)
+TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201) uses a dangerous strict equality:
+	- winner == 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#189)
+TwoCoinsOneMoonGame.getBetAmountETH(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#133-141) uses a dangerous strict equality:
+	- tokenCount == 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#135)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157):
+	External calls:
+	- tokenCount = discountToken.balanceOf(msg.sender) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#146)
+	State variables written after the call(s):
+	- lastActionBlock = block.number (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#154)
+	TwoCoinsOneMoonGame.lastActionBlock (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#22) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157)
+	- TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173)
+	- TwoCoinsOneMoonGame.constructor() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#52-73)
+	- TwoCoinsOneMoonGame.lastActionBlock (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#22)
+	- marketCapBlue += betAmountGNC (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#151)
+	TwoCoinsOneMoonGame.marketCapBlue (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#25) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.addEvent(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#203-207)
+	- TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157)
+	- TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173)
+	- TwoCoinsOneMoonGame.burstBubble() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#209-232)
+	- TwoCoinsOneMoonGame.checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#234-242)
+	- TwoCoinsOneMoonGame.constructor() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#52-73)
+	- TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201)
+	- TwoCoinsOneMoonGame.marketCapBlue (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#25)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- marketCapBlue = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#224)
+	TwoCoinsOneMoonGame.marketCapBlue (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#25) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.addEvent(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#203-207)
+	- TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157)
+	- TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173)
+	- TwoCoinsOneMoonGame.burstBubble() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#209-232)
+	- TwoCoinsOneMoonGame.checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#234-242)
+	- TwoCoinsOneMoonGame.constructor() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#52-73)
+	- TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201)
+	- TwoCoinsOneMoonGame.marketCapBlue (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#25)
+Reentrancy in TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173):
+	External calls:
+	- tokenCount = discountToken.balanceOf(msg.sender) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#162)
+	State variables written after the call(s):
+	- lastActionBlock = block.number (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#170)
+	TwoCoinsOneMoonGame.lastActionBlock (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#22) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157)
+	- TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173)
+	- TwoCoinsOneMoonGame.constructor() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#52-73)
+	- TwoCoinsOneMoonGame.lastActionBlock (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#22)
+	- marketCapRed += betAmountGNC (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#167)
+	TwoCoinsOneMoonGame.marketCapRed (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#26) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.addEvent(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#203-207)
+	- TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173)
+	- TwoCoinsOneMoonGame.burstBubble() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#209-232)
+	- TwoCoinsOneMoonGame.checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#234-242)
+	- TwoCoinsOneMoonGame.constructor() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#52-73)
+	- TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201)
+	- TwoCoinsOneMoonGame.marketCapRed (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#26)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- marketCapRed = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#225)
+	TwoCoinsOneMoonGame.marketCapRed (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#26) can be used in cross function reentrancies:
+	- TwoCoinsOneMoonGame.addEvent(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#203-207)
+	- TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173)
+	- TwoCoinsOneMoonGame.burstBubble() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#209-232)
+	- TwoCoinsOneMoonGame.checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#234-242)
+	- TwoCoinsOneMoonGame.constructor() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#52-73)
+	- TwoCoinsOneMoonGame.depositBalance(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#187-201)
+	- TwoCoinsOneMoonGame.marketCapRed (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TwoCoinsOneMoonGame.withdraw() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#175-185) ignores return value by feeCollector.call.value(fee)() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#179)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-low-level-calls
+
+Reentrancy in TwoCoinsOneMoonGame.betBlueCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#143-157):
+	External calls:
+	- tokenCount = discountToken.balanceOf(msg.sender) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#146)
+	State variables written after the call(s):
+	- betAmountETH = getBetAmountETH(tokenCount) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#147)
+		- balance[feeCollector] += comission (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#138)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- balance[bettorsBlue[i].account] += bettorsBlue[i].amountEth (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#191)
+		- balance[bettorsBlue[i].account] += 10 ** 18 * bettorsBlue[i].amount / marketCapBlue * jackpotRed / 10 ** 18 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#192)
+		- balance[bettorsRed[i].account] += bettorsRed[i].amountEth (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#197)
+		- balance[bettorsRed[i].account] += 10 ** 18 * bettorsRed[i].amount / marketCapRed * jackpotBlue / 10 ** 18 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#198)
+	- bettorsBlue.push(Bettor({account:msg.sender,amount:betAmountGNC,amountEth:betAmountETH})) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#152)
+	- endBetBlue = bettorsBlue.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#153)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- history.push(Event({winner:winner,newMoonLevel:moonLevel,block:block.number,blueCap:marketCapBlue,redCap:marketCapRed})) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#204)
+	- jackpotBlue += betAmountETH (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#150)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- jackpotBlue = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#227)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- jackpotRed = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#228)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- lastEventId = history.length - 1 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#205)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- lastLevelChangeBlock = block.number (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#206)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- marketCapRed = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#225)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- moonLevel = moonLevel / 2 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#236)
+		- moonLevel = moonLevel * 2 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#221)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- startBetBlue = bettorsBlue.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#230)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#156)
+		- startBetRed = bettorsRed.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#231)
+Reentrancy in TwoCoinsOneMoonGame.betRedCoin(uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#159-173):
+	External calls:
+	- tokenCount = discountToken.balanceOf(msg.sender) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#162)
+	State variables written after the call(s):
+	- betAmountETH = getBetAmountETH(tokenCount) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#163)
+		- balance[feeCollector] += comission (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#138)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- balance[bettorsBlue[i].account] += bettorsBlue[i].amountEth (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#191)
+		- balance[bettorsBlue[i].account] += 10 ** 18 * bettorsBlue[i].amount / marketCapBlue * jackpotRed / 10 ** 18 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#192)
+		- balance[bettorsRed[i].account] += bettorsRed[i].amountEth (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#197)
+		- balance[bettorsRed[i].account] += 10 ** 18 * bettorsRed[i].amount / marketCapRed * jackpotBlue / 10 ** 18 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#198)
+	- bettorsRed.push(Bettor({account:msg.sender,amount:betAmountGNC,amountEth:betAmountETH})) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#168)
+	- endBetRed = bettorsRed.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#169)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- history.push(Event({winner:winner,newMoonLevel:moonLevel,block:block.number,blueCap:marketCapBlue,redCap:marketCapRed})) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#204)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- jackpotBlue = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#227)
+	- jackpotRed += betAmountETH (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#166)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- jackpotRed = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#228)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- lastEventId = history.length - 1 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#205)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- lastLevelChangeBlock = block.number (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#206)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- marketCapBlue = 0 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#224)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- moonLevel = moonLevel / 2 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#236)
+		- moonLevel = moonLevel * 2 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#221)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- startBetBlue = bettorsBlue.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#230)
+	- checkMoon() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#172)
+		- startBetRed = bettorsRed.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#231)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+TwoCoinsOneMoonGame.getBetAmountGNC(uint256,uint256,uint256) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#75-119) has a high cyclomatic complexity (13).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in TwoCoinsOneMoonGame.withdraw() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#175-185):
+	- feeCollector.call.value(fee)() (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#179)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Loop condition i < bettorsBlue.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#190) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < bettorsRed.length (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#196) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+putMessage(string) should be declared external:
+	- TwoCoinsOneMoonGame.putMessage(string) (../sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol#121-125)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x718f1892987a871fbe81462597e6dcd2900e127f.sol analyzed (2 contracts with 100 detectors), 24 result(s) found

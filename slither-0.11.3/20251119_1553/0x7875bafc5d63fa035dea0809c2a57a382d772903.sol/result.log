@@ -1,0 +1,49 @@
+'solc --version' running
+'solc /sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ERC20Detailed.constructor(string,string,uint8).name (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#37) shadows:
+	- ERC20Detailed.name() (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#43-45) (function)
+ERC20Detailed.constructor(string,string,uint8).symbol (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#37) shadows:
+	- ERC20Detailed.symbol() (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#47-49) (function)
+ERC20Detailed.constructor(string,string,uint8).decimals (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#37) shadows:
+	- ERC20Detailed.decimals() (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#51-53) (function)
+Token.constructor(string,string,uint8,uint256)._name (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#217) shadows:
+	- ERC20Detailed._name (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#33) (state variable)
+Token.constructor(string,string,uint8,uint256)._symbol (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#217) shadows:
+	- ERC20Detailed._symbol (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#34) (state variable)
+Token.constructor(string,string,uint8,uint256)._decimals (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#217) shadows:
+	- ERC20Detailed._decimals (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#35) (state variable)
+Token.constructor(string,string,uint8,uint256).totalSupply (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#224) shadows:
+	- ERC20.totalSupply() (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#105-107) (function)
+	- IERC20.totalSupply() (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#4) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Void constructor called in Token.constructor(string,string,uint8,uint256) (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#217-226):
+	- ERC20() (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#219)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#void-constructor
+
+ERC20._burn(address,uint256) (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#198-205) is never used and should be removed
+ERC20._burnFrom(address,uint256) (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#207-213) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint 0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- 0.4.25 (../sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol#1)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+/sb/0x7875bafc5d63fa035dea0809c2a57a382d772903.sol analyzed (5 contracts with 100 detectors), 12 result(s) found

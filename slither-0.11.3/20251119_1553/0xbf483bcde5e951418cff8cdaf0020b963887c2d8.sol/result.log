@@ -1,0 +1,285 @@
+'solc --version' running
+'solc /sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:60:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:106:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function RefundVault(address _wallet) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:207:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ACAToken(uint256 _totalSupply, address _newAdmin) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:558:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ACATokenSale(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:78:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:123:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Closed();
+    ^------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:124:21: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    wallet.transfer(this.balance);
+                    ^----------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:130:5: Warning: Invoking events without "emit" prefix is deprecated.
+    RefundsEnabled();
+    ^--------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:141:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Refunded(investor, depositedValue);
+    ^--------------------------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:755:36: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function _postValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
+                                   ^------------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:755:58: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function _postValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
+                                                         ^----------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:809:37: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function _updatePurchasingState(address _beneficiary, uint256 _weiAmount) internal {
+                                    ^------------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:809:59: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function _updatePurchasingState(address _beneficiary, uint256 _weiAmount) internal {
+                                                          ^----------------^
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol:809:5: Warning: Function state mutability can be restricted to pure
+    function _updatePurchasingState(address _beneficiary, uint256 _weiAmount) internal {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in ACATokenSale.buyTokens(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#706-723):
+	External calls:
+	- _forwardFunds() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#721)
+		- vault.deposit.value(msg.value)(msg.sender) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#814)
+	State variables written after the call(s):
+	- _postValidatePurchase(_beneficiary,weiAmount) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#722)
+		- currentStage = currentStage.add(1) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#757)
+	ACATokenSale.currentStage (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#391) can be used in cross function reentrancies:
+	- ACATokenSale._postValidatePurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#755-760)
+	- ACATokenSale._preValidatePurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#733-753)
+	- ACATokenSale._processPurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#766-807)
+	- ACATokenSale.currentStage (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#391)
+	- ACATokenSale.getClosingTime() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#476-478)
+	- ACATokenSale.getCurrentCapacity() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#485-487)
+	- ACATokenSale.getCurrentRate() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#503-505)
+	- ACATokenSale.getCurrentSold() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#494-496)
+	- ACATokenSale.getOpeningTime() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#467-469)
+	- ACATokenSale.setRate(uint256,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#532-539)
+	- ACATokenSale.setSalePeriod(uint256,uint256,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#521-530)
+	- ACATokenSale.updateStage() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#662-680)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+ACAToken.emergencyERC20Drain(ERC20,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#336-338) ignores return value by _token.transfer(owner,_amount) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#337)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+ACATokenSale._processPurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#766-807) performs a multiplication on the result of a division:
+	- referralAmountInviter = baseRate.div(100).mul(referralRateInviter) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#775)
+ACATokenSale._processPurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#766-807) performs a multiplication on the result of a division:
+	- referralAmountInvitee = baseRate.div(100).mul(referralRateInvitee) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#776)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in ACATokenSale.finalize() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#682-690):
+	External calls:
+	- finalization() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#686)
+		- vault.close() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#694)
+		- vault.enableRefunds() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#697)
+	State variables written after the call(s):
+	- isFinalized = true (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#689)
+	ACATokenSale.isFinalized (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#394) can be used in cross function reentrancies:
+	- ACATokenSale.claimRefund() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#828-833)
+	- ACATokenSale.claimable() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#439-443)
+	- ACATokenSale.finalize() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#682-690)
+	- ACATokenSale.isFinalized (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#394)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+ACATokenSale.setAdmin(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#543-549) should emit an event for: 
+	- admin = _newAdmin (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#548) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+RefundVault.refund(address).investor (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#136) lacks a zero-check on :
+		- investor.transfer(depositedValue) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#140)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in ACATokenSale.buyTokens(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#706-723):
+	External calls:
+	- _forwardFunds() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#721)
+		- vault.deposit.value(msg.value)(msg.sender) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#814)
+	Event emitted after the call(s):
+	- StageUpdated(currentStage) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#758)
+		- _postValidatePurchase(_beneficiary,weiAmount) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#722)
+Reentrancy in ACATokenSale.finalize() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#682-690):
+	External calls:
+	- finalization() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#686)
+		- vault.close() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#694)
+		- vault.enableRefunds() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#697)
+	Event emitted after the call(s):
+	- Finalized() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#687)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ACATokenSale.isClosed() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#450-452) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > stages[maxStage - 1].closing (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#451)
+ACATokenSale.setSalePeriod(uint256,uint256,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#521-530) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_openingTime > now) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#522)
+ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#584-613) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_whitelistBonusClosingTime > now) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#599)
+ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#614-643) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_openingTime > now) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#623)
+ACATokenSale.updateStage() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#662-680) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now >= stages[currentStage].opening) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#665)
+	- now > stages[currentStage].closing (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#668)
+ACATokenSale._preValidatePurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#733-753) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now >= stages[currentStage].opening) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#739)
+	- require(bool)(now >= stages[currentStage].opening && now <= stages[currentStage].closing) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#745)
+ACATokenSale.addToWhitelist(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#898-904) uses timestamp for comparisons
+	Dangerous comparisons:
+	- whitelistBonus[_beneficiary] == false && now < whitelistBonusClosingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#901)
+ACATokenSale.addManyToWhitelist(address[]) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#906-919) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now < whitelistBonusClosingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#908)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+ACAToken.transferAllowed(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#260-262) compares to a boolean constant:
+	-(transferable && transferLocked[_target] == false) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#261)
+ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#614-643) compares to a boolean constant:
+	-require(bool)(tokenSaleEnabled == false) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#621)
+ACATokenSale.updateStage() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#662-680) compares to a boolean constant:
+	-require(bool)(tokenSaleEnabled == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#663)
+ACATokenSale.finalize() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#682-690) compares to a boolean constant:
+	-require(bool)(isFinalized == false) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#683)
+ACATokenSale._preValidatePurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#733-753) compares to a boolean constant:
+	-require(bool)(tokenSaleEnabled == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#737)
+ACATokenSale._processPurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#766-807) compares to a boolean constant:
+	-inviter != address(0x0) && referralDone == false (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#773)
+ACATokenSale._processPurchase(address,uint256) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#766-807) compares to a boolean constant:
+	-referralDone == false && referralAmountInviter >= referralRemains (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#788)
+ACATokenSale.claimRefund() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#828-833) compares to a boolean constant:
+	-require(bool)(isFinalized == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#829)
+ACATokenSale._deliverWhitelistBonus(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#877-893) compares to a boolean constant:
+	-whitelistBonus[_beneficiary] == true (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#882)
+ACATokenSale.addToWhitelist(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#898-904) compares to a boolean constant:
+	-whitelistBonus[_beneficiary] == false && now < whitelistBonusClosingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#901)
+ACATokenSale.onlyWhileOpen() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#427-431) compares to a boolean constant:
+	-require(bool)(tokenSaleEnabled == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#428)
+ACATokenSale.isVerified(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#433-437) compares to a boolean constant:
+	-require(bool)(kyclist[_beneficiary] == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#435)
+ACATokenSale.isVerified(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#433-437) compares to a boolean constant:
+	-require(bool)(whitelist[_beneficiary] == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#434)
+ACATokenSale.claimable() (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#439-443) compares to a boolean constant:
+	-require(bool)(isFinalized == true) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#440)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+ACATokenSale._deliverWhitelistBonus(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#877-893) has costly operations inside a loop:
+	- whitelistBonusSent = whitelistBonusSent.add(whitelistBonusRate) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#889)
+	Calls stack containing the loop:
+		ACATokenSale.addManyToWhitelist(address[])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter ACAToken.transferAdmin(address)._newAdmin (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#231) is not in mixedCase
+Parameter ACAToken.setTransferable(bool)._transferable (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#240) is not in mixedCase
+Parameter ACAToken.manageTransferLock(address,bool)._target (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#254) is not in mixedCase
+Parameter ACAToken.manageTransferLock(address,bool)._value (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#254) is not in mixedCase
+Parameter ACAToken.transferAllowed(address)._target (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#260) is not in mixedCase
+Parameter ACAToken.transfer(address,uint256)._to (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#269) is not in mixedCase
+Parameter ACAToken.transfer(address,uint256)._value (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#269) is not in mixedCase
+Parameter ACAToken.balanceOf(address)._owner (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#279) is not in mixedCase
+Parameter ACAToken.transferFrom(address,address,uint256)._from (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#287) is not in mixedCase
+Parameter ACAToken.transferFrom(address,address,uint256)._to (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#287) is not in mixedCase
+Parameter ACAToken.transferFrom(address,address,uint256)._value (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#287) is not in mixedCase
+Parameter ACAToken.approve(address,uint256)._spender (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#298) is not in mixedCase
+Parameter ACAToken.approve(address,uint256)._value (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#298) is not in mixedCase
+Parameter ACAToken.allowance(address,address)._owner (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#304) is not in mixedCase
+Parameter ACAToken.allowance(address,address)._spender (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#304) is not in mixedCase
+Parameter ACAToken.increaseApproval(address,uint256)._spender (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#308) is not in mixedCase
+Parameter ACAToken.increaseApproval(address,uint256)._addedValue (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#308) is not in mixedCase
+Parameter ACAToken.decreaseApproval(address,uint256)._spender (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#314) is not in mixedCase
+Parameter ACAToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#314) is not in mixedCase
+Parameter ACAToken.burn(uint256)._value (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#325) is not in mixedCase
+Parameter ACAToken.emergencyERC20Drain(ERC20,uint256)._token (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#336) is not in mixedCase
+Parameter ACAToken.emergencyERC20Drain(ERC20,uint256)._amount (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#336) is not in mixedCase
+Parameter ACATokenSale.getOpeningTimeByStage(uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#471) is not in mixedCase
+Parameter ACATokenSale.getClosingTimeByStage(uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#480) is not in mixedCase
+Parameter ACATokenSale.getCapacity(uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#489) is not in mixedCase
+Parameter ACATokenSale.getSold(uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#498) is not in mixedCase
+Parameter ACATokenSale.getRate(uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#507) is not in mixedCase
+Parameter ACATokenSale.getSales(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#516) is not in mixedCase
+Parameter ACATokenSale.setSalePeriod(uint256,uint256,uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#521) is not in mixedCase
+Parameter ACATokenSale.setSalePeriod(uint256,uint256,uint256)._openingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#521) is not in mixedCase
+Parameter ACATokenSale.setSalePeriod(uint256,uint256,uint256)._closingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#521) is not in mixedCase
+Parameter ACATokenSale.setRate(uint256,uint256)._index (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#532) is not in mixedCase
+Parameter ACATokenSale.setRate(uint256,uint256)._rate (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#532) is not in mixedCase
+Parameter ACATokenSale.setAdmin(address)._newAdmin (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#543) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._referralAmount (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#585) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._referralRateInviter (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#586) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._referralRateInvitee (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#587) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._bountyAmount (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#588) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._whitelistBonusClosingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#589) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._whitelistBonusRate (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#590) is not in mixedCase
+Parameter ACATokenSale.setupBounty(uint256,uint256,uint256,uint256,uint256,uint256,uint256)._whitelistBonusAmount (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#591) is not in mixedCase
+Parameter ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256)._openingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#615) is not in mixedCase
+Parameter ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256)._closingTime (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#616) is not in mixedCase
+Parameter ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256)._capacity (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#617) is not in mixedCase
+Parameter ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256)._minimumWei (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#618) is not in mixedCase
+Parameter ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256)._maximumWei (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#619) is not in mixedCase
+Parameter ACATokenSale.addStage(uint256,uint256,uint256,uint256,uint256,uint256)._rate (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#620) is not in mixedCase
+Parameter ACATokenSale.setToken(ACAToken)._token (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#645) is not in mixedCase
+Parameter ACATokenSale.buyTokens(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#706) is not in mixedCase
+Parameter ACATokenSale.addBounty(address,uint256)._address (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#846) is not in mixedCase
+Parameter ACATokenSale.addBounty(address,uint256)._amount (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#846) is not in mixedCase
+Parameter ACATokenSale.delBounty(address,uint256)._address (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#853) is not in mixedCase
+Parameter ACATokenSale.delBounty(address,uint256)._amount (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#853) is not in mixedCase
+Parameter ACATokenSale.getBountyAmount(address)._address (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#861) is not in mixedCase
+Parameter ACATokenSale.addReferral(address,address)._inviter (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#866) is not in mixedCase
+Parameter ACATokenSale.addReferral(address,address)._invitee (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#866) is not in mixedCase
+Parameter ACATokenSale.delReferral(address,address)._inviter (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#869) is not in mixedCase
+Parameter ACATokenSale.delReferral(address,address)._invitee (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#869) is not in mixedCase
+Parameter ACATokenSale.getReferral(address)._address (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#872) is not in mixedCase
+Parameter ACATokenSale.isAccountWhitelisted(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#894) is not in mixedCase
+Parameter ACATokenSale.addToWhitelist(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#898) is not in mixedCase
+Parameter ACATokenSale.addManyToWhitelist(address[])._beneficiaries (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#906) is not in mixedCase
+Parameter ACATokenSale.removeFromWhitelist(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#921) is not in mixedCase
+Parameter ACATokenSale.isAccountVerified(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#926) is not in mixedCase
+Parameter ACATokenSale.setAccountVerified(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#930) is not in mixedCase
+Parameter ACATokenSale.setManyAccountsVerified(address[])._beneficiaries (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#934) is not in mixedCase
+Parameter ACATokenSale.unverifyAccount(address)._beneficiary (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#940) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in RefundVault.refund(address) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#136-142):
+	External calls:
+	- investor.transfer(depositedValue) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#140)
+	Event emitted after the call(s):
+	- Refunded(investor,depositedValue) (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#141)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ACAToken.decimals (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#167) should be constant 
+ACAToken.name (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#165) should be constant 
+ACAToken.symbol (../sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol#166) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xbf483bcde5e951418cff8cdaf0020b963887c2d8.sol analyzed (7 contracts with 100 detectors), 105 result(s) found

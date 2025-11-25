@@ -1,0 +1,53 @@
+'solc --version' running
+'solc /sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol:
+/sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol:153:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function AceFund() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol:75:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol:109:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol:125:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#68) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#68) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#84) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#101) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#101) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#101) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#123) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#123) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#135) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#135) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+AceFund.slitherConstructorConstantVariables() (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#141-159) uses literals with too many digits:
+	- INITIAL_SUPPLY = 1000000000 * (10 ** uint256(decimals)) (../sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol#148)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x7c85d043bde79c85ef113a35793b8fb324991f3e.sol analyzed (6 contracts with 100 detectors), 13 result(s) found

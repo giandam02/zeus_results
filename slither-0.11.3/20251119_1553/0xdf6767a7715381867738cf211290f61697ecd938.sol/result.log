@@ -1,0 +1,617 @@
+'solc --version' running
+'solc /sb/0xdf6767a7715381867738cf211290f61697ecd938.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xdf6767a7715381867738cf211290f61697ecd938.sol:
+/sb/0xdf6767a7715381867738cf211290f61697ecd938.sol:244:59: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function checkAndUpdateUniqueness(BaseWallet _wallet, uint256 _nonce, bytes32 _signHash) internal returns (bool) {
+                                                          ^------------^
+/sb/0xdf6767a7715381867738cf211290f61697ecd938.sol:1574:75: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function checkAndUpdateUniqueness(BaseWallet _wallet, uint256 _nonce, bytes32 _signHash) internal returns (bool) {
+                                                                          ^---------------^
+/sb/0xdf6767a7715381867738cf211290f61697ecd938.sol:1578:53: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function validateSignatures(BaseWallet _wallet, bytes _data, bytes32 _signHash, bytes _signatures) internal view returns (bool) {
+                                                    ^---------^
+/sb/0xdf6767a7715381867738cf211290f61697ecd938.sol:1583:36: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function getRequiredSignatures(BaseWallet _wallet, bytes _data) internal view returns (uint256) {
+                                   ^----------------^
+/sb/0xdf6767a7715381867738cf211290f61697ecd938.sol:999:5: Warning: Function state mutability can be restricted to pure
+    function kyberNetwork() internal view returns (KyberNetwork) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+BaseWallet.invoke(address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#923-927) sends eth to arbitrary user
+	Dangerous calls:
+	- require(bool,string)(_target.call.value(_value)(_data),BW: call to target failed) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#925)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+GuardianStorage (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1053-1175) contract sets array length with a user-controlled value:
+	- config.info[_guardian].index = uint128(config.guardians.push(_guardian) - 1) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1084)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+TokenTransfer.LIMIT_DISABLED (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1230) shadows:
+	- LimitManager.LIMIT_DISABLED (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#368)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+ModuleRegistry.recoverToken(address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#767-770) ignores return value by ERC20(_token).transfer(msg.sender,total) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#769)
+BaseModule.recoverToken(address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#99-102) ignores return value by ERC20(_token).transfer(address(registry),total) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#101)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+RelayerModule.recoverSigner(bytes32,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#276-291) is declared view but contains assembly code
+RelayerModule.verifyData(address,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#337-346) is declared view but contains assembly code
+RelayerModule.functionPrefix(bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#351-357) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Reentrancy in BaseWallet.init(address,address[]) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861-872):
+	External calls:
+	- Module(_modules[i]).init(this) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#869)
+	State variables written after the call(s):
+	- authorised[_modules[i]] = true (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#868)
+	BaseWallet.authorised (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#836) can be used in cross function reentrancies:
+	- BaseWallet.authoriseModule(address,bool) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#879-893)
+	- BaseWallet.authorised (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#836)
+	- BaseWallet.enableStaticCall(address,bytes4) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#901-905)
+	- BaseWallet.fallback() (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#934-953)
+	- BaseWallet.init(address,address[]) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861-872)
+	- BaseWallet.moduleOnly() (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#851-854)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TokenPriceProvider.syncPrice(ERC20) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#967-971) ignores return value by (expectedRate,None) = kyberNetwork().getExpectedRate(token,ERC20(ETH_TOKEN_ADDRESS),10000) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#969)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+LimitManager.changeLimit(BaseWallet,uint256,uint256).currentLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#433) shadows:
+	- LimitManager.currentLimit(uint128,uint128,uint64) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#544-549) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+BaseWallet.init(address,address[])._owner (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861) lacks a zero-check on :
+		- owner = _owner (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#864)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BaseWallet.init(address,address[]) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861-872) has external calls inside a loop: Module(_modules[i]).init(this) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#869)
+TokenPriceProvider.syncPrice(ERC20) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#967-971) has external calls inside a loop: (expectedRate,None) = kyberNetwork().getExpectedRate(token,ERC20(ETH_TOKEN_ADDRESS),10000) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#969)
+	Calls stack containing the loop:
+		TokenPriceProvider.syncPriceForTokenList(ERC20[])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in GuardianStorage.addGuardian(BaseWallet,address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1081-1085):
+	External calls:
+	- onlyModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1081)
+		- require(bool,string)(_wallet.authorised(msg.sender),TS: must be an authorized module to call this method) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1040)
+	State variables written after the call(s):
+	- config.info[_guardian].exists = true (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1083)
+	- config.info[_guardian].index = uint128(config.guardians.push(_guardian) - 1) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1084)
+Reentrancy in TokenTransfer.cancelPendingTransfer(BaseWallet,bytes32) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1435-1446):
+	External calls:
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1440)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1441)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	State variables written after the call(s):
+	- removePendingTransfer(_wallet,_id) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1444)
+		- delete configs[_wallet].pendingTransfers[_id] (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1539)
+Reentrancy in TokenTransfer.changeLimit(BaseWallet,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454-1456):
+	External calls:
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	State variables written after the call(s):
+	- changeLimit(_wallet,_newLimit,securityPeriod) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1455)
+		- limit.current = currentLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#434)
+		- limit.pending = uint128(_newLimit) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#435)
+		- limit.changeAfter = uint64(now.add(_securityPeriod)) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#437)
+Reentrancy in TokenTransfer.disableLimit(BaseWallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463-1465):
+	External calls:
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	State variables written after the call(s):
+	- changeLimit(_wallet,LIMIT_DISABLED,securityPeriod) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1464)
+		- limit.current = currentLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#434)
+		- limit.pending = uint128(_newLimit) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#435)
+		- limit.changeAfter = uint64(now.add(_securityPeriod)) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#437)
+Reentrancy in TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1405-1428):
+	External calls:
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1414)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	State variables written after the call(s):
+	- removePendingTransfer(_wallet,id) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1420)
+		- delete configs[_wallet].pendingTransfers[_id] (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1539)
+Reentrancy in GuardianStorage.revokeGuardian(BaseWallet,address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1092-1102):
+	External calls:
+	- onlyModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1092)
+		- require(bool,string)(_wallet.authorised(msg.sender),TS: must be an authorized module to call this method) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1040)
+	State variables written after the call(s):
+	- config.guardians[targetIndex] = lastGuardian (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1097)
+	- config.info[lastGuardian].index = targetIndex (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1098)
+	- config.guardians.length -- (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1100)
+	- delete config.info[_guardian] (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1101)
+Reentrancy in GuardianStorage.setLock(BaseWallet,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1142-1147):
+	External calls:
+	- onlyModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1142)
+		- require(bool,string)(_wallet.authorised(msg.sender),TS: must be an authorized module to call this method) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1040)
+	State variables written after the call(s):
+	- configs[_wallet].lock = _releaseAfter (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1143)
+	- configs[_wallet].locker = msg.sender (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1145)
+Reentrancy in TransferStorage.setWhitelist(BaseWallet,address,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1197-1199):
+	External calls:
+	- onlyModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1197)
+		- require(bool,string)(_wallet.authorised(msg.sender),TS: must be an authorized module to call this method) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1040)
+	State variables written after the call(s):
+	- whitelist[_wallet][_target] = _value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1198)
+Reentrancy in TokenPriceProvider.syncPrice(ERC20) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#967-971):
+	External calls:
+	- (expectedRate,None) = kyberNetwork().getExpectedRate(token,ERC20(ETH_TOKEN_ADDRESS),10000) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#969)
+	State variables written after the call(s):
+	- cachedPrices[token] = expectedRate (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#970)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	State variables written after the call(s):
+	- addPendingTransfer(_wallet,ETH_TOKEN,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1340)
+		- configs[_wallet].pendingTransfers[id] = executeAfter (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1529)
+	- checkAndUpdateDailySpent(_wallet,_amount) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1335)
+		- expense.periodEnd = uint64(now + 86400) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#510)
+		- expense.alreadySpent = uint128(_amount) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#511)
+		- expense.alreadySpent += uint128(_amount) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#514)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- etherAmount = priceProvider.getEtherValue(_amount,_token) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1344)
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	State variables written after the call(s):
+	- addPendingTransfer(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1351)
+		- configs[_wallet].pendingTransfers[id] = executeAfter (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1529)
+	- checkAndUpdateDailySpent(_wallet,etherAmount) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1346)
+		- expense.periodEnd = uint64(now + 86400) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#510)
+		- expense.alreadySpent = uint128(_amount) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#511)
+		- expense.alreadySpent += uint128(_amount) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#514)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TokenTransfer.addToWhitelist(BaseWallet,address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1362-1375):
+	External calls:
+	- require(bool,string)(! isWhitelisted(_wallet,_target),TT: target already whitelisted) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1370)
+		- whitelistAfter = transferStorage.getWhitelist(_wallet,_target) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1474)
+	- transferStorage.setWhitelist(_wallet,_target,whitelistAfter) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1373)
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1367)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1368)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- AddedToWhitelist(_wallet,_target,uint64(whitelistAfter)) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1374)
+Reentrancy in BaseWallet.authoriseModule(address,bool) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#879-893):
+	External calls:
+	- Module(_module).init(this) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#884)
+	Event emitted after the call(s):
+	- AuthorisedModule(_module,_value) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#891)
+Reentrancy in TokenTransfer.cancelPendingTransfer(BaseWallet,bytes32) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1435-1446):
+	External calls:
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1440)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1441)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- PendingTransferCanceled(_wallet,_id) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1445)
+Reentrancy in TokenTransfer.changeLimit(BaseWallet,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454-1456):
+	External calls:
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- LimitChanged(_wallet,_newLimit,uint64(now.add(_securityPeriod))) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#439)
+		- changeLimit(_wallet,_newLimit,securityPeriod) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1455)
+Reentrancy in TokenTransfer.disableLimit(BaseWallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463-1465):
+	External calls:
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- LimitChanged(_wallet,_newLimit,uint64(now.add(_securityPeriod))) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#439)
+		- changeLimit(_wallet,LIMIT_DISABLED,securityPeriod) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1464)
+Reentrancy in RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#172-198):
+	External calls:
+	- verifyRefund(_wallet,_gasLimit,_gasPrice,requiredSignatures) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#189)
+		- _gasPrice > 0 && _signatures > 1 && (address(_wallet).balance < _gasUsed * _gasPrice || _wallet.authorised(this) == false) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#324-326)
+	- success = address(this).call(_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#192)
+	- refund(_wallet,startGas - gasleft()(),_gasPrice,_gasLimit,requiredSignatures,msg.sender) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#193)
+		- _wallet.invoke(_relayer,amount,) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#313)
+	Event emitted after the call(s):
+	- TransactionExecuted(_wallet,success,signHash) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#197)
+Reentrancy in TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1405-1428):
+	External calls:
+	- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1422)
+		- _wallet.invoke(_to,_value,EMPTY_BYTES) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1499)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1414)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- Transfer(_wallet,ETH_TOKEN,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1500)
+		- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1422)
+Reentrancy in TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1405-1428):
+	External calls:
+	- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1425)
+		- _wallet.invoke(_token,0,methodData) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1513)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1414)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- Transfer(_wallet,_token,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1514)
+		- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1425)
+Reentrancy in TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1405-1428):
+	External calls:
+	- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1422)
+		- _wallet.invoke(_to,_value,EMPTY_BYTES) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1499)
+	- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1425)
+		- _wallet.invoke(_token,0,methodData) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1513)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1414)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- PendingTransferExecuted(_wallet,id) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1427)
+Reentrancy in BaseWallet.init(address,address[]) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861-872):
+	External calls:
+	- Module(_modules[i]).init(this) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#869)
+	Event emitted after the call(s):
+	- AuthorisedModule(_modules[i],true) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#870)
+Reentrancy in BaseWallet.invoke(address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#923-927):
+	External calls:
+	- require(bool,string)(_target.call.value(_value)(_data),BW: call to target failed) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#925)
+	Event emitted after the call(s):
+	- Invoked(msg.sender,_target,_value,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#926)
+Reentrancy in TokenTransfer.removeFromWhitelist(BaseWallet,address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1382-1393):
+	External calls:
+	- require(bool,string)(isWhitelisted(_wallet,_target),TT: target not whitelisted) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1390)
+		- whitelistAfter = transferStorage.getWhitelist(_wallet,_target) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1474)
+	- transferStorage.setWhitelist(_wallet,_target,0) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1391)
+	- onlyOwner(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1387)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1388)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- RemovedFromWhitelist(_wallet,_target) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1392)
+Reentrancy in TokenTransfer.transferERC20(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1511-1515):
+	External calls:
+	- _wallet.invoke(_token,0,methodData) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1513)
+	Event emitted after the call(s):
+	- Transfer(_wallet,_token,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1514)
+Reentrancy in TokenTransfer.transferETH(BaseWallet,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1498-1501):
+	External calls:
+	- _wallet.invoke(_to,_value,EMPTY_BYTES) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1499)
+	Event emitted after the call(s):
+	- Transfer(_wallet,ETH_TOKEN,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1500)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- isWhitelisted(_wallet,_to) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1322)
+		- whitelistAfter = transferStorage.getWhitelist(_wallet,_target) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1474)
+	- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1325)
+		- _wallet.invoke(_to,_value,EMPTY_BYTES) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1499)
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- Transfer(_wallet,ETH_TOKEN,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1500)
+		- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1325)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- isWhitelisted(_wallet,_to) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1322)
+		- whitelistAfter = transferStorage.getWhitelist(_wallet,_target) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1474)
+	- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1329)
+		- _wallet.invoke(_token,0,methodData) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1513)
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- Transfer(_wallet,_token,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1514)
+		- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1329)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1336)
+		- _wallet.invoke(_to,_value,EMPTY_BYTES) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1499)
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- Transfer(_wallet,ETH_TOKEN,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1500)
+		- transferETH(_wallet,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1336)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- PendingTransferCreated(_wallet,id,executeAfter,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1530)
+		- addPendingTransfer(_wallet,ETH_TOKEN,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1340)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- etherAmount = priceProvider.getEtherValue(_amount,_token) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1344)
+	- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1347)
+		- _wallet.invoke(_token,0,methodData) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1513)
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- Transfer(_wallet,_token,_value,_to,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1514)
+		- transferERC20(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1347)
+Reentrancy in TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1311-1355):
+	External calls:
+	- etherAmount = priceProvider.getEtherValue(_amount,_token) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1344)
+	- onlyOwnerOrModule(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1319)
+		- require(bool,string)(isOwner(_wallet,msg.sender) || _wallet.authorised(msg.sender),TT: must be wallet owner or module) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1266)
+		- _wallet.owner() == _addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#110)
+	- onlyWhenUnlocked(_wallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1320)
+		- require(bool,string)(! guardianStorage.isLocked(_wallet),TT: wallet must be unlocked) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1275)
+	Event emitted after the call(s):
+	- PendingTransferCreated(_wallet,id,executeAfter,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1530)
+		- addPendingTransfer(_wallet,_token,_to,_amount,_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1351)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+LimitManager.changeLimit(BaseWallet,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#430-440) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (limit.changeAfter > 0 && limit.changeAfter < now) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#433)
+LimitManager.getPendingLimit(BaseWallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#459-463) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (now < limit.changeAfter) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#462)
+LimitManager.getDailyUnspent(BaseWallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#470-482) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > expense.periodEnd (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#474)
+LimitManager.updateDailySpent(BaseWallet,uint128,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#506-517) uses timestamp for comparisons
+	Dangerous comparisons:
+	- expense.periodEnd < now (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#509)
+LimitManager.isWithinDailyLimit(BaseWallet,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#526-536) uses timestamp for comparisons
+	Dangerous comparisons:
+	- expense.periodEnd < now (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#531)
+LimitManager.currentLimit(uint128,uint128,uint64) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#544-549) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _changeAfter > 0 && _changeAfter < now (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#545)
+GuardianStorage.isLocked(BaseWallet) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1154-1156) uses timestamp for comparisons
+	Dangerous comparisons:
+	- configs[_wallet].lock > now (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1155)
+TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1405-1428) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(executeAfter <= now && now <= executeBefore,TT: outside of the execution window) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1419)
+TokenTransfer.isWhitelisted(BaseWallet,address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1473-1477) uses timestamp for comparisons
+	Dangerous comparisons:
+	- whitelistAfter > 0 && whitelistAfter < now (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1476)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+RelayerModule.recoverSigner(bytes32,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#276-291) uses assembly
+	- INLINE ASM (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#284-289)
+RelayerModule.verifyData(address,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#337-346) uses assembly
+	- INLINE ASM (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#341-345)
+RelayerModule.functionPrefix(bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#351-357) uses assembly
+	- INLINE ASM (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#354-357)
+BaseWallet.fallback() (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#934-953) uses assembly
+	- INLINE ASM (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#943-951)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+RelayerModule.checkAndUpdateUniqueness(BaseWallet,uint256,bytes32) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#244-250) compares to a boolean constant:
+	-relayer[_wallet].executedTx[_signHash] == true (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#245)
+RelayerModule.verifyRefund(BaseWallet,uint256,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#323-330) compares to a boolean constant:
+	-_gasPrice > 0 && _signatures > 1 && (address(_wallet).balance < _gasUsed * _gasPrice || _wallet.authorised(this) == false) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#324-326)
+BaseWallet.init(address,address[]) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861-872) compares to a boolean constant:
+	-require(bool,string)(authorised[_modules[i]] == false,BW: module is already added) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#867)
+BaseWallet.authoriseModule(address,bool) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#879-893) compares to a boolean constant:
+	-_value == true (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#881)
+TokenTransfer.verifyRefund(BaseWallet,uint256,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1561-1571) compares to a boolean constant:
+	-_gasPrice > 0 && _signatures > 0 && (address(_wallet).balance < _gasUsed * _gasPrice || isWithinDailyLimit(_wallet,getCurrentLimit(_wallet),_gasUsed * _gasPrice) == false || _wallet.authorised(this) == false) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1562-1566)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+RelayerModule.checkAndUpdateUniqueness(BaseWallet,uint256,bytes32) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#244-250) is never used and should be removed
+RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303-315) is never used and should be removed
+RelayerModule.verifyRefund(BaseWallet,uint256,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#323-330) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#172-198):
+	- success = address(this).call(_data) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#192)
+Low level call in BaseWallet.invoke(address,uint256,bytes) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#923-927):
+	- require(bool,string)(_target.call.value(_value)(_data),BW: call to target failed) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#925)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Parameter BaseModule.init(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#80) is not in mixedCase
+Parameter BaseModule.addModule(BaseWallet,Module)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#89) is not in mixedCase
+Parameter BaseModule.addModule(BaseWallet,Module)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#89) is not in mixedCase
+Parameter BaseModule.recoverToken(address)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#99) is not in mixedCase
+Parameter BaseModule.isOwner(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#109) is not in mixedCase
+Parameter BaseModule.isOwner(BaseWallet,address)._addr (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#109) is not in mixedCase
+Parameter RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#173) is not in mixedCase
+Parameter RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#174) is not in mixedCase
+Parameter RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256)._nonce (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#175) is not in mixedCase
+Parameter RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256)._signatures (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#176) is not in mixedCase
+Parameter RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256)._gasPrice (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#177) is not in mixedCase
+Parameter RelayerModule.execute(BaseWallet,bytes,uint256,bytes,uint256,uint256)._gasLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#178) is not in mixedCase
+Parameter RelayerModule.getNonce(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#204) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._from (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#219) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._to (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#220) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#221) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#222) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._nonce (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#223) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._gasPrice (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#224) is not in mixedCase
+Parameter RelayerModule.getSignHash(address,address,uint256,bytes,uint256,uint256,uint256)._gasLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#225) is not in mixedCase
+Parameter RelayerModule.checkAndUpdateUniqueness(BaseWallet,uint256,bytes32)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#244) is not in mixedCase
+Parameter RelayerModule.checkAndUpdateUniqueness(BaseWallet,uint256,bytes32)._signHash (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#244) is not in mixedCase
+Parameter RelayerModule.checkAndUpdateNonce(BaseWallet,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#258) is not in mixedCase
+Parameter RelayerModule.checkAndUpdateNonce(BaseWallet,uint256)._nonce (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#258) is not in mixedCase
+Parameter RelayerModule.recoverSigner(bytes32,bytes,uint256)._signedHash (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#276) is not in mixedCase
+Parameter RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303) is not in mixedCase
+Parameter RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._gasUsed (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303) is not in mixedCase
+Parameter RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._gasPrice (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303) is not in mixedCase
+Parameter RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._gasLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303) is not in mixedCase
+Parameter RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._signatures (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303) is not in mixedCase
+Parameter RelayerModule.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._relayer (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#303) is not in mixedCase
+Parameter RelayerModule.verifyRefund(BaseWallet,uint256,uint256,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#323) is not in mixedCase
+Parameter RelayerModule.verifyRefund(BaseWallet,uint256,uint256,uint256)._gasUsed (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#323) is not in mixedCase
+Parameter RelayerModule.verifyRefund(BaseWallet,uint256,uint256,uint256)._gasPrice (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#323) is not in mixedCase
+Parameter RelayerModule.verifyRefund(BaseWallet,uint256,uint256,uint256)._signatures (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#323) is not in mixedCase
+Parameter RelayerModule.verifyData(address,bytes)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#337) is not in mixedCase
+Parameter RelayerModule.verifyData(address,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#337) is not in mixedCase
+Parameter RelayerModule.functionPrefix(bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#351) is not in mixedCase
+Parameter LimitManager.init(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#416) is not in mixedCase
+Parameter LimitManager.changeLimit(BaseWallet,uint256,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#430) is not in mixedCase
+Parameter LimitManager.changeLimit(BaseWallet,uint256,uint256)._newLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#430) is not in mixedCase
+Parameter LimitManager.changeLimit(BaseWallet,uint256,uint256)._securityPeriod (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#430) is not in mixedCase
+Parameter LimitManager.getCurrentLimit(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#449) is not in mixedCase
+Parameter LimitManager.getPendingLimit(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#459) is not in mixedCase
+Parameter LimitManager.getDailyUnspent(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#470) is not in mixedCase
+Parameter LimitManager.checkAndUpdateDailySpent(BaseWallet,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#490) is not in mixedCase
+Parameter LimitManager.checkAndUpdateDailySpent(BaseWallet,uint256)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#490) is not in mixedCase
+Parameter LimitManager.updateDailySpent(BaseWallet,uint128,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#506) is not in mixedCase
+Parameter LimitManager.updateDailySpent(BaseWallet,uint128,uint256)._limit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#506) is not in mixedCase
+Parameter LimitManager.updateDailySpent(BaseWallet,uint128,uint256)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#506) is not in mixedCase
+Parameter LimitManager.isWithinDailyLimit(BaseWallet,uint256,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#526) is not in mixedCase
+Parameter LimitManager.isWithinDailyLimit(BaseWallet,uint256,uint256)._limit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#526) is not in mixedCase
+Parameter LimitManager.isWithinDailyLimit(BaseWallet,uint256,uint256)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#526) is not in mixedCase
+Parameter LimitManager.currentLimit(uint128,uint128,uint64)._current (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#544) is not in mixedCase
+Parameter LimitManager.currentLimit(uint128,uint128,uint64)._pending (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#544) is not in mixedCase
+Parameter LimitManager.currentLimit(uint128,uint128,uint64)._changeAfter (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#544) is not in mixedCase
+Parameter Owned.changeOwner(address)._newOwner (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#692) is not in mixedCase
+Parameter ModuleRegistry.registerModule(address,bytes32)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#725) is not in mixedCase
+Parameter ModuleRegistry.registerModule(address,bytes32)._name (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#725) is not in mixedCase
+Parameter ModuleRegistry.deregisterModule(address)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#735) is not in mixedCase
+Parameter ModuleRegistry.registerUpgrader(address,bytes32)._upgrader (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#746) is not in mixedCase
+Parameter ModuleRegistry.registerUpgrader(address,bytes32)._name (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#746) is not in mixedCase
+Parameter ModuleRegistry.deregisterUpgrader(address)._upgrader (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#756) is not in mixedCase
+Parameter ModuleRegistry.recoverToken(address)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#767) is not in mixedCase
+Parameter ModuleRegistry.moduleInfo(address)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#777) is not in mixedCase
+Parameter ModuleRegistry.upgraderInfo(address)._upgrader (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#786) is not in mixedCase
+Parameter ModuleRegistry.isRegisteredModule(address)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#795) is not in mixedCase
+Parameter ModuleRegistry.isRegisteredModule(address[])._modules (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#804) is not in mixedCase
+Parameter ModuleRegistry.isRegisteredUpgrader(address)._upgrader (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#818) is not in mixedCase
+Parameter BaseWallet.init(address,address[])._owner (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861) is not in mixedCase
+Parameter BaseWallet.init(address,address[])._modules (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#861) is not in mixedCase
+Parameter BaseWallet.authoriseModule(address,bool)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#879) is not in mixedCase
+Parameter BaseWallet.authoriseModule(address,bool)._value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#879) is not in mixedCase
+Parameter BaseWallet.enableStaticCall(address,bytes4)._module (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#901) is not in mixedCase
+Parameter BaseWallet.enableStaticCall(address,bytes4)._method (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#901) is not in mixedCase
+Parameter BaseWallet.setOwner(address)._newOwner (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#911) is not in mixedCase
+Parameter BaseWallet.invoke(address,uint256,bytes)._target (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#923) is not in mixedCase
+Parameter BaseWallet.invoke(address,uint256,bytes)._value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#923) is not in mixedCase
+Parameter BaseWallet.invoke(address,uint256,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#923) is not in mixedCase
+Parameter TokenPriceProvider.getEtherValue(uint256,address)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#989) is not in mixedCase
+Parameter TokenPriceProvider.getEtherValue(uint256,address)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#989) is not in mixedCase
+Parameter GuardianStorage.addGuardian(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1081) is not in mixedCase
+Parameter GuardianStorage.addGuardian(BaseWallet,address)._guardian (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1081) is not in mixedCase
+Parameter GuardianStorage.revokeGuardian(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1092) is not in mixedCase
+Parameter GuardianStorage.revokeGuardian(BaseWallet,address)._guardian (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1092) is not in mixedCase
+Parameter GuardianStorage.guardianCount(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1109) is not in mixedCase
+Parameter GuardianStorage.getGuardians(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1118) is not in mixedCase
+Parameter GuardianStorage.isGuardian(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1133) is not in mixedCase
+Parameter GuardianStorage.isGuardian(BaseWallet,address)._guardian (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1133) is not in mixedCase
+Parameter GuardianStorage.setLock(BaseWallet,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1142) is not in mixedCase
+Parameter GuardianStorage.setLock(BaseWallet,uint256)._releaseAfter (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1142) is not in mixedCase
+Parameter GuardianStorage.isLocked(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1154) is not in mixedCase
+Parameter GuardianStorage.getLock(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1163) is not in mixedCase
+Parameter GuardianStorage.getLocker(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1172) is not in mixedCase
+Parameter TransferStorage.setWhitelist(BaseWallet,address,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1197) is not in mixedCase
+Parameter TransferStorage.setWhitelist(BaseWallet,address,uint256)._target (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1197) is not in mixedCase
+Parameter TransferStorage.setWhitelist(BaseWallet,address,uint256)._value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1197) is not in mixedCase
+Parameter TransferStorage.getWhitelist(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1207) is not in mixedCase
+Parameter TransferStorage.getWhitelist(BaseWallet,address)._target (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1207) is not in mixedCase
+Parameter TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1312) is not in mixedCase
+Parameter TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1313) is not in mixedCase
+Parameter TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes)._to (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1314) is not in mixedCase
+Parameter TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1315) is not in mixedCase
+Parameter TokenTransfer.transferToken(BaseWallet,address,address,uint256,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1316) is not in mixedCase
+Parameter TokenTransfer.addToWhitelist(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1363) is not in mixedCase
+Parameter TokenTransfer.addToWhitelist(BaseWallet,address)._target (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1364) is not in mixedCase
+Parameter TokenTransfer.removeFromWhitelist(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1383) is not in mixedCase
+Parameter TokenTransfer.removeFromWhitelist(BaseWallet,address)._target (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1384) is not in mixedCase
+Parameter TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1406) is not in mixedCase
+Parameter TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1407) is not in mixedCase
+Parameter TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256)._to (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1408) is not in mixedCase
+Parameter TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1409) is not in mixedCase
+Parameter TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1410) is not in mixedCase
+Parameter TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256)._block (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1411) is not in mixedCase
+Parameter TokenTransfer.cancelPendingTransfer(BaseWallet,bytes32)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1436) is not in mixedCase
+Parameter TokenTransfer.cancelPendingTransfer(BaseWallet,bytes32)._id (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1437) is not in mixedCase
+Parameter TokenTransfer.changeLimit(BaseWallet,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454) is not in mixedCase
+Parameter TokenTransfer.changeLimit(BaseWallet,uint256)._newLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1454) is not in mixedCase
+Parameter TokenTransfer.disableLimit(BaseWallet)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1463) is not in mixedCase
+Parameter TokenTransfer.isWhitelisted(BaseWallet,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1473) is not in mixedCase
+Parameter TokenTransfer.isWhitelisted(BaseWallet,address)._target (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1473) is not in mixedCase
+Parameter TokenTransfer.getPendingTransfer(BaseWallet,bytes32)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1485) is not in mixedCase
+Parameter TokenTransfer.getPendingTransfer(BaseWallet,bytes32)._id (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1485) is not in mixedCase
+Parameter TokenTransfer.transferETH(BaseWallet,address,uint256,bytes)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1498) is not in mixedCase
+Parameter TokenTransfer.transferETH(BaseWallet,address,uint256,bytes)._to (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1498) is not in mixedCase
+Parameter TokenTransfer.transferETH(BaseWallet,address,uint256,bytes)._value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1498) is not in mixedCase
+Parameter TokenTransfer.transferETH(BaseWallet,address,uint256,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1498) is not in mixedCase
+Parameter TokenTransfer.transferERC20(BaseWallet,address,address,uint256,bytes)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1511) is not in mixedCase
+Parameter TokenTransfer.transferERC20(BaseWallet,address,address,uint256,bytes)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1511) is not in mixedCase
+Parameter TokenTransfer.transferERC20(BaseWallet,address,address,uint256,bytes)._to (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1511) is not in mixedCase
+Parameter TokenTransfer.transferERC20(BaseWallet,address,address,uint256,bytes)._value (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1511) is not in mixedCase
+Parameter TokenTransfer.transferERC20(BaseWallet,address,address,uint256,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1511) is not in mixedCase
+Parameter TokenTransfer.addPendingTransfer(BaseWallet,address,address,uint256,bytes)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1526) is not in mixedCase
+Parameter TokenTransfer.addPendingTransfer(BaseWallet,address,address,uint256,bytes)._token (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1526) is not in mixedCase
+Parameter TokenTransfer.addPendingTransfer(BaseWallet,address,address,uint256,bytes)._to (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1526) is not in mixedCase
+Parameter TokenTransfer.addPendingTransfer(BaseWallet,address,address,uint256,bytes)._amount (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1526) is not in mixedCase
+Parameter TokenTransfer.addPendingTransfer(BaseWallet,address,address,uint256,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1526) is not in mixedCase
+Parameter TokenTransfer.removePendingTransfer(BaseWallet,bytes32)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1538) is not in mixedCase
+Parameter TokenTransfer.removePendingTransfer(BaseWallet,bytes32)._id (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1538) is not in mixedCase
+Parameter TokenTransfer.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1545) is not in mixedCase
+Parameter TokenTransfer.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._gasUsed (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1545) is not in mixedCase
+Parameter TokenTransfer.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._gasPrice (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1545) is not in mixedCase
+Parameter TokenTransfer.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._gasLimit (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1545) is not in mixedCase
+Parameter TokenTransfer.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._signatures (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1545) is not in mixedCase
+Parameter TokenTransfer.refund(BaseWallet,uint256,uint256,uint256,uint256,address)._relayer (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1545) is not in mixedCase
+Parameter TokenTransfer.verifyRefund(BaseWallet,uint256,uint256,uint256)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1561) is not in mixedCase
+Parameter TokenTransfer.verifyRefund(BaseWallet,uint256,uint256,uint256)._gasUsed (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1561) is not in mixedCase
+Parameter TokenTransfer.verifyRefund(BaseWallet,uint256,uint256,uint256)._gasPrice (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1561) is not in mixedCase
+Parameter TokenTransfer.verifyRefund(BaseWallet,uint256,uint256,uint256)._signatures (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1561) is not in mixedCase
+Parameter TokenTransfer.checkAndUpdateUniqueness(BaseWallet,uint256,bytes32)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1574) is not in mixedCase
+Parameter TokenTransfer.checkAndUpdateUniqueness(BaseWallet,uint256,bytes32)._nonce (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1574) is not in mixedCase
+Parameter TokenTransfer.validateSignatures(BaseWallet,bytes,bytes32,bytes)._wallet (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1578) is not in mixedCase
+Parameter TokenTransfer.validateSignatures(BaseWallet,bytes,bytes32,bytes)._signHash (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1578) is not in mixedCase
+Parameter TokenTransfer.validateSignatures(BaseWallet,bytes,bytes32,bytes)._signatures (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1578) is not in mixedCase
+Parameter TokenTransfer.getRequiredSignatures(BaseWallet,bytes)._data (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1583) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+RelayerModule.checkAndUpdateNonce(BaseWallet,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#258-268) uses literals with too many digits:
+	- nonceBlock = (_nonce & 0xffffffffffffffffffffffffffffffff00000000000000000000000000000000) >> 128 (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#262)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+BaseWallet.implementation (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#832) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+syncPriceForTokenList(ERC20[]) should be declared external:
+	- TokenPriceProvider.syncPriceForTokenList(ERC20[]) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#977-981)
+executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) should be declared external:
+	- TokenTransfer.executePendingTransfer(BaseWallet,address,address,uint256,bytes,uint256) (../sb/0xdf6767a7715381867738cf211290f61697ecd938.sol#1405-1428)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xdf6767a7715381867738cf211290f61697ecd938.sol analyzed (15 contracts with 100 detectors), 229 result(s) found

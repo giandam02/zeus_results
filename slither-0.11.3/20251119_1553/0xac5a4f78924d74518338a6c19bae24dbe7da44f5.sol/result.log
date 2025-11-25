@@ -1,0 +1,363 @@
+'solc --version' running
+'solc /sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:8:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Ownable() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:863:9: Warning: This declaration shadows an existing declaration.
+        uint leekStealToday_ = (now.sub(round_[rID_].strt) / 1 days); 
+        ^------------------^
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:112:5: The shadowed declaration is here:
+    uint256 public leekStealToday_;
+    ^----------------------------^
+
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:58:50: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x18D9FC8E3b65124744553d642989e3bA9E41A95A'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+    address private constant WALLET_ETH_COM2   = 0x18d9fc8e3b65124744553d642989e3ba9e41a95a; 
+                                                 ^----------------------------------------^
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:334:24: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        owner.transfer(this.balance);
+                       ^----------^
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:8:5: Warning: No visibility specified. Defaulting to "public". 
+    function Ownable() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:1086:33: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function distributeExternal(uint256 _rID, uint256 _pID, uint256 _eth, uint256 _affID)
+                                ^----------^
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:345:24: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+        uint256 keys = keysRec(round_[rID_].eth, 1e18);
+                       ^-----------------------------^
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol:659:5: Warning: Function state mutability can be restricted to pure
+    function keysRec(uint256 _curEth, uint256 _newEth)
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+JCLYLong.leekStealToday_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#112) is never initialized. It is used in:
+	- JCLYLong.stealTheLeek() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#875-890)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+JCLYLong.keysRec(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659-734) performs a multiplication on the result of a division:
+	- _newEth.mul(((_incrRate.mul(_initPrice)) / (_incrRate.add(_initPrice.mul((_curEth.sub(_startEth)) / 1e18))))) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#733)
+JCLYLong.updateGuReferral(uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#736-774) performs a multiplication on the result of a division:
+	- _totalReward = plyrPhas_[_affID][_newPhID].eth / phrase_[_newPhID].minEthRequired (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#760)
+	- _totalReward = _totalReward.mul(1e18) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#761)
+JCLYLong.updateTimer(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024-1042) performs a multiplication on the result of a division:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1035)
+JCLYLong.updateTimer(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024-1042) performs a multiplication on the result of a division:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1033)
+JCLYLong.airdrop() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1044-1063) performs a multiplication on the result of a division:
+	- (seed - ((seed / 1000) * 1000)) < airDropTracker_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1059)
+JCLYLong.randomNum(uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1065-1084) performs a multiplication on the result of a division:
+	- (seed - ((seed / 1000) * 1000)) < _tracker (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1080)
+JCLYLong.distributeExternal(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1086-1108) performs a multiplication on the result of a division:
+	- _aff = _eth / 10 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1095)
+	- plyr_[_affID].aff = (_aff.mul(8) / 10).add(plyr_[_affID].aff) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1099)
+JCLYLong.distributeExternal(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1086-1108) performs a multiplication on the result of a division:
+	- _aff = _eth / 10 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1095)
+	- plyr_[_affID2].aff = (_aff.mul(2) / 10).add(plyr_[_affID2].aff) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1103)
+JCLYLong.updateKeyMasks(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1142-1157) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1e18)) / (round_[_rID].keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1147)
+	- _pearn = (_ppt.mul(_keys)) / (1e18) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1152)
+JCLYLong.updateKeyMasks(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1142-1157) performs a multiplication on the result of a division:
+	- _ppt = (_gen.mul(1e18)) / (round_[_rID].keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1147)
+	- (_gen.sub((_ppt.mul(round_[_rID].keys)) / (1e18))) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1156)
+JCLYLong.updateGuMasks(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1159-1178) performs a multiplication on the result of a division:
+	- _ppg = (_jcg.mul(1e18)) / allGuGiven_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1165)
+	- _pearn = (_ppg.mul(plyr_[_pID].gu)) / (1e18) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1170)
+JCLYLong.updateGuMasks(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1159-1178) performs a multiplication on the result of a division:
+	- _ppg = (_jcg.mul(1e18)) / allGuGiven_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1165)
+	- (_jcg.sub((_ppg.mul(allGuGiven_)) / (1e18))) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1174)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+JCLYLong.leekStealGo() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#861-873) uses a dangerous strict equality:
+	- dayStealTime_[leekStealToday_] == 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#864)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+JCLYLong.updateReferralGu(uint256)._guShares (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1005) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+JCLYLong.leekStealGo().leekStealToday_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#863) shadows:
+	- JCLYLong.leekStealToday_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#112) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+JCLYLong.reLoadCore(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#238-267) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now < round_[rID_].strt + whitelistRange_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#248)
+	- _now > round_[_rID].strt && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#253)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#262)
+JCLYLong.withdraw() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#269-310) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#287)
+JCLYLong.getTimeLeft() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#349-367) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now < round_[_rID].end (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#360)
+	- _now > round_[_rID].strt (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#361)
+JCLYLong.getPlayerVaults(uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#369-414) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#378)
+JCLYLong.buyCore(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#487-521) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now < round_[rID_].strt + whitelistRange_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#498)
+	- _now > round_[_rID].strt && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#503)
+	- _now > round_[_rID].end && round_[_rID].ended == false (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#511)
+JCLYLong.updateGuPhrase() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#802-859) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now <= contractStartDate_ + guPhrase1_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#806)
+	- now <= contractStartDate_ + guPhrase2_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#811)
+	- now <= contractStartDate_ + guPhrase3_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#816)
+	- now <= contractStartDate_ + guPhrase4_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#821)
+	- now <= contractStartDate_ + guPhrase5_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#826)
+	- now <= contractStartDate_ + guPhrase6_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#831)
+	- now <= contractStartDate_ + guPhrase7_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#836)
+	- now <= contractStartDate_ + guPhrase8_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#841)
+	- now <= contractStartDate_ + guPhrase9_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#846)
+	- now <= contractStartDate_ + guPhrase10_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#851)
+JCLYLong.leekStealGo() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#861-873) uses timestamp for comparisons
+	Dangerous comparisons:
+	- dayStealTime_[leekStealToday_] == 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#864)
+JCLYLong.stealTheLeek() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#875-890) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now.sub(dayStealTime_[leekStealToday_]) > 300 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#878)
+JCLYLong.updateTimer(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024-1042) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _now > round_[_rID].end && round_[_rID].plyr == 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1032)
+	- _newTime < (rndMax_).add(_now) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1038)
+JCLYLong.airdrop() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1044-1063) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (seed - ((seed / 1000) * 1000)) < airDropTracker_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1059)
+JCLYLong.randomNum(uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1065-1084) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (seed - ((seed / 1000) * 1000)) < _tracker (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1080)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+JCLYLong.reLoadCore(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#238-267) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#262)
+JCLYLong.withdraw() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#269-310) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#287)
+JCLYLong.getPlayerVaults(uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#369-414) compares to a boolean constant:
+	-now > round_[_rID].end && round_[_rID].ended == false && round_[_rID].plyr != 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#378)
+JCLYLong.buyCore(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#487-521) compares to a boolean constant:
+	-_now > round_[_rID].end && round_[_rID].ended == false (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#511)
+JCLYLong.core(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523-638) compares to a boolean constant:
+	-airdrop() == true (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#576)
+JCLYLong.leekStealGo() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#861-873) compares to a boolean constant:
+	-randomNum(leekStealTracker_) == true (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#867)
+JCLYLong.activate() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1208-1223) compares to a boolean constant:
+	-require(bool)(activated_ == false) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1213)
+JCLYLong.isActivated() (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#145-148) compares to a boolean constant:
+	-require(bool)(activated_ == true) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#146)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+JCLYLong.updateWhitelist(address[],bool) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#312-328) has costly operations inside a loop:
+	- pID_ ++ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#323)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+JCLYLong.core(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523-638) has a high cyclomatic complexity (13).
+JCLYLong.keysRec(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659-734) has a high cyclomatic complexity (13).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter JCLYLong.buyXid(uint256)._affID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#190) is not in mixedCase
+Parameter JCLYLong.reLoadCore(uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#238) is not in mixedCase
+Parameter JCLYLong.reLoadCore(uint256,uint256)._affID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#238) is not in mixedCase
+Parameter JCLYLong.updateWhitelist(address[],bool)._addrs (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#312) is not in mixedCase
+Parameter JCLYLong.updateWhitelist(address[],bool)._isWhitelisted (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#312) is not in mixedCase
+Parameter JCLYLong.getPlayerVaults(uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#369) is not in mixedCase
+Parameter JCLYLong.getPlayerInfoByAddress(address)._addr (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#457) is not in mixedCase
+Parameter JCLYLong.buyCore(uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#487) is not in mixedCase
+Parameter JCLYLong.buyCore(uint256,uint256)._affID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#487) is not in mixedCase
+Parameter JCLYLong.core(uint256,uint256,uint256,uint256)._rID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523) is not in mixedCase
+Parameter JCLYLong.core(uint256,uint256,uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523) is not in mixedCase
+Parameter JCLYLong.core(uint256,uint256,uint256,uint256)._eth (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523) is not in mixedCase
+Parameter JCLYLong.core(uint256,uint256,uint256,uint256)._affID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523) is not in mixedCase
+Parameter JCLYLong.checkDoubledProfit(uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#640) is not in mixedCase
+Parameter JCLYLong.checkDoubledProfit(uint256,uint256)._rID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#640) is not in mixedCase
+Parameter JCLYLong.keysRec(uint256,uint256)._curEth (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659) is not in mixedCase
+Parameter JCLYLong.keysRec(uint256,uint256)._newEth (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659) is not in mixedCase
+Parameter JCLYLong.updateGuReferral(uint256,uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#736) is not in mixedCase
+Parameter JCLYLong.updateGuReferral(uint256,uint256,uint256)._affID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#736) is not in mixedCase
+Parameter JCLYLong.updateGuReferral(uint256,uint256,uint256)._eth (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#736) is not in mixedCase
+Parameter JCLYLong.updateReferralMasks(uint256)._phID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#776) is not in mixedCase
+Parameter JCLYLong.transferGu(address,uint256)._to (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#785) is not in mixedCase
+Parameter JCLYLong.transferGu(address,uint256)._guAmt (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#785) is not in mixedCase
+Parameter JCLYLong.calcUnMaskedKeyEarnings(uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#892) is not in mixedCase
+Parameter JCLYLong.calcUnMaskedKeyEarnings(uint256,uint256)._rIDlast (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#892) is not in mixedCase
+Parameter JCLYLong.calcUnMaskedGuEarnings(uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#903) is not in mixedCase
+Parameter JCLYLong.pay500Winners(uint256)._pot (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#946) is not in mixedCase
+Parameter JCLYLong.updateGenVault(uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#969) is not in mixedCase
+Parameter JCLYLong.updateGenVault(uint256,uint256)._rIDlast (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#969) is not in mixedCase
+Parameter JCLYLong.updateGenGuVault(uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#982) is not in mixedCase
+Parameter JCLYLong.updateReferralGu(uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#995) is not in mixedCase
+Parameter JCLYLong.updateTimer(uint256,uint256)._keys (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024) is not in mixedCase
+Parameter JCLYLong.updateTimer(uint256,uint256)._rID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024) is not in mixedCase
+Parameter JCLYLong.randomNum(uint256)._tracker (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1065) is not in mixedCase
+Parameter JCLYLong.distributeExternal(uint256,uint256,uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1086) is not in mixedCase
+Parameter JCLYLong.distributeExternal(uint256,uint256,uint256,uint256)._eth (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1086) is not in mixedCase
+Parameter JCLYLong.distributeExternal(uint256,uint256,uint256,uint256)._affID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1086) is not in mixedCase
+Parameter JCLYLong.distributeInternal(uint256,uint256,uint256,uint256)._rID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1110) is not in mixedCase
+Parameter JCLYLong.distributeInternal(uint256,uint256,uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1110) is not in mixedCase
+Parameter JCLYLong.distributeInternal(uint256,uint256,uint256,uint256)._eth (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1110) is not in mixedCase
+Parameter JCLYLong.distributeInternal(uint256,uint256,uint256,uint256)._keys (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1110) is not in mixedCase
+Parameter JCLYLong.updateKeyMasks(uint256,uint256,uint256,uint256)._rID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1142) is not in mixedCase
+Parameter JCLYLong.updateKeyMasks(uint256,uint256,uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1142) is not in mixedCase
+Parameter JCLYLong.updateKeyMasks(uint256,uint256,uint256,uint256)._gen (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1142) is not in mixedCase
+Parameter JCLYLong.updateKeyMasks(uint256,uint256,uint256,uint256)._keys (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1142) is not in mixedCase
+Parameter JCLYLong.updateGuMasks(uint256,uint256)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1159) is not in mixedCase
+Parameter JCLYLong.updateGuMasks(uint256,uint256)._jcg (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1159) is not in mixedCase
+Parameter JCLYLong.withdrawEarnings(uint256,bool)._pID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1180) is not in mixedCase
+Constant JCLYLong.rndInit_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#61) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.rndInc_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#62) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.rndMax_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#63) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.ethLimiterRange1_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#66) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.ethLimiterRange2_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#67) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.ethLimiter1_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#68) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.ethLimiter2_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#69) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.whitelistRange_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#72) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage1_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#75) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage2_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#76) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage3_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#77) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage4_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#78) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage5_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#79) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage6_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#80) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage7_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#81) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage8_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#82) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage9_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#83) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage10_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#84) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage11_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#85) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.priceStage12_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#86) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase1_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#89) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase2_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#90) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase3_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#91) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase4_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#92) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase5_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#93) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase6_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#94) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase7_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#95) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase8_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#96) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase9_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#97) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant JCLYLong.guPhrase10_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#98) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable JCLYLong.whitelisted_Prebuy (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#129) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in JCLYLong.core(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#523-638):
+	External calls:
+	- distributeExternal(_rID,_pID,_eth,_affID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#629)
+		- address(WALLET_ETH_COM1).transfer(_com) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1091)
+		- address(WALLET_ETH_COM2).transfer(_com) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1092)
+	State variables written after the call(s):
+	- distributeInternal(_rID,_pID,_eth,_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#630)
+		- airDropPot_ = airDropPot_.add(_air) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1121)
+	- updateGuReferral(_pID,_affID,_eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#633)
+		- allGuGiven_ = (phrase_[_newPhID].guPoolAllocation / 5).add(allGuGiven_) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#745)
+		- allGuGiven_ = 1e18.add(allGuGiven_) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#771)
+	- distributeInternal(_rID,_pID,_eth,_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#630)
+		- allMaskGu_ = _ppg.add(allMaskGu_) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1166)
+	- distributeInternal(_rID,_pID,_eth,_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#630)
+		- leekStealPot_ = leekStealPot_.add(_steal) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1125)
+	- updateGuReferral(_pID,_affID,_eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#633)
+		- phID_ = _newPhID (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#746)
+	- updateGuReferral(_pID,_affID,_eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#633)
+		- phrase_[1].minEthRequired = 5e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#807)
+		- phrase_[1].guPoolAllocation = 100e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#808)
+		- phrase_[_phID].mask = _gpe.add(phrase_[_phID].mask) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#781)
+		- phrase_[_newPhID].guGiven = (phrase_[_newPhID].guPoolAllocation / 5).add(phrase_[_newPhID].guGiven) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#744)
+		- phrase_[2].minEthRequired = 4e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#812)
+		- phrase_[2].guPoolAllocation = 200e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#813)
+		- phrase_[3].minEthRequired = 3e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#817)
+		- phrase_[_newPhID].eth = _eth.add(phrase_[_newPhID].eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#753)
+		- phrase_[3].guPoolAllocation = 400e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#818)
+		- phrase_[4].minEthRequired = 2e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#822)
+		- phrase_[4].guPoolAllocation = 800e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#823)
+		- phrase_[5].minEthRequired = 1e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#827)
+		- phrase_[5].guPoolAllocation = 1600e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#828)
+		- phrase_[_newPhID].guGiven = 1e18.add(phrase_[_newPhID].guGiven) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#770)
+		- phrase_[6].minEthRequired = 1e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#832)
+		- phrase_[6].guPoolAllocation = 3200e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#833)
+		- phrase_[7].minEthRequired = 1e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#837)
+		- phrase_[7].guPoolAllocation = 6400e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#838)
+		- phrase_[8].minEthRequired = 1e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#842)
+		- phrase_[8].guPoolAllocation = 12800e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#843)
+		- phrase_[9].minEthRequired = 1e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#847)
+		- phrase_[9].guPoolAllocation = 25600e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#848)
+		- phrase_[10].minEthRequired = 1e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#852)
+		- phrase_[10].guPoolAllocation = 51200e18 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#853)
+		- phrase_[11].minEthRequired = 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#856)
+		- phrase_[11].guPoolAllocation = 0 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#857)
+	- updateGuReferral(_pID,_affID,_eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#633)
+		- plyrPhas_[_affID][_newPhID].eth = _eth.add(plyrPhas_[_affID][_newPhID].eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#751)
+		- plyrPhas_[_affID][_newPhID].guRewarded = _toReward.add(plyrPhas_[_affID][_newPhID].guRewarded) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#769)
+	- distributeInternal(_rID,_pID,_eth,_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#630)
+		- plyrRnds_[_pID][_rID].maskKey = (((round_[_rID].maskKey.mul(_keys)) / (1e18)).sub(_pearn)).add(plyrRnds_[_pID][_rID].maskKey) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1153)
+	- checkDoubledProfit(_pID,_rID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#635)
+		- plyrRnds_[_pID][_rIDlast].maskKey = _earnings.add(plyrRnds_[_pID][_rIDlast].maskKey) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#978)
+		- plyrRnds_[_pID][_rID].keys = plyrRnds_[_pID][_rID].keys.sub(_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#654)
+	- checkDoubledProfit(_affID,_rID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#636)
+		- plyrRnds_[_pID][_rIDlast].maskKey = _earnings.add(plyrRnds_[_pID][_rIDlast].maskKey) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#978)
+		- plyrRnds_[_pID][_rID].keys = plyrRnds_[_pID][_rID].keys.sub(_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#654)
+	- distributeInternal(_rID,_pID,_eth,_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#630)
+		- plyr_[_pID].maskGu = (((allMaskGu_.mul(plyr_[_pID].gu)) / (1e18)).sub(_pearn)).add(plyr_[_pID].maskGu) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1171)
+	- updateGuReferral(_pID,_affID,_eth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#633)
+		- plyr_[1].gu = (phrase_[_newPhID].guPoolAllocation / 10).add(plyr_[1].gu) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#742)
+		- plyr_[2].gu = (phrase_[_newPhID].guPoolAllocation / 10).add(plyr_[2].gu) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#743)
+		- plyr_[_affID].referEth = _eth.add(plyr_[_affID].referEth) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#752)
+		- plyr_[_affID].gu = _toReward.add(plyr_[_affID].gu) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#768)
+	- checkDoubledProfit(_pID,_rID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#635)
+		- plyr_[_pID].gen = _earnings.add(plyr_[_pID].gen) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#976)
+	- checkDoubledProfit(_affID,_rID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#636)
+		- plyr_[_pID].gen = _earnings.add(plyr_[_pID].gen) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#976)
+	- distributeInternal(_rID,_pID,_eth,_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#630)
+		- round_[_rID].maskKey = _ppt.add(round_[_rID].maskKey) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1148)
+		- round_[_rID].pot = _pot.add(_dustKey).add(_dustGu).add(round_[_rID].pot) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1139)
+	- checkDoubledProfit(_pID,_rID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#635)
+		- round_[_rID].keys = round_[_rID].keys.sub(_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#653)
+	- checkDoubledProfit(_affID,_rID) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#636)
+		- round_[_rID].keys = round_[_rID].keys.sub(_keys) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#653)
+Reentrancy in JCLYLong.distributeExternal(uint256,uint256,uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1086-1108):
+	External calls:
+	- address(WALLET_ETH_COM1).transfer(_com) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1091)
+	- address(WALLET_ETH_COM2).transfer(_com) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1092)
+	State variables written after the call(s):
+	- plyr_[_affID].aff = (_aff.mul(8) / 10).add(plyr_[_affID].aff) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1099)
+	- plyr_[_affID2].aff = (_aff.mul(2) / 10).add(plyr_[_affID2].aff) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1103)
+	- plyr_[1].aff = _aff.add(plyr_[_affID].aff) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1106)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+JCLYLong.keysRec(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659-734) uses literals with too many digits:
+	- _incrRate = 50000000 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#670)
+JCLYLong.keysRec(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659-734) uses literals with too many digits:
+	- _incrRate = 50000000 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#675)
+JCLYLong.keysRec(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#659-734) uses literals with too many digits:
+	- _incrRate = 50000000 (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#680)
+JCLYLong.updateTimer(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024-1042) uses literals with too many digits:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1033)
+JCLYLong.updateTimer(uint256,uint256) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1024-1042) uses literals with too many digits:
+	- _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#1035)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+JCLYLong.leekStealToday_ (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#112) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+updateWhitelist(address[],bool) should be declared external:
+	- JCLYLong.updateWhitelist(address[],bool) (../sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol#312-328)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xac5a4f78924d74518338a6c19bae24dbe7da44f5.sol analyzed (5 contracts with 100 detectors), 128 result(s) found

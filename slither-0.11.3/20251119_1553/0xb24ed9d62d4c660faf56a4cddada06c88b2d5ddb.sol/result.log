@@ -1,0 +1,325 @@
+'solc --version' running
+'solc /sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+MiniMeToken.claimTokens(address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#539-549) ignores return value by token.transfer(controller,balance) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#547)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+MiniMeToken.isContract(address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#509-516) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794) uses a dangerous strict equality:
+	- (p.token == 0x0) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#793)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Contract locking ether found:
+	Contract ProposalManager (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#638-929) has payable functions:
+	 - ProposalManager.proxyPayment(address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#909-911)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Reentrancy in MiniMeToken.approve(address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#260-277):
+	External calls:
+	- require(bool)(TokenController(controller).onApprove(msg.sender,_spender,_amount)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#271)
+	State variables written after the call(s):
+	- allowed[msg.sender][_spender] = _amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#274)
+	MiniMeToken.allowed (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#117) can be used in cross function reentrancies:
+	- MiniMeToken.allowance(address,address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#284-287)
+	- MiniMeToken.approve(address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#260-277)
+	- MiniMeToken.transferFrom(address,address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#185-201)
+Reentrancy in ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724):
+	External calls:
+	- p.token = tokenFactory.createCloneToken(nectarToken,getBlockNumber(),appendUintToString(NectarProposal-,_proposalId),MiniMeToken(nectarToken).decimals(),appendUintToString(NP-,_proposalId),true) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#711-717)
+	State variables written after the call(s):
+	- p.approved = true (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#719)
+	ProposalManager.proposals (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#658) can be used in cross function reentrancies:
+	- ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698)
+	- ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724)
+	- ProposalManager.checkIfCurrentlyActive(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904-907)
+	- ProposalManager.denyProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796-800)
+	- ProposalManager.getActiveProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#851-869)
+	- ProposalManager.getApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#828-846)
+	- ProposalManager.getNotApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#805-823)
+	- ProposalManager.nProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#896-898)
+	- ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794)
+	- ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747)
+	- p.startTime = now (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#720)
+	ProposalManager.proposals (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#658) can be used in cross function reentrancies:
+	- ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698)
+	- ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724)
+	- ProposalManager.checkIfCurrentlyActive(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904-907)
+	- ProposalManager.denyProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796-800)
+	- ProposalManager.getActiveProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#851-869)
+	- ProposalManager.getApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#828-846)
+	- ProposalManager.getNotApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#805-823)
+	- ProposalManager.nProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#896-898)
+	- ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794)
+	- ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747)
+	- p.startBlock = getBlockNumber() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#721)
+	ProposalManager.proposals (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#658) can be used in cross function reentrancies:
+	- ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698)
+	- ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724)
+	- ProposalManager.checkIfCurrentlyActive(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904-907)
+	- ProposalManager.denyProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796-800)
+	- ProposalManager.getActiveProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#851-869)
+	- ProposalManager.getApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#828-846)
+	- ProposalManager.getNotApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#805-823)
+	- ProposalManager.nProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#896-898)
+	- ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794)
+	- ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747)
+Reentrancy in ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747):
+	External calls:
+	- amount = MiniMeToken(p.token).balanceOf(msg.sender) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#735)
+	- require(bool)(MiniMeToken(p.token).transferFrom(msg.sender,address(this),amount)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#738)
+	State variables written after the call(s):
+	- proposals[_proposalId].yesVotes += amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#741)
+	ProposalManager.proposals (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#658) can be used in cross function reentrancies:
+	- ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698)
+	- ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724)
+	- ProposalManager.checkIfCurrentlyActive(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904-907)
+	- ProposalManager.denyProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796-800)
+	- ProposalManager.getActiveProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#851-869)
+	- ProposalManager.getApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#828-846)
+	- ProposalManager.getNotApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#805-823)
+	- ProposalManager.nProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#896-898)
+	- ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794)
+	- ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747)
+	- proposals[_proposalId].noVotes += amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#743)
+	ProposalManager.proposals (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#658) can be used in cross function reentrancies:
+	- ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698)
+	- ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724)
+	- ProposalManager.checkIfCurrentlyActive(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904-907)
+	- ProposalManager.denyProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796-800)
+	- ProposalManager.getActiveProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#851-869)
+	- ProposalManager.getApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#828-846)
+	- ProposalManager.getNotApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#805-823)
+	- ProposalManager.nProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#896-898)
+	- ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794)
+	- ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+MiniMeToken.getValueAt(MiniMeToken.Checkpoint[],uint256).min (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#476) shadows:
+	- MiniMeToken.min(uint256,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#519-521) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Controlled.changeController(address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#43-45) should emit an event for: 
+	- controller = _newController (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#44) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Controlled.changeController(address)._newController (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#43) lacks a zero-check on :
+		- controller = _newController (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#44)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698):
+	External calls:
+	- amount = MiniMeToken(nectarToken).balanceOf(msg.sender) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#686)
+	State variables written after the call(s):
+	- proposals.length ++ (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#690)
+	- p.storageHash = _storageHash (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#693)
+	- p.duration = _duration * (86400) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#694)
+	- p.proposer = msg.sender (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#695)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in ProposalManager.addProposal(uint256,bytes32) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#679-698):
+	External calls:
+	- amount = MiniMeToken(nectarToken).balanceOf(msg.sender) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#686)
+	Event emitted after the call(s):
+	- NewProposal(_proposalId,_duration,_storageHash) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#697)
+Reentrancy in MiniMeToken.approve(address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#260-277):
+	External calls:
+	- require(bool)(TokenController(controller).onApprove(msg.sender,_spender,_amount)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#271)
+	Event emitted after the call(s):
+	- Approval(msg.sender,_spender,_amount) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#275)
+Reentrancy in ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724):
+	External calls:
+	- p.token = tokenFactory.createCloneToken(nectarToken,getBlockNumber(),appendUintToString(NectarProposal-,_proposalId),MiniMeToken(nectarToken).decimals(),appendUintToString(NP-,_proposalId),true) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#711-717)
+	Event emitted after the call(s):
+	- Approved(_proposalId) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#723)
+Reentrancy in MiniMeToken.claimTokens(address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#539-549):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#546)
+	- token.transfer(controller,balance) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#547)
+	Event emitted after the call(s):
+	- ClaimedTokens(_token,controller,balance) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#548)
+Reentrancy in MiniMeToken.createCloneToken(string,uint8,string,uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#386-408):
+	External calls:
+	- cloneToken = tokenFactory.createCloneToken(this,_snapshotBlock,_cloneTokenName,_cloneDecimalUnits,_cloneTokenSymbol,_transfersEnabled) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#394-401)
+	- cloneToken.changeController(msg.sender) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#403)
+	Event emitted after the call(s):
+	- NewCloneToken(address(cloneToken),_snapshotBlock) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#406)
+Reentrancy in MiniMeToken.destroyTokens(address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#435-445):
+	External calls:
+	- curTotalSupply = totalSupply() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#437)
+		- parentToken.totalSupplyAt(min(_blockNumber,parentSnapShotBlock)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#361)
+	- previousBalanceFrom = balanceOf(_owner) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#439)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#336)
+	Event emitted after the call(s):
+	- Transfer(_owner,0,_amount) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#443)
+Reentrancy in MiniMeToken.doTransfer(address,address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#209-246):
+	External calls:
+	- previousBalanceFrom = balanceOfAt(_from,block.number) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#224)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#336)
+	- require(bool)(TokenController(controller).onTransfer(_from,_to,_amount)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#230)
+	- previousBalanceTo = balanceOfAt(_to,block.number) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#239)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#336)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#244)
+Reentrancy in MiniMeToken.generateTokens(address,uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#418-428):
+	External calls:
+	- curTotalSupply = totalSupply() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#420)
+		- parentToken.totalSupplyAt(min(_blockNumber,parentSnapShotBlock)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#361)
+	- previousBalanceTo = balanceOf(_owner) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#422)
+		- parentToken.balanceOfAt(_owner,min(_blockNumber,parentSnapShotBlock)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#336)
+	Event emitted after the call(s):
+	- Transfer(0,_owner,_amount) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#426)
+Reentrancy in ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747):
+	External calls:
+	- amount = MiniMeToken(p.token).balanceOf(msg.sender) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#735)
+	- require(bool)(MiniMeToken(p.token).transferFrom(msg.sender,address(this),amount)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#738)
+	Event emitted after the call(s):
+	- Vote(_proposalId,msg.sender,_yes,amount) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#746)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ProposalManager.approveProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702-724) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(proposals.length > _proposalId) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#703)
+	- require(bool)(! proposals[_proposalId].denied) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#704)
+	- require(bool)(! p.approved) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#709)
+ProposalManager.vote(uint256,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729-747) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_proposalId < proposals.length) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#730)
+	- require(bool)(amount > 0) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#736)
+	- require(bool)(MiniMeToken(p.token).transferFrom(msg.sender,address(this),amount)) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#738)
+ProposalManager.proposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763-794) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_proposalId < proposals.length) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#778)
+	- _finalized = (_startTime + _duration < now) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#786)
+	- _active = ! _finalized && (p.startBlock < getBlockNumber()) && p.approved (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#787)
+	- (p.token == 0x0) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#793)
+	- _hasBalance = (MiniMeToken(p.token).balanceOf(msg.sender) > 0) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#793)
+ProposalManager.denyProposal(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796-800) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(! proposals[_proposalId].approved) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#797)
+ProposalManager.getNotApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#805-823) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#807)
+	- ! proposals[i].approved && ! proposals[i].denied (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#808)
+	- i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#815)
+	- ! proposals[i].approved && ! proposals[i].denied (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#816)
+ProposalManager.getApprovedProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#828-846) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#830)
+	- proposals[i].approved && ! proposals[i].denied (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#831)
+	- i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#838)
+	- proposals[i].approved && ! proposals[i].denied (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#839)
+ProposalManager.getActiveProposals() (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#851-869) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#853)
+	- i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#861)
+ProposalManager.checkIfCurrentlyActive(uint256) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904-907) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (p.startTime + p.duration > now && p.startTime < now && p.approved && ! p.denied) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#906)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+MiniMeToken.isContract(address) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#509-516) uses assembly
+	- INLINE ASM (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#512-515)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint 0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- 0.4.21 (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#1)
+solc-0.4.21 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+ProposalManager (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#638-929) should inherit from TokenController (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#49-71)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-inheritance
+
+Parameter Controlled.changeController(address)._newController (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#43) is not in mixedCase
+Parameter MiniMeToken.transfer(address,uint256)._to (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#173) is not in mixedCase
+Parameter MiniMeToken.transfer(address,uint256)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#173) is not in mixedCase
+Parameter MiniMeToken.transferFrom(address,address,uint256)._from (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#185) is not in mixedCase
+Parameter MiniMeToken.transferFrom(address,address,uint256)._to (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#185) is not in mixedCase
+Parameter MiniMeToken.transferFrom(address,address,uint256)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#185) is not in mixedCase
+Parameter MiniMeToken.doTransfer(address,address,uint256)._from (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#209) is not in mixedCase
+Parameter MiniMeToken.doTransfer(address,address,uint256)._to (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#209) is not in mixedCase
+Parameter MiniMeToken.doTransfer(address,address,uint256)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#209) is not in mixedCase
+Parameter MiniMeToken.balanceOf(address)._owner (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#250) is not in mixedCase
+Parameter MiniMeToken.approve(address,uint256)._spender (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#260) is not in mixedCase
+Parameter MiniMeToken.approve(address,uint256)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#260) is not in mixedCase
+Parameter MiniMeToken.allowance(address,address)._owner (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#284) is not in mixedCase
+Parameter MiniMeToken.allowance(address,address)._spender (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#284) is not in mixedCase
+Parameter MiniMeToken.approveAndCall(address,uint256,bytes)._spender (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#296) is not in mixedCase
+Parameter MiniMeToken.approveAndCall(address,uint256,bytes)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#296) is not in mixedCase
+Parameter MiniMeToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#296) is not in mixedCase
+Parameter MiniMeToken.balanceOfAt(address,uint256)._owner (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#325) is not in mixedCase
+Parameter MiniMeToken.balanceOfAt(address,uint256)._blockNumber (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#325) is not in mixedCase
+Parameter MiniMeToken.totalSupplyAt(uint256)._blockNumber (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#351) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._cloneTokenName (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#387) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._cloneDecimalUnits (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#388) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._cloneTokenSymbol (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#389) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._snapshotBlock (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#390) is not in mixedCase
+Parameter MiniMeToken.createCloneToken(string,uint8,string,uint256,bool)._transfersEnabled (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#391) is not in mixedCase
+Parameter MiniMeToken.generateTokens(address,uint256)._owner (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#418) is not in mixedCase
+Parameter MiniMeToken.generateTokens(address,uint256)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#418) is not in mixedCase
+Parameter MiniMeToken.destroyTokens(address,uint256)._owner (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#435) is not in mixedCase
+Parameter MiniMeToken.destroyTokens(address,uint256)._amount (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#435) is not in mixedCase
+Parameter MiniMeToken.enableTransfers(bool)._transfersEnabled (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#454) is not in mixedCase
+Parameter MiniMeToken.getValueAt(MiniMeToken.Checkpoint[],uint256)._block (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#466) is not in mixedCase
+Parameter MiniMeToken.updateValueAtNow(MiniMeToken.Checkpoint[],uint256)._value (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#493) is not in mixedCase
+Parameter MiniMeToken.isContract(address)._addr (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#509) is not in mixedCase
+Parameter MiniMeToken.claimTokens(address)._token (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#539) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._parentToken (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#586) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._snapshotBlock (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#587) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._tokenName (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#588) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._decimalUnits (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#589) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._tokenSymbol (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#590) is not in mixedCase
+Parameter MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool)._transfersEnabled (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#591) is not in mixedCase
+Parameter ProposalManager.addProposal(uint256,bytes32)._duration (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#680) is not in mixedCase
+Parameter ProposalManager.addProposal(uint256,bytes32)._storageHash (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#681) is not in mixedCase
+Parameter ProposalManager.approveProposal(uint256)._proposalId (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#702) is not in mixedCase
+Parameter ProposalManager.vote(uint256,bool)._proposalId (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729) is not in mixedCase
+Parameter ProposalManager.vote(uint256,bool)._yes (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#729) is not in mixedCase
+Parameter ProposalManager.addAdmin(address)._newAdmin (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#751) is not in mixedCase
+Parameter ProposalManager.removeAdmin(address)._admin (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#757) is not in mixedCase
+Parameter ProposalManager.proposal(uint256)._proposalId (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#763) is not in mixedCase
+Parameter ProposalManager.denyProposal(uint256)._proposalId (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#796) is not in mixedCase
+Parameter ProposalManager.isAdmin(address)._admin (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#900) is not in mixedCase
+Parameter ProposalManager.checkIfCurrentlyActive(uint256)._proposalId (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#904) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Loop condition i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#807) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#815) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#830) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#838) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#853) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < proposals.length (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#861) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+MiniMeToken.version (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#85) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- ApproveAndCallFallBack.receiveApproval(address,uint256,address,bytes) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#74)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- MiniMeToken.approveAndCall(address,uint256,bytes) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#296-308)
+createCloneToken(address,uint256,string,uint8,string,bool) should be declared external:
+	- MiniMeTokenFactory.createCloneToken(address,uint256,string,uint8,string,bool) (../sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol#585-605)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xb24ed9d62d4c660faf56a4cddada06c88b2d5ddb.sol analyzed (7 contracts with 100 detectors), 93 result(s) found

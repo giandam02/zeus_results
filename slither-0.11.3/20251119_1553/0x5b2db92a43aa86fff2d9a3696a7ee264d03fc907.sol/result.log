@@ -1,0 +1,1200 @@
+'solc --version' running
+'solc /sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:123:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ApplicationAsset() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:143:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventAppAssetOwnerSet(_name, owner);
+        ^---------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:164:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventRunBeforeInit(assetName);
+        ^---------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:180:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventRunBeforeApplyingSettings(assetName);
+        ^---------------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:186:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventAppAssetOwnerSet(assetName, owner);
+        ^-------------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:713:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventRunBeforeApplyingSettings(assetName);
+        ^---------------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:729:16: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        return keccak256(actionType, arg1, arg2);
+               ^-------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:977:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventNewProposalCreated ( _hash, RecordNum );
+        ^------------------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:1151:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventAddVoteIntoResult(_proposalId, _type, _power );
+        ^-------------------------------------------------^
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol:1216:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventProcessVoteTotals(_proposalId, start, end);
+        ^---------------------------------------------^
+
+
+ApplicationAsset.EntityStates (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#101) is never initialized. It is used in:
+	- ApplicationAsset.getEntityState(bytes32) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#159-161)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277) uses a dangerous strict equality:
+	- result.requiresCounting == false (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1262)
+Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289) uses a dangerous strict equality:
+	- proposal.state == getRecordState(ACCEPTING_VOTES) && proposal.time_end < getTimestamp() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1285)
+Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770) uses a dangerous strict equality:
+	- getProposalType(ActiveProposalIds[i]) == getActionType(PROJECT_DELISTING) || getProposalType(ActiveProposalIds[i]) == getActionType(AFTER_COMPLETE_CODE_UPGRADE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#760-761)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096):
+	External calls:
+	- VoterPower = getVotingPower(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1071)
+		- TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1175)
+		- VaultAddress = FundingManagerEntity.getMyVaultAddress(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1179)
+		- VotingPower = TokenEntity.balanceOf(VaultAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1181)
+		- VotingPower += TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1185)
+	- tryEndVoting(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1091)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- tryEndVoting(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1091)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1350)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1333)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1355)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1336)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1359)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+Reentrancy in Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986):
+	External calls:
+	- proposal.time_end = getTimestamp() + getBylawsProposalVotingDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#966)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+	State variables written after the call(s):
+	- ProposalIdByHash[_hash] = RecordNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#969)
+	Proposals.ProposalIdByHash (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#937) can be used in cross function reentrancies:
+	- Proposals.ProposalIdByHash (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#937)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getHasVoteForCurrentMilestoneRelease(address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1448-1454)
+	- Proposals.getMyVoteForCurrentMilestoneRelease(address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1438-1446)
+	- proposal.index = RecordNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#967)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+Reentrancy in Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986):
+	External calls:
+	- proposal.time_end = getTimestamp() + getBylawsProposalVotingDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#966)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+	- initProposalVoting(RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#976)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- initProposalVoting(RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#976)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1371)
+		- proposal.state = getRecordState(ACCEPTING_VOTES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1029)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1001)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+	- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+	State variables written after the call(s):
+	- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+	- result.requiresCounting = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1009)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1001)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+	State variables written after the call(s):
+	- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+	- result.requiresCounting = false (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1016)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1019)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+	- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+	- result.requiresCounting = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1025)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1001)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+	- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+	- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1019)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+	- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- proposal.state = getRecordState(ACCEPTING_VOTES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1029)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- result.requiredForResult = result.totalAvailable / 2 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1027)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1001)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+	- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+	- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1019)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+	- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	- tryFinaliseNonLockedTokensProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1032)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- tryFinaliseNonLockedTokensProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1032)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1371)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+Reentrancy in Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770):
+	External calls:
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- ActiveProposalIds[i] = ActiveProposalIds[i + 1] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1388)
+	Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751) can be used in cross function reentrancies:
+	- Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751)
+	- Proposals.addActiveProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376-1378)
+	- Proposals.hasRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#772-779)
+	- Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770)
+	- Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- ActiveProposalIds[i] = ActiveProposalIds[i + 1] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1388)
+	Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751) can be used in cross function reentrancies:
+	- Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751)
+	- Proposals.addActiveProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376-1378)
+	- Proposals.hasRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#772-779)
+	- Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770)
+	- Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- ActiveProposalNum -- (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1392)
+	Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752) can be used in cross function reentrancies:
+	- Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752)
+	- Proposals.addActiveProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376-1378)
+	- Proposals.getRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#781-786)
+	- Proposals.hasRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#772-779)
+	- Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770)
+	- Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- ActiveProposalNum -- (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1392)
+	Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752) can be used in cross function reentrancies:
+	- Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752)
+	- Proposals.addActiveProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376-1378)
+	- Proposals.getRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#781-786)
+	- Proposals.hasRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#772-779)
+	- Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770)
+	- Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- Application = ApplicationEntityABI(owner) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#991)
+	Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644) can be used in cross function reentrancies:
+	- Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- Application = ApplicationEntityABI(owner) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#991)
+	Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644) can be used in cross function reentrancies:
+	- Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- ProcessedVotesByProposal[_proposalId] = lastProcessedVoteIdByProposal[_proposalId] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1253)
+	Proposals.ProcessedVotesByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1194) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ProcessedVotesByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1194)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1350)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1333)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1355)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1336)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1359)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1350)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1333)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1355)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1336)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1359)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- newResult.totalSoFar += _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1154)
+		- newResult.yes += _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1156)
+		- newResult.no += _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1158)
+		- result.yes = 0 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1225)
+		- result.no = 0 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1226)
+		- result.totalSoFar = 0 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1227)
+	Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065)
+	- Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160)
+	- Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+	- Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- VoteCountAtProcessingStartByProposal[_proposalId] = VotesNumByProposalId[_proposalId] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1221)
+	Proposals.VoteCountAtProcessingStartByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1195) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.VoteCountAtProcessingStartByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1195)
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- lastProcessedVoteIdByProposal[_proposalId] = 0 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1234)
+		- lastProcessedVoteIdByProposal[_proposalId] ++ (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1247)
+		- lastProcessedVoteIdByProposal[_proposalId] = 0 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1254)
+	Proposals.lastProcessedVoteIdByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1193) can be used in cross function reentrancies:
+	- Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257)
+	- Proposals.lastProcessedVoteIdByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1193)
+	- Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309)
+Reentrancy in Proposals.tryEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1311-1319):
+	External calls:
+	- finaliseProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1313)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- ActiveProposalIds[i] = ActiveProposalIds[i + 1] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1388)
+	Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751) can be used in cross function reentrancies:
+	- Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751)
+	- Proposals.addActiveProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376-1378)
+	- Proposals.hasRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#772-779)
+	- Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770)
+	- Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393)
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- ActiveProposalNum -- (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1392)
+	Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752) can be used in cross function reentrancies:
+	- Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752)
+	- Proposals.addActiveProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376-1378)
+	- Proposals.getRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#781-786)
+	- Proposals.hasRequiredStateChanges() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#772-779)
+	- Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770)
+	- Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393)
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- Application = ApplicationEntityABI(owner) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#991)
+	Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644) can be used in cross function reentrancies:
+	- Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1350)
+		- proposal.state = getRecordState(VOTING_RESULT_YES) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1355)
+		- proposal.state = getRecordState(VOTING_RESULT_NO) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1359)
+	Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) can be used in cross function reentrancies:
+	- Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936)
+	- Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096)
+	- Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993)
+	- Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986)
+	- Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289)
+	- Proposals.finaliseExpiredProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343-1363)
+	- Proposals.finaliseProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321-1341)
+	- Proposals.getCurrentMilestonePostponingProposalDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#860-865)
+	- Proposals.getCurrentMilestoneProposalStatusForType(uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867-877)
+	- Proposals.getProposalState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660-662)
+	- Proposals.getProposalType(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279-1281)
+	- Proposals.getVotingPower(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169-1190)
+	- Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033)
+	- Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435)
+	- Proposals.tryFinaliseNonLockedTokensProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365-1374)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Proposals.addCodeUpgradeProposal(address,bytes32).thisAction (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#799) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+ABIFundingManager.VaultRequestedUpdateForLockedVotingTokens(address).owner (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#551) shadows:
+	- ABIApplicationAsset.owner (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#334) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+ApplicationAsset.setInitialApplicationAddress(address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#127-129) should emit an event for: 
+	- owner = _ownerAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#128) 
+	- owner = _ownerAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#128) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+ApplicationAsset.setInitialApplicationAddress(address)._ownerAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#127) lacks a zero-check on :
+		- owner = _ownerAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#128)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435) has external calls inside a loop: ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	Calls stack containing the loop:
+		Proposals.process()
+		Proposals.ProcessVoteTotals(uint256,uint256)
+		Proposals.tryEndVoting(uint256)
+		Proposals.finaliseProposal(uint256)
+Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993) has external calls inside a loop: Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+	Calls stack containing the loop:
+		Proposals.process()
+		Proposals.ProcessVoteTotals(uint256,uint256)
+		Proposals.tryEndVoting(uint256)
+		Proposals.finaliseProposal(uint256)
+		Proposals.runActionAfterResult(uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096):
+	External calls:
+	- VoterPower = getVotingPower(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1071)
+		- TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1175)
+		- VaultAddress = FundingManagerEntity.getMyVaultAddress(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1179)
+		- VotingPower = TokenEntity.balanceOf(VaultAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1181)
+		- VotingPower += TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1185)
+	State variables written after the call(s):
+	- undoPreviousVote(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1085)
+		- result.totalSoFar -= previousVoteByProposalId.power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1119)
+		- result.yes -= previousVoteByProposalId.power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1122)
+		- result.no -= previousVoteByProposalId.power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1125)
+	- registerNewVote(_proposalId,Voter,_myVote,VoterPower) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1088)
+		- newResult.totalSoFar += _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1154)
+		- newResult.yes += _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1156)
+		- newResult.no += _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1158)
+	- undoPreviousVote(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1085)
+		- previousVoteByCaster.annulled = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1111)
+	- registerNewVote(_proposalId,Voter,_myVote,VoterPower) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1088)
+		- VotesByCaster[_proposalId][_voter] = VotesByProposalId[_proposalId][currentVoteId] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1142)
+	- undoPreviousVote(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1085)
+		- previousVoteByProposalId.annulled = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1114)
+	- registerNewVote(_proposalId,Voter,_myVote,VoterPower) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1088)
+		- vote.voter = _voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1136)
+		- vote.time = getTimestamp() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1137)
+		- vote.vote = _myVote (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1138)
+		- vote.power = _power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1139)
+		- vote.index = currentVoteId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1140)
+	- registerNewVote(_proposalId,Voter,_myVote,VoterPower) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1088)
+		- currentVoteId = VotesNumByProposalId[_proposalId] ++ (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1134)
+Reentrancy in Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096):
+	External calls:
+	- VoterPower = getVotingPower(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1071)
+		- TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1175)
+		- VaultAddress = FundingManagerEntity.getMyVaultAddress(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1179)
+		- VotingPower = TokenEntity.balanceOf(VaultAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1181)
+		- VotingPower += TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1185)
+	- tryEndVoting(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1091)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- tryEndVoting(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1091)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.addCodeUpgradeProposal(address,bytes32) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#788-817):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#801)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#804)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- createProposal(msg.sender,CODE_UPGRADE,getHash(thisAction,bytes32(_addr),0),thisAction,_addr,_sourceCodeUrl,0) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#808-816)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- createProposal(msg.sender,CODE_UPGRADE,getHash(thisAction,bytes32(_addr),0),thisAction,_addr,_sourceCodeUrl,0) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#808-816)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.createDelistingProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#895-915):
+	External calls:
+	- ListingContractEntity.canBeDelisted(_projectId) == true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#901)
+	- createProposal(msg.sender,PROJECT_DELISTING,getHash(getActionType(PROJECT_DELISTING),bytes32(_projectId),0),getActionType(PROJECT_DELISTING),0,0,_projectId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#903-911)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	- onlyTokenHolder() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#897)
+		- VaultAddress = FundingManagerEntity.getMyVaultAddress(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1163)
+		- VotingPower = TokenEntity.balanceOf(VaultAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1164)
+		- VotingPower += TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1165)
+	State variables written after the call(s):
+	- createProposal(msg.sender,PROJECT_DELISTING,getHash(getActionType(PROJECT_DELISTING),bytes32(_projectId),0),getActionType(PROJECT_DELISTING),0,0,_projectId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#903-911)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.createMilestoneAcceptanceProposal() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#820-836):
+	External calls:
+	- recordId = MilestonesEntity.currentRecord() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#826)
+	- createProposal(msg.sender,MILESTONE_DEADLINE,getHash(getActionType(MILESTONE_DEADLINE),bytes32(recordId),0),getActionType(MILESTONE_DEADLINE),0,0,uint256(recordId)) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#827-835)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	- onlyAsset(Milestones) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#822)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	State variables written after the call(s):
+	- createProposal(msg.sender,MILESTONE_DEADLINE,getHash(getActionType(MILESTONE_DEADLINE),bytes32(recordId),0),getActionType(MILESTONE_DEADLINE),0,0,uint256(recordId)) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#827-835)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.createMilestonePostponingProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#838-858):
+	External calls:
+	- _duration >= getBylawsMilestoneMinPostponing() && _duration <= getBylawsMilestoneMaxPostponing() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#843)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+	- recordId = MilestonesEntity.currentRecord() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#845)
+	- createProposal(msg.sender,MILESTONE_POSTPONING,getHash(getActionType(MILESTONE_POSTPONING),bytes32(recordId),0),getActionType(MILESTONE_POSTPONING),0,0,_duration) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#846-854)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- createProposal(msg.sender,MILESTONE_POSTPONING,getHash(getActionType(MILESTONE_POSTPONING),bytes32(recordId),0),getActionType(MILESTONE_POSTPONING),0,0,_duration) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#846-854)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986):
+	External calls:
+	- proposal.time_end = getTimestamp() + getBylawsProposalVotingDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#966)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+	- initProposalVoting(RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#976)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- initProposalVoting(RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#976)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1001)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+	- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+	- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1019)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+	- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	State variables written after the call(s):
+	- addActiveProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1030)
+		- ActiveProposalIds[ActiveProposalNum ++] = _proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1377)
+	- addActiveProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1030)
+		- ActiveProposalIds[ActiveProposalNum ++] = _proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1377)
+Reentrancy in Proposals.initProposalVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996-1033):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1001)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+	- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+	- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1019)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+	- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	- tryFinaliseNonLockedTokensProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1032)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- tryFinaliseNonLockedTokensProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1032)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770):
+	External calls:
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reentrancy in Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435):
+	External calls:
+	- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	- acceptCodeUpgrade(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1421)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+	State variables written after the call(s):
+	- removeAndReindexActive(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1424)
+		- ActiveProposalIds[i] = ActiveProposalIds[i + 1] (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1388)
+	- removeAndReindexActive(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1424)
+		- ActiveProposalNum -- (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1392)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	State variables written after the call(s):
+	- FundingEntity = ABIFunding(FundingAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#698)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- FundingManagerAddress = getApplicationAssetAddressByName(FundingManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#700)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	State variables written after the call(s):
+	- FundingManagerEntity = ABIFundingManager(FundingManagerAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#701)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- FundingManagerAddress = getApplicationAssetAddressByName(FundingManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#700)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenManagerAddress = getApplicationAssetAddressByName(TokenManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#703)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	State variables written after the call(s):
+	- TokenManagerEntity = ABITokenManager(TokenManagerAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#704)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- FundingManagerAddress = getApplicationAssetAddressByName(FundingManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#700)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenManagerAddress = getApplicationAssetAddressByName(TokenManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#703)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenEntity = ABIToken(TokenManagerEntity.TokenEntity()) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#705)
+	State variables written after the call(s):
+	- TokenEntity = ABIToken(TokenManagerEntity.TokenEntity()) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#705)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- FundingManagerAddress = getApplicationAssetAddressByName(FundingManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#700)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenManagerAddress = getApplicationAssetAddressByName(TokenManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#703)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenEntity = ABIToken(TokenManagerEntity.TokenEntity()) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#705)
+	- ListingContractAddress = getApplicationAssetAddressByName(ListingContract) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#707)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	State variables written after the call(s):
+	- ListingContractEntity = ABIListingContract(ListingContractAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#708)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- FundingManagerAddress = getApplicationAssetAddressByName(FundingManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#700)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenManagerAddress = getApplicationAssetAddressByName(TokenManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#703)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenEntity = ABIToken(TokenManagerEntity.TokenEntity()) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#705)
+	- ListingContractAddress = getApplicationAssetAddressByName(ListingContract) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#707)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- MilestonesContractAddress = getApplicationAssetAddressByName(Milestones) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#710)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	State variables written after the call(s):
+	- MilestonesEntity = ABIMilestones(MilestonesContractAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#711)
+Reentrancy in Proposals.tryEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1311-1319):
+	External calls:
+	- finaliseProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1313)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	State variables written after the call(s):
+	- finaliseExpiredProposal(_proposalId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1317)
+		- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096):
+	External calls:
+	- VoterPower = getVotingPower(_proposalId,Voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1071)
+		- TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1175)
+		- VaultAddress = FundingManagerEntity.getMyVaultAddress(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1179)
+		- VotingPower = TokenEntity.balanceOf(VaultAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1181)
+		- VotingPower += TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1185)
+	Event emitted after the call(s):
+	- EventAddVoteIntoResult(_proposalId,_type,_power) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1151)
+		- registerNewVote(_proposalId,Voter,_myVote,VoterPower) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1088)
+Reentrancy in Proposals.addCodeUpgradeProposal(address,bytes32) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#788-817):
+	External calls:
+	- getApplicationState() == getApplicationEntityState(IN_DEVELOPMENT) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#801)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- getApplicationState() == getApplicationEntityState(DEVELOPMENT_COMPLETE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#804)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+	- createProposal(msg.sender,CODE_UPGRADE,getHash(thisAction,bytes32(_addr),0),thisAction,_addr,_sourceCodeUrl,0) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#808-816)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	Event emitted after the call(s):
+	- EventNewProposalCreated(_hash,RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#977)
+		- createProposal(msg.sender,CODE_UPGRADE,getHash(thisAction,bytes32(_addr),0),thisAction,_addr,_sourceCodeUrl,0) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#808-816)
+Reentrancy in Proposals.createDelistingProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#895-915):
+	External calls:
+	- ListingContractEntity.canBeDelisted(_projectId) == true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#901)
+	- createProposal(msg.sender,PROJECT_DELISTING,getHash(getActionType(PROJECT_DELISTING),bytes32(_projectId),0),getActionType(PROJECT_DELISTING),0,0,_projectId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#903-911)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	- onlyTokenHolder() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#897)
+		- VaultAddress = FundingManagerEntity.getMyVaultAddress(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1163)
+		- VotingPower = TokenEntity.balanceOf(VaultAddress) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1164)
+		- VotingPower += TokenEntity.balanceOf(_voter) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1165)
+	Event emitted after the call(s):
+	- EventNewProposalCreated(_hash,RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#977)
+		- createProposal(msg.sender,PROJECT_DELISTING,getHash(getActionType(PROJECT_DELISTING),bytes32(_projectId),0),getActionType(PROJECT_DELISTING),0,0,_projectId) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#903-911)
+Reentrancy in Proposals.createMilestoneAcceptanceProposal() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#820-836):
+	External calls:
+	- recordId = MilestonesEntity.currentRecord() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#826)
+	- createProposal(msg.sender,MILESTONE_DEADLINE,getHash(getActionType(MILESTONE_DEADLINE),bytes32(recordId),0),getActionType(MILESTONE_DEADLINE),0,0,uint256(recordId)) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#827-835)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	- onlyAsset(Milestones) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#822)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	Event emitted after the call(s):
+	- EventNewProposalCreated(_hash,RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#977)
+		- createProposal(msg.sender,MILESTONE_DEADLINE,getHash(getActionType(MILESTONE_DEADLINE),bytes32(recordId),0),getActionType(MILESTONE_DEADLINE),0,0,uint256(recordId)) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#827-835)
+Reentrancy in Proposals.createMilestonePostponingProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#838-858):
+	External calls:
+	- _duration >= getBylawsMilestoneMinPostponing() && _duration <= getBylawsMilestoneMaxPostponing() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#843)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+	- recordId = MilestonesEntity.currentRecord() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#845)
+	- createProposal(msg.sender,MILESTONE_POSTPONING,getHash(getActionType(MILESTONE_POSTPONING),bytes32(recordId),0),getActionType(MILESTONE_POSTPONING),0,0,_duration) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#846-854)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	Event emitted after the call(s):
+	- EventNewProposalCreated(_hash,RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#977)
+		- createProposal(msg.sender,MILESTONE_POSTPONING,getHash(getActionType(MILESTONE_POSTPONING),bytes32(recordId),0),getActionType(MILESTONE_POSTPONING),0,0,_duration) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#846-854)
+Reentrancy in Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#939-986):
+	External calls:
+	- proposal.time_end = getTimestamp() + getBylawsProposalVotingDuration() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#966)
+		- CurrentApp.getBylawUint256(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#213)
+	- initProposalVoting(RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#976)
+		- ApplicationEntityABI(owner).CurrentEntityState() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#204)
+		- ApplicationEntityABI(owner).getEntityState(name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#208)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ownerLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1005)
+		- result.totalAvailable = TokenEntity.totalSupply() - ownerLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1006)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+		- result.totalAvailable = FundingManagerEntity.LockedVotingTokens() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1013)
+		- residualLockedTokens = TokenEntity.balanceOf(TokenManagerEntity) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1021)
+		- result.totalAvailable = TokenEntity.totalSupply() - residualLockedTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1022)
+	Event emitted after the call(s):
+	- EventNewProposalCreated(_hash,RecordNum) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#977)
+Reentrancy in Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770):
+	External calls:
+	- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	- tryEndVoting(ActiveProposalIds[i]) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#766)
+		- Application.acceptCodeUpgradeProposal(proposal.addr) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#992)
+		- ListingContractEntity.delistChild(proposal.extra) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1413)
+	Event emitted after the call(s):
+	- EventAddVoteIntoResult(_proposalId,_type,_power) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1151)
+		- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+	- EventProcessVoteTotals(_proposalId,start,end) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1216)
+		- ProcessVoteTotals(ActiveProposalIds[i],VoteCountPerProcess) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#763)
+Reentrancy in Proposals.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#692-714):
+	External calls:
+	- FundingAddress = getApplicationAssetAddressByName(Funding) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#697)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- FundingManagerAddress = getApplicationAssetAddressByName(FundingManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#700)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenManagerAddress = getApplicationAssetAddressByName(TokenManager) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#703)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- TokenEntity = ABIToken(TokenManagerEntity.TokenEntity()) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#705)
+	- ListingContractAddress = getApplicationAssetAddressByName(ListingContract) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#707)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	- MilestonesContractAddress = getApplicationAssetAddressByName(Milestones) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#710)
+		- asset = ApplicationEntityABI(owner).getAssetAddressByName(_name) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#195)
+	Event emitted after the call(s):
+	- EventRunBeforeApplyingSettings(assetName) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#713)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Proposals.process() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#756-770) uses timestamp for comparisons
+	Dangerous comparisons:
+	- getProposalType(ActiveProposalIds[i]) == getActionType(PROJECT_DELISTING) || getProposalType(ActiveProposalIds[i]) == getActionType(AFTER_COMPLETE_CODE_UPGRADE) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#760-761)
+Proposals.expiryChangesState(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283-1289) uses timestamp for comparisons
+	Dangerous comparisons:
+	- proposal.state == getRecordState(ACCEPTING_VOTES) && proposal.time_end < getTimestamp() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1285)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+ApplicationAsset.requireInitialised() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#231-234) compares to a boolean constant:
+	-require(bool)(_initialized == true) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#232)
+ApplicationAsset.requireNotInitialised() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#236-239) compares to a boolean constant:
+	-require(bool)(_initialized == false) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#237)
+ApplicationAsset.requireSettingsApplied() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#241-244) compares to a boolean constant:
+	-require(bool)(_settingsApplied == true) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#242)
+ApplicationAsset.requireSettingsNotApplied() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#246-249) compares to a boolean constant:
+	-require(bool)(_settingsApplied == false) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#247)
+Proposals.createDelistingProposal(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#895-915) compares to a boolean constant:
+	-ListingContractEntity.canBeDelisted(_projectId) == true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#901)
+Proposals.undoPreviousVote(uint256,address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106-1129) compares to a boolean constant:
+	-previousVoteByProposalId.vote == true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1121)
+Proposals.addVoteIntoResult(uint256,bool,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149-1160) compares to a boolean constant:
+	-_type == true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1155)
+Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257) compares to a boolean constant:
+	-vote.annulled != true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1243)
+Proposals.canEndVoting(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259-1277) compares to a boolean constant:
+	-result.requiresCounting == false (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1262)
+Proposals.needsProcessing(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291-1309) compares to a boolean constant:
+	-result.requiresCounting == true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1297)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Proposals.runActionAfterResult(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398-1435) has costly operations inside a loop:
+	- EmergencyFundingReleaseApproved = true (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1409)
+	Calls stack containing the loop:
+		Proposals.process()
+		Proposals.ProcessVoteTotals(uint256,uint256)
+		Proposals.tryEndVoting(uint256)
+		Proposals.finaliseProposal(uint256)
+Proposals.removeAndReindexActive(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380-1393) has costly operations inside a loop:
+	- ActiveProposalNum -- (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1392)
+	Calls stack containing the loop:
+		Proposals.process()
+		Proposals.ProcessVoteTotals(uint256,uint256)
+		Proposals.tryEndVoting(uint256)
+		Proposals.finaliseProposal(uint256)
+		Proposals.runActionAfterResult(uint256)
+Proposals.acceptCodeUpgrade(uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988-993) has costly operations inside a loop:
+	- Application = ApplicationEntityABI(owner) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#991)
+	Calls stack containing the loop:
+		Proposals.process()
+		Proposals.ProcessVoteTotals(uint256,uint256)
+		Proposals.tryEndVoting(uint256)
+		Proposals.finaliseProposal(uint256)
+		Proposals.runActionAfterResult(uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+ApplicationAsset.runBeforeApplyingSettings() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#179-181) is never used and should be removed
+ApplicationAsset.setAssetStates() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#147-153) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.17 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.17 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function ApplicationEntityABI.ApplicationEntity() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#44) is not in mixedCase
+Parameter ApplicationEntityABI.linkToGateway(address,bytes32)._GatewayInterfaceAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#46) is not in mixedCase
+Variable ApplicationEntityABI.ProposalsEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#21) is not in mixedCase
+Variable ApplicationEntityABI.FundingEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#22) is not in mixedCase
+Variable ApplicationEntityABI.MilestonesEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#23) is not in mixedCase
+Variable ApplicationEntityABI.MeetingsEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#24) is not in mixedCase
+Variable ApplicationEntityABI.BountyManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#25) is not in mixedCase
+Variable ApplicationEntityABI.TokenManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#26) is not in mixedCase
+Variable ApplicationEntityABI.ListingContractEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#27) is not in mixedCase
+Variable ApplicationEntityABI.FundingManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#28) is not in mixedCase
+Variable ApplicationEntityABI.NewsContractEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#29) is not in mixedCase
+Variable ApplicationEntityABI._initialized (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#31) is not in mixedCase
+Variable ApplicationEntityABI._locked (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#32) is not in mixedCase
+Variable ApplicationEntityABI.CurrentEntityState (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#33) is not in mixedCase
+Variable ApplicationEntityABI.AssetCollectionNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#34) is not in mixedCase
+Variable ApplicationEntityABI.GatewayInterfaceAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#35) is not in mixedCase
+Variable ApplicationEntityABI.EntityStates (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#38) is not in mixedCase
+Variable ApplicationEntityABI.AssetCollection (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#39) is not in mixedCase
+Variable ApplicationEntityABI.AssetCollectionIdToName (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#40) is not in mixedCase
+Variable ApplicationEntityABI.BylawsUint256 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#41) is not in mixedCase
+Variable ApplicationEntityABI.BylawsBytes32 (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#42) is not in mixedCase
+Parameter ApplicationAsset.setInitialApplicationAddress(address)._ownerAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#127) is not in mixedCase
+Parameter ApplicationAsset.setInitialOwnerAndName(bytes32)._name (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#131) is not in mixedCase
+Parameter ApplicationAsset.transferToNewOwner(address)._newOwner (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#183) is not in mixedCase
+Parameter ApplicationAsset.getApplicationAssetAddressByName(bytes32)._name (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#190) is not in mixedCase
+Variable ApplicationAsset.EntityStates (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#101) is not in mixedCase
+Variable ApplicationAsset.RecordStates (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#102) is not in mixedCase
+Variable ApplicationAsset.CurrentEntityState (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#103) is not in mixedCase
+Variable ApplicationAsset.RecordNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#111) is not in mixedCase
+Variable ApplicationAsset._initialized (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#114) is not in mixedCase
+Variable ApplicationAsset._settingsApplied (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#117) is not in mixedCase
+Variable ABIApplicationAsset.CurrentEntityState (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#330) is not in mixedCase
+Variable ABIApplicationAsset.RecordNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#331) is not in mixedCase
+Variable ABIApplicationAsset._initialized (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#332) is not in mixedCase
+Variable ABIApplicationAsset._settingsApplied (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#333) is not in mixedCase
+Variable ABIApplicationAsset.EntityStates (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#336) is not in mixedCase
+Variable ABIApplicationAsset.RecordStates (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#337) is not in mixedCase
+Function ABITokenManager.ReleaseOwnersLockedTokens(address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#381) is not in mixedCase
+Variable ABITokenManager.TokenSCADAEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#371) is not in mixedCase
+Variable ABITokenManager.TokenEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#372) is not in mixedCase
+Variable ABITokenManager.MarketingMethodAddress (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#373) is not in mixedCase
+Variable ABITokenManager.OwnerTokenBalancesReleased (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#374) is not in mixedCase
+Struct ABIListingContract.item (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#403-408) is not in CapWords
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._time_start (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#485) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._time_end (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#486) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._amount_cap_soft (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#487) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._amount_cap_hard (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#488) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._minimum_entry (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#490) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._fixed_tokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#491) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._price_addition_percentage (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#492) is not in mixedCase
+Parameter ABIFunding.addFundingStage(bytes32,uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint8,uint8)._token_share_percentage (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#493) is not in mixedCase
+Parameter ABIFunding.addSettings(address,uint256,uint256,uint8,address,address).soft_cap (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#497) is not in mixedCase
+Parameter ABIFunding.addSettings(address,uint256,uint256,uint8,address,address).hard_cap (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#497) is not in mixedCase
+Parameter ABIFunding.addSettings(address,uint256,uint256,uint8,address,address).sale_percentage (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#497) is not in mixedCase
+Parameter ABIFunding.getStageAmount(uint8).StageId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#498) is not in mixedCase
+Parameter ABIFunding.allowedPaymentMethod(uint8)._payment_method (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#499) is not in mixedCase
+Parameter ABIFunding.receivePayment(address,uint8)._payment_method (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#500) is not in mixedCase
+Parameter ABIFunding.isFundingStageUpdateAllowed(uint8)._new_state (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#503) is not in mixedCase
+Variable ABIFunding.DirectInput (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#444) is not in mixedCase
+Variable ABIFunding.MilestoneInput (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#445) is not in mixedCase
+Variable ABIFunding.TokenManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#446) is not in mixedCase
+Variable ABIFunding.FundingManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#447) is not in mixedCase
+Variable ABIFunding.Collection (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#467) is not in mixedCase
+Variable ABIFunding.FundingStageNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#468) is not in mixedCase
+Variable ABIFunding.AmountRaised (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#470) is not in mixedCase
+Variable ABIFunding.MilestoneAmountRaised (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#471) is not in mixedCase
+Variable ABIFunding.GlobalAmountCapSoft (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#472) is not in mixedCase
+Variable ABIFunding.GlobalAmountCapHard (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#473) is not in mixedCase
+Variable ABIFunding.TokenSellPercentage (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#474) is not in mixedCase
+Variable ABIFunding.Funding_Setting_funding_time_start (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#475) is not in mixedCase
+Variable ABIFunding.Funding_Setting_funding_time_end (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#476) is not in mixedCase
+Variable ABIFunding.Funding_Setting_cashback_time_start (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#477) is not in mixedCase
+Variable ABIFunding.Funding_Setting_cashback_time_end (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#478) is not in mixedCase
+Variable ABIFunding.Funding_Setting_cashback_before_start_wait_duration (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#479) is not in mixedCase
+Variable ABIFunding.Funding_Setting_cashback_duration (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#480) is not in mixedCase
+Parameter ABIFundingManager.receivePayment(address,uint8,uint8)._payment_method (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#540) is not in mixedCase
+Parameter ABIFundingManager.receivePayment(address,uint8,uint8)._funding_stage (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#540) is not in mixedCase
+Function ABIFundingManager.VaultRequestedUpdateForLockedVotingTokens(address) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#551) is not in mixedCase
+Function ABIFundingManager.ApplicationInFundingOrDevelopment() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#555) is not in mixedCase
+Variable ABIFundingManager.FundingPoolBalancesAllocated (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#530) is not in mixedCase
+Variable ABIFundingManager.VaultCountPerProcess (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#531) is not in mixedCase
+Variable ABIFundingManager.LockedVotingTokens (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#534) is not in mixedCase
+Parameter ABIMilestones.setCurrentMilestoneMeetingTime(uint256)._meeting_time (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#609) is not in mixedCase
+Parameter ABIMilestones.isRecordUpdateAllowed(uint8)._new_state (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#610) is not in mixedCase
+Function ABIMilestones.ApplicationIsInDevelopment() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#612) is not in mixedCase
+Function ABIMilestones.MeetingTimeSetFailure() (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#613) is not in mixedCase
+Variable ABIMilestones.MilestoneCashBackTime (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#592) is not in mixedCase
+Variable ABIMilestones.Collection (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#593) is not in mixedCase
+Variable ABIMilestones.MilestonePostponingHash (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#594) is not in mixedCase
+Variable ABIMilestones.ProposalIdByHash (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#595) is not in mixedCase
+Parameter Proposals.getProposalState(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#660) is not in mixedCase
+Parameter Proposals.addCodeUpgradeProposal(address,bytes32)._addr (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#788) is not in mixedCase
+Parameter Proposals.addCodeUpgradeProposal(address,bytes32)._sourceCodeUrl (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#788) is not in mixedCase
+Parameter Proposals.createMilestonePostponingProposal(uint256)._duration (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#838) is not in mixedCase
+Parameter Proposals.getCurrentMilestoneProposalStatusForType(uint8)._actionType (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#867) is not in mixedCase
+Parameter Proposals.createDelistingProposal(uint256)._projectId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#895) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._creator (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#940) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._name (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#941) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._hash (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#942) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._action (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#943) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._addr (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#944) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._sourceCodeUrl (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#945) is not in mixedCase
+Parameter Proposals.createProposal(address,bytes32,bytes32,uint8,address,bytes32,uint256)._extra (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#946) is not in mixedCase
+Parameter Proposals.acceptCodeUpgrade(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#988) is not in mixedCase
+Parameter Proposals.initProposalVoting(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#996) is not in mixedCase
+Function Proposals.RegisterVote(uint256,bool) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067-1096) is not in mixedCase
+Parameter Proposals.RegisterVote(uint256,bool)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067) is not in mixedCase
+Parameter Proposals.RegisterVote(uint256,bool)._myVote (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1067) is not in mixedCase
+Parameter Proposals.hasPreviousVote(uint256,address)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1098) is not in mixedCase
+Parameter Proposals.hasPreviousVote(uint256,address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1098) is not in mixedCase
+Parameter Proposals.undoPreviousVote(uint256,address)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106) is not in mixedCase
+Parameter Proposals.undoPreviousVote(uint256,address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1106) is not in mixedCase
+Parameter Proposals.registerNewVote(uint256,address,bool,uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1131) is not in mixedCase
+Parameter Proposals.registerNewVote(uint256,address,bool,uint256)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1131) is not in mixedCase
+Parameter Proposals.registerNewVote(uint256,address,bool,uint256)._myVote (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1131) is not in mixedCase
+Parameter Proposals.registerNewVote(uint256,address,bool,uint256)._power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1131) is not in mixedCase
+Parameter Proposals.addVoteIntoResult(uint256,bool,uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149) is not in mixedCase
+Parameter Proposals.addVoteIntoResult(uint256,bool,uint256)._type (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149) is not in mixedCase
+Parameter Proposals.addVoteIntoResult(uint256,bool,uint256)._power (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1149) is not in mixedCase
+Parameter Proposals.getTotalTokenVotingPower(address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1162) is not in mixedCase
+Parameter Proposals.getVotingPower(uint256,address)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169) is not in mixedCase
+Parameter Proposals.getVotingPower(uint256,address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1169) is not in mixedCase
+Parameter Proposals.setVoteCountPerProcess(uint256)._perProcess (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1198) is not in mixedCase
+Function Proposals.ProcessVoteTotals(uint256,uint256) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208-1257) is not in mixedCase
+Parameter Proposals.ProcessVoteTotals(uint256,uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1208) is not in mixedCase
+Parameter Proposals.canEndVoting(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1259) is not in mixedCase
+Parameter Proposals.getProposalType(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1279) is not in mixedCase
+Parameter Proposals.expiryChangesState(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1283) is not in mixedCase
+Parameter Proposals.needsProcessing(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1291) is not in mixedCase
+Parameter Proposals.tryEndVoting(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1311) is not in mixedCase
+Parameter Proposals.finaliseProposal(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1321) is not in mixedCase
+Parameter Proposals.finaliseExpiredProposal(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1343) is not in mixedCase
+Parameter Proposals.tryFinaliseNonLockedTokensProposal(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1365) is not in mixedCase
+Parameter Proposals.addActiveProposal(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1376) is not in mixedCase
+Parameter Proposals.removeAndReindexActive(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1380) is not in mixedCase
+Parameter Proposals.runActionAfterResult(uint256)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1398) is not in mixedCase
+Parameter Proposals.getMyVoteForCurrentMilestoneRelease(address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1438) is not in mixedCase
+Parameter Proposals.getHasVoteForCurrentMilestoneRelease(address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1448) is not in mixedCase
+Parameter Proposals.getMyVote(uint256,address)._proposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1456) is not in mixedCase
+Parameter Proposals.getMyVote(uint256,address)._voter (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1456) is not in mixedCase
+Variable Proposals.Application (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#644) is not in mixedCase
+Variable Proposals.ListingContractEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#645) is not in mixedCase
+Variable Proposals.FundingEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#646) is not in mixedCase
+Variable Proposals.FundingManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#647) is not in mixedCase
+Variable Proposals.TokenManagerEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#648) is not in mixedCase
+Variable Proposals.TokenEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#649) is not in mixedCase
+Variable Proposals.MilestonesEntity (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#650) is not in mixedCase
+Variable Proposals.ActionTypes (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#664) is not in mixedCase
+Variable Proposals.ActiveProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#751) is not in mixedCase
+Variable Proposals.ActiveProposalNum (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#752) is not in mixedCase
+Variable Proposals.ExpiredProposalIds (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#754) is not in mixedCase
+Variable Proposals.ProposalsById (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#936) is not in mixedCase
+Variable Proposals.ProposalIdByHash (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#937) is not in mixedCase
+Variable Proposals.VotesByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1062) is not in mixedCase
+Variable Proposals.VotesByCaster (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1063) is not in mixedCase
+Variable Proposals.VotesNumByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1064) is not in mixedCase
+Variable Proposals.ResultsByProposalId (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1065) is not in mixedCase
+Variable Proposals.ProcessedVotesByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1194) is not in mixedCase
+Variable Proposals.VoteCountAtProcessingStartByProposal (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1195) is not in mixedCase
+Variable Proposals.VoteCountPerProcess (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1196) is not in mixedCase
+Variable Proposals.EmergencyFundingReleaseApproved (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#1396) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+addRecord(bytes32,string,uint256,uint8) should be declared external:
+	- ABIMilestones.addRecord(bytes32,string,uint256,uint8) (../sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol#600)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x5b2db92a43aa86fff2d9a3696a7ee264d03fc907.sol analyzed (10 contracts with 100 detectors), 227 result(s) found

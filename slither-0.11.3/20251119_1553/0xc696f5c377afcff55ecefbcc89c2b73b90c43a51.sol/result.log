@@ -1,0 +1,151 @@
+'solc --version' running
+'solc /sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:36:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function AcceptsExchange(address _tokenContract) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:239:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function ORACLEPSYCHICHOTLINE()
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:295:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onReinvestment(_customerAddress, _dividends, _tokens);
+        ^---------------------------------------------------^
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:336:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onWithdraw(_customerAddress, _dividends);
+        ^--------------------------------------^
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:377:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenSell(_customerAddress, _tokens, _taxedEthereum);
+        ^----------------------------------------------------^
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:424:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_customerAddress, _toAddress, _taxedTokens);
+        ^--------------------------------------------------^
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:815:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenPurchase(msg.sender, _incomingEthereum, _amountOfTokens, _referredBy);
+        ^--------------------------------------------------------------------------^
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol:349:9: Warning: Unused local variable.
+        uint8 localDivFee = 200;
+        ^---------------^
+
+
+ORACLEPSYCHICHOTLINE.sell(uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#343-378) performs a multiplication on the result of a division:
+	- _dividends = SafeMath.div(SafeMath.mul(_ethereum,sellDividendFee_),1000) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#358)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#372)
+ORACLEPSYCHICHOTLINE.purchaseTokens(uint256,address) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#726-818) performs a multiplication on the result of a division:
+	- _fee = _fee - (_fee - (_amountOfTokens * (_dividends * magnitude / (tokenSupply_)))) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#798)
+ORACLEPSYCHICHOTLINE.tokensToEthereum_(uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#861-883) performs a multiplication on the result of a division:
+	- _etherReceived = (SafeMath.sub((((tokenPriceInitial_ + (tokenPriceIncremental_ * (_tokenSupply / 1e18))) - tokenPriceIncremental_) * (tokens_ - 1e18)),(tokenPriceIncremental_ * ((tokens_ ** 2 - tokens_) / 1e18)) / 2) / 1e18) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#869-881)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+ORACLEPSYCHICHOTLINE.setMarket1(address)._newMkt1 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#488) lacks a zero-check on :
+		- mkt1 = _newMkt1 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#493)
+ORACLEPSYCHICHOTLINE.setMarket2(address)._newMkt2 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#500) lacks a zero-check on :
+		- mkt2 = _newMkt2 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#505)
+ORACLEPSYCHICHOTLINE.setMarket3(address)._newMkt3 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#512) lacks a zero-check on :
+		- mkt3 = _newMkt3 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#517)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+ORACLEPSYCHICHOTLINE.antiEarlyWhale(uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#107-135) compares to a boolean constant:
+	-require(bool)((ambassadors_[_customerAddress] == true && (ambassadorAccumulatedQuota_[_customerAddress] + _amountOfEthereum) <= ambassadorMaxPurchase_) || (_customerAddress == dev)) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#113-122)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event ORACLEPSYCHICHOTLINE.onTokenPurchase(address,uint256,uint256,address) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#142-147) is not in CapWords
+Event ORACLEPSYCHICHOTLINE.onTokenSell(address,uint256,uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#149-153) is not in CapWords
+Event ORACLEPSYCHICHOTLINE.onReinvestment(address,uint256,uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#155-159) is not in CapWords
+Event ORACLEPSYCHICHOTLINE.onWithdraw(address,uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#161-164) is not in CapWords
+Parameter ORACLEPSYCHICHOTLINE.buy(address)._referredBy (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#253) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.sell(uint256)._amountOfTokens (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#343) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.transfer(address,uint256)._toAddress (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#385) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.transfer(address,uint256)._amountOfTokens (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#385) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setAdministrator(address,bool)._identifier (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#445) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setAdministrator(address,bool)._status (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#445) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setExchangeRates(uint256,uint256)._newBuyFee (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#457) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setExchangeRates(uint256,uint256)._newSellFee (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#457) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setMarketingRates(uint8,uint8,uint8)._newMkt1Rate (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#473) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setMarketingRates(uint8,uint8,uint8)._newMkt2Rate (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#473) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setMarketingRates(uint8,uint8,uint8)._newMkt3Rate (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#473) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setMarket1(address)._newMkt1 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#488) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setMarket2(address)._newMkt2 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#500) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setMarket3(address)._newMkt3 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#512) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setContractActive(bool)._status (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#525) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setStakingRequirement(uint256)._amountOfTokens (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#535) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setName(string)._name (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#545) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.setSymbol(string)._symbol (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#555) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.addAmbassador(address)._newAmbassador (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#562) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.myDividends(bool)._includeReferralBonus (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#612) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.balanceOf(address)._customerAddress (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#633) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.dividendsOf(address)._customerAddress (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#644) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.calculateTokensReceived(uint256)._ethereumToSpend (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#693) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.calculateEthereumReceived(uint256)._tokensToSell (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#708) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.purchaseTokens(uint256,address)._incomingEthereum (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#726) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.purchaseTokens(uint256,address)._referredBy (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#726) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.ethereumToTokens_(uint256)._ethereum (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#826) is not in mixedCase
+Parameter ORACLEPSYCHICHOTLINE.tokensToEthereum_(uint256)._tokens (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#861) is not in mixedCase
+Constant ORACLEPSYCHICHOTLINE.tokenPriceInitial_ (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#180) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ORACLEPSYCHICHOTLINE.tokenPriceIncremental_ (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#181) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ORACLEPSYCHICHOTLINE.magnitude (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#182) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ORACLEPSYCHICHOTLINE.ambassadorMaxPurchase_ (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#189) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ORACLEPSYCHICHOTLINE.ambassadorQuota_ (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#190) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ORACLEPSYCHICHOTLINE.transfer(address,uint256) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#385-429):
+	External calls:
+	- withdraw() (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#401)
+		- _customerAddress.transfer(_dividends) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#333)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] -= int256(profitPerShare_ * _amountOfTokens) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#417)
+	- payoutsTo_[_toAddress] += int256(profitPerShare_ * _taxedTokens) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#418)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#421)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.sub(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#413)
+	- tokenBalanceLedger_[_toAddress] = SafeMath.add(tokenBalanceLedger_[_toAddress],_taxedTokens) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#414)
+	- tokenSupply_ = SafeMath.sub(tokenSupply_,_tokenFee) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#410)
+	Event emitted after the call(s):
+	- Transfer(_customerAddress,_toAddress,_taxedTokens) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#424)
+Reentrancy in ORACLEPSYCHICHOTLINE.withdraw() (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#317-338):
+	External calls:
+	- _customerAddress.transfer(_dividends) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#333)
+	Event emitted after the call(s):
+	- onWithdraw(_customerAddress,_dividends) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#336)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ORACLEPSYCHICHOTLINE.slitherConstructorConstantVariables() (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#56-896) uses literals with too many digits:
+	- tokenPriceInitial_ = 10000000000 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#180)
+ORACLEPSYCHICHOTLINE.slitherConstructorConstantVariables() (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#56-896) uses literals with too many digits:
+	- tokenPriceIncremental_ = 1000000000 (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#181)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+AcceptsExchange (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#33-54) does not implement functions:
+	- AcceptsExchange.tokenFallback(address,uint256,bytes) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#52)
+	- AcceptsExchange.tokenFallbackExpanded(address,uint256,bytes,address,address) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#53)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+ORACLEPSYCHICHOTLINE.allowReferral (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#209) should be constant 
+ORACLEPSYCHICHOTLINE.boolAllowPlayer (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#194) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+setName(string) should be declared external:
+	- ORACLEPSYCHICHOTLINE.setName(string) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#545-550)
+setSymbol(string) should be declared external:
+	- ORACLEPSYCHICHOTLINE.setSymbol(string) (../sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol#555-560)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xc696f5c377afcff55ecefbcc89c2b73b90c43a51.sol analyzed (3 contracts with 100 detectors), 55 result(s) found

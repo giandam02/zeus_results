@@ -1,0 +1,71 @@
+'solc --version' running
+'solc /sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol:
+/sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol:234:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokenPurchase(this, _beneficiary, weiAmount, tokens);
+        ^--------------------------------------------------^
+/sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol:239:5: Warning: Function state mutability can be restricted to pure
+    function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol:244:5: Warning: Function state mutability can be restricted to view
+    function _getTokenAmount(uint256 _weiAmount) internal returns (uint256) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+VenaCoin.constructor(address)._owner (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#92) lacks a zero-check on :
+		- owner = _owner (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#99)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+VenaCoin.isItOpen() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#316-323) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > openingTime && now < closingTime (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#317)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter VenaCoin.buyTokens(address)._beneficiary (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#195) is not in mixedCase
+Variable VenaCoin._ICOTokensLimit (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#71) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+VenaCoin._icoTokens() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#109-111) uses literals with too many digits:
+	- 1700000000 * 10 ** uint256(decimals) (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#110)
+VenaCoin._ownersTokens() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#113-115) uses literals with too many digits:
+	- 300000000 * 10 ** uint256(decimals) (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#114)
+VenaCoin.totalSupply() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#117-119) uses literals with too many digits:
+	- 2000000000 * 10 ** uint256(decimals) (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#118)
+VenaCoin.distributeContest() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#271-299) uses literals with too many digits:
+	- _transfer(_beneficiary,300000) (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#278)
+VenaCoin.distributeContest() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#271-299) uses literals with too many digits:
+	- _transfer(_beneficiary,200000) (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#281)
+VenaCoin.distributeContest() (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#271-299) uses literals with too many digits:
+	- _transfer(_beneficiary,100000) (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#284)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+VenaCoin.value (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#70) is never used in VenaCoin (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#56-325)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+Owned.newOwner (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#8) should be constant 
+VenaCoin.value (../sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol#70) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x42b5abaa985220582ff63c9a168096257737f3f5.sol analyzed (4 contracts with 100 detectors), 15 result(s) found

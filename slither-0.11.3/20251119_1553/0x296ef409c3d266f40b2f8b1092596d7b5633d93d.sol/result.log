@@ -1,0 +1,109 @@
+'solc --version' running
+'solc /sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol:
+/sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol:290:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferOwnership(address newOwner) onlyOwner 
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol:374:2: Warning: No visibility specified. Defaulting to "public". 
+	function transferToPartnerAccount(address _partner, uint256 _amount) onlyOwner {
+ ^ (Relevant source part starts here and spans across multiple lines).
+
+
+BiLinkToken (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#302-482) contract sets array length with a user-controlled value:
+	- accountsCanShareProfit.push(accountFoundation) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#353)
+BiLinkToken (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#302-482) contract sets array length with a user-controlled value:
+	- accountsCanShareProfit.push(accountPartnerBase) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#354)
+BiLinkToken (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#302-482) contract sets array length with a user-controlled value:
+	- accountsCanShareProfit.push(_to) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#458)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+BiLinkToken.constructor(address,address,address,address) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#331-358) performs a multiplication on the result of a division:
+	- tapOfOne = (10 ** decimals) / (lockTimeSpan) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#348)
+	- lockedAccount2WithdrawTap[accountCompany] = tapOfOne.mul(balances[accountCompany]) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#349)
+BiLinkToken.constructor(address,address,address,address) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#331-358) performs a multiplication on the result of a division:
+	- tapOfOne = (10 ** decimals) / (lockTimeSpan) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#348)
+	- lockedAccount2WithdrawTap[accountPartnerBase] = tapOfOne.mul(balances[accountPartnerBase]) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#350)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Ownable.transferOwnership(address) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#290-298) should emit an event for: 
+	- owner = newOwner (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#296) 
+BiLinkToken.setMintAndBurnOwner(address) (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#360-362) should emit an event for: 
+	- contractBalance = _contractBalance (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#361) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Ownable.constructor(address)._owner (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#268) lacks a zero-check on :
+		- owner = _owner (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#272)
+BiLinkToken.constructor(address,address,address,address)._accountFoundation (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#331) lacks a zero-check on :
+		- accountFoundation = _accountFoundation (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#335)
+BiLinkToken.constructor(address,address,address,address)._accountCompany (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#331) lacks a zero-check on :
+		- accountCompany = _accountCompany (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#336)
+BiLinkToken.constructor(address,address,address,address)._accountPartnerBase (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#331) lacks a zero-check on :
+		- accountPartnerBase = _accountPartnerBase (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#337)
+BiLinkToken.setMintAndBurnOwner(address)._contractBalance (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#360) lacks a zero-check on :
+		- contractBalance = _contractBalance (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#361)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BiLinkToken.INITIAL_SUPPLY (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#306) is set pre-construction with a non-constant function or state variable:
+	- 10000 * 10000 * (10 ** decimals)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.13 (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#124) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#124) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#139) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#157) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#158) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#159) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#185) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#185) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#198) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#199) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#219) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#220) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#242) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#243) is not in mixedCase
+Parameter BiLinkToken.setMintAndBurnOwner(address)._contractBalance (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#360) is not in mixedCase
+Parameter BiLinkToken.burn(uint256)._amount (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#364) is not in mixedCase
+Parameter BiLinkToken.transferToPartnerAccount(address,uint256)._partner (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#374) is not in mixedCase
+Parameter BiLinkToken.transferToPartnerAccount(address,uint256)._amount (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#374) is not in mixedCase
+Parameter BiLinkToken.mint(address,uint256)._to (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#405) is not in mixedCase
+Parameter BiLinkToken.mint(address,uint256)._amount (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#405) is not in mixedCase
+Parameter BiLinkToken.preTransfer(address,address,uint256)._from (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#433) is not in mixedCase
+Parameter BiLinkToken.preTransfer(address,address,uint256)._to (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#433) is not in mixedCase
+Parameter BiLinkToken.preTransfer(address,address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#433) is not in mixedCase
+Parameter BiLinkToken.transfer(address,uint256)._to (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#462) is not in mixedCase
+Parameter BiLinkToken.transfer(address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#462) is not in mixedCase
+Parameter BiLinkToken.transferFrom(address,address,uint256)._from (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#468) is not in mixedCase
+Parameter BiLinkToken.transferFrom(address,address,uint256)._to (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#468) is not in mixedCase
+Parameter BiLinkToken.transferFrom(address,address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#468) is not in mixedCase
+Parameter BiLinkToken.approve(address,uint256)._spender (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#474) is not in mixedCase
+Parameter BiLinkToken.approve(address,uint256)._value (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#474) is not in mixedCase
+Variable BiLinkToken.INITIAL_SUPPLY (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#306) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+BiLinkToken.decimals (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#305) should be constant 
+BiLinkToken.name (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#303) should be constant 
+BiLinkToken.symbol (../sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol#304) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x296ef409c3d266f40b2f8b1092596d7b5633d93d.sol analyzed (7 contracts with 100 detectors), 49 result(s) found

@@ -1,0 +1,72 @@
+'solc --version' running
+'solc /sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ClickGem.allowance (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#86) is never initialized. It is used in:
+	- ClickGem.allowance(address,address) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#244-250)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+ClickGem.transferCheck(address,address,uint256) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#197-209) contains a tautology or contradiction:
+	- require(bool)(balances[_sender].sub(_amount) >= 0) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#205)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+Owned.transferOwnership(address) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#65-71) should emit an event for: 
+	- owner = _newOwner (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#68) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Owned.transferOwnership(address)._newOwner (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#65) lacks a zero-check on :
+		- owner = _newOwner (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#68)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+ClickGem.AirDropper(address[],uint256[]) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#230-240) compares to a boolean constant:
+	-transfer(_to[i],_value[i]) == false (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#235)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint 0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- 0.4.25 (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#1)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Owned.transferOwnership(address)._newOwner (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#65) is not in mixedCase
+Parameter ClickGem.transfer(address,uint256)._receiver (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#138) is not in mixedCase
+Parameter ClickGem.transfer(address,uint256)._amount (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#138) is not in mixedCase
+Parameter ClickGem.tokenBurner(uint256)._amount (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#152) is not in mixedCase
+Parameter ClickGem.tokenMinter(uint256)._amount (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#169) is not in mixedCase
+Parameter ClickGem.tokenFactory(uint256)._amount (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#184) is not in mixedCase
+Parameter ClickGem.transferCheck(address,address,uint256)._sender (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#197) is not in mixedCase
+Parameter ClickGem.transferCheck(address,address,uint256)._receiver (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#197) is not in mixedCase
+Parameter ClickGem.transferCheck(address,address,uint256)._amount (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#197) is not in mixedCase
+Parameter ClickGem.balanceOf(address)._person (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#222) is not in mixedCase
+Function ClickGem.AirDropper(address[],uint256[]) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#230-240) is not in mixedCase
+Parameter ClickGem.AirDropper(address[],uint256[])._to (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#230) is not in mixedCase
+Parameter ClickGem.AirDropper(address[],uint256[])._value (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#230) is not in mixedCase
+Parameter ClickGem.allowance(address,address)._owner (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#244) is not in mixedCase
+Parameter ClickGem.allowance(address,address)._spender (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#244) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ClickGem.constructor() (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#98-108) uses literals with too many digits:
+	- totalSupply = 300000000000000000000000000000 (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#103)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ClickGem.stakingStatus (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#84) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+AirDropper(address[],uint256[]) should be declared external:
+	- ClickGem.AirDropper(address[],uint256[]) (../sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol#230-240)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xa01ac5b665e4e4c1cd504f9bb0040c4edca4f07e.sol analyzed (3 contracts with 100 detectors), 25 result(s) found

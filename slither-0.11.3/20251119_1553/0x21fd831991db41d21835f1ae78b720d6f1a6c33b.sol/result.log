@@ -1,0 +1,144 @@
+'solc --version' running
+'solc /sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:14:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:34:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:62:17: Warning: Invoking events without "emit" prefix is deprecated.
+                LogWhitelistAdd(addresses[i]);
+                ^---------------------------^
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:76:17: Warning: Invoking events without "emit" prefix is deprecated.
+                LogWhitelistRemove(addresses[i]);
+                ^------------------------------^
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:249:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Buy(msg.sender, contributionInWei, rewardTransferAmount);
+        ^------------------------------------------------------^
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:258:36: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        beneficiaryWallet.transfer(this.balance);
+                                   ^----------^
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol:305:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Refund(msg.sender, ethRefund);
+        ^---------------------------^
+
+
+RtcTokenCrowdsale.BuyRTCtokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#212-253) ignores return value by tokenReward.transfer(msg.sender,rewardTransferAmount) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#248)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+RtcTokenCrowdsale.BuyRTCtokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#212-253) performs a multiplication on the result of a division:
+	- partialPercentage = tokensRemaining.mul(10 ** 18).div(rewardTransferAmount) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#237)
+	- contributionInWei = contributionInWei.mul(partialPercentage).div(10 ** 18) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#238)
+RtcTokenCrowdsale.BuyRTCtokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#212-253) performs a multiplication on the result of a division:
+	- partialPercentage = tokensRemaining.mul(10 ** 18).div(rewardTransferAmount) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#237)
+	- rewardBonusTransferAmount = rewardBonusTransferAmount.mul(partialPercentage).div(10 ** 18) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#239)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+RtcTokenCrowdsale.setupCrowdsale(uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#138-169) should emit an event for: 
+	- fundingStartTime = _fundingStartTime (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#155) 
+	- p1_start = fundingStartTime + white_duration (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#160) 
+	- p2_start = p1_start + p1_duration + 2419200 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#161) 
+	- fundingEndTime = p2_start + 2419200 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#163) 
+RtcTokenCrowdsale.updateDuration(uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#194-202) should emit an event for: 
+	- p2_start = _newP2Start (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#200) 
+	- fundingEndTime = p2_start.add(2419200) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#201) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in RtcTokenCrowdsale.BuyRTCtokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#212-253):
+	External calls:
+	- assert(bool)(tokenReward.increaseFrozen(msg.sender,rewardBonusTransferAmount)) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#247)
+	- tokenReward.transfer(msg.sender,rewardTransferAmount) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#248)
+	Event emitted after the call(s):
+	- Buy(msg.sender,contributionInWei,rewardTransferAmount) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#249)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+RtcTokenCrowdsale.setBonusPrice() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#171-191) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= fundingStartTime && now <= p1_start (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#174)
+	- now > p1_start && now <= p1_start + p1_duration (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#176)
+	- now > p2_start && now <= p2_start + 86400 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#178)
+	- now > p2_start + 86400 && now <= p2_start + 604800 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#180)
+	- now > p2_start + 604800 && now <= p2_start + 1209600 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#182)
+	- now > p2_start + 1209600 && now <= p2_start + 1814400 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#184)
+	- now > p2_start + 1814400 && now <= fundingEndTime (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#186)
+RtcTokenCrowdsale.updateDuration(uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#194-202) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(isCrowdSaleSetup && ! (p2_start == _newP2Start) && ! (_newP2Start > p1_start + p1_duration + 2592000) && (now < p2_start) && (fundingStartTime + p1_duration < _newP2Start)) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#195-199)
+RtcTokenCrowdsale.BuyRTCtokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#212-253) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(! (msg.value == 0) && (isCrowdSaleSetup) && (now >= fundingStartTime) && (now <= fundingEndTime) && (tokensRemaining > 0)) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#214-218)
+	- now <= p1_start (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#221)
+RtcTokenCrowdsale.checkGoalReached() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#261-289) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (amountRaisedInWei < fundingMinCapInWei) && (block.timestamp <= fundingEndTime && block.timestamp >= fundingStartTime) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#264)
+	- (amountRaisedInWei < fundingMinCapInWei) && (block.timestamp < fundingStartTime) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#268)
+	- (amountRaisedInWei < fundingMinCapInWei) && (block.timestamp > fundingEndTime) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#272)
+	- (amountRaisedInWei >= fundingMinCapInWei) && (block.timestamp > fundingEndTime) && (tokensRemaining > 0) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#280)
+	- (amountRaisedInWei >= fundingMinCapInWei) && (tokensRemaining > 0) && (block.timestamp <= fundingEndTime) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#284)
+RtcTokenCrowdsale.refund() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#291-306) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)((amountRaisedInWei < fundingMinCapInWei) && (isCrowdSaleClosed) && (now > fundingEndTime) && (fundValue[msg.sender] > 0)) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#294-297)
+RtcTokenCrowdsale.burnRemainingTokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#308-312) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > fundingEndTime) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#309)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.13 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter RtcTokenCrowdsale.updateMaxGasPrice(uint256)._newGasPrice (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#132) is not in mixedCase
+Parameter RtcTokenCrowdsale.setupCrowdsale(uint256)._fundingStartTime (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#138) is not in mixedCase
+Parameter RtcTokenCrowdsale.updateDuration(uint256)._newP2Start (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#194) is not in mixedCase
+Function RtcTokenCrowdsale.BuyRTCtokens() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#212-253) is not in mixedCase
+Variable RtcTokenCrowdsale.p1_duration (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#102) is not in mixedCase
+Variable RtcTokenCrowdsale.p1_start (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#103) is not in mixedCase
+Variable RtcTokenCrowdsale.p2_start (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#104) is not in mixedCase
+Variable RtcTokenCrowdsale.white_duration (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#105) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in RtcTokenCrowdsale.refund() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#291-306):
+	External calls:
+	- msg.sender.transfer(ethRefund) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#304)
+	Event emitted after the call(s):
+	- Refund(msg.sender,ethRefund) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#305)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+RtcTokenCrowdsale.setupCrowdsale(uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#138-169) uses literals with too many digits:
+	- initialSupply = toSmallrtc(35000000) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#152)
+RtcTokenCrowdsale.slitherConstructorVariables() (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#84-313) uses literals with too many digits:
+	- maxGasPrice = 50000000000 (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#115)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+PausableToken (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#40-45) does not implement functions:
+	- PausableToken.balanceOf(address) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#41)
+	- PausableToken.burn(uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#44)
+	- PausableToken.increaseFrozen(address,uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#43)
+	- PausableToken.transfer(address,uint256) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#42)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+addToWhitelist(address[]) should be declared external:
+	- AddressWhitelist.addToWhitelist(address[]) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#58-67)
+removeFromWhitelist(address[]) should be declared external:
+	- AddressWhitelist.removeFromWhitelist(address[]) (../sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol#72-81)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x21fd831991db41d21835f1ae78b720d6f1a6c33b.sol analyzed (5 contracts with 100 detectors), 28 result(s) found

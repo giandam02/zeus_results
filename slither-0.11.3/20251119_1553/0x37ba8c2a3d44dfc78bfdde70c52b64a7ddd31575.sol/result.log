@@ -1,0 +1,105 @@
+'solc --version' running
+'solc /sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+HeapTycoon (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#121-333) contract sets array length with a user-controlled value:
+	- heaps[id].players.push(msg.sender) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#228)
+HeapTycoon (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#121-333) contract sets array length with a user-controlled value:
+	- heaps.push(heap) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#199)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+HeapTycoon.buy(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#205-258) uses a weak PRNG: "index = uint256(hash) % heaps[id].players.length (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#250)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+HeapTycoon.get_heap(uint256).timer (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#317) is a local variable never initialized
+HeapTycoon.buy(uint256).bonus_val (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#223) is a local variable never initialized
+HeapTycoon.create(uint256,bytes32,uint256,uint256,uint256).players (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#193) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+HeapTycoon.buy(uint256).res (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#221) is written in both
+	res = heaps[id].cur_addr.send(bonus_val) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#255)
+	res = heaps[id].owner.send(heaps[id].fee) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#257)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#write-after-write
+
+HeapTycoon.get_heap(uint256).owner (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#306) shadows:
+	- Ownable.owner (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#63) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+HeapTycoon.constructor(address).addr (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#159) lacks a zero-check on :
+		- master = addr (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#161)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+HeapTycoon.buy(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#205-258) has external calls inside a loop: res = heaps[id].players[index].send(val) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#251)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+HeapTycoon.buy(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#205-258) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(id < heaps.length) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#208)
+	- require(bool)(msg.value >= heaps[id].ticket) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#209)
+	- now < heaps[id].timer (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#230)
+	- bonus_val > 0 (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#254)
+HeapTycoon.get_heaps(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#267-297) uses timestamp for comparisons
+	Dangerous comparisons:
+	- start + i < heaps.length (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#282)
+	- now < heaps[start + i].timer (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#286)
+HeapTycoon.get_heap(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#306-331) uses timestamp for comparisons
+	Dangerous comparisons:
+	- id >= heaps.length (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#310)
+	- now < heaps[id].timer (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#319)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+HeapTycoon.create(uint256,bytes32,uint256,uint256,uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#175-202) compares to a boolean constant:
+	-require(bool)(used_names[name] == false) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#181)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#104) is not in mixedCase
+Function HeapTycoon.set_master(address) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#167-172) is not in mixedCase
+Parameter HeapTycoon.create(uint256,bytes32,uint256,uint256,uint256).timer_inc (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#175) is not in mixedCase
+Parameter HeapTycoon.create(uint256,bytes32,uint256,uint256,uint256).bonus_fee (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#175) is not in mixedCase
+Function HeapTycoon.get_len() (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#261-264) is not in mixedCase
+Function HeapTycoon.get_heaps(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#267-297) is not in mixedCase
+Function HeapTycoon.is_name_used(bytes32) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#300-303) is not in mixedCase
+Function HeapTycoon.get_heap(uint256) (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#306-331) is not in mixedCase
+Variable HeapTycoon.PAGE_SIZE (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#125) is not in mixedCase
+Variable HeapTycoon.MASTER_FEE (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#128) is not in mixedCase
+Variable HeapTycoon.MIN_TICKET (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#131) is not in mixedCase
+Variable HeapTycoon.MAX_TICKET (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#134) is not in mixedCase
+Variable HeapTycoon.used_names (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#156) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+HeapTycoon.slitherConstructorVariables() (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#121-333) uses literals with too many digits:
+	- MASTER_FEE = 5000000000000000 (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#128)
+HeapTycoon.slitherConstructorVariables() (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#121-333) uses literals with too many digits:
+	- MIN_TICKET = 10000000000000000 (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#131)
+HeapTycoon.slitherConstructorVariables() (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#121-333) uses literals with too many digits:
+	- MAX_TICKET = 10000000000000000000 (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#134)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+HeapTycoon.MASTER_FEE (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#128) should be constant 
+HeapTycoon.MAX_TICKET (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#134) should be constant 
+HeapTycoon.MIN_TICKET (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#131) should be constant 
+HeapTycoon.PAGE_SIZE (../sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol#125) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x37ba8c2a3d44dfc78bfdde70c52b64a7ddd31575.sol analyzed (3 contracts with 100 detectors), 36 result(s) found

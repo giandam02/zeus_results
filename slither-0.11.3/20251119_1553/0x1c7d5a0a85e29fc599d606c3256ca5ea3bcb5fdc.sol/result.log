@@ -1,0 +1,138 @@
+'solc --version' running
+'solc /sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol:
+/sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol:24:5: Warning: No visibility specified. Defaulting to "public". 
+    function tokenFallback(address _from, uint _value, bytes _data);
+    ^--------------------------------------------------------------^
+/sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol:184:56: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function tokenFallback(address _from, uint _value, bytes _data) public whenNotPaused {
+                                                       ^---------^
+
+
+Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254-266) uses arbitrary from in transferFrom: ERC20(_token).transferFrom(_ownerOfTokens,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#263)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202-212) ignores return value by ERC20(_token).transfer(_hunter,_amount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#209)
+Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213-233) ignores return value by ERC20(_token).transfer(_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#229)
+Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234-253) ignores return value by ERC20(_token).transfer(_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#249)
+Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254-266) ignores return value by ERC20(_token).transferFrom(_ownerOfTokens,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#263)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Bounty0xEscrow.approveToPullOutTokens(address,address,uint256) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#268-270) ignores return value by ERC20(_token).approve(_receiver,_amount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#269)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213-233) has external calls inside a loop: require(bool)(_hunters[i].send(_amounts[i])) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#224)
+Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213-233) has external calls inside a loop: ERC20(_token).transfer(_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#229)
+Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234-253) has external calls inside a loop: require(bool)(_hunters[i].send(_amounts[i])) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#243)
+Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234-253) has external calls inside a loop: ERC20(_token).transfer(_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#249)
+Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254-266) has external calls inside a loop: ERC20(_token).transferFrom(_ownerOfTokens,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#263)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Bounty0xEscrow.depositToken(address,uint256) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#190-196):
+	External calls:
+	- require(bool)(ERC20(_token).transferFrom(msg.sender,this,_amount)) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#193)
+	State variables written after the call(s):
+	- tokens[_token][msg.sender] = SafeMath.add(tokens[_token][msg.sender],_amount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#194)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Bounty0xEscrow.depositToken(address,uint256) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#190-196):
+	External calls:
+	- require(bool)(ERC20(_token).transferFrom(msg.sender,this,_amount)) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#193)
+	Event emitted after the call(s):
+	- Deposit(_token,msg.sender,_amount,tokens[_token][msg.sender]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#195)
+Reentrancy in Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202-212):
+	External calls:
+	- ERC20(_token).transfer(_hunter,_amount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#209)
+	External calls sending eth:
+	- require(bool)(_hunter.send(_amount)) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#207)
+	Event emitted after the call(s):
+	- Distribution(_token,_host,_hunter,_amount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#211)
+Reentrancy in Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213-233):
+	External calls:
+	- ERC20(_token).transfer(_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#229)
+	Event emitted after the call(s):
+	- Distribution(_token,_host,_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#230)
+Reentrancy in Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234-253):
+	External calls:
+	- require(bool)(ERC20(_token).balanceOf(this) >= totalAmount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#247)
+	- ERC20(_token).transfer(_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#249)
+	Event emitted after the call(s):
+	- Distribution(_token,this,_hunters[k],_amounts[k]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#250)
+Reentrancy in Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254-266):
+	External calls:
+	- require(bool)(ERC20(_token).allowance(_ownerOfTokens,this) >= totalAmount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#261)
+	- ERC20(_token).transferFrom(_ownerOfTokens,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#263)
+	Event emitted after the call(s):
+	- Distribution(_token,this,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#264)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#66) is not in mixedCase
+Parameter Bounty0xEscrow.tokenFallback(address,uint256,bytes)._from (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#184) is not in mixedCase
+Parameter Bounty0xEscrow.tokenFallback(address,uint256,bytes)._value (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#184) is not in mixedCase
+Parameter Bounty0xEscrow.depositToken(address,uint256)._token (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#190) is not in mixedCase
+Parameter Bounty0xEscrow.depositToken(address,uint256)._amount (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#190) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256)._token (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256)._host (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256)._hunter (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256)._amount (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[])._token (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[])._host (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[])._hunters (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[])._amounts (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[])._token (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[])._hunters (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234) is not in mixedCase
+Parameter Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[])._amounts (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234) is not in mixedCase
+Parameter Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[])._token (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254) is not in mixedCase
+Parameter Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[])._ownerOfTokens (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254) is not in mixedCase
+Parameter Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[])._hunters (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254) is not in mixedCase
+Parameter Bounty0xEscrow.distributeWithTransferFrom(address,address,address[],uint256[])._amounts (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#254) is not in mixedCase
+Parameter Bounty0xEscrow.approveToPullOutTokens(address,address,uint256)._token (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#268) is not in mixedCase
+Parameter Bounty0xEscrow.approveToPullOutTokens(address,address,uint256)._receiver (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#268) is not in mixedCase
+Parameter Bounty0xEscrow.approveToPullOutTokens(address,address,uint256)._amount (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#268) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Bounty0xEscrow.distributeTokenToAddress(address,address,address,uint256) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#202-212):
+	External calls:
+	- require(bool)(_hunter.send(_amount)) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#207)
+	Event emitted after the call(s):
+	- Distribution(_token,_host,_hunter,_amount) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#211)
+Reentrancy in Bounty0xEscrow.distributeTokenToAddressesAndAmounts(address,address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#213-233):
+	External calls:
+	- require(bool)(_hunters[i].send(_amounts[i])) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#224)
+	Event emitted after the call(s):
+	- Distribution(_token,_host,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#225)
+Reentrancy in Bounty0xEscrow.distributeTokenToAddressesAndAmountsWithoutHost(address,address[],uint256[]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#234-253):
+	External calls:
+	- require(bool)(_hunters[i].send(_amounts[i])) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#243)
+	Event emitted after the call(s):
+	- Distribution(_token,this,_hunters[i],_amounts[i]) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#244)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+tokenFallback(address,uint256,bytes) should be declared external:
+	- Bounty0xEscrow.tokenFallback(address,uint256,bytes) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#184-188)
+	- ERC223ReceivingContract.tokenFallback(address,uint256,bytes) (../sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol#24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x1c7d5a0a85e29fc599d606c3256ca5ea3bcb5fdc.sol analyzed (7 contracts with 100 detectors), 46 result(s) found

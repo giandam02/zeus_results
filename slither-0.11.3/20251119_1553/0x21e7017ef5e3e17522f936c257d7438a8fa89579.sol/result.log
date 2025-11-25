@@ -1,0 +1,65 @@
+'solc --version' running
+'solc /sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+XAIToken.changeTransfer(bool).allowed (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#117) shadows:
+	- StandardXAIToken.allowed (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#83) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+XAIToken.constructor(address).sale_address (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#96) lacks a zero-check on :
+		- mintableAddress = sale_address (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#102)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in XAIToken.approveAndCall(address,uint256,bytes) (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#132-138):
+	- require(bool)(_spender.call(bytes4(bytes32(keccak256()(receiveApproval(address,uint256,address,bytes)))),msg.sender,_value,this,_extraData)) (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#136)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Parameter StandardXAIToken.transfer(address,uint256)._to (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#48) is not in mixedCase
+Parameter StandardXAIToken.transfer(address,uint256)._value (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#48) is not in mixedCase
+Parameter StandardXAIToken.transferFrom(address,address,uint256)._from (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#57) is not in mixedCase
+Parameter StandardXAIToken.transferFrom(address,address,uint256)._to (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#57) is not in mixedCase
+Parameter StandardXAIToken.transferFrom(address,address,uint256)._value (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#57) is not in mixedCase
+Parameter StandardXAIToken.balanceOf(address)._owner (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#67) is not in mixedCase
+Parameter StandardXAIToken.approve(address,uint256)._spender (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#71) is not in mixedCase
+Parameter StandardXAIToken.approve(address,uint256)._value (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#71) is not in mixedCase
+Parameter StandardXAIToken.allowance(address,address)._owner (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#78) is not in mixedCase
+Parameter StandardXAIToken.allowance(address,address)._spender (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#78) is not in mixedCase
+Parameter XAIToken.approveAndCall(address,uint256,bytes)._spender (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#132) is not in mixedCase
+Parameter XAIToken.approveAndCall(address,uint256,bytes)._value (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#132) is not in mixedCase
+Parameter XAIToken.approveAndCall(address,uint256,bytes)._extraData (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#132) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+XAIToken.createTokens() (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#111-115) uses literals with too many digits:
+	- total = 4045084999529091000000000000 (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#112)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+XAIToken.version (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#92) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+approveAndCall(address,uint256,bytes) should be declared external:
+	- XAIToken.approveAndCall(address,uint256,bytes) (../sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol#132-138)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x21e7017ef5e3e17522f936c257d7438a8fa89579.sol analyzed (3 contracts with 100 detectors), 21 result(s) found

@@ -1,0 +1,580 @@
+'solc --version' running
+'solc /sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:15:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function NFT() public { }
+  ^-----------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:96:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:143:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Cryptogs() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:262:78: Warning: This declaration shadows a builtin symbol.
+ ... uint32 block ... 
+     ^----------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:404:7: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+      uint256[10] thisStack = mixedStack[_stack];
+      ^-------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:34:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(_from, _to, _tokenId);
+      ^----------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:59:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Approval(msg.sender, _to, _tokenId);
+      ^---------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:114:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:138:7: Warning: Invoking events without "emit" prefix is deprecated.
+      IPFS(ipfs);
+      ^--------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:173:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Mint(items[newId].image,tokenIndexToOwner[newId],newId);
+      ^-----------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:208:7: Warning: Invoking events without "emit" prefix is deprecated.
+      MintPack(packs.push(_pack) - 1, _price,tokens[0],tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7],tokens[8],tokens[9]);
+      ^-----------------------------------------------------------------------------------------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:227:7: Warning: Invoking events without "emit" prefix is deprecated.
+      BuyPack(msg.sender,packId,msg.value);
+      ^----------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:284:23: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      bytes32 stack = keccak256(nonce++,msg.sender);
+                      ^---------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:290:7: Warning: Invoking events without "emit" prefix is deprecated.
+      SubmitStack(msg.sender,now,stack,_id,_id2,_id3,_id4,_id5,_public);
+      ^---------------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:314:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      bytes32 counterstack = keccak256(nonce++,msg.sender,_id);
+                             ^-------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:321:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CounterStack(msg.sender,now,_stack,counterstack,_id,_id2,_id3,_id4,_id5);
+      ^----------------------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:338:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CancelStack(msg.sender,now,_stack);
+      ^--------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:353:7: Warning: Invoking events without "emit" prefix is deprecated.
+      CancelCounterStack(msg.sender,now,_stack,_counterstack);
+      ^-----------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:397:7: Warning: Invoking events without "emit" prefix is deprecated.
+      AcceptCounterStack(msg.sender,_stack,_counterStack);
+      ^-------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:430:7: Warning: Invoking events without "emit" prefix is deprecated.
+      StartCoinFlip(_stack,_commit);
+      ^---------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:445:10: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      if(keccak256(_reveal)!=commit[_stack]){
+         ^----------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:445:10: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+      if(keccak256(_reveal)!=commit[_stack]){
+         ^----------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:450:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CoinFlipFail(_stack);
+        ^------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:456:36: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 pseudoRandomHash = keccak256(_reveal,block.blockhash(commitBlock[_stack]));
+                                   ^-----------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:461:11: Warning: Invoking events without "emit" prefix is deprecated.
+          CoinFlipSuccess(_stack,stacks[_stack].owner,true);
+          ^-----------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:466:11: Warning: Invoking events without "emit" prefix is deprecated.
+          CoinFlipSuccess(_stack,stacks[_counterStack].owner,false);
+          ^-------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:495:7: Warning: Invoking events without "emit" prefix is deprecated.
+      RaiseSlammer(_stack,_commit);
+      ^--------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:516:10: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+      if(keccak256(_reveal)!=commit[_stack]){
+         ^----------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:516:10: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+      if(keccak256(_reveal)!=commit[_stack]){
+         ^----------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:529:36: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 pseudoRandomHash = keccak256(_reveal,block.blockhash(commitBlock[_stack]));
+                                   ^-----------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:567:11: Warning: Invoking events without "emit" prefix is deprecated.
+          FinishGame(_stack);
+          ^----------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:590:7: Warning: Invoking events without "emit" prefix is deprecated.
+      ThrowSlammer(stack,whoDoneIt,otherA ... Array[7],flipArray[8],flipArray[9]);
+      ^-------------------------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:619:7: Warning: Invoking events without "emit" prefix is deprecated.
+      FinishGame(_stack);
+      ^----------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:633:7: Warning: Invoking events without "emit" prefix is deprecated.
+      DrainStack(_stack,_counterStack,msg.sender);
+      ^-----------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:661:15: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+      require(this.balance >= _amount);
+              ^----------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:456:54: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+        bytes32 pseudoRandomHash = keccak256(_reveal,block.blockhash(commitBlock[_stack]));
+                                                     ^-------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:529:54: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+        bytes32 pseudoRandomHash = keccak256(_reveal,block.blockhash(commitBlock[_stack]));
+                                                     ^-------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:674:21: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) public returns (bool) { }
+                    ^---------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:674:34: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transfer(address _to, uint256 _value) public returns (bool) { }
+                                 ^------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:678:29: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function startSlammerTime(address _player1,uint256[5] _id1,address _player2,uint256[5] _id2) public returns (bool) { }
+                            ^--------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:678:46: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function startSlammerTime(address _player1,uint256[5] _id1,address _player2,uint256[5] _id2) public returns (bool) { }
+                                             ^-------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:678:62: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function startSlammerTime(address _player1,uint256[5] _id1,address _player2,uint256[5] _id2) public returns (bool) { }
+                                                             ^--------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:678:79: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function startSlammerTime(address _player1,uint256[5] _id1,address _player2,uint256[5] _id2) public returns (bool) { }
+                                                                              ^-------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:679:25: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferBack(address _toWhom, uint256 _id) public returns (bool) { }
+                        ^-------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:679:42: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function transferBack(address _toWhom, uint256 _id) public returns (bool) { }
+                                         ^---------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:674:3: Warning: Function state mutability can be restricted to pure
+  function transfer(address _to, uint256 _value) public returns (bool) { }
+  ^----------------------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:678:3: Warning: Function state mutability can be restricted to pure
+  function startSlammerTime(address _player1,uint256[5] _id1,address _player2,uint256[5] _id2) public returns (bool) { }
+  ^--------------------------------------------------------------------------------------------------------------------^
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol:679:3: Warning: Function state mutability can be restricted to pure
+  function transferBack(address _toWhom, uint256 _id) public returns (bool) { }
+  ^---------------------------------------------------------------------------^
+
+
+Cryptogs (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#121-671) contract sets array length with a user-controlled value:
+	- items.push(_item) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#148)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471) uses a weak PRNG: "uint256(pseudoRandomHash) % 2 == 0 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#457)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+Cryptogs.withdrawToken(address,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#666-670) ignores return value by token.transfer(msg.sender,_amount) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#668)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Cryptogs (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#121-671) has incorrect ERC721 function interface:NFT.approve(address,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#56-61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc721-interface
+
+Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471) uses a dangerous strict equality:
+	- uint256(pseudoRandomHash) % 2 == 0 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#457)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398):
+	External calls:
+	- require(bool)(slammerTimeContract.startSlammerTime(msg.sender,stacks[_stack].ids,stacks[_counterStack].owner,stacks[_counterStack].ids)) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#376)
+	State variables written after the call(s):
+	- mode[_stack] = 1 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#381)
+	Cryptogs.mode (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#358) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.mode (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#358)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+Reentrancy in Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634):
+	External calls:
+	- slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#615)
+	State variables written after the call(s):
+	- delete counterOfStack[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#628)
+	Cryptogs.counterOfStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#357) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.counterOfStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#357)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete lastActor[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#627)
+	Cryptogs.lastActor (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#362) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.lastActor (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#362)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete lastBlock[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#626)
+	Cryptogs.lastBlock (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#360) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.lastBlock (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#360)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- mixedStack[_stack][i] = 0 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#613)
+	Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.getMixedStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#403-406)
+	- Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete mixedStack[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#622)
+	Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.getMixedStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#403-406)
+	- Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- mode[_stack] = 9 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#620)
+	Cryptogs.mode (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#358) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.mode (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#358)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete stackCounter[_counterStack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#624)
+	Cryptogs.stackCounter (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#256) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.stackCounter (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#256)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296-322)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete stacks[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#623)
+	Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.getStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262-264)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.stackOwner(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#258-260)
+	- Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296-322)
+	- Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268-291)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete stacks[_counterStack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#625)
+	Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.getStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262-264)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.stackOwner(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#258-260)
+	- Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296-322)
+	- Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268-291)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+Reentrancy in Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585):
+	External calls:
+	- slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#557)
+	State variables written after the call(s):
+	- delete commit[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#578)
+	Cryptogs.commit (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#401) can be used in cross function reentrancies:
+	- Cryptogs.commit (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#401)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete commitBlock[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#577)
+	Cryptogs.commitBlock (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#361) can be used in cross function reentrancies:
+	- Cryptogs.commitBlock (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#361)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete counterOfStack[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#575)
+	Cryptogs.counterOfStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#357) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.counterOfStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#357)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete lastActor[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#574)
+	Cryptogs.lastActor (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#362) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.lastActor (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#362)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- mixedStack[_stack][i] = 0 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#554)
+	Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.getMixedStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#403-406)
+	- Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete mixedStack[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#569)
+	Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.getMixedStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#403-406)
+	- Cryptogs.mixedStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#363)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- mode[_stack] = 9 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#568)
+	Cryptogs.mode (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#358) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.mode (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#358)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete round[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#576)
+	Cryptogs.round (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#359) can be used in cross function reentrancies:
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.round (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#359)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- round[_stack] ++ (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#580)
+	Cryptogs.round (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#359) can be used in cross function reentrancies:
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.round (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#359)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete stackCounter[_counterStack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#571)
+	Cryptogs.stackCounter (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#256) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.stackCounter (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#256)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296-322)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete stacks[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#570)
+	Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.getStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262-264)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.stackOwner(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#258-260)
+	- Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296-322)
+	- Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268-291)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+	- delete stacks[_counterStack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#572)
+	Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255) can be used in cross function reentrancies:
+	- Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398)
+	- Cryptogs.cancelCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342-354)
+	- Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339)
+	- Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634)
+	- Cryptogs.endCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435-471)
+	- Cryptogs.getStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262-264)
+	- Cryptogs.raiseSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477-496)
+	- Cryptogs.stackOwner(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#258-260)
+	- Cryptogs.stacks (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#255)
+	- Cryptogs.startCoinFlip(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417-431)
+	- Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296-322)
+	- Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268-291)
+	- Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Cryptogs.throwSlammer(bytes32,bytes32,bytes32).flipped (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#515) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585) ignores return value by slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#557)
+Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634) ignores return value by slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#615)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Cryptogs.getStack(bytes32).block (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262) (local variable) shadows built-in symbol"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#builtin-symbol-shadowing
+
+Cryptogs.getToken(uint256).owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#235) shadows:
+	- Ownable.owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#86) (state variable)
+Cryptogs.stackOwner(bytes32).owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#258) shadows:
+	- Ownable.owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#86) (state variable)
+Cryptogs.getStack(bytes32).owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262) shadows:
+	- Ownable.owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#86) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Cryptogs.setSlammerTime(address)._slammerTime (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#152) lacks a zero-check on :
+		- slammerTime = _slammerTime (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#157)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585) has external calls inside a loop: slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#557)
+Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634) has external calls inside a loop: slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#615)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398):
+	External calls:
+	- require(bool)(slammerTimeContract.startSlammerTime(msg.sender,stacks[_stack].ids,stacks[_counterStack].owner,stacks[_counterStack].ids)) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#376)
+	State variables written after the call(s):
+	- counterOfStack[_stack] = _counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#382)
+	- lastActor[_stack] = stacks[_counterStack].owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#380)
+	- lastBlock[_stack] = uint32(block.number) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#379)
+	- mixedStack[_stack][0] = stacks[_stack].ids[0] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#385)
+	- mixedStack[_stack][1] = stacks[_counterStack].ids[0] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#386)
+	- mixedStack[_stack][2] = stacks[_stack].ids[1] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#387)
+	- mixedStack[_stack][3] = stacks[_counterStack].ids[1] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#388)
+	- mixedStack[_stack][4] = stacks[_stack].ids[2] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#389)
+	- mixedStack[_stack][5] = stacks[_counterStack].ids[2] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#390)
+	- mixedStack[_stack][6] = stacks[_stack].ids[3] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#391)
+	- mixedStack[_stack][7] = stacks[_counterStack].ids[3] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#392)
+	- mixedStack[_stack][8] = stacks[_stack].ids[4] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#393)
+	- mixedStack[_stack][9] = stacks[_counterStack].ids[4] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#394)
+Reentrancy in Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634):
+	External calls:
+	- slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#615)
+	State variables written after the call(s):
+	- delete commit[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#631)
+	- delete commitBlock[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#630)
+	- delete round[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#629)
+Reentrancy in Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585):
+	External calls:
+	- slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#557)
+	State variables written after the call(s):
+	- delete lastBlock[_stack] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#573)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Cryptogs.acceptCounterStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366-398):
+	External calls:
+	- require(bool)(slammerTimeContract.startSlammerTime(msg.sender,stacks[_stack].ids,stacks[_counterStack].owner,stacks[_counterStack].ids)) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#376)
+	Event emitted after the call(s):
+	- AcceptCounterStack(msg.sender,_stack,_counterStack) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#397)
+Reentrancy in Cryptogs.drainStack(bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594-634):
+	External calls:
+	- slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#615)
+	Event emitted after the call(s):
+	- DrainStack(_stack,_counterStack,msg.sender) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#633)
+	- FinishGame(_stack) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#619)
+Reentrancy in Cryptogs.throwSlammer(bytes32,bytes32,bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501-585):
+	External calls:
+	- slammerTimeContract.transferBack(msg.sender,tempId) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#557)
+	Event emitted after the call(s):
+	- FinishGame(_stack) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#567)
+	- ThrowSlammer(stack,whoDoneIt,otherAccount,flipArray[0],flipArray[1],flipArray[2],flipArray[3],flipArray[4],flipArray[5],flipArray[6],flipArray[7],flipArray[8],flipArray[9]) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#590)
+		- throwSlammerEvent(_stack,msg.sender,previousLastActor,flipped) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#564)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+NFT._transfer(address,address,uint256) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#27-35) has costly operations inside a loop:
+	- delete tokenIndexToApproved[_tokenId] (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#32)
+	Calls stack containing the loop:
+		Cryptogs.buyPack(uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Deprecated standard detected pseudoRandomHash = keccak256()(_reveal,block.blockhash(commitBlock[_stack])) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#456):
+	- Usage of "block.blockhash()" should be replaced with "blockhash()"
+Deprecated standard detected pseudoRandomHash = keccak256()(_reveal,block.blockhash(commitBlock[_stack])) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#529):
+	- Usage of "block.blockhash()" should be replaced with "blockhash()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter NFT.transfer(address,uint256)._to (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#21) is not in mixedCase
+Parameter NFT.transfer(address,uint256)._tokenId (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#21) is not in mixedCase
+Parameter NFT.transferFrom(address,address,uint256)._from (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#38) is not in mixedCase
+Parameter NFT.transferFrom(address,address,uint256)._to (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#38) is not in mixedCase
+Parameter NFT.transferFrom(address,address,uint256)._tokenId (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#38) is not in mixedCase
+Parameter NFT.approve(address,uint256)._to (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#56) is not in mixedCase
+Parameter NFT.approve(address,uint256)._tokenId (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#56) is not in mixedCase
+Parameter NFT.balanceOf(address)._owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#64) is not in mixedCase
+Parameter NFT.ownerOf(uint256)._tokenId (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#68) is not in mixedCase
+Parameter NFT.allowance(address,uint256)._claimant (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#73) is not in mixedCase
+Parameter NFT.allowance(address,uint256)._tokenId (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#73) is not in mixedCase
+Parameter Cryptogs.setIpfs(string)._ipfs (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#136) is not in mixedCase
+Parameter Cryptogs.setSlammerTime(address)._slammerTime (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#152) is not in mixedCase
+Parameter Cryptogs.mint(bytes32,address)._image (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#170) is not in mixedCase
+Parameter Cryptogs.mint(bytes32,address)._owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#170) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._price (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image1 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image2 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image3 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image4 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image5 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image6 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image7 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image8 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image9 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.mintPack(uint256,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)._image10 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#192) is not in mixedCase
+Parameter Cryptogs.getToken(uint256)._id (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#235) is not in mixedCase
+Parameter Cryptogs.stackOwner(bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#258) is not in mixedCase
+Parameter Cryptogs.getStack(bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#262) is not in mixedCase
+Parameter Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool)._id (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268) is not in mixedCase
+Parameter Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool)._id2 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268) is not in mixedCase
+Parameter Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool)._id3 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268) is not in mixedCase
+Parameter Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool)._id4 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268) is not in mixedCase
+Parameter Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool)._id5 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268) is not in mixedCase
+Parameter Cryptogs.submitStack(uint256,uint256,uint256,uint256,uint256,bool)._public (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#268) is not in mixedCase
+Parameter Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296) is not in mixedCase
+Parameter Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256)._id (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296) is not in mixedCase
+Parameter Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256)._id2 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296) is not in mixedCase
+Parameter Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256)._id3 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296) is not in mixedCase
+Parameter Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256)._id4 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296) is not in mixedCase
+Parameter Cryptogs.submitCounterStack(bytes32,uint256,uint256,uint256,uint256,uint256)._id5 (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#296) is not in mixedCase
+Parameter Cryptogs.cancelStack(bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328) is not in mixedCase
+Parameter Cryptogs.cancelCounterStack(bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342) is not in mixedCase
+Parameter Cryptogs.cancelCounterStack(bytes32,bytes32)._counterstack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#342) is not in mixedCase
+Parameter Cryptogs.acceptCounterStack(bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366) is not in mixedCase
+Parameter Cryptogs.acceptCounterStack(bytes32,bytes32)._counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#366) is not in mixedCase
+Parameter Cryptogs.getMixedStack(bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#403) is not in mixedCase
+Parameter Cryptogs.startCoinFlip(bytes32,bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417) is not in mixedCase
+Parameter Cryptogs.startCoinFlip(bytes32,bytes32,bytes32)._counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417) is not in mixedCase
+Parameter Cryptogs.startCoinFlip(bytes32,bytes32,bytes32)._commit (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#417) is not in mixedCase
+Parameter Cryptogs.endCoinFlip(bytes32,bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435) is not in mixedCase
+Parameter Cryptogs.endCoinFlip(bytes32,bytes32,bytes32)._counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435) is not in mixedCase
+Parameter Cryptogs.endCoinFlip(bytes32,bytes32,bytes32)._reveal (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#435) is not in mixedCase
+Parameter Cryptogs.raiseSlammer(bytes32,bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477) is not in mixedCase
+Parameter Cryptogs.raiseSlammer(bytes32,bytes32,bytes32)._counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477) is not in mixedCase
+Parameter Cryptogs.raiseSlammer(bytes32,bytes32,bytes32)._commit (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#477) is not in mixedCase
+Parameter Cryptogs.throwSlammer(bytes32,bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501) is not in mixedCase
+Parameter Cryptogs.throwSlammer(bytes32,bytes32,bytes32)._counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501) is not in mixedCase
+Parameter Cryptogs.throwSlammer(bytes32,bytes32,bytes32)._reveal (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#501) is not in mixedCase
+Parameter Cryptogs.drainStack(bytes32,bytes32)._stack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594) is not in mixedCase
+Parameter Cryptogs.drainStack(bytes32,bytes32)._counterStack (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#594) is not in mixedCase
+Parameter Cryptogs.tokensOfOwner(address)._owner (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#641) is not in mixedCase
+Parameter Cryptogs.withdraw(uint256)._amount (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#660) is not in mixedCase
+Parameter Cryptogs.withdrawToken(address,uint256)._token (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#666) is not in mixedCase
+Parameter Cryptogs.withdrawToken(address,uint256)._amount (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#666) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Cryptogs.cancelStack(bytes32) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#328-339) uses literals with too many digits:
+	- require(bool)(stackCounter[_stack] == 0x00000000000000000000000000000000) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#334)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+setIpfs(string) should be declared external:
+	- Cryptogs.setIpfs(string) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#136-140)
+startSlammerTime(address,uint256[5],address,uint256[5]) should be declared external:
+	- SlammerTime.startSlammerTime(address,uint256[5],address,uint256[5]) (../sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol#678)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xc2e9a923a9bc9db5409d35ae30974c76b6e401f9.sol analyzed (5 contracts with 100 detectors), 97 result(s) found

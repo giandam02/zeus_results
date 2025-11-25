@@ -1,0 +1,100 @@
+'solc --version' running
+'solc /sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+batnani.totalSupply (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#86) shadows:
+	- ERC20Basic.totalSupply (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#55)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+batnani.transferOwnership(address) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#120-124) should emit an event for: 
+	- owner = newOwner (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#122) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+batnani.getTokens() (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#186-207) uses timestamp for comparisons
+	Dangerous comparisons:
+	- msg.value <= 0 && msg.value < MIN_CONTRIBUTION && Claimed[investor] == false && now >= bonusDeadline (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#195)
+	- msg.value >= MIN_CONTRIBUTION && now >= bonusDeadline (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#198)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+batnani.getTokens() (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#186-207) compares to a boolean constant:
+	-msg.value <= 0 && msg.value < MIN_CONTRIBUTION && Claimed[investor] == false && now >= bonusDeadline (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#195)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+batnani.Distribute(address,uint256) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#141-157) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#148)
+	Calls stack containing the loop:
+		batnani.DistributeAirdropMultiple(address[],uint256)
+batnani.Distribute(address,uint256) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#141-157) has costly operations inside a loop:
+	- distributionFinished = true (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#151)
+	Calls stack containing the loop:
+		batnani.DistributeAirdropMultiple(address[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+batnani.bonusDeadline (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#82) is set pre-construction with a non-constant function or state variable:
+	- now + bonusDeadlineDefault * 86400
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract batnani (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#68-279) is not in CapWords
+Parameter batnani.distr(address,uint256)._to (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#132) is not in mixedCase
+Parameter batnani.distr(address,uint256)._amount (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#132) is not in mixedCase
+Function batnani.Distribute(address,uint256) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#141-157) is not in mixedCase
+Parameter batnani.Distribute(address,uint256)._participant (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#141) is not in mixedCase
+Parameter batnani.Distribute(address,uint256)._amount (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#141) is not in mixedCase
+Function batnani.DistributeAirdrop(address,uint256) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#159-161) is not in mixedCase
+Parameter batnani.DistributeAirdrop(address,uint256)._participant (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#159) is not in mixedCase
+Parameter batnani.DistributeAirdrop(address,uint256)._amount (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#159) is not in mixedCase
+Function batnani.DistributeAirdropMultiple(address[],uint256) (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#163-165) is not in mixedCase
+Parameter batnani.DistributeAirdropMultiple(address[],uint256)._addresses (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#163) is not in mixedCase
+Parameter batnani.DistributeAirdropMultiple(address[],uint256)._amount (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#163) is not in mixedCase
+Parameter batnani.updateTokensPerEth(uint256)._tokensPerEth (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#167) is not in mixedCase
+Parameter batnani.updateInitialBonus(uint256)._initialBonus (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#172) is not in mixedCase
+Parameter batnani.updateInitialZero(uint256)._initialZero (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#177) is not in mixedCase
+Parameter batnani.balanceOf(address)._owner (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#209) is not in mixedCase
+Parameter batnani.transfer(address,uint256)._to (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#218) is not in mixedCase
+Parameter batnani.transfer(address,uint256)._amount (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#218) is not in mixedCase
+Parameter batnani.transferFrom(address,address,uint256)._from (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#229) is not in mixedCase
+Parameter batnani.transferFrom(address,address,uint256)._to (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#229) is not in mixedCase
+Parameter batnani.transferFrom(address,address,uint256)._amount (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#229) is not in mixedCase
+Parameter batnani.approve(address,uint256)._spender (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#242) is not in mixedCase
+Parameter batnani.approve(address,uint256)._value (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#242) is not in mixedCase
+Parameter batnani.allowance(address,address)._owner (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#249) is not in mixedCase
+Parameter batnani.allowance(address,address)._spender (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#249) is not in mixedCase
+Parameter batnani.burn(uint256)._value (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#265) is not in mixedCase
+Parameter batnani.withdrawForeignTokens(address)._tokenContract (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#273) is not in mixedCase
+Variable batnani.Claimed (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#75) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+batnani.slitherConstructorVariables() (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#68-279) uses literals with too many digits:
+	- totalSupply = 300000000e10 (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#86)
+batnani.slitherConstructorVariables() (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#68-279) uses literals with too many digits:
+	- tokensPerEth = 300000e10 (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#87)
+batnani.slitherConstructorVariables() (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#68-279) uses literals with too many digits:
+	- initialBonus = 100000e10 (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#88)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#55) should be constant 
+batnani.bonusDeadlineDefault (../sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol#81) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x4653e2674b64ea887f3bdf6f750a9aae864cdef5.sol analyzed (5 contracts with 100 detectors), 42 result(s) found

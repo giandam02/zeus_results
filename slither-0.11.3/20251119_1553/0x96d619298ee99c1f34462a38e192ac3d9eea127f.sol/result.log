@@ -1,0 +1,84 @@
+'solc --version' running
+'solc /sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol:
+/sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol:24:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function IRideICO() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol:68:9: Warning: Invoking events without "emit" prefix is deprecated.
+        FundTransfer(msg.sender, amount, true);
+        ^------------------------------------^
+
+
+IRideICO.fallback() (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#60-70) uses arbitrary from in transferFrom: tokenReward.transferFrom(owner,msg.sender,amount) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#67)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+IRideICO.fallback() (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#60-70) performs a multiplication on the result of a division:
+	- _amount = amount / 20 (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#65)
+	- amount += _amount * 3 (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#66)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Token (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#3-5) has incorrect ERC20 function interface:Token.transferFrom(address,address,uint256) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#4)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+IRideICO.setCreator(address) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#36-38) should emit an event for: 
+	- creator = _creator (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#37) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+IRideICO.setStartDate(uint256) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#40-42) should emit an event for: 
+	- startDate = _startDate (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#41) 
+IRideICO.setEndtDate(uint256) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#44-46) should emit an event for: 
+	- endDate = _endDate (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#45) 
+IRideICO.setPrice(uint256) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#48-50) should emit an event for: 
+	- price = _price (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#49) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+IRideICO.setOwner(address)._owner (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#32) lacks a zero-check on :
+		- owner = _owner (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#33)
+IRideICO.setCreator(address)._creator (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#36) lacks a zero-check on :
+		- creator = _creator (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#37)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in IRideICO.fallback() (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#60-70):
+	External calls:
+	- tokenReward.transferFrom(owner,msg.sender,amount) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#67)
+	Event emitted after the call(s):
+	- FundTransfer(msg.sender,amount,true) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#68)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+IRideICO.fallback() (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#60-70) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > startDate) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#62)
+	- require(bool)(now < endDate) (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#63)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.16 (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter IRideICO.setOwner(address)._owner (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#32) is not in mixedCase
+Parameter IRideICO.setCreator(address)._creator (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#36) is not in mixedCase
+Parameter IRideICO.setStartDate(uint256)._startDate (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#40) is not in mixedCase
+Parameter IRideICO.setEndtDate(uint256)._endDate (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#44) is not in mixedCase
+Parameter IRideICO.setPrice(uint256)._price (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#48) is not in mixedCase
+Parameter IRideICO.setToken(address)._token (../sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol#52) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x96d619298ee99c1f34462a38e192ac3d9eea127f.sol analyzed (2 contracts with 100 detectors), 19 result(s) found

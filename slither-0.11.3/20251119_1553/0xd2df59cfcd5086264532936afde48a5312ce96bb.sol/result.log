@@ -1,0 +1,59 @@
+'solc --version' running
+'solc /sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Auction.weiToOwner(address)._address (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#208) lacks a zero-check on :
+		- _address.transfer(address(this).balance) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#211)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Auction.placeBid() (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#184-202) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp > _start,Auction not started) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#185)
+	- require(bool,string)(block.timestamp < _end,Auction ended) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#186)
+Auction.weiToOwner(address) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#208-214) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp > _end,Auction not ended) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#209)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Auction.placeBid() (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#184-202) compares to a boolean constant:
+	-_oldHighestBidder.send(_payout) == true (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#195)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Modifier Ownable.contract_onlyOwner() (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#36-39) is not in mixedCase
+Event Auction.bidPlaced(uint256,address) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#150) is not in CapWords
+Event Auction.etherTransfered(uint256,address) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#151) is not in CapWords
+Parameter Auction.weiToOwner(address)._address (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#208) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Auction.placeBid() (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#184-202):
+	External calls:
+	- _oldHighestBidder.send(_payout) == true (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#195)
+	Event emitted after the call(s):
+	- bidPlaced(_highestBid,_highestBidder) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#199)
+	- etherTransfered(_payout,_oldHighestBidder) (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#196)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Auction.constructor() (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#161-178) uses literals with too many digits:
+	- _minStep = 10000000000000000 (../sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol#176)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xd2df59cfcd5086264532936afde48a5312ce96bb.sol analyzed (3 contracts with 100 detectors), 12 result(s) found

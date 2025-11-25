@@ -1,0 +1,386 @@
+'solc --version' running
+'solc /sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+HorseyExchange (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#174-420) contract sets array length with a user-controlled value:
+	- userBarn[msg.sender].push(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#261)
+HorseyPilot (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1016-1390) contract sets array length with a user-controlled value:
+	- currentProposal.yay.push(msg.sender) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1227)
+HorseyPilot (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1016-1390) contract sets array length with a user-controlled value:
+	- currentProposal.nay.push(msg.sender) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1238)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+HorseyToken._feed(uint256,bytes32) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#878-896) uses a weak PRNG: "randNum = uint256(keccak256()(abi.encodePacked(tokenId,blockHash))) % probabilityByRarity (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#884)" 
+HorseyToken._increaseRarity(uint256,bytes32) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#928-939) uses a weak PRNG: "rarityMask = _shiftLeft(bytes32(1),(random % 16 + 240)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#936)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+Reentrancy in HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334):
+	External calls:
+	- totalToPay = getTokenPrice(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#305)
+		- require(bool,string)(token.ownerOf(tokenId) == address(this),Token not on market) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#387)
+	- isOnMarket(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#300)
+		- require(bool,string)(token.ownerOf(tokenId) == address(this),Token not on market) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#387)
+	External calls sending eth:
+	- sale.owner.transfer(sale.price) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#315)
+	State variables written after the call(s):
+	- delete market[tokenId] (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#321)
+	HorseyExchange.market (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#200) can be used in cross function reentrancies:
+	- HorseyExchange.cancelSale(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#271-289)
+	- HorseyExchange.depositToExchange(uint256,uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#248-264)
+	- HorseyExchange.getTokenPrice(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#237-240)
+	- HorseyExchange.notOriginalOwnerOf(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#404-407)
+	- HorseyExchange.originalOwnerOf(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#398-401)
+	- HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+HorseyExchange.getTokenPrice(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#237-240) performs a multiplication on the result of a division:
+	- market[tokenId].price + (market[tokenId].price.div(100).mul(marketMakerFee)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#239)
+HorseyPilot._updateDistribution() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1264-1277) performs a multiplication on the result of a division:
+	- knightPayday = toBeDistributed.div(100).mul(knightEquity) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1266)
+HorseyPilot._updateDistribution() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1264-1277) performs a multiplication on the result of a division:
+	- paladinPayday = toBeDistributed.div(100).mul(paladinEquity) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1267)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+HorseyToken.noFeedingInProgress() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#972-976) uses a dangerous strict equality:
+	- require(bool,string)(pendingFeedings[msg.sender].blockNumber == 0,Already feeding) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#974)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 0 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1284)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 1 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1287)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 2 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1290)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 3 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1293)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 4 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1296)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.parameter == 0 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1297)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 5 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1307)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 8 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1310)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses a dangerous strict equality:
+	- currentProposal.methodId == 9 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1315)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in HorseyExchange.cancelSale(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#271-289):
+	External calls:
+	- token.transferFrom(address(this),msg.sender,tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#276)
+	State variables written after the call(s):
+	- delete market[tokenId] (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#279)
+	HorseyExchange.market (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#200) can be used in cross function reentrancies:
+	- HorseyExchange.cancelSale(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#271-289)
+	- HorseyExchange.depositToExchange(uint256,uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#248-264)
+	- HorseyExchange.getTokenPrice(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#237-240)
+	- HorseyExchange.notOriginalOwnerOf(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#404-407)
+	- HorseyExchange.originalOwnerOf(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#398-401)
+	- HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334)
+Reentrancy in HorseyPilot.deployChildren(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1109-1119):
+	External calls:
+	- HorseyExchange(exchangeAddress).setStables(stablesAddress) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1116)
+	State variables written after the call(s):
+	- deployed = true (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1118)
+	HorseyPilot.deployed (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1080) can be used in cross function reentrancies:
+	- HorseyPilot.deployChildren(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1109-1119)
+Reentrancy in HorseyPilot.voteOnProposal(bool) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1219-1247):
+	External calls:
+	- _doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1231)
+		- HorseyToken(tokenAddress).setRenamingCosts(currentProposal.parameter) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1284)
+		- HorseyExchange(exchangeAddress).setMarketFees(currentProposal.parameter) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1287)
+		- HorseyToken(tokenAddress).addLegitDevAddress(address(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1290)
+		- HorseyToken(tokenAddress).addHorseIndex(bytes32(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1293)
+		- HorseyExchange(exchangeAddress).unpause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1298)
+		- HorseyToken(tokenAddress).unpause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1299)
+		- HorseyExchange(exchangeAddress).pause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1301)
+		- HorseyToken(tokenAddress).pause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1302)
+		- HorseyToken(tokenAddress).setClaimingCosts(currentProposal.parameter) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1307)
+		- HorseyToken(tokenAddress).setCarrotsMultiplier(uint8(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1311)
+		- HorseyToken(tokenAddress).setRarityMultiplier(uint8(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1316)
+	State variables written after the call(s):
+	- proposalInProgress = false (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1232)
+	HorseyPilot.proposalInProgress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1074) can be used in cross function reentrancies:
+	- HorseyPilot.makeProposal(uint8,uint8) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1200-1214)
+	- HorseyPilot.proposalAvailable() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1336-1339)
+	- HorseyPilot.proposalInProgress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1074)
+	- HorseyPilot.proposalPending() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1351-1354)
+	- HorseyPilot.voteOnProposal(bool) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1219-1247)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+HorseyToken.getHorsey(uint256).temp (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#802) is a local variable never initialized
+EthorseHelpers._isWinnerOf(address,address).horse (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#510) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+EthorseHelpers._isWinnerOf(address,address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#492-535) ignores return value by (None,None,race_end,voided_bet,None,None,None,None) = race.chronus() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#503)
+EthorseHelpers._isWinnerOf(address,address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#492-535) ignores return value by (None,None,None,None,bet_amount) = race.getCoinIndex(horse,eth_address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#530)
+HorseyToken.freeForCarrots(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#775-785) ignores return value by (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#781)
+HorseyToken.feed(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#815-826) ignores return value by (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#823)
+HorseyToken.stopFeeding() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#832-864) ignores return value by (None,dna,None,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#861)
+HorseyToken._feed(uint256,bytes32) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#878-896) ignores return value by (None,None,feedingCounter,tier) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#882)
+HorseyToken._increaseRarity(uint256,bytes32) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#928-939) ignores return value by (None,dna,None,tier) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#931)
+HorseyToken.carrotsMeetLevel(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#952-957) ignores return value by (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#954)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+HorseyPilot.transferJokerOwnership(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1125-1130) should emit an event for: 
+	- jokerAddress = newJoker (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1129) 
+HorseyPilot.transferKnightOwnership(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1136-1141) should emit an event for: 
+	- knightAddress = newKnight (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1140) 
+HorseyPilot.transferPaladinOwnership(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1147-1152) should emit an event for: 
+	- paladinAddress = newPaladin (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1151) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+HorseyExchange.setMarketFees(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#225-229) should emit an event for: 
+	- marketMakerFee = fees (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#228) 
+HorseyToken.setRarityMultiplier(uint8) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#637-640) should emit an event for: 
+	- rarityMultiplier = newRarityMultiplier (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#639) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+HorseyPilot.constructor(address,address,address,address[3])._jokerAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1089) lacks a zero-check on :
+		- jokerAddress = _jokerAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1094)
+HorseyPilot.constructor(address,address,address,address[3])._knightAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1090) lacks a zero-check on :
+		- knightAddress = _knightAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1095)
+HorseyPilot.constructor(address,address,address,address[3])._paladinAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1091) lacks a zero-check on :
+		- paladinAddress = _paladinAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1096)
+HorseyPilot.deployChildren(address).stablesAddress (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1109) lacks a zero-check on :
+		- tokenAddress = new HorseyToken(stablesAddress) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1113)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+EthorseHelpers._isWinnerOf(address,address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#492-535) has external calls inside a loop: race.winner_horse(all_horses[i]) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#517)
+	Calls stack containing the loop:
+		HorseyToken.can_claim(address,address)
+EthorseHelpers._isWinnerOf(address,address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#492-535) has external calls inside a loop: race.winner_horse(all_horses[i]) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#517)
+	Calls stack containing the loop:
+		HorseyToken.claim(address)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in HorseyExchange.depositToExchange(uint256,uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#248-264):
+	External calls:
+	- require(bool,string)(token.getApproved(tokenId) == address(this),Exchange is not allowed to transfer) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#253)
+	- token.transferFrom(msg.sender,address(this),tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#255)
+	- isTokenOwner(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#250)
+		- require(bool,string)(token.ownerOf(tokenId) == msg.sender,Not tokens owner) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#393)
+	State variables written after the call(s):
+	- market[tokenId] = SaleData(price,msg.sender) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#258)
+	- userBarn[msg.sender].push(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#261)
+Reentrancy in HorseyToken.feed(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#815-826):
+	External calls:
+	- onlyOwnerOf(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#817)
+		- require(bool,string)(stables.ownerOf(tokenId) == msg.sender,Caller is not owner of this token) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#987)
+	- carrotsMeetLevel(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#818)
+		- (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#954)
+		- require(bool,string)(feedingCounter <= stables.carrot_credits(msg.sender),Not enough carrots) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#955)
+	State variables written after the call(s):
+	- pendingFeedings[msg.sender] = FeedingData(block.number,tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#821)
+Reentrancy in HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334):
+	External calls:
+	- totalToPay = getTokenPrice(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#305)
+		- require(bool,string)(token.ownerOf(tokenId) == address(this),Token not on market) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#387)
+	- isOnMarket(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#300)
+		- require(bool,string)(token.ownerOf(tokenId) == address(this),Token not on market) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#387)
+	State variables written after the call(s):
+	- collectedFees += totalToPay - sale.price (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#312)
+Reentrancy in HorseyPilot.syncFunds() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1180-1187):
+	External calls:
+	- HorseyToken(tokenAddress).withdraw() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1182)
+	- HorseyExchange(exchangeAddress).withdraw() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1183)
+	State variables written after the call(s):
+	- toBeDistributed = toBeDistributed.add(newBalance - prevBalance) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1186)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320):
+	External calls:
+	- HorseyToken(tokenAddress).setRenamingCosts(currentProposal.parameter) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1284)
+	- HorseyExchange(exchangeAddress).setMarketFees(currentProposal.parameter) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1287)
+	- HorseyToken(tokenAddress).addLegitDevAddress(address(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1290)
+	- HorseyToken(tokenAddress).addHorseIndex(bytes32(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1293)
+	- HorseyExchange(exchangeAddress).unpause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1298)
+	- HorseyToken(tokenAddress).unpause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1299)
+	- HorseyExchange(exchangeAddress).pause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1301)
+	- HorseyToken(tokenAddress).pause() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1302)
+	- HorseyToken(tokenAddress).setClaimingCosts(currentProposal.parameter) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1307)
+	- HorseyToken(tokenAddress).setCarrotsMultiplier(uint8(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1311)
+	- HorseyToken(tokenAddress).setRarityMultiplier(uint8(currentProposal.parameter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1316)
+	Event emitted after the call(s):
+	- ProposalPassed(currentProposal.methodId,currentProposal.parameter,currentProposal.proposer) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1319)
+Reentrancy in HorseyExchange.cancelSale(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#271-289):
+	External calls:
+	- token.transferFrom(address(this),msg.sender,tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#276)
+	Event emitted after the call(s):
+	- SaleCanceled(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#284)
+Reentrancy in HorseyToken.claim(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#728-740):
+	External calls:
+	- (None,winner) = _isWinnerOf(raceAddress,address(0)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#734)
+		- bc = BettingControllerInterface(race.owner()) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#497)
+		- require(bool)(_legitOwners[bc.owner()]) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#499)
+		- (None,None,race_end,voided_bet,None,None,None,None) = race.chronus() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#503)
+		- race.winner_horse(all_horses[i]) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#517)
+		- (None,None,None,None,bet_amount) = race.getCoinIndex(horse,eth_address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#530)
+	- require(bool,string)(can_claim(raceAddress,msg.sender),can_claim return false) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#736)
+		- bc = BettingControllerInterface(race.owner()) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#497)
+		- require(bool)(_legitOwners[bc.owner()]) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#499)
+		- (None,None,race_end,voided_bet,None,None,None,None) = race.chronus() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#503)
+		- race.winner_horse(all_horses[i]) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#517)
+		- (None,None,None,None,bet_amount) = race.getCoinIndex(horse,eth_address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#530)
+	- id = _generate_special_horsey(raceAddress,msg.sender,winner) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#738)
+		- stables.storeHorsey(eth_address,id,race,dna,1,0) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#918)
+	Event emitted after the call(s):
+	- Claimed(raceAddress,msg.sender,id) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#739)
+Reentrancy in HorseyExchange.depositToExchange(uint256,uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#248-264):
+	External calls:
+	- require(bool,string)(token.getApproved(tokenId) == address(this),Exchange is not allowed to transfer) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#253)
+	- token.transferFrom(msg.sender,address(this),tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#255)
+	- isTokenOwner(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#250)
+		- require(bool,string)(token.ownerOf(tokenId) == msg.sender,Not tokens owner) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#393)
+	Event emitted after the call(s):
+	- HorseyDeposit(tokenId,price) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#263)
+Reentrancy in HorseyToken.feed(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#815-826):
+	External calls:
+	- (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#823)
+	- stables.storeCarrotsCredit(msg.sender,stables.carrot_credits(msg.sender) - uint32(feedingCounter)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#824)
+	- onlyOwnerOf(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#817)
+		- require(bool,string)(stables.ownerOf(tokenId) == msg.sender,Caller is not owner of this token) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#987)
+	- carrotsMeetLevel(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#818)
+		- (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#954)
+		- require(bool,string)(feedingCounter <= stables.carrot_credits(msg.sender),Not enough carrots) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#955)
+	Event emitted after the call(s):
+	- Feeding(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#825)
+Reentrancy in HorseyToken.freeForCarrots(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#775-785):
+	External calls:
+	- (None,None,feedingCounter,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#781)
+	- stables.storeCarrotsCredit(msg.sender,stables.carrot_credits(msg.sender) + uint32(feedingCounter * carrotsMultiplier)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#782)
+	- stables.unstoreHorsey(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#783)
+	- onlyOwnerOf(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#777)
+		- require(bool,string)(stables.ownerOf(tokenId) == msg.sender,Caller is not owner of this token) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#987)
+	Event emitted after the call(s):
+	- HorseyFreed(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#784)
+Reentrancy in HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334):
+	External calls:
+	- totalToPay = getTokenPrice(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#305)
+		- require(bool,string)(token.ownerOf(tokenId) == address(this),Token not on market) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#387)
+	- token.transferFrom(address(this),msg.sender,tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#325)
+	- isOnMarket(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#300)
+		- require(bool,string)(token.ownerOf(tokenId) == address(this),Token not on market) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#387)
+	External calls sending eth:
+	- sale.owner.transfer(sale.price) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#315)
+	- msg.sender.transfer(msg.value.sub(totalToPay)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#330)
+	Event emitted after the call(s):
+	- HorseyPurchased(tokenId,msg.sender,totalToPay) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#333)
+Reentrancy in HorseyToken.renameHorsey(uint256,string) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#752-766):
+	External calls:
+	- stables.storeName(tokenId,newName) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#764)
+	- onlyOwnerOf(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#754)
+		- require(bool,string)(stables.ownerOf(tokenId) == msg.sender,Caller is not owner of this token) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#987)
+	External calls sending eth:
+	- msg.sender.transfer(msg.value.sub(renamingFee)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#761)
+	Event emitted after the call(s):
+	- HorseyRenamed(tokenId,newName) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#765)
+Reentrancy in HorseyToken.stopFeeding() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#832-864):
+	External calls:
+	- stables.ownerOf(tokenId) != msg.sender (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#851)
+	Event emitted after the call(s):
+	- FeedingFailed(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#854)
+Reentrancy in HorseyToken.stopFeeding() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#832-864):
+	External calls:
+	- _feed(tokenId,blockhash(uint256)(blockNumber)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#859)
+		- (None,None,feedingCounter,tier) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#882)
+		- (None,dna,None,tier) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#931)
+		- stables.modifyHorseyTier(tokenId,tier + 1) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#933)
+		- stables.modifyHorseyDna(tokenId,newdna) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#938)
+		- stables.modifyHorseyFeedingCounter(tokenId,feedingCounter + 1) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#894)
+	- (None,dna,None,None) = stables.horseys(tokenId) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#861)
+	Event emitted after the call(s):
+	- ReceivedCarrot(tokenId,dna) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#862)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+HorseyPilot.voteOnProposal(bool) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1219-1247) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)((block.timestamp - currentProposal.timestamp) <= proposalLife) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1224)
+	- currentProposal.yay.length >= votingThreshold (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1229)
+	- currentProposal.nay.length >= votingThreshold (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1240)
+HorseyPilot._doProposal() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1282-1320) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentProposal.methodId == 0 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1284)
+	- currentProposal.methodId == 1 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1287)
+	- currentProposal.methodId == 2 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1290)
+	- currentProposal.methodId == 3 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1293)
+	- currentProposal.methodId == 4 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1296)
+	- currentProposal.parameter == 0 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1297)
+	- currentProposal.methodId == 5 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1307)
+	- currentProposal.methodId == 8 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1310)
+	- currentProposal.methodId == 9 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1315)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Void constructor called in HorseyToken.constructor(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#627-631):
+	- EthorseHelpers() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#628)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#void-constructor
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter HorseyExchange.setStables(address)._token (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#214) is not in mixedCase
+Struct EthorseRace.chronus_info (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#434-443) is not in CapWords
+Variable EthorseRace.winner_horse (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#451) is not in mixedCase
+Function EthorseHelpers.getall_horsesCount() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#483-485) is not in mixedCase
+Variable EthorseHelpers.all_horses (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#470) is not in mixedCase
+Parameter RoyalStablesInterface.getOwnedTokens(address).eth_address (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#554) is not in mixedCase
+Variable RoyalStablesInterface.carrot_credits (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#550) is not in mixedCase
+Parameter HorseyToken.getOwnedTokens(address).eth_address (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#705) is not in mixedCase
+Function HorseyToken.can_claim(address,address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#716-720) is not in mixedCase
+Parameter HorseyToken.can_claim(address,address).eth_address (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#716) is not in mixedCase
+Function HorseyToken._generate_special_horsey(address,address,bytes32) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#913-920) is not in mixedCase
+Parameter HorseyToken._generate_special_horsey(address,address,bytes32).eth_address (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#913) is not in mixedCase
+Constant HorseyPilot.votingThreshold (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1028) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HorseyPilot.proposalLife (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1032) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant HorseyPilot.proposalCooldown (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1036) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334):
+	External calls:
+	- sale.owner.transfer(sale.price) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#315)
+	State variables written after the call(s):
+	- delete market[tokenId] (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#321)
+Reentrancy in HorseyExchange.purchaseToken(uint256) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#298-334):
+	External calls:
+	- sale.owner.transfer(sale.price) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#315)
+	- msg.sender.transfer(msg.value.sub(totalToPay)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#330)
+	Event emitted after the call(s):
+	- HorseyPurchased(tokenId,msg.sender,totalToPay) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#333)
+Reentrancy in HorseyToken.renameHorsey(uint256,string) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#752-766):
+	External calls:
+	- msg.sender.transfer(msg.value.sub(renamingFee)) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#761)
+	Event emitted after the call(s):
+	- HorseyRenamed(tokenId,newName) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#765)
+Reentrancy in HorseyExchange.withdraw() (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#337-343):
+	External calls:
+	- owner.transfer(collectedFees) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#341)
+	State variables written after the call(s):
+	- collectedFees = 0 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#342)
+Reentrancy in HorseyPilot.withdrawCeo(address) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1160-1177):
+	External calls:
+	- destination.transfer(balance) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1174)
+	State variables written after the call(s):
+	- _cBalance[msg.sender] = 0 (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#1175)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+storeName(uint256,string) should be declared external:
+	- RoyalStablesInterface.storeName(uint256,string) (../sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol#555)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x2419455b836cd34e272fbb6d704422a96102b36c.sol analyzed (11 contracts with 100 detectors), 83 result(s) found

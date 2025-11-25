@@ -1,0 +1,225 @@
+'solc --version' running
+'solc /sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:134:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function EtherTanks() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:183:18: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require (this.balance >= _amount); // Checking if this contract has enought money to pay
+                 ^----------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:193:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventCashOut (msg.sender, _amount);
+        ^--------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:198:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventLogin (msg.sender, _hash);
+        ^----------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:214:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventUpgradeTank (msg.sender, _tankID, _upgradeChoice);
+        ^----------------------------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:228:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventTransfer (msg.sender, _receiver, _tankID);
+        ^--------------------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:248:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventTransferAction (msg.sender, _receiver, _tankID, _ActionType);
+        ^---------------------------------------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:267:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventAuction (msg.sender, _tankID, _startPrice, _finishPrice, _duration, now);
+        ^---------------------------------------------------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:293:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventBid (_tankID);
+        ^----------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:305:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventCancelAuction (_tankID);
+        ^--------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:312:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventProduct (newIdTankProduct-1, _name, _hull, _weapon, _price, _earning, _releaseTime, now);
+        ^-------------------------------------------------------------------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:354:9: Warning: Invoking events without "emit" prefix is deprecated.
+        EventBuyTank (msg.sender, _tankproductID, newIdTank-1);
+        ^----------------------------------------------------^
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol:452:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+
+
+EtherTanks.bid(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#271-294) performs a multiplication on the result of a division:
+	- currentPrice = currentAuction.startPrice - (((currentAuction.startPrice - currentAuction.finishPrice) / (currentAuction.duration)) * (now - currentAuction.startTime)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#275)
+EtherTanks.bid(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#271-294) performs a multiplication on the result of a division:
+	- marketFee = (currentPrice / 100) * 3 (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#284)
+EtherTanks.getCurrentPriceAuction(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#437-445) performs a multiplication on the result of a division:
+	- currentPrice = currentAuction.startPrice - (((currentAuction.startPrice - currentAuction.finishPrice) / (currentAuction.duration)) * (now - currentAuction.startTime)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#440)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+EtherTanks.cashOut(uint256) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#180-195) contains a tautology or contradiction:
+	- require(bool)(_amount >= 0) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#181)
+EtherTanks.upgradeTank(uint32,uint8) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#204-216) contains a tautology or contradiction:
+	- require(bool)(_upgradeChoice >= 0 && _upgradeChoice < 4) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#207)
+EtherTanks.sellTank(uint32,uint256,uint256,uint256) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#253-268) contains a tautology or contradiction:
+	- require(bool)(_startPrice > 0 && _finishPrice >= 0) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#258)
+EtherTanks.bid(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#271-294) contains a tautology or contradiction:
+	- require(bool)(currentPrice >= 0) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#280)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+EtherTanks.ChangeUpgradeMaster(address)._newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#119) lacks a zero-check on :
+		- UpgradeMaster = _newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#121)
+EtherTanks.ChangeTankSellMaster(address)._newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#124) lacks a zero-check on :
+		- TankSellMaster = _newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#126)
+EtherTanks.ChangeAuctionMaster(address)._newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#129) lacks a zero-check on :
+		- AuctionMaster = _newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#131)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+EtherTanks.cashOut(uint256) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#180-195) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_amount >= 0) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#181)
+	- require(bool)(_amount == uint256(uint128(_amount))) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#182)
+	- require(bool)(this.balance >= _amount) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#183)
+	- require(bool)(balances[msg.sender] >= _amount) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#184)
+	- _amount == 0 (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#185)
+EtherTanks.bid(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#271-294) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentPrice < currentAuction.finishPrice (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#277)
+	- require(bool)(currentPrice >= 0) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#280)
+	- require(bool)(msg.value >= currentPrice) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#281)
+EtherTanks.buyTank(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#323-356) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(tankProducts[_tankproductID].currentPrice > 0 && msg.value > 0) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#324)
+	- require(bool)(msg.value >= tankProducts[_tankproductID].currentPrice) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#325)
+	- require(bool)(tankProducts[_tankproductID].releaseTime <= now) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#326)
+	- msg.value > tankProducts[_tankproductID].currentPrice (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#330)
+EtherTanks.getCurrentPriceAuction(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#437-445) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentPrice < currentAuction.finishPrice (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#441)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+EtherTanks._transfer(uint32,address) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#220-230) compares to a boolean constant:
+	-require(bool)(tanks[_tankID].selling == false) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#224)
+EtherTanks._transferAction(uint32,address,uint8) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#233-250) compares to a boolean constant:
+	-require(bool)(tanks[_tankID].selling == false) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#237)
+EtherTanks.sellTank(uint32,uint256,uint256,uint256) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#253-268) compares to a boolean constant:
+	-require(bool)(tanks[_tankID].selling == false) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#256)
+EtherTanks.bid(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#271-294) compares to a boolean constant:
+	-require(bool)(tanks[_tankID].selling == true) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#273)
+EtherTanks.cancelAuction(uint32) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#297-306) compares to a boolean constant:
+	-require(bool)(tanks[_tankID].selling == true) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#299)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3
+	- LibrariesNotCallableFromPayableFunctions.
+It is used by:
+	- ^0.4.0 (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function EtherTanks.ChangeUpgradeMaster(address) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#119-122) is not in mixedCase
+Parameter EtherTanks.ChangeUpgradeMaster(address)._newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#119) is not in mixedCase
+Function EtherTanks.ChangeTankSellMaster(address) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#124-127) is not in mixedCase
+Parameter EtherTanks.ChangeTankSellMaster(address)._newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#124) is not in mixedCase
+Function EtherTanks.ChangeAuctionMaster(address) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#129-132) is not in mixedCase
+Parameter EtherTanks.ChangeAuctionMaster(address)._newMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#129) is not in mixedCase
+Parameter EtherTanks.cashOut(uint256)._amount (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#180) is not in mixedCase
+Parameter EtherTanks.login(string)._hash (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#197) is not in mixedCase
+Parameter EtherTanks.upgradeTank(uint32,uint8)._tankID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#204) is not in mixedCase
+Parameter EtherTanks.upgradeTank(uint32,uint8)._upgradeChoice (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#204) is not in mixedCase
+Function EtherTanks._transfer(uint32,address) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#220-230) is not in mixedCase
+Parameter EtherTanks._transfer(uint32,address)._tankID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#220) is not in mixedCase
+Parameter EtherTanks._transfer(uint32,address)._receiver (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#220) is not in mixedCase
+Function EtherTanks._transferAction(uint32,address,uint8) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#233-250) is not in mixedCase
+Parameter EtherTanks._transferAction(uint32,address,uint8)._tankID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#233) is not in mixedCase
+Parameter EtherTanks._transferAction(uint32,address,uint8)._receiver (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#233) is not in mixedCase
+Parameter EtherTanks._transferAction(uint32,address,uint8)._ActionType (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#233) is not in mixedCase
+Parameter EtherTanks.sellTank(uint32,uint256,uint256,uint256)._tankID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#253) is not in mixedCase
+Parameter EtherTanks.sellTank(uint32,uint256,uint256,uint256)._startPrice (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#253) is not in mixedCase
+Parameter EtherTanks.sellTank(uint32,uint256,uint256,uint256)._finishPrice (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#253) is not in mixedCase
+Parameter EtherTanks.sellTank(uint32,uint256,uint256,uint256)._duration (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#253) is not in mixedCase
+Parameter EtherTanks.bid(uint32)._tankID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#271) is not in mixedCase
+Parameter EtherTanks.cancelAuction(uint32)._tankID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#297) is not in mixedCase
+Parameter EtherTanks.newTankProduct(string,uint32,uint32,uint256,uint256,uint256)._name (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#309) is not in mixedCase
+Parameter EtherTanks.newTankProduct(string,uint32,uint32,uint256,uint256,uint256)._hull (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#309) is not in mixedCase
+Parameter EtherTanks.newTankProduct(string,uint32,uint32,uint256,uint256,uint256)._weapon (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#309) is not in mixedCase
+Parameter EtherTanks.newTankProduct(string,uint32,uint32,uint256,uint256,uint256)._price (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#309) is not in mixedCase
+Parameter EtherTanks.newTankProduct(string,uint32,uint32,uint256,uint256,uint256)._earning (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#309) is not in mixedCase
+Parameter EtherTanks.newTankProduct(string,uint32,uint32,uint256,uint256,uint256)._releaseTime (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#309) is not in mixedCase
+Parameter EtherTanks.newTankHull(uint32,uint32,uint8)._armor (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#315) is not in mixedCase
+Parameter EtherTanks.newTankHull(uint32,uint32,uint8)._speed (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#315) is not in mixedCase
+Parameter EtherTanks.newTankHull(uint32,uint32,uint8)._league (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#315) is not in mixedCase
+Parameter EtherTanks.newTankWeapon(uint32,uint32,uint32,uint8)._minDamage (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#319) is not in mixedCase
+Parameter EtherTanks.newTankWeapon(uint32,uint32,uint32,uint8)._maxDamage (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#319) is not in mixedCase
+Parameter EtherTanks.newTankWeapon(uint32,uint32,uint32,uint8)._attackSpeed (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#319) is not in mixedCase
+Parameter EtherTanks.newTankWeapon(uint32,uint32,uint32,uint8)._league (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#319) is not in mixedCase
+Parameter EtherTanks.buyTank(uint32)._tankproductID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#323) is not in mixedCase
+Parameter EtherTanks.getTankName(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#397) is not in mixedCase
+Parameter EtherTanks.getTankProduct(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#401) is not in mixedCase
+Parameter EtherTanks.getTankDetails(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#405) is not in mixedCase
+Parameter EtherTanks.getTankOwner(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#409) is not in mixedCase
+Parameter EtherTanks.getTankSell(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#413) is not in mixedCase
+Parameter EtherTanks.getTankTotalEarned(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#417) is not in mixedCase
+Parameter EtherTanks.getTankAuctionEntity(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#421) is not in mixedCase
+Parameter EtherTanks.getCurrentPrice(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#425) is not in mixedCase
+Parameter EtherTanks.getProductEarning(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#429) is not in mixedCase
+Parameter EtherTanks.getTankEarning(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#433) is not in mixedCase
+Parameter EtherTanks.getCurrentPriceAuction(uint32)._ID (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#437) is not in mixedCase
+Parameter EtherTanks.getPlayerBalance(address)._player (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#447) is not in mixedCase
+Variable EtherTanks.UpgradeMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#113) is not in mixedCase
+Variable EtherTanks.AuctionMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#114) is not in mixedCase
+Variable EtherTanks.TankSellMaster (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#115) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in EtherTanks.cashOut(uint256) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#180-195):
+	External calls:
+	- msg.sender.send(_amount) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#189)
+	State variables written after the call(s):
+	- balances[msg.sender] -= _amount (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#190)
+	Event emitted after the call(s):
+	- EventCashOut(msg.sender,_amount) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#193)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(LT-1,1,1,10000000000000000,100000000000000,now) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#167)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(LT-2,2,2,50000000000000000,500000000000000,now) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#168)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(MT-1,3,3,100000000000000000,1000000000000000,now) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#169)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(HT-1,4,4,500000000000000000,5000000000000000,now) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#170)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(SPG-1,5,5,500000000000000000,5000000000000000,now) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#171)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(MT-2,6,6,700000000000000000,7000000000000000,now + (60 * 60 * 2)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#172)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(HT-2,7,7,1500000000000000000,15000000000000000,now + (60 * 60 * 5)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#173)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(LT-3,8,8,300000000000000000,3000000000000000,now + (60 * 60 * 8)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#174)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(MT-3,9,9,1500000000000000000,15000000000000000,now + (60 * 60 * 24)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#175)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(SPG-2,10,10,2000000000000000000,20000000000000000,now + (60 * 60 * 24 * 2)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#176)
+EtherTanks.EtherTanks() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#134-178) uses literals with too many digits:
+	- newTankProduct(HT-3,11,11,2500000000000000000,25000000000000000,now + (60 * 60 * 24 * 3)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#177)
+EtherTanks.newTankType() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#359-375) uses literals with too many digits:
+	- newTankProduct(Tank,uint32(createNewTankHull),uint32(createNewTankWeapon),200000000000000000,3000000000000000,now + (60 * 60)) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#373)
+EtherTanks.slitherConstructorConstantVariables() (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#3-462) uses literals with too many digits:
+	- upgradePrice = 50000000000000000 (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#395)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+login(string) should be declared external:
+	- EtherTanks.login(string) (../sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol#197-200)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xca5088449b96c225801ced8e9efdcae1e0c92a3d.sol analyzed (1 contracts with 100 detectors), 88 result(s) found

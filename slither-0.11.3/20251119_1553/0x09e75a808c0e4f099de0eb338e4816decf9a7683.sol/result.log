@@ -1,0 +1,344 @@
+'solc --version' running
+'solc /sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:14:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:32:9: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+        suicide(msg.sender);
+        ^-----------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:143:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _symbol, _value, _reference);
+        ^-----------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:147:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Issue(_symbol, _value, _by);
+        ^-------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:151:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Revoke(_symbol, _value, _by);
+        ^--------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:155:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnershipChange(_from, _to, _symbol);
+        ^----------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:159:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approve(_from, _spender, _symbol, _value);
+        ^---------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:163:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Recovery(_from, _to, _by);
+        ^-----------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:167:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Error(_errorCode);
+        ^---------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:14:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:31:5: Warning: No visibility specified. Defaulting to "public". 
+    function destroy() onlyContractOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:98:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply() constant returns (uint256 supply);
+    ^-------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:99:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _owner) constant returns (uint256 balance);
+    ^--------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:100:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:101:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:102:5: Warning: No visibility specified. Defaulting to "public". 
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:103:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+    ^----------------------------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:112:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdrawnTokens(address[] tokens, address _to) onlyContractOwner returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:142:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitTransfer(address _from, address _to, bytes32 _symbol, uint _value, string _reference) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:146:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitIssue(bytes32 _symbol, uint _value, address _by) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:150:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitRevoke(bytes32 _symbol, uint _value, address _by) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:154:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitOwnershipChange(address _from, address _to, bytes32 _symbol) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:158:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitApprove(address _from, address _spender, bytes32 _symbol, uint _value) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:162:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitRecovery(address _from, address _to, address _by) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:166:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitError(uint _errorCode) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:199:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitTransfer(address _from, address _to, uint _value);
+    ^-------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:200:5: Warning: No visibility specified. Defaulting to "public". 
+    function emitApprove(address _from, address _spender, uint _value);
+    ^-----------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:205:5: Warning: No visibility specified. Defaulting to "public". 
+    function assetOwnerAdded(bytes32 _symbol, address _platform, address _owner);
+    ^---------------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:206:5: Warning: No visibility specified. Defaulting to "public". 
+    function assetOwnerRemoved(bytes32 _symbol, address _platform, address _owner);
+    ^-----------------------------------------------------------------------------^
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:368:5: Warning: No visibility specified. Defaulting to "public". 
+    function addPartOwner(address _partowner) onlyContractOwner returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:381:5: Warning: No visibility specified. Defaulting to "public". 
+    function removePartOwner(address _partowner) onlyContractOwner returns (uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:395:5: Warning: No visibility specified. Defaulting to "public". 
+    function setupEventsHistory(address _eventsHistory) onlyEventsAdmin returns (uint errorCode) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:409:5: Warning: No visibility specified. Defaulting to "public". 
+    function setupEventsAdmin(address _eventsAdmin) onlyContractOwner returns (uint errorCode) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:438:5: Warning: No visibility specified. Defaulting to "public". 
+    function isCreated(bytes32 _symbol) constant returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:449:5: Warning: No visibility specified. Defaulting to "public". 
+    function baseUnit(bytes32 _symbol) constant returns(uint8) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:460:5: Warning: No visibility specified. Defaulting to "public". 
+    function name(bytes32 _symbol) constant returns(string) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:471:5: Warning: No visibility specified. Defaulting to "public". 
+    function description(bytes32 _symbol) constant returns(string) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:482:5: Warning: No visibility specified. Defaulting to "public". 
+    function isReissuable(bytes32 _symbol) constant returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:493:5: Warning: No visibility specified. Defaulting to "public". 
+    function owner(bytes32 _symbol) constant returns(address) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:505:5: Warning: No visibility specified. Defaulting to "public". 
+    function isOwner(address _owner, bytes32 _symbol) constant returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:517:5: Warning: No visibility specified. Defaulting to "public". 
+    function hasAssetRights(address _owner, bytes32 _symbol) constant returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:529:5: Warning: No visibility specified. Defaulting to "public". 
+    function totalSupply(bytes32 _symbol) constant returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:541:5: Warning: No visibility specified. Defaulting to "public". 
+    function balanceOf(address _holder, bytes32 _symbol) constant returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:553:5: Warning: No visibility specified. Defaulting to "public". 
+    function _balanceOf(uint _holderId, bytes32 _symbol) constant returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:564:5: Warning: No visibility specified. Defaulting to "public". 
+    function _address(uint _holderId) constant returns(address) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:612:5: Warning: No visibility specified. Defaulting to "public". 
+    function setProxy(address _proxyAddress, bytes32 _symbol) onlyOneOfContractOwners returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:692:5: Warning: No visibility specified. Defaulting to "public". 
+    function proxyTransferWithReference(address _to, uint _value, bytes32 _symbol, string _reference, address _sender) onlyProxy(_symbol) returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:720:5: Warning: No visibility specified. Defaulting to "public". 
+    function getHolderId(address _holder) constant returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:905:5: Warning: No visibility specified. Defaulting to "public". 
+    function isTrusted(address _from, address _to) constant returns(bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:916:5: Warning: No visibility specified. Defaulting to "public". 
+    function trust(address _to) returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:1039:5: Warning: No visibility specified. Defaulting to "public". 
+    function allowance(address _from, address _spender, bytes32 _symbol) constant returns(uint) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:173:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:179:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:186:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol:191:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Object.withdrawnTokens(address[],address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#112-120) ignores return value by ERC20Interface(token).transfer(_to,balance) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#117)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Owned.transferContractOwnership(address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#78-89) should emit an event for: 
+	- contractOwner = _to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#87) 
+	- contractOwner = _to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#87) 
+	- contractOwner = _to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#87) 
+ChronoBankPlatform.setupEventsAdmin(address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#409-412) should emit an event for: 
+	- eventsAdmin = _eventsAdmin (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#410) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+ChronoBankPlatform.setupEventsHistory(address)._eventsHistory (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#395) lacks a zero-check on :
+		- eventsHistory = _eventsHistory (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#396)
+ChronoBankPlatform.setupEventsAdmin(address)._eventsAdmin (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#409) lacks a zero-check on :
+		- eventsAdmin = _eventsAdmin (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#410)
+ChronoBankPlatform.setupAssetOwningListener(address)._listener (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#417) lacks a zero-check on :
+		- owningListener = _listener (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#418)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Modifier Owned.onlyContractOwner() (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#21-25) does not always execute _; or revert
+Modifier ChronoBankPlatform.onlyOwner(bytes32) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#309-313) does not always execute _; or revert
+Modifier ChronoBankPlatform.onlyEventsAdmin() (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#318-322) does not always execute _; or revert
+Modifier ChronoBankPlatform.onlyOneOfOwners(bytes32) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#327-331) does not always execute _; or revert
+Modifier ChronoBankPlatform.onlyOneOfContractOwners() (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#336-340) does not always execute _; or revert
+Modifier ChronoBankPlatform.onlyProxy(bytes32) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#345-349) does not always execute _; or revert
+Modifier ChronoBankPlatform.checkTrust(address,address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#354-358) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+Object.withdrawnTokens(address[],address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#112-120) has external calls inside a loop: balance = ERC20Interface(token).balanceOf(this) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#115)
+Object.withdrawnTokens(address[],address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#112-120) has external calls inside a loop: ERC20Interface(token).transfer(_to,balance) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#117)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+MultiEventsHistoryAdapter._self() (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#128-130) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Deprecated standard detected suicide(address)(msg.sender) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#32):
+	- Usage of "suicide()" should be replaced with "selfdestruct()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Owned.changeContractOwnership(address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#44) is not in mixedCase
+Parameter Owned.transferContractOwnership(address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#78) is not in mixedCase
+Parameter Object.withdrawnTokens(address[],address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#112) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitTransfer(address,address,bytes32,uint256,string)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#142) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitTransfer(address,address,bytes32,uint256,string)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#142) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitTransfer(address,address,bytes32,uint256,string)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#142) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitTransfer(address,address,bytes32,uint256,string)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#142) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitTransfer(address,address,bytes32,uint256,string)._reference (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#142) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitIssue(bytes32,uint256,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#146) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitIssue(bytes32,uint256,address)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#146) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitIssue(bytes32,uint256,address)._by (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#146) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitRevoke(bytes32,uint256,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#150) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitRevoke(bytes32,uint256,address)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#150) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitRevoke(bytes32,uint256,address)._by (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#150) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitOwnershipChange(address,address,bytes32)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#154) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitOwnershipChange(address,address,bytes32)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#154) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitOwnershipChange(address,address,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#154) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitApprove(address,address,bytes32,uint256)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#158) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitApprove(address,address,bytes32,uint256)._spender (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#158) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitApprove(address,address,bytes32,uint256)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#158) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitApprove(address,address,bytes32,uint256)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#158) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitRecovery(address,address,address)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#162) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitRecovery(address,address,address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#162) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitRecovery(address,address,address)._by (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#162) is not in mixedCase
+Parameter ChronoBankPlatformEmitter.emitError(uint256)._errorCode (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#166) is not in mixedCase
+Parameter ChronoBankPlatform.addPartOwner(address)._partowner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#368) is not in mixedCase
+Parameter ChronoBankPlatform.removePartOwner(address)._partowner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#381) is not in mixedCase
+Parameter ChronoBankPlatform.setupEventsHistory(address)._eventsHistory (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#395) is not in mixedCase
+Parameter ChronoBankPlatform.setupEventsAdmin(address)._eventsAdmin (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#409) is not in mixedCase
+Parameter ChronoBankPlatform.setupAssetOwningListener(address)._listener (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#417) is not in mixedCase
+Parameter ChronoBankPlatform.isCreated(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#438) is not in mixedCase
+Parameter ChronoBankPlatform.baseUnit(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#449) is not in mixedCase
+Parameter ChronoBankPlatform.name(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#460) is not in mixedCase
+Parameter ChronoBankPlatform.description(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#471) is not in mixedCase
+Parameter ChronoBankPlatform.isReissuable(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#482) is not in mixedCase
+Parameter ChronoBankPlatform.owner(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#493) is not in mixedCase
+Parameter ChronoBankPlatform.isOwner(address,bytes32)._owner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#505) is not in mixedCase
+Parameter ChronoBankPlatform.isOwner(address,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#505) is not in mixedCase
+Parameter ChronoBankPlatform.hasAssetRights(address,bytes32)._owner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#517) is not in mixedCase
+Parameter ChronoBankPlatform.hasAssetRights(address,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#517) is not in mixedCase
+Parameter ChronoBankPlatform.totalSupply(bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#529) is not in mixedCase
+Parameter ChronoBankPlatform.balanceOf(address,bytes32)._holder (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#541) is not in mixedCase
+Parameter ChronoBankPlatform.balanceOf(address,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#541) is not in mixedCase
+Function ChronoBankPlatform._balanceOf(uint256,bytes32) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#553-555) is not in mixedCase
+Parameter ChronoBankPlatform._balanceOf(uint256,bytes32)._holderId (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#553) is not in mixedCase
+Parameter ChronoBankPlatform._balanceOf(uint256,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#553) is not in mixedCase
+Function ChronoBankPlatform._address(uint256) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#564-566) is not in mixedCase
+Parameter ChronoBankPlatform._address(uint256)._holderId (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#564) is not in mixedCase
+Parameter ChronoBankPlatform.addAssetPartOwner(bytes32,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#577) is not in mixedCase
+Parameter ChronoBankPlatform.addAssetPartOwner(bytes32,address)._partowner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#577) is not in mixedCase
+Parameter ChronoBankPlatform.removeAssetPartOwner(bytes32,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#594) is not in mixedCase
+Parameter ChronoBankPlatform.removeAssetPartOwner(bytes32,address)._partowner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#594) is not in mixedCase
+Parameter ChronoBankPlatform.setProxy(address,bytes32)._proxyAddress (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#612) is not in mixedCase
+Parameter ChronoBankPlatform.setProxy(address,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#612) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferWithReference(address,uint256,bytes32,string,address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#692) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferWithReference(address,uint256,bytes32,string,address)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#692) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferWithReference(address,uint256,bytes32,string,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#692) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferWithReference(address,uint256,bytes32,string,address)._reference (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#692) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferWithReference(address,uint256,bytes32,string,address)._sender (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#692) is not in mixedCase
+Parameter ChronoBankPlatform.getHolderId(address)._holder (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#720) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool)._name (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool)._description (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool)._baseUnit (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool)._isReissuable (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._name (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._description (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._baseUnit (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._isReissuable (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool,address)._account (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#776) is not in mixedCase
+Parameter ChronoBankPlatform.reissueAsset(bytes32,uint256)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#810) is not in mixedCase
+Parameter ChronoBankPlatform.reissueAsset(bytes32,uint256)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#810) is not in mixedCase
+Parameter ChronoBankPlatform.revokeAsset(bytes32,uint256)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#843) is not in mixedCase
+Parameter ChronoBankPlatform.revokeAsset(bytes32,uint256)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#843) is not in mixedCase
+Parameter ChronoBankPlatform.changeOwnership(bytes32,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#875) is not in mixedCase
+Parameter ChronoBankPlatform.changeOwnership(bytes32,address)._newOwner (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#875) is not in mixedCase
+Parameter ChronoBankPlatform.isTrusted(address,address)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#905) is not in mixedCase
+Parameter ChronoBankPlatform.isTrusted(address,address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#905) is not in mixedCase
+Parameter ChronoBankPlatform.trust(address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#916) is not in mixedCase
+Parameter ChronoBankPlatform.distrust(address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#938) is not in mixedCase
+Parameter ChronoBankPlatform.recover(address,address)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#955) is not in mixedCase
+Parameter ChronoBankPlatform.recover(address,address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#955) is not in mixedCase
+Parameter ChronoBankPlatform.proxyApprove(address,uint256,bytes32,address)._spender (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1026) is not in mixedCase
+Parameter ChronoBankPlatform.proxyApprove(address,uint256,bytes32,address)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1026) is not in mixedCase
+Parameter ChronoBankPlatform.proxyApprove(address,uint256,bytes32,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1026) is not in mixedCase
+Parameter ChronoBankPlatform.proxyApprove(address,uint256,bytes32,address)._sender (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1026) is not in mixedCase
+Parameter ChronoBankPlatform.allowance(address,address,bytes32)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1039) is not in mixedCase
+Parameter ChronoBankPlatform.allowance(address,address,bytes32)._spender (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1039) is not in mixedCase
+Parameter ChronoBankPlatform.allowance(address,address,bytes32)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1039) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address)._from (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address)._to (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address)._value (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address)._symbol (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address)._reference (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070) is not in mixedCase
+Parameter ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address)._sender (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+withdrawnTokens(address[],address) should be declared external:
+	- Object.withdrawnTokens(address[],address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#112-120)
+emitTransfer(address,address,bytes32,uint256,string) should be declared external:
+	- ChronoBankPlatformEmitter.emitTransfer(address,address,bytes32,uint256,string) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#142-144)
+proxyTransferWithReference(address,uint256,bytes32,string,address) should be declared external:
+	- ChronoBankPlatform.proxyTransferWithReference(address,uint256,bytes32,string,address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#692-694)
+issueAsset(bytes32,uint256,string,string,uint8,bool) should be declared external:
+	- ChronoBankPlatform.issueAsset(bytes32,uint256,string,string,uint8,bool) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#756-758)
+proxyTransferFromWithReference(address,address,uint256,bytes32,string,address) should be declared external:
+	- ChronoBankPlatform.proxyTransferFromWithReference(address,address,uint256,bytes32,string,address) (../sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol#1070-1072)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x09e75a808c0e4f099de0eb338e4816decf9a7683.sol analyzed (9 contracts with 100 detectors), 122 result(s) found

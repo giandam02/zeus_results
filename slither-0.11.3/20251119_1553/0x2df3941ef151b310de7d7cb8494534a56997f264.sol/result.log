@@ -1,0 +1,204 @@
+'solc --version' running
+'solc /sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+LotteryData.getRandomWallet() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#178-182) uses a weak PRNG: "result = uint256(keccak256()(abi.encodePacked(now,randNonce,blockhash(uint256)(block.number - 1)))) % 3 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#179)" 
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a weak PRNG: "dilemma = uint256(keccak256()(abi.encodePacked(now,winner,blockhash(uint256)(block.number - 1)))) % 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#195)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+LotteryData._distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#229-239) performs a multiplication on the result of a division:
+	- percents = playersBets[wallets[winner]][players[wallets[winner]][i]].mul(10000).div(totalBets[wallets[winner]]) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#236)
+	- deposit(players[wallets[winner]][i],totalBetsWithoutCommission.mul(percents).div(10000)) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#237)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a dangerous strict equality:
+	- winner == 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#196)
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a dangerous strict equality:
+	- dilemma == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#197)
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a dangerous strict equality:
+	- winner == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#205)
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a dangerous strict equality:
+	- dilemma == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#206)
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a dangerous strict equality:
+	- winner == 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#214)
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses a dangerous strict equality:
+	- dilemma == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#215)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in LotteryData._fundriser() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#184-188):
+	External calls:
+	- fund = fund.add(wallet_0.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#185)
+	- fund = fund.add(wallet_1.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#186)
+	State variables written after the call(s):
+	- fund = fund.add(wallet_1.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#186)
+	LotteryData.fund (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#126) can be used in cross function reentrancies:
+	- LotteryData._collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#241-253)
+	- LotteryData._distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#229-239)
+	- LotteryData._fundriser() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#184-188)
+	- LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288)
+Reentrancy in LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288):
+	External calls:
+	- fund = _fundriser() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#265)
+		- fund = fund.add(wallet_0.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#185)
+		- fund = fund.add(wallet_1.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#186)
+		- fund.add(wallet_2.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#187)
+	State variables written after the call(s):
+	- finishTime = finishTime.add(roundTime) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#278)
+	LotteryData.finishTime (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#116) can be used in cross function reentrancies:
+	- LotteryData.constructor() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#147-152)
+	- LotteryData.finishTime (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#116)
+	- LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288)
+	- _collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#273)
+		- fund = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#242)
+	LotteryData.fund (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#126) can be used in cross function reentrancies:
+	- LotteryData._collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#241-253)
+	- LotteryData._distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#229-239)
+	- LotteryData._fundriser() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#184-188)
+	- LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288)
+	- _collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#273)
+		- participators = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#243)
+	LotteryData.participators (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#121) can be used in cross function reentrancies:
+	- LotteryData._collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#241-253)
+	- LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288)
+	- participators = participators.add(1) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#284)
+	LotteryData.participators (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#121) can be used in cross function reentrancies:
+	- LotteryData._collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#241-253)
+	- LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Wallet.setMinPayment(uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#79-81) should emit an event for: 
+	- minPaymnent = value (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#80) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288):
+	External calls:
+	- fund = _fundriser() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#265)
+		- fund = fund.add(wallet_0.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#185)
+		- fund = fund.add(wallet_1.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#186)
+		- fund.add(wallet_2.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#187)
+	State variables written after the call(s):
+	- _distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#271)
+		- _deposits[payee] = _deposits[payee].add(amount) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#168)
+	- _distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#271)
+		- commission = fund.mul(15).div(100) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#231)
+	- winner = _randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#269)
+		- dilemma = uint256(keccak256()(abi.encodePacked(now,winner,blockhash(uint256)(block.number - 1)))) % 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#195)
+	- _logger(wallets[winner],fund) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#275)
+		- games = games + 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#256)
+	- _logger(wallets[winner],fund) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#275)
+		- gamesLog[games].winner = _winner (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#257)
+		- gamesLog[games].time = now (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#258)
+	- _collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#273)
+		- players[wallets[j]][k] = address(0x0) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#248)
+	- players[msg.sender][totalPlayers[msg.sender]] = player (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#282)
+	- _collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#273)
+		- playersBets[wallets[j]][players[wallets[j]][k]] = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#247)
+	- playersBets[msg.sender][player] = playersBets[msg.sender][player].add(amount) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#286)
+	- winner = _randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#269)
+		- randNonce = randNonce.add(result.add(2)) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#180)
+	- _collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#273)
+		- totalBets[wallets[0]] = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#244)
+		- totalBets[wallets[j]] = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#250)
+	- totalBets[msg.sender] = totalBets[msg.sender].add(amount) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#287)
+	- _distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#271)
+		- totalBetsWithoutCommission = fund.sub(commission) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#232)
+	- _collector() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#273)
+		- totalPlayers[wallets[j]] = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#251)
+	- totalPlayers[msg.sender] = totalPlayers[msg.sender].add(1) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#283)
+	- winner = _randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#269)
+		- winner = getRandomWallet() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#192)
+		- winner = winner_2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#223)
+		- winner = winner_1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#223)
+	- winner = _randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#269)
+		- winner_1 = 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#198)
+		- winner_1 = 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#201)
+		- winner_1 = 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#207)
+		- winner_1 = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#210)
+		- winner_1 = 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#216)
+		- winner_1 = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#219)
+	- winner = _randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#269)
+		- winner_2 = 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#199)
+		- winner_2 = 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#202)
+		- winner_2 = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#208)
+		- winner_2 = 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#211)
+		- winner_2 = 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#217)
+		- winner_2 = 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#220)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288):
+	External calls:
+	- fund = _fundriser() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#265)
+		- fund = fund.add(wallet_0.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#185)
+		- fund = fund.add(wallet_1.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#186)
+		- fund.add(wallet_2.finishDay()) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#187)
+	Event emitted after the call(s):
+	- Deposited(payee,amount) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#169)
+		- _distribute() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#271)
+	- WinnerWallet(_winner,_fund) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#259)
+		- _logger(wallets[winner],fund) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#275)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+LotteryData._randomizer() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#190-227) uses timestamp for comparisons
+	Dangerous comparisons:
+	- winner == 0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#196)
+	- dilemma == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#197)
+	- winner == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#205)
+	- dilemma == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#206)
+	- winner == 2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#214)
+	- dilemma == 1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#215)
+LotteryData.participate(address,uint256) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#262-288) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= finishTime || participators >= max_participators (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#263)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#5) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#5) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#14) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#14) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#20) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#20) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#26) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#26) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#61) is not in mixedCase
+Struct LotteryData.wins (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#140-143) is not in CapWords
+Parameter LotteryData.paymentValidator(address,uint256)._payee (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#300) is not in mixedCase
+Parameter LotteryData.paymentValidator(address,uint256)._amount (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#300) is not in mixedCase
+Variable LotteryData.wallet_0 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#112) is not in mixedCase
+Variable LotteryData.wallet_1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#113) is not in mixedCase
+Variable LotteryData.wallet_2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#114) is not in mixedCase
+Constant LotteryData.roundTime (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#117) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable LotteryData.max_participators (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#120) is not in mixedCase
+Variable LotteryData.winner_1 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#124) is not in mixedCase
+Variable LotteryData.winner_2 (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#125) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in LotteryData.withdraw() (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#293-298):
+	External calls:
+	- msg.sender.transfer(payment) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#296)
+	Event emitted after the call(s):
+	- Withdrawn(msg.sender,payment) (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#297)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+LotteryData.max_participators (../sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol#120) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x2df3941ef151b310de7d7cb8494534a56997f264.sol analyzed (4 contracts with 100 detectors), 39 result(s) found

@@ -1,0 +1,404 @@
+'solc --version' running
+'solc /sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Play0x_LottoBall.sendFunds(address,uint256,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#811-817) sends eth to arbitrary user
+	Dangerous calls:
+	- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#555)
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,totalTokenAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#556)
+	- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#565)
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#566)
+	External calls sending eth:
+	- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+		- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+	State variables written after the call(s):
+	- bet.amount = 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#580)
+	Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206) can be used in cross function reentrancies:
+	- Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206)
+	- Play0x_LottoBall.clearProcessedBet(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#797-808)
+	- Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424-444)
+	- Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446-466)
+	- Play0x_LottoBall.refundBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#728-755)
+	- Play0x_LottoBall.refundTokenBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#757-785)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- jackpotSize = jackpotSize.add(uint256(combinationParameter[uint8(SettleParam.jackpotFee)])) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#584)
+	Play0x_LottoBall.jackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#157) can be used in cross function reentrancies:
+	- Play0x_LottoBall.getContractInformation() (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#377-403)
+	- Play0x_LottoBall.jackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#157)
+	- Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- Play0x_LottoBall.withdrawFunds(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#330-338)
+	- tokenJackpotSize = tokenJackpotSize.add(uint256(combinationParameter[uint8(SettleParam.jackpotFee)])) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#586)
+	Play0x_LottoBall.tokenJackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#158) can be used in cross function reentrancies:
+	- Play0x_LottoBall.getContractInformation() (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#377-403)
+	- Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- Play0x_LottoBall.tokenJackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#158)
+	- Play0x_LottoBall.withdrawToken(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#341-350)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+ERC20 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#139-147) has incorrect ERC20 function interface:ERC20.transfer(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#144)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses a dangerous strict equality:
+	- (one ^ 0xF) == 0 && (two ^ 0xF) == 0 && (three ^ 0xF) == 0 && (four ^ 0xF) == 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#706)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446-466):
+	External calls:
+	- require(bool)(lockedTokenInBets <= ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#458)
+	State variables written after the call(s):
+	- bet.amount = _amount (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#461)
+	Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206) can be used in cross function reentrancies:
+	- Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206)
+	- Play0x_LottoBall.clearProcessedBet(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#797-808)
+	- Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424-444)
+	- Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446-466)
+	- Play0x_LottoBall.refundBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#728-755)
+	- Play0x_LottoBall.refundTokenBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#757-785)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- bet.placeBlockNumber = uint40(block.number) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#462)
+	Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206) can be used in cross function reentrancies:
+	- Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206)
+	- Play0x_LottoBall.clearProcessedBet(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#797-808)
+	- Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424-444)
+	- Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446-466)
+	- Play0x_LottoBall.refundBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#728-755)
+	- Play0x_LottoBall.refundTokenBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#757-785)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- bet.gambler = _playerAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#463)
+	Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206) can be used in cross function reentrancies:
+	- Play0x_LottoBall.bets (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#206)
+	- Play0x_LottoBall.clearProcessedBet(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#797-808)
+	- Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424-444)
+	- Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446-466)
+	- Play0x_LottoBall.refundBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#728-755)
+	- Play0x_LottoBall.refundTokenBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#757-785)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	State variables written after the call(s):
+	- jackpotSize = uint128(jackpotSize.sub(totalJackpotWin)) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#534)
+	Play0x_LottoBall.jackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#157) can be used in cross function reentrancies:
+	- Play0x_LottoBall.getContractInformation() (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#377-403)
+	- Play0x_LottoBall.jackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#157)
+	- Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- Play0x_LottoBall.withdrawFunds(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#330-338)
+	- tokenJackpotSize = uint128(tokenJackpotSize.sub(totalJackpotWin)) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#541)
+	Play0x_LottoBall.tokenJackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#158) can be used in cross function reentrancies:
+	- Play0x_LottoBall.getContractInformation() (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#377-403)
+	- Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646)
+	- Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588)
+	- Play0x_LottoBall.tokenJackpotSize (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#158)
+	- Play0x_LottoBall.withdrawToken(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#341-350)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32).two (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#650) is a local variable never initialized
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32).four (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#652) is a local variable never initialized
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32).three (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#651) is a local variable never initialized
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32).one (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#649) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32).jackpo_Mask (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#655) is written in both
+	jackpo_Mask = jackpo_Mask << 4 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#689)
+	jackpo_Mask = 0xF000000000000000000000000000000000000000000000000000000000000000 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#692)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#write-after-write
+
+Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270-284) should emit an event for: 
+	- manager = _manager (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#271) 
+	- manager = _manager (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#271) 
+	- secretSigner = _secretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#272) 
+Play0x_LottoBall.setSecretSigner(address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#313-315) should emit an event for: 
+	- secretSigner = newSecretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#314) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270-284) should emit an event for: 
+	- MIN_BET = _MIN_BET (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#275) 
+	- MAX_BET = _MAX_BET (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#276) 
+	- maxProfit = _maxProfit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#277) 
+	- maxTokenProfit = _maxTokenProfit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#278) 
+	- MAX_AMOUNT = _MAX_AMOUNT (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#279) 
+	- platformFeePercentage = _platformFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#280) 
+	- jackpotFeePercentage = _jackpotFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#281) 
+	- ERC20rewardMultiple = _ERC20rewardMultiple (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#282) 
+Play0x_LottoBall.setMaxProfit(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#324-327) should emit an event for: 
+	- maxProfit = _maxProfit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#326) 
+Play0x_LottoBall.updateMIN_BET(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#841-843) should emit an event for: 
+	- MIN_BET = _uintNumber (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#842) 
+Play0x_LottoBall.updateMAX_BET(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#845-847) should emit an event for: 
+	- MAX_BET = _uintNumber (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#846) 
+Play0x_LottoBall.updateMAX_AMOUNT(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#849-851) should emit an event for: 
+	- MAX_AMOUNT = _uintNumber (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#850) 
+Play0x_LottoBall.updatePlatformFeePercentage(uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#865-867) should emit an event for: 
+	- platformFeePercentage = _platformFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#866) 
+Play0x_LottoBall.updateJackpotFeePercentage(uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#869-871) should emit an event for: 
+	- jackpotFeePercentage = _jackpotFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#870) 
+Play0x_LottoBall.updateERC20rewardMultiple(uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#873-875) should emit an event for: 
+	- ERC20rewardMultiple = _ERC20rewardMultiple (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#874) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._manager (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) lacks a zero-check on :
+		- manager = _manager (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#271)
+Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._secretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) lacks a zero-check on :
+		- secretSigner = _secretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#272)
+Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._erc20tokenAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) lacks a zero-check on :
+		- ERC20ContractAddres = _erc20tokenAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#273)
+Play0x_LottoBall.setSecretSigner(address).newSecretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#313) lacks a zero-check on :
+		- secretSigner = newSecretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#314)
+Play0x_LottoBall.setTokenAddress(address)._tokenAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#318) lacks a zero-check on :
+		- ERC20ContractAddres = _tokenAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#319)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646) has external calls inside a loop: ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	Calls stack containing the loop:
+		Play0x_LottoBall.settleBet(uint256[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,totalTokenAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#556)
+	- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#565)
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#566)
+	External calls sending eth:
+	- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+		- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+	State variables written after the call(s):
+	- lockedInBets = lockedInBets.sub(combinationParameter[uint8(SettleParam.PossibleWinAmount)]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#574)
+	- lockedTokenInBets = lockedTokenInBets.sub(combinationParameter[uint8(SettleParam.PossibleWinAmount)]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#576)
+Reentrancy in Play0x_LottoBall.withdrawAlltokenFunds(address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#363-367):
+	External calls:
+	- ERC20(ERC20ContractAddres).transfer(beneficiary,ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#364)
+	State variables written after the call(s):
+	- lockedTokenInBets = 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#365)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446-466):
+	External calls:
+	- require(bool)(lockedTokenInBets <= ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#458)
+	Event emitted after the call(s):
+	- PlaceBetLog(_playerAddress,_amount,uint8(placParameter[uint8(PlaceParam.RotateTime)])) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#465)
+Reentrancy in Play0x_LottoBall.refundTokenBet(uint256,uint8) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#757-785):
+	External calls:
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#783)
+	Event emitted after the call(s):
+	- TokenPayment(bet.gambler,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#784)
+Reentrancy in Play0x_LottoBall.sendTokenFundsToManager(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#827-830):
+	External calls:
+	- ERC20(ERC20ContractAddres).transfer(manager,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#828)
+	Event emitted after the call(s):
+	- TokenPayment(manager,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#829)
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	Event emitted after the call(s):
+	- BetRelatedData(bet.gambler,bet.amount,totalAmount,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)]))),uint8(combinationParameter[uint8(SettleParam.Uplimit)]),uint8(combinationParameter[uint8(SettleParam.RotateTime)])) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#544)
+	- JackpotBouns(bet.gambler,totalJackpotWin) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#532)
+	- TokenJackpotBouns(bet.gambler,totalJackpotWin) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#539)
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	External calls sending eth:
+	- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+		- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+	Event emitted after the call(s):
+	- FailedPayment(beneficiary,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#815)
+		- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+	- Payment(beneficiary,successLogAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#813)
+		- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#555)
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,totalTokenAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#556)
+	External calls sending eth:
+	- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+		- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+	Event emitted after the call(s):
+	- TokenPayment(bet.gambler,totalTokenAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#557)
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- (totalAmount,totalTokenAmount,totalJackpotWin) = runRotateTime(combinationParameter,_entropy,keccak256()(abi.encodePacked(uint256(_entropy),blockhash(uint256)(combinationParameter[uint8(SettleParam.LuckySeed)])))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#527)
+		- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#625)
+	- ERC20(ERC20ContractAddres).balanceOf(address(this)) > 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#565)
+	- ERC20(ERC20ContractAddres).transfer(bet.gambler,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#566)
+	Event emitted after the call(s):
+	- TokenPayment(bet.gambler,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#567)
+Reentrancy in Play0x_LottoBall.withdrawAlltokenFunds(address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#363-367):
+	External calls:
+	- ERC20(ERC20ContractAddres).transfer(beneficiary,ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#364)
+	- TokenPayment(beneficiary,ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#366)
+	Event emitted after the call(s):
+	- TokenPayment(beneficiary,ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#366)
+Reentrancy in Play0x_LottoBall.withdrawToken(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#341-350):
+	External calls:
+	- require(bool)(withdrawAmount <= ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#342)
+	- require(bool)(safetyAmount <= ERC20(ERC20ContractAddres).balanceOf(address(this))) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#346)
+	- ERC20(ERC20ContractAddres).transfer(beneficiary,withdrawAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#348)
+	Event emitted after the call(s):
+	- TokenPayment(beneficiary,withdrawAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#349)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646) uses timestamp for comparisons
+	Dangerous comparisons:
+	- uint256(tmp_entropy) < uint256(combinationParameter[uint8(SettleParam.Uplimit)]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#613)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (one ^ 0xF) == 0 && (two ^ 0xF) == 0 && (three ^ 0xF) == 0 && (four ^ 0xF) == 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#706)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646) compares to a boolean constant:
+	-isGetJackpot == false (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#634)
+Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646) compares to a boolean constant:
+	-isGetJackpot == true && combinationParameter[uint8(SettleParam.CurrencyType)] == 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#639)
+Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646) compares to a boolean constant:
+	-isGetJackpot == true && combinationParameter[uint8(SettleParam.CurrencyType)] == 1 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#642)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588) has a high cyclomatic complexity (14).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract Play0x_LottoBall (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#150-877) is not in CapWords
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._manager (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._secretSigner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._erc20tokenAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._MIN_BET (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._MAX_BET (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._maxProfit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._maxTokenProfit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._MAX_AMOUNT (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._platformFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._jackpotFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._ERC20rewardMultiple (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.initialParameter(address,address,address,uint256,uint256,uint256,uint256,uint256,uint8,uint8,uint8,uint32[])._withdrawalMode (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#270) is not in mixedCase
+Parameter Play0x_LottoBall.approveNextOwner(address)._nextOwner (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#287) is not in mixedCase
+Parameter Play0x_LottoBall.approveNextManager(address)._nextManager (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#298) is not in mixedCase
+Parameter Play0x_LottoBall.setTokenAddress(address)._tokenAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#318) is not in mixedCase
+Parameter Play0x_LottoBall.setMaxProfit(uint256)._maxProfit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#324) is not in mixedCase
+Parameter Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8)._signatureHash (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424) is not in mixedCase
+Parameter Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8)._commitLastBlock (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424) is not in mixedCase
+Parameter Play0x_LottoBall.placeBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8)._commit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#424) is not in mixedCase
+Parameter Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address)._signatureHash (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446) is not in mixedCase
+Parameter Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address)._commitLastBlock (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446) is not in mixedCase
+Parameter Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address)._commit (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446) is not in mixedCase
+Parameter Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address)._amount (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446) is not in mixedCase
+Parameter Play0x_LottoBall.placeTokenBet(uint256[],bytes32,uint256,uint256,bytes32,bytes32,uint8,uint256,address)._playerAddress (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#446) is not in mixedCase
+Parameter Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32)._entropy (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591) is not in mixedCase
+Parameter Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32)._entropy2 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591) is not in mixedCase
+Function Play0x_LottoBall.updateMIN_BET(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#841-843) is not in mixedCase
+Parameter Play0x_LottoBall.updateMIN_BET(uint256)._uintNumber (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#841) is not in mixedCase
+Function Play0x_LottoBall.updateMAX_BET(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#845-847) is not in mixedCase
+Parameter Play0x_LottoBall.updateMAX_BET(uint256)._uintNumber (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#845) is not in mixedCase
+Function Play0x_LottoBall.updateMAX_AMOUNT(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#849-851) is not in mixedCase
+Parameter Play0x_LottoBall.updateMAX_AMOUNT(uint256)._uintNumber (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#849) is not in mixedCase
+Parameter Play0x_LottoBall.updateWithdrawalModeByIndex(uint8,uint32)._index (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#853) is not in mixedCase
+Parameter Play0x_LottoBall.updateWithdrawalModeByIndex(uint8,uint32)._value (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#853) is not in mixedCase
+Parameter Play0x_LottoBall.updateWithdrawalMode(uint32[])._withdrawalMode (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#857) is not in mixedCase
+Parameter Play0x_LottoBall.updateBitComparisonMask(bytes32)._newBitComparisonMask (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#861) is not in mixedCase
+Parameter Play0x_LottoBall.updatePlatformFeePercentage(uint8)._platformFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#865) is not in mixedCase
+Parameter Play0x_LottoBall.updateJackpotFeePercentage(uint8)._jackpotFeePercentage (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#869) is not in mixedCase
+Parameter Play0x_LottoBall.updateERC20rewardMultiple(uint8)._ERC20rewardMultiple (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#873) is not in mixedCase
+Variable Play0x_LottoBall.MIN_BET (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#160) is not in mixedCase
+Variable Play0x_LottoBall.MAX_BET (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#161) is not in mixedCase
+Variable Play0x_LottoBall.MAX_AMOUNT (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#162) is not in mixedCase
+Variable Play0x_LottoBall.ERC20rewardMultiple (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#171) is not in mixedCase
+Constant Play0x_LottoBall.BetExpirationBlocks (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#174) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable Play0x_LottoBall.ERC20ContractAddres (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#192) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Play0x_LottoBall.sendFunds(address,uint256,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#811-817):
+	External calls:
+	- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+	Event emitted after the call(s):
+	- Payment(beneficiary,successLogAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#813)
+Reentrancy in Play0x_LottoBall.sendFundsToManager(uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#819-825):
+	External calls:
+	- manager.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#820)
+	Event emitted after the call(s):
+	- ToManagerPayment(manager,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#821)
+Reentrancy in Play0x_LottoBall.sendFundsToOwner(address,uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#832-838):
+	External calls:
+	- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#833)
+	Event emitted after the call(s):
+	- ToOwnerPayment(beneficiary,amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#834)
+Reentrancy in Play0x_LottoBall.settleBet(uint256[],uint256) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#490-588):
+	External calls:
+	- sendFunds(bet.gambler,totalAmount,totalAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#549)
+		- beneficiary.send(amount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#812)
+	State variables written after the call(s):
+	- bet.amount = 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#580)
+	- jackpotSize = jackpotSize.add(uint256(combinationParameter[uint8(SettleParam.jackpotFee)])) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#584)
+	- lockedInBets = lockedInBets.sub(combinationParameter[uint8(SettleParam.PossibleWinAmount)]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#574)
+	- lockedTokenInBets = lockedTokenInBets.sub(combinationParameter[uint8(SettleParam.PossibleWinAmount)]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#576)
+	- tokenJackpotSize = tokenJackpotSize.add(uint256(combinationParameter[uint8(SettleParam.jackpotFee)])) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#586)
+	Event emitted after the call(s):
+	- TokenPayment(bet.gambler,totalTokenAmount) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#557)
+Reentrancy in Play0x_LottoBall.withdrawAllFunds(address) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#353-360):
+	External calls:
+	- beneficiary.send(address(this).balance) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#354)
+	State variables written after the call(s):
+	- lockedInBets = 0 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#355)
+	Event emitted after the call(s):
+	- Payment(beneficiary,address(this).balance) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#356)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Play0x_LottoBall.runRotateTime(uint256[],bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#591-646) uses literals with too many digits:
+	- resultMask = 0xF000000000000000000000000000000000000000000000000000000000000000 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#593)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- resultMask = 0xF000000000000000000000000000000000000000000000000000000000000000 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#654)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- four = (entropy2 & 0xF000000000000000000000000000000000000000000000000000000000000000) >> 4 * 63 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#675)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- three = (entropy2 & 0xF000000000000000000000000000000000000000000000000000000000000000) >> 4 * 63 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#681)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- four = (entropy2 & 0x0F00000000000000000000000000000000000000000000000000000000000000) >> 4 * 62 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#682)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- two = (entropy2 & 0xF000000000000000000000000000000000000000000000000000000000000000) >> 4 * 63 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#686)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- three = (entropy2 & 0x0F00000000000000000000000000000000000000000000000000000000000000) >> 4 * 62 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#688)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- four = (entropy2 & 0x00F0000000000000000000000000000000000000000000000000000000000000) >> 4 * 61 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#690)
+Play0x_LottoBall.getJackpotWinBonus(uint8,bytes32,bytes32) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#648-709) uses literals with too many digits:
+	- jackpo_Mask = 0xF000000000000000000000000000000000000000000000000000000000000000 (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#692)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+updateWithdrawalMode(uint32[]) should be declared external:
+	- Play0x_LottoBall.updateWithdrawalMode(uint32[]) (../sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol#857-859)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x24a97310a50d8536fedf5cd01773be590dc62451.sol analyzed (3 contracts with 100 detectors), 107 result(s) found

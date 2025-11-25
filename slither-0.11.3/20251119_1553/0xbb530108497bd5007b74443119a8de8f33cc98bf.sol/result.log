@@ -1,0 +1,50 @@
+'solc --version' running
+'solc /sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol:
+/sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol:11:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+ERC20 (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#37-42) has incorrect ERC20 function interface:ERC20Basic.transfer(address,uint256) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#33)
+ERC20 (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#37-42) has incorrect ERC20 function interface:ERC20.transferFrom(address,address,uint256) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#39)
+ERC20 (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#37-42) has incorrect ERC20 function interface:ERC20.approve(address,uint256) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#40)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Ownable.transferOwnership(address) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#22-26) should emit an event for: 
+	- owner = newOwner (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#24) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Airdropper.multisend(address,address[],uint256[]) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#46-56) has external calls inside a loop: ERC20(_tokenAddr).transfer(dests[i],values[i]) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#52)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Airdropper.multisend(address,address[],uint256[])._tokenAddr (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#46) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+multisend(address,address[],uint256[]) should be declared external:
+	- Airdropper.multisend(address,address[],uint256[]) (../sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol#46-56)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xbb530108497bd5007b74443119a8de8f33cc98bf.sol analyzed (4 contracts with 100 detectors), 9 result(s) found

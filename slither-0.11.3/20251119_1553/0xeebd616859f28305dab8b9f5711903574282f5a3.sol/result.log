@@ -1,0 +1,80 @@
+'solc --version' running
+'solc /sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ERC223Token.isContract(address) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#313-320) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ERC223Token.transfer(address,uint256).empty (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#300) is a local variable never initialized
+ERC223ReceivingContract.tokenFallback(address,uint256,bytes).tkn (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#227) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Reentrancy in ERC223Token._transferFallback(address,uint256,bytes) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#251-263):
+	External calls:
+	- receiver.tokenFallback(msg.sender,_value,_data) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#258)
+	Event emitted after the call(s):
+	- Transfer(msg.sender,_to,_value,_data) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#260)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ERC223Token.isContract(address) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#313-320) uses assembly
+	- INLINE ASM (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#315-319)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter ERC20StandardToken.transferFrom(address,address,uint256)._from (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#73) is not in mixedCase
+Parameter ERC20StandardToken.transferFrom(address,address,uint256)._to (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#73) is not in mixedCase
+Parameter ERC20StandardToken.transferFrom(address,address,uint256)._value (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#73) is not in mixedCase
+Parameter ERC20StandardToken.transfer(address,uint256)._to (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#98) is not in mixedCase
+Parameter ERC20StandardToken.transfer(address,uint256)._value (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#98) is not in mixedCase
+Parameter ERC20StandardToken.approve(address,uint256)._spender (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#120) is not in mixedCase
+Parameter ERC20StandardToken.approve(address,uint256)._value (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#120) is not in mixedCase
+Parameter ERC20StandardToken.allowance(address,address)._owner (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#134) is not in mixedCase
+Parameter ERC20StandardToken.allowance(address,address)._spender (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#135) is not in mixedCase
+Parameter ERC20StandardToken.increaseApproval(address,uint256)._spender (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#156) is not in mixedCase
+Parameter ERC20StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#157) is not in mixedCase
+Parameter ERC20StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#180) is not in mixedCase
+Parameter ERC20StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#181) is not in mixedCase
+Contract addtionalERC223Interface (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#204-207) is not in CapWords
+Parameter ERC223ReceivingContract.tokenFallback(address,uint256,bytes)._from (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#225) is not in mixedCase
+Parameter ERC223ReceivingContract.tokenFallback(address,uint256,bytes)._value (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#225) is not in mixedCase
+Parameter ERC223ReceivingContract.tokenFallback(address,uint256,bytes)._data (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#225) is not in mixedCase
+Parameter ERC223Token.transfer(address,uint256,bytes)._to (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#276) is not in mixedCase
+Parameter ERC223Token.transfer(address,uint256,bytes)._value (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#276) is not in mixedCase
+Parameter ERC223Token.transfer(address,uint256,bytes)._data (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#276) is not in mixedCase
+Parameter ERC223Token.transfer(address,uint256)._to (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#299) is not in mixedCase
+Parameter ERC223Token.transfer(address,uint256)._value (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#299) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TowaCoin.decimals (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#328) should be constant 
+TowaCoin.name (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#326) should be constant 
+TowaCoin.symbol (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#327) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+transfer(address,uint256,bytes) should be declared external:
+	- ERC223Token.transfer(address,uint256,bytes) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#276-288)
+	- addtionalERC223Interface.transfer(address,uint256,bytes) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#205)
+tokenFallback(address,uint256,bytes) should be declared external:
+	- ERC223ReceivingContract.tokenFallback(address,uint256,bytes) (../sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol#225-233)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xeebd616859f28305dab8b9f5711903574282f5a3.sol analyzed (6 contracts with 100 detectors), 34 result(s) found

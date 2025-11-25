@@ -1,0 +1,296 @@
+'solc --version' running
+'solc /sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol:
+/sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol:19:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DSAuth() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol:195:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DSTokenBase(uint supply) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol:246:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function DSToken(
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol:367:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TICDist(uint256 initial_supply) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472) performs a multiplication on the result of a division:
+	- all_token_num = TIC.totalSupply() * founders[founderList[i]].distPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#455)
+	- locked_token_num = all_token_num * founders[founderList[i]].lockedPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#458)
+TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509) performs a multiplication on the result of a division:
+	- all_token_num = TIC.totalSupply() * founders[msg.sender].distPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#489)
+	- locked_token_num = all_token_num * founders[msg.sender].lockedPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#491)
+TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509) performs a multiplication on the result of a division:
+	- locked_token_num = all_token_num * founders[msg.sender].lockedPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#491)
+	- unlock_token_num = locked_token_num * unlock_percent / founders[msg.sender].lockedPercent (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#493)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509):
+	External calls:
+	- all_token_num = TIC.totalSupply() * founders[msg.sender].distPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#489)
+	- TIC.push(msg.sender,unlock_token_num) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#498)
+	State variables written after the call(s):
+	- founders[msg.sender].lockedToken -= unlock_token_num (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#500)
+	TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364) can be used in cross function reentrancies:
+	- TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509)
+	- TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364)
+	- TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411)
+	- TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442)
+	- TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472)
+Reentrancy in TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509):
+	External calls:
+	- TIC.push(msg.sender,founders[msg.sender].lockedToken) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#505)
+	State variables written after the call(s):
+	- founders[msg.sender].lockedToken = 0 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#507)
+	TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364) can be used in cross function reentrancies:
+	- TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509)
+	- TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364)
+	- TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411)
+	- TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442)
+	- TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472)
+Reentrancy in DSAuth.setAuthority(DSAuthority) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#32-38):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#34)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- authority = authority_ (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#36)
+	DSAuth.authority (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#16) can be used in cross function reentrancies:
+	- DSAuth.authority (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#16)
+	- DSAuth.isAuthorized(address,bytes4) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#45-55)
+	- DSAuth.setAuthority(DSAuthority) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#32-38)
+Reentrancy in DSAuth.setOwner(address) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#24-30):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#26)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- owner = owner_ (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#28)
+	DSAuth.owner (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#17) can be used in cross function reentrancies:
+	- DSAuth.DSAuth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#19-22)
+	- DSAuth.isAuthorized(address,bytes4) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#45-55)
+	- DSAuth.owner (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#17)
+	- DSAuth.setOwner(address) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#24-30)
+Reentrancy in TICDist.setTIC(DSToken) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#373-385):
+	External calls:
+	- assert(bool)(tic.owner() == address(this)) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#377)
+	- assert(bool)(tic.totalSupply() == 0) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#379)
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#373)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- TIC = tic (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#381)
+	TICDist.TIC (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#345) can be used in cross function reentrancies:
+	- TICDist.TIC (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#345)
+	- TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509)
+	- TICDist.setTIC(DSToken) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#373-385)
+	- TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472)
+Reentrancy in TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472):
+	External calls:
+	- all_token_num = TIC.totalSupply() * founders[founderList[i]].distPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#455)
+	- TIC.push(founderList[i],all_token_num - locked_token_num) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#462)
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- distDay = today() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#465)
+	TICDist.distDay (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#350) can be used in cross function reentrancies:
+	- TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509)
+	- TICDist.distDay (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#350)
+	- TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472)
+	- founders[founderList[i]].lockedToken = locked_token_num (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#460)
+	TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364) can be used in cross function reentrancies:
+	- TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509)
+	- TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364)
+	- TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411)
+	- TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442)
+	- TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472)
+	- founders[founderList[i]].lockedDay += distDay (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#469)
+	TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364) can be used in cross function reentrancies:
+	- TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509)
+	- TICDist.founders (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#364)
+	- TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411)
+	- TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442)
+	- TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+DSAuth.setOwner(address).owner_ (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#24) lacks a zero-check on :
+		- owner = owner_ (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#28)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472) has external calls inside a loop: all_token_num = TIC.totalSupply() * founders[founderList[i]].distPercent / 100 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#455)
+TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472) has external calls inside a loop: TIC.push(founderList[i],all_token_num - locked_token_num) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#462)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in DSToken.burn(address,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#307-315):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#307)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- _approvals[guy][msg.sender] = sub(_approvals[guy][msg.sender],wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#309)
+	- _balances[guy] = sub(_balances[guy],wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#312)
+	- _supply = sub(_supply,wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#313)
+Reentrancy in DSToken.mint(address,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#302-306):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#302)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- _balances[guy] = add(_balances[guy],wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#303)
+	- _supply = add(_supply,wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#304)
+Reentrancy in TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- founderList = founders_ (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#405)
+	- founders[founders_[i]].distPercent = percents_[i] (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#407)
+	- isDistConfig = true (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#410)
+Reentrancy in TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- founders[founders_[i]].lockedPercent = percents_[i] (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#436)
+	- founders[founders_[i]].lockedDay = days_[i] (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#437)
+	- isLockedConfig = true (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#441)
+Reentrancy in DSToken.setName(string) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#257-259):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#257)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- name = name_ (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#258)
+Reentrancy in TICDist.setTIC(DSToken) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#373-385):
+	External calls:
+	- assert(bool)(tic.owner() == address(this)) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#377)
+	- assert(bool)(tic.totalSupply() == 0) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#379)
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#373)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- initSupply = initSupply * 10 ** uint256(decimals) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#383)
+Reentrancy in DSStop.start() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#96-98):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#96)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- stopped = false (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#97)
+Reentrancy in DSStop.stop() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#93-95):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#93)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	State variables written after the call(s):
+	- stopped = true (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#94)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in DSToken.burn(address,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#307-315):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#307)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	Event emitted after the call(s):
+	- Burn(guy,wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#314)
+Reentrancy in DSToken.mint(address,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#302-306):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#302)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	Event emitted after the call(s):
+	- Mint(guy,wad) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#305)
+Reentrancy in DSAuth.setAuthority(DSAuthority) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#32-38):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#34)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	Event emitted after the call(s):
+	- LogSetAuthority(authority) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#37)
+Reentrancy in DSAuth.setOwner(address) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#24-30):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#26)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	Event emitted after the call(s):
+	- LogSetOwner(owner) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#29)
+Reentrancy in DSStop.start() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#96-98):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#96)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	Event emitted after the call(s):
+	- LogNote(msg.sig,msg.sender,foo,bar,msg.value,msg.data) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#78)
+		- note() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#96)
+Reentrancy in DSStop.stop() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#93-95):
+	External calls:
+	- auth() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#93)
+		- authority.canCall(src,this,sig) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#53)
+	Event emitted after the call(s):
+	- LogNote(msg.sig,msg.sender,foo,bar,msg.value,msg.data) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#78)
+		- note() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#93)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assert(bool)(distDay == 0) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#447)
+TICDist.checkLockedToken() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#475-509) uses timestamp for comparisons
+	Dangerous comparisons:
+	- assert(bool)(distDay != 0) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#477)
+	- unlock_percent > founders[msg.sender].lockedPercent (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#485)
+	- unlock_token_num > founders[msg.sender].lockedToken (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#494)
+	- assert(bool)(today() > founders[msg.sender].lockedDay) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#503)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411) compares to a boolean constant:
+	-assert(bool)(isDistConfig == false) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#392)
+TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442) compares to a boolean constant:
+	-assert(bool)(isDistConfig == true) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#419)
+TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442) compares to a boolean constant:
+	-assert(bool)(isLockedConfig == false) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#421)
+TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472) compares to a boolean constant:
+	-assert(bool)(isLockedConfig == true) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#450)
+TICDist.startDist() (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#445-472) compares to a boolean constant:
+	-assert(bool)(isDistConfig == true) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#449)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+DSMath.imax(int256,int256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#141-143) is never used and should be removed
+DSMath.imin(int256,int256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#138-140) is never used and should be removed
+DSMath.max(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#135-137) is never used and should be removed
+DSMath.min(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#132-134) is never used and should be removed
+DSMath.mul(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#128-130) is never used and should be removed
+DSMath.rdiv(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#157-159) is never used and should be removed
+DSMath.rmul(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#151-153) is never used and should be removed
+DSMath.rpow(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#176-186) is never used and should be removed
+DSMath.wdiv(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#154-156) is never used and should be removed
+DSMath.wmul(uint256,uint256) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#148-150) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.13 (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable TICDist.TIC (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#345) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Loop condition i < founderList.length (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#467) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+DSToken.decimals (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#244) should be constant 
+TICDist.bTest (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#354) should be constant 
+TICDist.decimals (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#347) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+setName(string) should be declared external:
+	- DSToken.setName(string) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#257-259)
+setDistConfig(address[],uint256[]) should be declared external:
+	- TICDist.setDistConfig(address[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#390-411)
+setLockedConfig(address[],uint256[],uint256[]) should be declared external:
+	- TICDist.setLockedConfig(address[],uint256[],uint256[]) (../sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol#417-442)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xe35e828b42d46d27fb4279b451db211c2002845a.sol analyzed (11 contracts with 100 detectors), 53 result(s) found

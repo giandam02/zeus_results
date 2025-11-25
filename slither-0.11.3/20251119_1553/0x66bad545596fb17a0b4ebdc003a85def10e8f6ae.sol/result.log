@@ -1,0 +1,118 @@
+'solc --version' running
+'solc /sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:21:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:393:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function WikiToken() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:39:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:139:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:195:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:211:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:237:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:258:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:293:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_to, _amount);
+    ^----------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:294:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(address(0), _to, _amount);
+    ^--------------------------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:304:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MintFinished();
+    ^------------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:343:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Pause();
+    ^-----^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:351:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Unpause();
+    ^-------^
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol:404:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+
+
+WikiToken.level (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#390) is set pre-construction with a non-constant function or state variable:
+	- 10 ** uint256(decimals)
+WikiToken.INITIAL_SUPPLY (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#391) is set pre-construction with a non-constant function or state variable:
+	- 21000000 * level
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#132) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#132) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#148) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#187) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#187) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#187) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#209) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#209) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#221) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#221) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#235) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#235) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#251) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#251) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#290) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#290) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._to (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#363) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#363) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._from (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#367) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._to (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#367) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#367) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#371) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#371) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#375) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._addedValue (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#375) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._spender (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#379) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#379) is not in mixedCase
+Parameter WikiToken.revertFunds(address,address,uint256)._from (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#398) is not in mixedCase
+Parameter WikiToken.revertFunds(address,address,uint256)._to (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#398) is not in mixedCase
+Parameter WikiToken.revertFunds(address,address,uint256)._value (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#398) is not in mixedCase
+Variable WikiToken.INITIAL_SUPPLY (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#391) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+WikiToken.slitherConstructorVariables() (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#386-408) uses literals with too many digits:
+	- INITIAL_SUPPLY = 21000000 * level (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#391)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+WikiToken.decimals (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#389) should be constant 
+WikiToken.name (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#387) should be constant 
+WikiToken.symbol (../sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol#388) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x66bad545596fb17a0b4ebdc003a85def10e8f6ae.sol analyzed (10 contracts with 100 detectors), 39 result(s) found

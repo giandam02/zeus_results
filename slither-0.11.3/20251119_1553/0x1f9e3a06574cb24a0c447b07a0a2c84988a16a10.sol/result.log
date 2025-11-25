@@ -1,0 +1,596 @@
+'solc --version' running
+'solc /sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ldoh (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#45-713) contract sets array length with a user-controlled value:
+	- afflist[ref].push(msg.sender) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#293)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+ldoh.fallback() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#180-201) ignores return value by token.transfer(msg.sender,Send0ETH_Reward) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#196)
+ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) ignores return value by token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496) ignores return value by token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#493)
+ldoh.EthereumNodesFees(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#568-579) ignores return value by token.transfer(msg.sender,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#578)
+ldoh.Send0ETH_Withdraw(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#652-663) ignores return value by token.transfer(msg.sender,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#662)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+ldoh.mul(uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#685-693) uses a dangerous strict equality:
+	- a == 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#686)
+ldoh.mul(uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#685-693) uses a dangerous strict equality:
+	- require(bool)(c / a == b) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#691)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#269)
+	- _safes[_currentIndex] = Safe(_currentIndex,data_a1,TokenHodlTimeFinal,msg.sender,tokenAddress,token.symbol(),data_d1,data_d2,now,TokenPercent,0,0,0,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#283-286)
+	State variables written after the call(s):
+	- _currentIndex ++ (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#295)
+	ldoh._currentIndex (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#131) can be used in cross function reentrancies:
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.constructor() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#169-172)
+Reentrancy in ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#617)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	State variables written after the call(s):
+	- s.lastwithdraw = s.amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#619)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.lasttime = now (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#620)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.tokenreceive = div(mul(s.amount,88),100) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#623)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.percentagereceive = mul(1000000000000000000,88) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#624)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.tokenreceive = div(mul(s.amount,72),100) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#627)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.percentagereceive = mul(1000000000000000000,72) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#628)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.amountbalance = 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#632)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- _totalSaved[s.tokenAddress] = sub(_totalSaved[s.tokenAddress],s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#631)
+	ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140) can be used in cross function reentrancies:
+	- ldoh.EthereumNodesFees(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#568-579)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496)
+	- ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140)
+Reentrancy in ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603):
+	External calls:
+	- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	- WithdrawAffiliate(s.user,s.tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#596)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#492)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#493)
+	State variables written after the call(s):
+	- WithdrawAffiliate(s.user,s.tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#596)
+		- Affiliatevault[msg.sender][tokenAddress] = 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#482)
+	ldoh.Affiliatevault (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#154) can be used in cross function reentrancies:
+	- ldoh.Affiliatevault (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#154)
+	- ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496)
+	- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+		- AllPayments[tokenAddress] = add(AllPayments[tokenAddress],amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#433)
+	ldoh.AllPayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#146) can be used in cross function reentrancies:
+	- ldoh.AllPayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#146)
+	- ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439)
+	- ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496)
+	- WithdrawAffiliate(s.user,s.tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#596)
+		- AllPayments[tokenAddress] = add(AllPayments[tokenAddress],amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#485)
+	ldoh.AllPayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#146) can be used in cross function reentrancies:
+	- ldoh.AllPayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#146)
+	- ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439)
+	- ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496)
+	- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+		- LifetimePayments[msg.sender][tokenAddress] = add(LifetimePayments[user][tokenAddress],amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#434)
+	ldoh.LifetimePayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#153) can be used in cross function reentrancies:
+	- ldoh.LifetimePayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#153)
+	- ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439)
+	- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+		- s.amountbalance = newamountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#407)
+		- s.lasttime = now (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#408)
+		- s.tokenreceive = tokenreceived (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#419)
+		- s.percentagereceive = percentagereceived (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#420)
+		- s.lastwithdraw = realAmount (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#391)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+		- _totalSaved[s.tokenAddress] = sub(_totalSaved[s.tokenAddress],realAmount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#421)
+	ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140) can be used in cross function reentrancies:
+	- ldoh.EthereumNodesFees(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#568-579)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496)
+	- ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140)
+	- WithdrawAffiliate(s.user,s.tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#596)
+		- _totalSaved[tokenAddress] = sub(_totalSaved[tokenAddress],amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#484)
+	ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140) can be used in cross function reentrancies:
+	- ldoh.EthereumNodesFees(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#568-579)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496)
+	- ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140)
+Reentrancy in ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#330)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	State variables written after the call(s):
+	- s.lastwithdraw = s.amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#335)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.amountbalance = 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#336)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.lasttime = now (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#337)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.tokenreceive = div(mul(s.amount,88),100) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#340)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.percentagereceive = mul(1000000000000000000,88) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#341)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.tokenreceive = div(mul(s.amount,72),100) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#344)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+	- s.percentagereceive = mul(1000000000000000000,72) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#345)
+	ldoh._safes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#143) can be used in cross function reentrancies:
+	- ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316)
+	- ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509)
+	- ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459)
+	- ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300)
+	- ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644)
+	- ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603)
+	- ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358)
+	- ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395)
+	- ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428)
+Reentrancy in ldoh.fallback() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#180-201):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= Send0ETH_Reward) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#195)
+	- token.transfer(msg.sender,Send0ETH_Reward) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#196)
+	State variables written after the call(s):
+	- Send0ETH_Balance[tokenaddress] = sub(Send0ETH_Balance[tokenaddress],Send0ETH_Reward) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#198)
+	ldoh.Send0ETH_Balance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#163) can be used in cross function reentrancies:
+	- ldoh.Send0ETH_Balance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#163)
+	- ldoh.Send0ETH_Deposit(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#665-672)
+	- ldoh.Send0ETH_Withdraw(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#652-663)
+	- ldoh.fallback() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#180-201)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+ldoh.SendUnlockedTokens().returned (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#585) is a local variable never initialized
+ldoh.ReturnAllTokens().returned (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#609) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+ldoh.Send0ETH_Setting(address,uint256,bool) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#674-678) should emit an event for: 
+	- Send0ETH_Reward = reward (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#675) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256).tokenAddress (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518) lacks a zero-check on :
+		- DefaultToken = tokenAddress (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#528)
+ldoh.Send0ETH_Setting(address,uint256,bool).tokenAddress (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#674) lacks a zero-check on :
+		- send0ETH_tokenaddress = tokenAddress (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#676)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) has external calls inside a loop: require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+	Calls stack containing the loop:
+		ldoh.SendUnlockedTokens()
+		ldoh.UpdateUserData1(address,uint256)
+		ldoh.UpdateUserData2(address,uint256,uint256,uint256)
+ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) has external calls inside a loop: token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	Calls stack containing the loop:
+		ldoh.SendUnlockedTokens()
+		ldoh.UpdateUserData1(address,uint256)
+		ldoh.UpdateUserData2(address,uint256,uint256,uint256)
+ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496) has external calls inside a loop: require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#492)
+	Calls stack containing the loop:
+		ldoh.SendUnlockedTokens()
+ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496) has external calls inside a loop: token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#493)
+	Calls stack containing the loop:
+		ldoh.SendUnlockedTokens()
+ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) has external calls inside a loop: require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+	Calls stack containing the loop:
+		ldoh.ReturnAllTokens()
+ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) has external calls inside a loop: token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	Calls stack containing the loop:
+		ldoh.ReturnAllTokens()
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: ref = cashbackcode[msg.sender] (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#238)
+Variable 'ldoh.HodlTokens2(address,uint256).data_amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#227)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: data_amountbalance = sub(amount,affcomission) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#240)
+Variable 'ldoh.HodlTokens2(address,uint256).data_cashbackbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#228)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: data_cashbackbalance = div(mul(amount,cashback),100) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#241)
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: ref_contribution = LifetimeContribution[ref][tokenAddress] (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#242)
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: Affiliatevault[ref][tokenAddress] = add(Affiliatevault[ref][tokenAddress],affcomission) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#247)
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: Affiliateprofit[ref][tokenAddress] = add(Affiliateprofit[ref][tokenAddress],affcomission) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#248)
+Variable 'ldoh.HodlTokens2(address,uint256).data_amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#227)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: HodlTokens3(tokenAddress,amount,data_amountbalance,data_cashbackbalance,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#262)
+Variable 'ldoh.HodlTokens2(address,uint256).data_cashbackbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#228)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: HodlTokens3(tokenAddress,amount,data_amountbalance,data_cashbackbalance,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#262)
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: HodlTokens3(tokenAddress,amount,data_amountbalance,data_cashbackbalance,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#262)
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: Affiliatevault[ref][tokenAddress] = add(Affiliatevault[ref][tokenAddress],Newbie) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#254)
+Variable 'ldoh.HodlTokens2(address,uint256).ref (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#229)' in ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) potentially used before declaration: Affiliateprofit[ref][tokenAddress] = add(Affiliateprofit[ref][tokenAddress],Newbie) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#255)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#388)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: realAmount = realAmount1 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#389)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#388)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: s.lastwithdraw = realAmount (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#391)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#388)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: newamountbalance = sub(s.amountbalance,realAmount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#392)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#388)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: UpdateUserData2(tokenAddress,id,newamountbalance,realAmount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#393)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount1 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#380)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: realAmount1 = MaxAccumulation (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#381)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount1 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#380)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: realAmount = add(realAmount1,s.cashbackbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#388)
+Variable 'ldoh.UpdateUserData1(address,uint256).realAmount1 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#380)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: realAmount = realAmount1 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#389)
+Variable 'ldoh.UpdateUserData1(address,uint256).MaxAccumulation (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#375)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: MaxAccumulation = CalculateWithdraw (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#376)
+Variable 'ldoh.UpdateUserData1(address,uint256).MaxAccumulation (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#375)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: MaxAccumulation > s.amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#379)
+Variable 'ldoh.UpdateUserData1(address,uint256).MaxAccumulation (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#375)' in ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) potentially used before declaration: realAmount1 = MaxAccumulation (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#381)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#269)
+	- _safes[_currentIndex] = Safe(_currentIndex,data_a1,TokenHodlTimeFinal,msg.sender,tokenAddress,token.symbol(),data_d1,data_d2,now,TokenPercent,0,0,0,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#283-286)
+	State variables written after the call(s):
+	- AllContribution[tokenAddress] = add(AllContribution[tokenAddress],data_a1) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#289)
+	- LifetimeContribution[msg.sender][tokenAddress] = add(LifetimeContribution[msg.sender][tokenAddress],data_a1) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#288)
+	- _countSafes ++ (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#296)
+	- _safes[_currentIndex] = Safe(_currentIndex,data_a1,TokenHodlTimeFinal,msg.sender,tokenAddress,token.symbol(),data_d1,data_d2,now,TokenPercent,0,0,0,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#283-286)
+	- _totalSaved[tokenAddress] = add(_totalSaved[tokenAddress],data_a1) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#290)
+	- _userSafes[msg.sender].push(_currentIndex) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#294)
+	- afflist[ref].push(msg.sender) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#293)
+Reentrancy in ldoh.Send0ETH_Deposit(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#665-672):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#668)
+	State variables written after the call(s):
+	- Send0ETH_Balance[tokenAddress] = add(Send0ETH_Balance[tokenAddress],amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#670)
+Reentrancy in ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#330)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	State variables written after the call(s):
+	- _totalSaved[s.tokenAddress] = sub(_totalSaved[s.tokenAddress],s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#333)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300):
+	External calls:
+	- require(bool)(token.transferFrom(msg.sender,address(this),amount)) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#269)
+	- _safes[_currentIndex] = Safe(_currentIndex,data_a1,TokenHodlTimeFinal,msg.sender,tokenAddress,token.symbol(),data_d1,data_d2,now,TokenPercent,0,0,0,ref) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#283-286)
+	- onHodlTokens(msg.sender,tokenAddress,token.symbol(),data_a1,TokenHodlTimeFinal) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#298)
+	Event emitted after the call(s):
+	- onHodlTokens(msg.sender,tokenAddress,token.symbol(),data_a1,TokenHodlTimeFinal) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#298)
+Reentrancy in ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#617)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	Event emitted after the call(s):
+	- onReturnAll(returned) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#643)
+Reentrancy in ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603):
+	External calls:
+	- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	- WithdrawAffiliate(s.user,s.tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#596)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#492)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#493)
+	Event emitted after the call(s):
+	- onAffiliateBonus(msg.sender,eventTokenAddress,eventTokenSymbol,eventAmount,now) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#495)
+		- WithdrawAffiliate(s.user,s.tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#596)
+	- onClaimTokens(msg.sender,eventTokenAddress,eventTokenSymbol,eventAmount,now) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#427)
+		- UpdateUserData1(s.tokenAddress,s.id) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#592)
+	- onUnlockedTokens(returned) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#602)
+Reentrancy in ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,s.amountbalance) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#330)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	Event emitted after the call(s):
+	- onClaimTokens(msg.sender,eventTokenAddress,eventTokenSymbol,eventAmount,now) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#348)
+Reentrancy in ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428):
+	External calls:
+	- PayToken(s.user,s.tokenAddress,realAmount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#424)
+		- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+		- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#438)
+	Event emitted after the call(s):
+	- onClaimTokens(msg.sender,eventTokenAddress,eventTokenSymbol,eventAmount,now) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#427)
+Reentrancy in ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#492)
+	- token.transfer(user,amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#493)
+	Event emitted after the call(s):
+	- onAffiliateBonus(msg.sender,eventTokenAddress,eventTokenSymbol,eventAmount,now) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#495)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+ldoh.fallback() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#180-201) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(Send0ETH_Balance[tokenaddress] > 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#192)
+ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) uses timestamp for comparisons
+	Dangerous comparisons:
+	- ref_contribution >= mycontribution (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#245)
+ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(s.user == msg.sender) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#308)
+ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(s.id != 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#321)
+	- require(bool)(s.tokenAddress == tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#322)
+	- s.endtime < now (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#328)
+	- s.cashbackbalance > 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#339)
+ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(s.id != 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#364)
+	- require(bool)(s.tokenAddress == tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#365)
+	- CalculateWithdraw > MaxWithdraw (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#374)
+	- MaxAccumulation > s.amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#379)
+	- s.amountbalance >= amountbalance72 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#387)
+ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(s.id != 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#400)
+	- require(bool)(s.tokenAddress == tokenAddress) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#401)
+ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(token.balanceOf(address(this)) >= amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#437)
+ldoh.EthereumNodesFees(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#568-579) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(EthereumVault[tokenAddress] > 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#569)
+ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644) uses timestamp for comparisons
+	Dangerous comparisons:
+	- s.cashbackbalance > 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#622)
+ldoh.Send0ETH_Withdraw(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#652-663) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(Send0ETH_Balance[tokenAddress] > 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#654)
+ldoh.mul(uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#685-693) uses timestamp for comparisons
+	Dangerous comparisons:
+	- a == 0 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#686)
+	- require(bool)(c / a == b) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#691)
+ldoh.div(uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#695-699) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(b > 0) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#696)
+ldoh.sub(uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#701-705) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(b <= a) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#702)
+ldoh.add(uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#707-711) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(c >= a) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#709)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+ldoh.fallback() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#180-201) compares to a boolean constant:
+	-msg.value == 0 && send0ETH_status == true (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#189)
+ldoh.HodlTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#215-222) compares to a boolean constant:
+	-contractaddress[tokenAddress] == false (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#219)
+ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518-536) compares to a boolean constant:
+	-tokenAddress == DefaultToken && contractstatus == false (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#531)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function EthereumSmartContract.GetEthereumNodes() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#39-41) is not in mixedCase
+Variable EthereumSmartContract.EthereumNodes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#29) is not in mixedCase
+Contract ldoh (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#45-713) is not in CapWords
+Event ldoh.onAffiliateBonus(address,address,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#51-57) is not in CapWords
+Event ldoh.onClaimTokens(address,address,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#59-65) is not in CapWords
+Event ldoh.onHodlTokens(address,address,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#67-73) is not in CapWords
+Event ldoh.onAddContractAddress(address,bool,uint256,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#75-82) is not in CapWords
+Event ldoh.onCashbackCode(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#84-87) is not in CapWords
+Event ldoh.onUnlockedTokens(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#89-91) is not in CapWords
+Event ldoh.onReturnAll(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#93-95) is not in CapWords
+Function ldoh.CashbackCode(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#205-212) is not in mixedCase
+Parameter ldoh.CashbackCode(address)._cashbackcode (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#205) is not in mixedCase
+Function ldoh.HodlTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#215-222) is not in mixedCase
+Function ldoh.HodlTokens2(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#224-264) is not in mixedCase
+Function ldoh.HodlTokens3(address,uint256,uint256,uint256,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266-300) is not in mixedCase
+Parameter ldoh.HodlTokens3(address,uint256,uint256,uint256,address).data_amountbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266) is not in mixedCase
+Parameter ldoh.HodlTokens3(address,uint256,uint256,uint256,address).data_cashbackbalance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#266) is not in mixedCase
+Function ldoh.ClaimTokens(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#303-316) is not in mixedCase
+Function ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358) is not in mixedCase
+Function ldoh.UpdateUserData1(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#360-395) is not in mixedCase
+Function ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428) is not in mixedCase
+Function ldoh.PayToken(address,address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#431-439) is not in mixedCase
+Function ldoh.GetUserSafesLength(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#442-444) is not in mixedCase
+Function ldoh.GetTotalAffiliate(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#448-450) is not in mixedCase
+Function ldoh.GetSafe(uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454-459) is not in mixedCase
+Parameter ldoh.GetSafe(uint256)._id (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#454) is not in mixedCase
+Function ldoh.GetTokenReserve(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#463-465) is not in mixedCase
+Function ldoh.GetContractBalance() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#469-472) is not in mixedCase
+Function ldoh.WithdrawAffiliate(address,address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#476-496) is not in mixedCase
+Function ldoh.GetHodlTokensBalance(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#500-509) is not in mixedCase
+Function ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518-536) is not in mixedCase
+Parameter ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256)._maxcontribution (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518) is not in mixedCase
+Parameter ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256)._ContractSymbol (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518) is not in mixedCase
+Parameter ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256)._PercentPermonth (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518) is not in mixedCase
+Parameter ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256)._HodlingTime (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518) is not in mixedCase
+Function ldoh.AddSpeedDistribution(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#539-548) is not in mixedCase
+Function ldoh.AddMaxContribution(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#551-553) is not in mixedCase
+Parameter ldoh.AddMaxContribution(address,uint256)._maxcontribution (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#551) is not in mixedCase
+Function ldoh.WithdrawEth() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#557-564) is not in mixedCase
+Function ldoh.EthereumNodesFees(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#568-579) is not in mixedCase
+Function ldoh.SendUnlockedTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#583-603) is not in mixedCase
+Function ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644) is not in mixedCase
+Function ldoh.Send0ETH_Withdraw(address) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#652-663) is not in mixedCase
+Function ldoh.Send0ETH_Deposit(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#665-672) is not in mixedCase
+Function ldoh.Send0ETH_Setting(address,uint256,bool) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#674-678) is not in mixedCase
+Parameter ldoh.Send0ETH_Setting(address,uint256,bool)._status (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#674) is not in mixedCase
+Variable ldoh.DefaultToken (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#103) is not in mixedCase
+Constant ldoh.affiliate (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#126) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.cashback (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#127) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.nocashback (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#128) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.totalreceive (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#129) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ldoh.seconds30days (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#130) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable ldoh._countSafes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#132) is not in mixedCase
+Variable ldoh._totalSaved (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#140) is not in mixedCase
+Variable ldoh._userSafes (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#141) is not in mixedCase
+Variable ldoh.EthereumVault (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#142) is not in mixedCase
+Variable ldoh.AllContribution (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#145) is not in mixedCase
+Variable ldoh.AllPayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#146) is not in mixedCase
+Variable ldoh.ContractSymbol (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#147) is not in mixedCase
+Variable ldoh.LifetimeContribution (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#152) is not in mixedCase
+Variable ldoh.LifetimePayments (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#153) is not in mixedCase
+Variable ldoh.Affiliatevault (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#154) is not in mixedCase
+Variable ldoh.Affiliateprofit (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#155) is not in mixedCase
+Variable ldoh.Send0ETH_Reward (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#160) is not in mixedCase
+Variable ldoh.send0ETH_tokenaddress (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#161) is not in mixedCase
+Variable ldoh.send0ETH_status (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#162) is not in mixedCase
+Variable ldoh.Send0ETH_Balance (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#163) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358) uses literals with too many digits:
+	- s.percentagereceive = mul(1000000000000000000,88) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#341)
+ldoh.UnlockToken(address,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#318-358) uses literals with too many digits:
+	- s.percentagereceive = mul(1000000000000000000,72) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#345)
+ldoh.UpdateUserData2(address,uint256,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#397-428) uses literals with too many digits:
+	- percentagereceived = div(mul(tokenreceived,100000000000000000000),s.amount) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#417)
+ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644) uses literals with too many digits:
+	- s.percentagereceive = mul(1000000000000000000,88) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#624)
+ldoh.ReturnAllTokens() (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#607-644) uses literals with too many digits:
+	- s.percentagereceive = mul(1000000000000000000,72) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#628)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ldoh.totalreceive (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#129) is never used in ldoh (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#45-713)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+AddContractAddress(address,bool,uint256,string,uint256,uint256) should be declared external:
+	- ldoh.AddContractAddress(address,bool,uint256,string,uint256,uint256) (../sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol#518-536)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x1f9e3a06574cb24a0c447b07a0a2c84988a16a10.sol analyzed (3 contracts with 100 detectors), 147 result(s) found

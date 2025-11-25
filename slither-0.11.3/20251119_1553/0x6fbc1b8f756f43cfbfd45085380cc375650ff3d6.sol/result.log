@@ -1,0 +1,89 @@
+'solc --version' running
+'solc /sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ZethrSnap.withdraw() (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#127-131) sends eth to arbitrary user
+	Dangerous calls:
+	- (address(multiSigWallet)).transfer(address(this).balance) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#130)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ZethrSnap.toUint(bytes,uint256) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#255-267) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ZethrInterface (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#42-46) has incorrect ERC20 function interface:ZethrInterface.transfer(address,uint256) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#43)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+ZethrSnap.walletCreateSnap(uint256,uint256) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#166-183) should emit an event for: 
+	- allocatedTokens = allocatedTokens + _profitToShare (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#182) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+ZethrSnap.constructor(address,address,address)._signer (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#86) lacks a zero-check on :
+		- signer = _signer (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#91)
+ZethrSnap.walletSetSigner(address)._signer (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#136) lacks a zero-check on :
+		- signer = _signer (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#139)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in ZethrSnap.ownerSetPaused(bool) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#106-111):
+	External calls:
+	- ownerOnly() (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#108)
+		- require(bool)(msg.sender == address(multiSigWallet) || multiSigWallet.isOwner(msg.sender)) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#279)
+	State variables written after the call(s):
+	- paused = _paused (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#110)
+Reentrancy in ZethrSnap.walletCreateSnap(uint256,uint256) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#166-183):
+	External calls:
+	- balance = zethr.myFrontEndTokens() (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#177)
+	State variables written after the call(s):
+	- allocatedTokens = allocatedTokens + _profitToShare (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#182)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+ZethrSnap.toUint(bytes,uint256) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#255-267) uses assembly
+	- INLINE ASM (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#262-266)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ZethrSnap.claim(uint256,address,uint256,bytes) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#204-227) compares to a boolean constant:
+	-require(bool)(claimedMap[msg.sender][_snapId] == false) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#211)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#7)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter ZethrSnap.ownerSetPaused(bool)._paused (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#106) is not in mixedCase
+Parameter ZethrSnap.walletSetWallet(address)._multiSigWalletAddress (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#117) is not in mixedCase
+Parameter ZethrSnap.walletSetSigner(address)._signer (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#136) is not in mixedCase
+Parameter ZethrSnap.walletWithdrawTokens(uint256)._amount (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#145) is not in mixedCase
+Parameter ZethrSnap.walletCreateSnap(uint256,uint256)._blockNumber (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#166) is not in mixedCase
+Parameter ZethrSnap.walletCreateSnap(uint256,uint256)._profitToShare (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#166) is not in mixedCase
+Parameter ZethrSnap.getSnap(uint256)._snapId (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#189) is not in mixedCase
+Parameter ZethrSnap.claim(uint256,address,uint256,bytes)._snapId (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#204) is not in mixedCase
+Parameter ZethrSnap.claim(uint256,address,uint256,bytes)._payTo (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#204) is not in mixedCase
+Parameter ZethrSnap.claim(uint256,address,uint256,bytes)._amount (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#204) is not in mixedCase
+Parameter ZethrSnap.claim(uint256,address,uint256,bytes)._signatureBytes (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#204) is not in mixedCase
+Parameter ZethrSnap.toUint(bytes,uint256)._bytes (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#255) is not in mixedCase
+Parameter ZethrSnap.toUint(bytes,uint256)._start (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#255) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+claim(uint256,address,uint256,bytes) should be declared external:
+	- ZethrSnap.claim(uint256,address,uint256,bytes) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#204-227)
+tokenFallback(address,uint256,bytes) should be declared external:
+	- ZethrSnap.tokenFallback(address,uint256,bytes) (../sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol#232-238)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x6fbc1b8f756f43cfbfd45085380cc375650ff3d6.sol analyzed (4 contracts with 100 detectors), 27 result(s) found

@@ -1,0 +1,396 @@
+'solc --version' running
+'solc /sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:285:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:599:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function TTGOracle() public 
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:237:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Approval(msg.sender, _to, _tokenId);
+		^---------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:261:4: Warning: Invoking events without "emit" prefix is deprecated.
+			Transfer(_from, _to, _tokenId);
+			^----------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:639:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogEvent( "AddGame", _nameLottery, newGameId );
+		^--------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:702:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogToken( "Buy", msg.sender, idLottery, uint32(newTokenId), combination, userStake);
+		^---------------------------------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:740:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogToken( "Redeem", msg.sender, idLottery, uint32(_tokenId), combination, sumPayment);
+		^-----------------------------------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:753:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogEvent( "CancelLottery", curGame.nameLottery, idLottery );
+		^---------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:774:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogEvent( error, curGame.nameLottery, tmpCombination );
+		^----------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:792:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogEvent( "ResolveLotteryByOraclize", curGame.nameLottery, delaySec );
+		^-------------------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:817:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogEvent( "ResolveLotteryByHand", curGame.nameLottery, curGame.winCombination );
+		^-----------------------------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:833:4: Warning: Invoking events without "emit" prefix is deprecated.
+			LogEvent( "NOBODYWIN", curGame.nameLottery, curGame.betsSumIn+curGame.feeValue );
+			^------------------------------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:847:4: Warning: Invoking events without "emit" prefix is deprecated.
+			LogEvent( "TakeFee", curGame.nameLottery, curGame.feeValue );
+			^----------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:859:3: Warning: Invoking events without "emit" prefix is deprecated.
+		LogEvent( "WITHDRAW", "", tmpFeeLottery);
+		^--------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:866:3: Warning: Functions in interfaces should be declared external.
+  function airDrop(address transmitter, address receiver, uint amount) public  returns (uint actual);  
+  ^-------------------------------------------------------------------------------------------------^
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol:870:5: Warning: Functions in interfaces should be declared external.
+    function ownerOf (uint256 _itemId) public view returns (address _owner);  
+    ^----------------------------------------------------------------------^
+
+
+Reentrancy in TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741):
+	External calls:
+	- teamOwner = itemToken.ownerOf(teamID) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#727)
+	External calls sending eth:
+	- teamOwner.transfer(sumPayment.div(100)) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#729)
+	State variables written after the call(s):
+	- tkn.option = packed (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#736)
+	ERC721.tokens (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#185) can be used in cross function reentrancies:
+	- TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703)
+	- TTGOracle.getTokenByID(uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#503-536)
+	- TTGOracle.getUserTokensByMatch(address,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#555-575)
+	- TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+usingOraclize.getCodeSize(address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#146-150) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741) performs a multiplication on the result of a division:
+	- sumPayment = curGame.betsSumIn * tkn.price / betsAll[idLottery][curGame.winCombination].sum (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#726)
+	- sumPayment = sumPayment.mul(99).div(100) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#730)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703):
+	External calls:
+	- ttgCoin.airDrop(this,msg.sender,airDropAmountUser) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#667)
+	- teamOwner = itemToken.ownerOf(teamID) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#668)
+	- ttgCoin.airDrop(this,teamOwner,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#672)
+	- ttgCoin.airDrop(this,captainAddress,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#683)
+	State variables written after the call(s):
+	- curGame.feeValue = curGame.feeValue.add(feeValue) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#686)
+	TTGOracle.game (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#411) can be used in cross function reentrancies:
+	- TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781)
+	- TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617-640)
+	- TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703)
+	- TTGOracle.cancelLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#743-756)
+	- TTGOracle.checkWinNobody(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#822-837)
+	- TTGOracle.freezeLottery(uint32,bool) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#610-615)
+	- TTGOracle.getCountTokensByLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#487-493)
+	- TTGOracle.getLotteryByID(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#454-485)
+	- TTGOracle.getStatLotteries() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#577-597)
+	- TTGOracle.getSumInByLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#495-501)
+	- TTGOracle.getTokenByID(uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#503-536)
+	- TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741)
+	- TTGOracle.resolveLotteryByHand(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#805-820)
+	- TTGOracle.resolveLotteryByOraclize(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#783-803)
+	- TTGOracle.takeFee(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#839-849)
+Reentrancy in usingOraclize.oraclizeAPI() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#82-91):
+	External calls:
+	- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+	- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	State variables written after the call(s):
+	- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+Reentrancy in TTGOracle.resolveLotteryByOraclize(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#783-803):
+	External calls:
+	- oraclizeFee = oraclize_getPrice(URL,ORACLIZE_GAS_LIMIT) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#787)
+		- oraclize.getPrice(datasource,gaslimit) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#135)
+		- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	State variables written after the call(s):
+	- curGame.feeValue = curGame.feeValue + msg.value - oraclizeFee (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#790)
+	TTGOracle.game (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#411) can be used in cross function reentrancies:
+	- TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781)
+	- TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617-640)
+	- TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703)
+	- TTGOracle.cancelLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#743-756)
+	- TTGOracle.checkWinNobody(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#822-837)
+	- TTGOracle.freezeLottery(uint32,bool) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#610-615)
+	- TTGOracle.getCountTokensByLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#487-493)
+	- TTGOracle.getLotteryByID(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#454-485)
+	- TTGOracle.getStatLotteries() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#577-597)
+	- TTGOracle.getSumInByLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#495-501)
+	- TTGOracle.getTokenByID(uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#503-536)
+	- TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741)
+	- TTGOracle.resolveLotteryByHand(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#805-820)
+	- TTGOracle.resolveLotteryByOraclize(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#783-803)
+	- TTGOracle.takeFee(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#839-849)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+TTGOracle.getUserTokens(address,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#538-553) contains a tautology or contradiction:
+	- i >= 0 (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#543)
+TTGOracle.getUserTokensByMatch(address,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#555-575) contains a tautology or contradiction:
+	- i >= 0 (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#560)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32)._game (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#625) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703) ignores return value by ttgCoin.airDrop(this,msg.sender,airDropAmountUser) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#667)
+TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703) ignores return value by ttgCoin.airDrop(this,teamOwner,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#672)
+TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703) ignores return value by ttgCoin.airDrop(this,captainAddress,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#683)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Owned.changeOwner(address).newOwner (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#290) lacks a zero-check on :
+		- candidate = newOwner (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#293)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Variable 'TTGOracle.buyToken(uint32,uint32,uint32,address).airDropAmountOwner (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#670)' in TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703) potentially used before declaration: ttgCoin.airDrop(this,captainAddress,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#683)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781):
+	External calls:
+	- onlyOraclize() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758)
+		- oraclize.cbAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#143)
+		- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	State variables written after the call(s):
+	- checkWinNobody(idLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#779)
+		- feeLottery = feeLottery + curGame.feeValue (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#846)
+		- feeLottery = feeLottery.add(curGame.betsSumIn).add(curGame.feeValue) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#832)
+	- curGame.winCombination = tmpCombination (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#778)
+	- checkWinNobody(idLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#779)
+		- curGame.status = Status.PAYING (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#826)
+		- curGame.betsSumIn = getSumInByLottery(idLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#827)
+Reentrancy in TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703):
+	External calls:
+	- ttgCoin.airDrop(this,msg.sender,airDropAmountUser) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#667)
+	- teamOwner = itemToken.ownerOf(teamID) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#668)
+	- ttgCoin.airDrop(this,teamOwner,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#672)
+	- ttgCoin.airDrop(this,captainAddress,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#683)
+	State variables written after the call(s):
+	- betsAll[idLottery][combination].sum += userStake (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#687)
+	- betsAll[idLottery][combination].count ++ (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#688)
+	- _transfer(0,msg.sender,newTokenId) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#700)
+		- ownershipTokenCount[_to] ++ (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#256)
+		- ownershipTokenCount[_from] -- (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#262)
+	- _transfer(0,msg.sender,newTokenId) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#700)
+		- delete tokenIndexToApproved[_tokenId] (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#264)
+	- _transfer(0,msg.sender,newTokenId) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#700)
+		- tokenIndexToOwner[_tokenId] = _to (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#257)
+	- tokens[newTokenId] = _token (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#699)
+	- newTokenId = totalSupply ++ (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#698)
+Reentrancy in TTGOracle.resolveLotteryByOraclize(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#783-803):
+	External calls:
+	- oraclizeFee = oraclize_getPrice(URL,ORACLIZE_GAS_LIMIT) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#787)
+		- oraclize.getPrice(datasource,gaslimit) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#135)
+		- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	- queryId = oraclize_query(delay,URL,tmpQuery,ORACLIZE_GAS_LIMIT) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#801)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#125)
+		- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+		- oraclize.query_withGasLimit.value(price)(timestamp,datasource,arg,gaslimit) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#127)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	External calls sending eth:
+	- queryId = oraclize_query(delay,URL,tmpQuery,ORACLIZE_GAS_LIMIT) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#801)
+		- oraclize.query_withGasLimit.value(price)(timestamp,datasource,arg,gaslimit) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#127)
+	State variables written after the call(s):
+	- queryRes[queryId] = idLottery (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#802)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781):
+	External calls:
+	- onlyOraclize() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758)
+		- oraclize.cbAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#143)
+		- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	Event emitted after the call(s):
+	- LogEvent(TakeFee,curGame.nameLottery,curGame.feeValue) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#847)
+		- checkWinNobody(idLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#779)
+	- LogEvent(NOBODYWIN,curGame.nameLottery,curGame.betsSumIn + curGame.feeValue) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#833)
+		- checkWinNobody(idLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#779)
+	- LogEvent(error,curGame.nameLottery,tmpCombination) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#774)
+Reentrancy in TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703):
+	External calls:
+	- ttgCoin.airDrop(this,msg.sender,airDropAmountUser) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#667)
+	- teamOwner = itemToken.ownerOf(teamID) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#668)
+	- ttgCoin.airDrop(this,teamOwner,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#672)
+	- ttgCoin.airDrop(this,captainAddress,airDropAmountOwner) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#683)
+	Event emitted after the call(s):
+	- LogToken(Buy,msg.sender,idLottery,uint32(newTokenId),combination,userStake) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#702)
+	- Transfer(_from,_to,_tokenId) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#261)
+		- _transfer(0,msg.sender,newTokenId) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#700)
+Reentrancy in TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741):
+	External calls:
+	- teamOwner = itemToken.ownerOf(teamID) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#727)
+	External calls sending eth:
+	- teamOwner.transfer(sumPayment.div(100)) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#729)
+	- msg.sender.transfer(sumPayment) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#738)
+	Event emitted after the call(s):
+	- LogToken(Redeem,msg.sender,idLottery,uint32(_tokenId),combination,sumPayment) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#740)
+Reentrancy in TTGOracle.resolveLotteryByOraclize(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#783-803):
+	External calls:
+	- oraclizeFee = oraclize_getPrice(URL,ORACLIZE_GAS_LIMIT) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#787)
+		- oraclize.getPrice(datasource,gaslimit) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#135)
+		- address(oraclize) != OAR.getAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#87)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#88)
+	Event emitted after the call(s):
+	- LogEvent(ResolveLotteryByOraclize,curGame.nameLottery,delaySec) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#792)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TTGOracle.getLotteryByID(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#454-485) uses timestamp for comparisons
+	Dangerous comparisons:
+	- status == Status.PLAYING && timenow() > dateStopBuy (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#483)
+TTGOracle.getStatLotteries() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#577-597) uses timestamp for comparisons
+	Dangerous comparisons:
+	- curtime < game[i].dateStopBuy (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#593)
+	- curtime >= game[i].dateStopBuy (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#594)
+TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617-640) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_dateStopBuy > timenow()) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#623)
+TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(timenow() < curGame.dateStopBuy) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#656)
+TTGOracle.cancelLottery(uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#743-756) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(msg.sender == owner || admins[msg.sender] || timenow() > curGame.dateStopBuy.add(7 * 24 * 60 * 60)) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#749)
+TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(timenow() > curGame.dateStopBuy) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#766)
+TTGOracle.resolveLotteryByOraclize(uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#783-803) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timenow() < curGame.dateStopBuy (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#798)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+usingOraclize.getCodeSize(address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#146-150) uses assembly
+	- INLINE ASM (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#147-150)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+TTGOracle.buyToken(uint32,uint32,uint32,address) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#652-703) compares to a boolean constant:
+	-require(bool)(curGame.isFreezing == false) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#659)
+TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741) compares to a boolean constant:
+	-require(bool)(payout == false) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#720)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+usingOraclize.oraclize_getPrice(string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#130-132) is never used and should be removed
+usingOraclize.oraclize_query(string,string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#118-122) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function OraclizeI.query_withGasLimit(uint256,string,string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#57) is not in mixedCase
+Function OraclizeI.query2_withGasLimit(uint256,string,string,string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#59) is not in mixedCase
+Function OraclizeI.queryN_withGasLimit(uint256,string,bytes,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#61) is not in mixedCase
+Function OraclizeI.randomDS_getSessionPubKeyHash() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#66) is not in mixedCase
+Contract usingOraclize (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#71-152) is not in CapWords
+Function usingOraclize.oraclize_setNetwork(uint8) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#97-101) is not in mixedCase
+Function usingOraclize.oraclize_setNetwork() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#103-116) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#118-122) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#124-128) is not in mixedCase
+Function usingOraclize.oraclize_getPrice(string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#130-132) is not in mixedCase
+Function usingOraclize.oraclize_getPrice(string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#134-136) is not in mixedCase
+Function usingOraclize.oraclize_setCustomGasPrice(uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#138-140) is not in mixedCase
+Function usingOraclize.oraclize_cbAddress() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#142-144) is not in mixedCase
+Constant usingOraclize.networkID_auto (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#73) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_mainnet (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#74) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_testnet (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#75) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_morden (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#76) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_consensys (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#77) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable usingOraclize.OAR (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#79) is not in mixedCase
+Parameter ERC721.balanceOf(address)._owner (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#203) is not in mixedCase
+Parameter ERC721.ownerOf(uint256)._tokenId (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#208) is not in mixedCase
+Parameter ERC721.approve(address,uint256)._to (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#228) is not in mixedCase
+Parameter ERC721.approve(address,uint256)._tokenId (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#228) is not in mixedCase
+Parameter ERC721.transferFrom(address,address,uint256)._from (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#240) is not in mixedCase
+Parameter ERC721.transferFrom(address,address,uint256)._to (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#240) is not in mixedCase
+Parameter ERC721.transferFrom(address,address,uint256)._tokenId (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#240) is not in mixedCase
+Parameter ERC721.transfer(address,uint256)._to (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#269) is not in mixedCase
+Parameter ERC721.transfer(address,uint256)._tokenId (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#269) is not in mixedCase
+Parameter Functional.parseInt(string,uint256)._a (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#318) is not in mixedCase
+Parameter Functional.parseInt(string,uint256)._b (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#318) is not in mixedCase
+Parameter Functional.strConcat(string,string,string)._a (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#355) is not in mixedCase
+Parameter Functional.strConcat(string,string,string)._b (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#355) is not in mixedCase
+Parameter Functional.strConcat(string,string,string)._c (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#355) is not in mixedCase
+Parameter TTGOracle.setTTGCoin(address)._ttgCoin (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#445) is not in mixedCase
+Parameter TTGOracle.setItemToken(address)._itemToken (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#449) is not in mixedCase
+Parameter TTGOracle.getLotteryByID(uint32)._id (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#454) is not in mixedCase
+Parameter TTGOracle.getTokenByID(uint256)._id (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#503) is not in mixedCase
+Parameter TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32)._nameLottery (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617) is not in mixedCase
+Parameter TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32)._dateStopBuy (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617) is not in mixedCase
+Parameter TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32)._countCombinations (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617) is not in mixedCase
+Parameter TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32)._minStakeFinney (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617) is not in mixedCase
+Parameter TTGOracle.redeemToken(uint256,uint32)._tokenId (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706) is not in mixedCase
+Function TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781) is not in mixedCase
+Parameter TTGOracle.__callback(bytes32,string)._result (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758) is not in mixedCase
+Variable TTGOracle.ORACLIZE_GAS_LIMIT (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#424) is not in mixedCase
+Variable TTGOracle.ORACLIZE_GASPRICE_GWEY (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#425) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Redundant expression "networkID (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#100)" inusingOraclize (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#71-152)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#redundant-statements
+
+Reentrancy in TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741):
+	External calls:
+	- teamOwner.transfer(sumPayment.div(100)) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#729)
+	State variables written after the call(s):
+	- tkn.option = packed (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#736)
+Reentrancy in TTGOracle.redeemToken(uint256,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#706-741):
+	External calls:
+	- teamOwner.transfer(sumPayment.div(100)) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#729)
+	- msg.sender.transfer(sumPayment) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#738)
+	Event emitted after the call(s):
+	- LogToken(Redeem,msg.sender,idLottery,uint32(_tokenId),combination,sumPayment) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#740)
+Reentrancy in TTGOracle.withdraw() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#851-860):
+	External calls:
+	- owner.transfer(tmpFeeLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#858)
+	Event emitted after the call(s):
+	- LogEvent(WITHDRAW,,tmpFeeLottery) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#859)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+TTGOracle.slitherConstructorVariables() (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#383-862) uses literals with too many digits:
+	- ORACLIZE_GAS_LIMIT = 2000000 (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#424)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+usingOraclize.networkID_mainnet (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#74) is never used in TTGOracle (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#383-862)
+usingOraclize.networkID_testnet (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#75) is never used in TTGOracle (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#383-862)
+usingOraclize.networkID_morden (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#76) is never used in TTGOracle (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#383-862)
+usingOraclize.networkID_consensys (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#77) is never used in TTGOracle (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#383-862)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+query2(uint256,string,string,string) should be declared external:
+	- OraclizeI.query2(uint256,string,string,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#58)
+queryN(uint256,string,bytes) should be declared external:
+	- OraclizeI.queryN(uint256,string,bytes) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#60)
+getPrice(string) should be declared external:
+	- OraclizeI.getPrice(string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#62)
+getPrice(string,uint256) should be declared external:
+	- OraclizeI.getPrice(string,uint256) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#63)
+addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32) should be declared external:
+	- TTGOracle.addLottery(string,uint32,uint32,uint32,uint32,uint32,uint32) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#617-640)
+__callback(bytes32,string) should be declared external:
+	- TTGOracle.__callback(bytes32,string) (../sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol#758-781)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x5dc66c1835fd8d60ef2ec31901ee3f33de9c61a1.sol analyzed (11 contracts with 100 detectors), 96 result(s) found

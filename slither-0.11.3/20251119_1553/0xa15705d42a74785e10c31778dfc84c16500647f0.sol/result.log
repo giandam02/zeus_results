@@ -1,0 +1,117 @@
+'solc --version' running
+'solc /sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:149:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:264:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GPUxToken() public onlyOwner{
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:175:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnershipTransferred(owner, newOwner);
+        ^-----------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:264:33: Warning: Modifier-style base constructor call without arguments.
+    function GPUxToken() public onlyOwner{
+                                ^-------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:304:31: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+            bytes32 digest =  keccak256(challengeNumber, msg.sender, nonce );
+                              ^--------------------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:337:15: Warning: Invoking events without "emit" prefix is deprecated.
+              Mint(msg.sender, reward_amount, epochCount, challengeNumber );
+              ^-----------------------------------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:463:26: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 digest = keccak256(challenge_number,msg.sender,nonce);
+                         ^------------------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:472:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+          bytes32 digest = keccak256(challenge_number,msg.sender,nonce);
+                           ^------------------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:526:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, to, tokens);
+        ^------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:554:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, tokens);
+        ^-----------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:588:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(from, to, tokens);
+        ^------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:626:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, tokens);
+        ^-----------------------------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:371:25: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+      challengeNumber = block.blockhash(block.number - 1);
+                        ^-------------^
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol:461:43: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    function getMintDigest(uint256 nonce, bytes32 challenge_digest, bytes32 challenge_number) public view returns (bytes32 digesttest) {
+                                          ^----------------------^
+
+
+GPUxToken._reAdjustDifficulty() (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#387-430) performs a multiplication on the result of a division:
+	- miningTarget = miningTarget.add(miningTarget.div(2000).mul(shortage_block_pct_extra)) (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#414)
+GPUxToken._reAdjustDifficulty() (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#387-430) performs a multiplication on the result of a division:
+	- miningTarget = miningTarget.sub(miningTarget.div(2000).mul(excess_block_pct_extra)) (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#407)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Contract locking ether found:
+	Contract GPUxToken (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#195-663) has payable functions:
+	 - GPUxToken.fallback() (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#642-646)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Owned.transferOwnership(address)._newOwner (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#165) lacks a zero-check on :
+		- newOwner = _newOwner (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Deprecated standard detected challengeNumber = block.blockhash(block.number - 1) (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#371):
+	- Usage of "block.blockhash()" should be replaced with "blockhash()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Owned.transferOwnership(address)._newOwner (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#165) is not in mixedCase
+Parameter GPUxToken.mint(uint256,bytes32).challenge_digest (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#300) is not in mixedCase
+Parameter GPUxToken.getMintDigest(uint256,bytes32,bytes32).challenge_digest (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#461) is not in mixedCase
+Parameter GPUxToken.getMintDigest(uint256,bytes32,bytes32).challenge_number (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#461) is not in mixedCase
+Parameter GPUxToken.checkMintSolution(uint256,bytes32,bytes32,uint256).challenge_digest (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#470) is not in mixedCase
+Parameter GPUxToken.checkMintSolution(uint256,bytes32,bytes32,uint256).challenge_number (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#470) is not in mixedCase
+Variable GPUxToken._totalSupply (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#207) is not in mixedCase
+Variable GPUxToken._BLOCKS_PER_READJUSTMENT (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#218) is not in mixedCase
+Variable GPUxToken._MINIMUM_TARGET (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#222) is not in mixedCase
+Variable GPUxToken._MAXIMUM_TARGET (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#227) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+GPUxToken.GPUxToken() (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#264-295) uses literals with too many digits:
+	- _totalSupply = 21000000 * 10 ** uint256(decimals) (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#274)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+GPUxToken._BLOCKS_PER_READJUSTMENT (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#218) should be constant 
+GPUxToken._MAXIMUM_TARGET (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#227) should be constant 
+GPUxToken._MINIMUM_TARGET (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#222) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- ApproveAndCallFallBack.receiveApproval(address,uint256,address,bytes) (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#127)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- GPUxToken.approveAndCall(address,uint256,bytes) (../sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol#622-632)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xa15705d42a74785e10c31778dfc84c16500647f0.sol analyzed (6 contracts with 100 detectors), 23 result(s) found

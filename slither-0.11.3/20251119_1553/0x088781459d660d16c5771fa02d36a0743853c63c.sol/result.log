@@ -1,0 +1,63 @@
+'solc --version' running
+'solc /sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+CrowdsaleToken.fallback() (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#266-295) performs a multiplication on the result of a division:
+	- newWei = newTokens.div(basePrice).mul(1000000000000000000) (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#278)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#121) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#121) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#136) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#148) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#148) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#148) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#171) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#171) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#183) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#183) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#197) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#197) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#213) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#213) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in CrowdsaleToken.fallback() (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#266-295):
+	External calls:
+	- msg.sender.transfer(returnWei) (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#287)
+	State variables written after the call(s):
+	- balances[msg.sender] = balances[msg.sender].add(tokens) (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#291)
+	- totalSupply_ = totalSupply_.add(tokens) (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#293)
+	Event emitted after the call(s):
+	- Transfer(address(this),msg.sender,returnWei) (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#288)
+	- Transfer(address(this),msg.sender,tokens) (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#292)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+BelinkToken.slitherConstructorConstantVariables() (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#327-332) uses literals with too many digits:
+	- cap = 1000000 * 10 ** 18 (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#229)
+BelinkToken.slitherConstructorConstantVariables() (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#327-332) uses literals with too many digits:
+	- tokenReserve = 1000000 * 10 ** 18 (../sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol#233)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0x088781459d660d16c5771fa02d36a0743853c63c.sol analyzed (9 contracts with 100 detectors), 20 result(s) found

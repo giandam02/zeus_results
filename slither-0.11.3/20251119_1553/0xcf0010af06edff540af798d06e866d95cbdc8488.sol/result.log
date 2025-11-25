@@ -1,0 +1,285 @@
+'solc --version' running
+'solc /sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol:
+/sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol:76:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function UnicornAccessControl(address _unicornManagementAddress) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol:523:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function UnicornToken(address _unicornManagementAddress) UnicornAccessControl(_unicornManagementAddress) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol:488:27: Warning: "block.blockhash()" has been deprecated in favor of "blockhash()"
+            time += (uint(block.blockhash(block.number - 1)) % freezingPlusCount[freezingIndex]) * 1 hours;
+                          ^-------------^
+
+
+UnicornBase (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#148-517) contract sets array length with a user-controlled value:
+	- ownedUnicorns[_to].push(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#340)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+UnicornBase._getFreezeTime(uint8) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#484-490) uses a weak PRNG: "freezingIndex %= maxFreezingIndex (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#485)" 
+UnicornBase._getFreezeTime(uint8) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#484-490) uses a weak PRNG: "time += (uint256(block.blockhash(block.number - 1)) % freezingPlusCount[freezingIndex]) * 3600 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#488)" 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#weak-PRNG
+
+Reentrancy in UnicornBase.clearApprovalAndTransfer(address,address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#309-318):
+	External calls:
+	- removeUnicorn(_from,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#315)
+		- unicornBreeding.deleteOffer(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#373)
+		- unicornBreeding.deleteHybridization(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#374)
+	State variables written after the call(s):
+	- addUnicorn(_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#316)
+		- ownedUnicorns[_to].push(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#340)
+	UnicornBase.ownedUnicorns (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#201) can be used in cross function reentrancies:
+	- UnicornBase.addUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#335-343)
+	- UnicornBase.balanceOf(address) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#236-238)
+	- UnicornBase.removeUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#350-376)
+	- UnicornBase.unicornsOf(address) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#245-247)
+	- addUnicorn(_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#316)
+		- ownedUnicornsIndex[_unicornId] = length (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#341)
+	UnicornBase.ownedUnicornsIndex (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#205) can be used in cross function reentrancies:
+	- UnicornBase.addUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#335-343)
+	- UnicornBase.removeUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#350-376)
+	- addUnicorn(_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#316)
+		- totalUnicorns = totalUnicorns.add(1) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#342)
+	UnicornBase.totalUnicorns (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#186) can be used in cross function reentrancies:
+	- UnicornBase.addUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#335-343)
+	- UnicornBase.removeUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#350-376)
+	- UnicornBase.totalSupply() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#227-229)
+	- addUnicorn(_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#316)
+		- unicornOwner[_unicornId] = _to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#337)
+	UnicornBase.unicornOwner (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#195) can be used in cross function reentrancies:
+	- UnicornBase.addUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#335-343)
+	- UnicornBase.ownerOf(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#220-225)
+	- UnicornBase.removeUnicorn(address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#350-376)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Reentrancy in UnicornBase.createUnicorn(address) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#390-404):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#390)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	State variables written after the call(s):
+	- _unicornId = lastUnicornId ++ (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#392)
+	- addUnicorn(_owner,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#393)
+		- ownedUnicorns[_to].push(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#340)
+	- addUnicorn(_owner,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#393)
+		- ownedUnicornsIndex[_unicornId] = length (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#341)
+	- addUnicorn(_owner,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#393)
+		- totalUnicorns = totalUnicorns.add(1) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#342)
+	- addUnicorn(_owner,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#393)
+		- unicornOwner[_unicornId] = _to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#337)
+	- unicorns[_unicornId] = Unicorn({gene:new bytes(0),birthTime:uint64(now),freezingEndTime:0,freezingTourEndTime:0,name:}) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#395-401)
+Reentrancy in UnicornToken.init() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#527-529):
+	External calls:
+	- unicornBreeding = UnicornBreedingInterface(unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#528)
+	- whenPaused() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#527)
+		- require(bool)(unicornManagement.paused()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#107)
+	State variables written after the call(s):
+	- unicornBreeding = UnicornBreedingInterface(unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#528)
+Reentrancy in UnicornBase.marketTransfer(address,address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470-472):
+	External calls:
+	- clearApprovalAndTransfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#471)
+		- unicornBreeding.deleteOffer(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#373)
+		- unicornBreeding.deleteHybridization(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#374)
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	State variables written after the call(s):
+	- clearApprovalAndTransfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#471)
+		- unicornApprovals[_unicornId] = 0 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#326)
+Reentrancy in UnicornBase.minusFreezingTime(uint256,uint64) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#494-499):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#494)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	State variables written after the call(s):
+	- unicorns[_unicornId].freezingEndTime -= _time (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#498)
+Reentrancy in UnicornBase.minusTourFreezingTime(uint256,uint64) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#502-507):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#502)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	State variables written after the call(s):
+	- unicorns[_unicornId].freezingTourEndTime -= _time (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#506)
+Reentrancy in UnicornBase.plusFreezingTime(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#474-477):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#474)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	State variables written after the call(s):
+	- unicorns[_unicornId].freezingEndTime = uint64(_getFreezeTime(getUnicornGenByte(_unicornId,163)) + now) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#475)
+Reentrancy in UnicornBase.plusTourFreezingTime(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#479-482):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#479)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	State variables written after the call(s):
+	- unicorns[_unicornId].freezingTourEndTime = uint64(_getFreezeTime(getUnicornGenByte(_unicornId,168)) + now) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#480)
+Reentrancy in UnicornBase.setGene(uint256,bytes) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#447-452):
+	External calls:
+	- onlyBlackBox() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#447)
+		- require(bool)(msg.sender == unicornManagement.blackBoxAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#128)
+	State variables written after the call(s):
+	- unicorns[_unicornId].gene = _gene (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#449)
+Reentrancy in UnicornBase.updateGene(uint256,bytes) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454-459):
+	External calls:
+	- onlyGeneLab() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454)
+		- require(bool)(msg.sender == unicornManagement.geneLabAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#123)
+	State variables written after the call(s):
+	- delete unicornApprovalsForGeneLab[_unicornId] (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#456)
+	- unicorns[_unicornId].gene = _gene (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#457)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in UnicornBase.clearApprovalAndTransfer(address,address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#309-318):
+	External calls:
+	- removeUnicorn(_from,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#315)
+		- unicornBreeding.deleteOffer(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#373)
+		- unicornBreeding.deleteHybridization(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#374)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#317)
+Reentrancy in UnicornBase.createUnicorn(address) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#390-404):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#390)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	Event emitted after the call(s):
+	- Transfer(0x0,_owner,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#402)
+Reentrancy in UnicornBase.marketTransfer(address,address,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470-472):
+	External calls:
+	- clearApprovalAndTransfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#471)
+		- unicornBreeding.deleteOffer(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#373)
+		- unicornBreeding.deleteHybridization(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#374)
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	Event emitted after the call(s):
+	- Approval(_owner,0,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#327)
+		- clearApprovalAndTransfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#471)
+	- Transfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#317)
+		- clearApprovalAndTransfer(_from,_to,_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#471)
+Reentrancy in UnicornBase.plusFreezingTime(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#474-477):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#474)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	Event emitted after the call(s):
+	- UnicornFreezingTimeSet(_unicornId,unicorns[_unicornId].freezingEndTime) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#476)
+Reentrancy in UnicornBase.plusTourFreezingTime(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#479-482):
+	External calls:
+	- onlyBreeding() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#479)
+		- require(bool)(msg.sender == unicornManagement.unicornBreedingAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#118)
+	Event emitted after the call(s):
+	- UnicornTourFreezingTimeSet(_unicornId,unicorns[_unicornId].freezingTourEndTime) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#481)
+Reentrancy in UnicornBase.setGene(uint256,bytes) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#447-452):
+	External calls:
+	- onlyBlackBox() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#447)
+		- require(bool)(msg.sender == unicornManagement.blackBoxAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#128)
+	Event emitted after the call(s):
+	- UnicornGeneSet(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#450)
+Reentrancy in UnicornBase.updateGene(uint256,bytes) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454-459):
+	External calls:
+	- onlyGeneLab() (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454)
+		- require(bool)(msg.sender == unicornManagement.geneLabAddress()) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#123)
+	Event emitted after the call(s):
+	- UnicornGeneUpdate(_unicornId) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#458)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+UnicornBase.fromHexChar(uint8) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#419-421) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _c < 58 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#420)
+	- _c < 97 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#420)
+UnicornBase.getUnicornGenByte(uint256,uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#424-431) uses timestamp for comparisons
+	Dangerous comparisons:
+	- unicorns[_unicornId].gene.length < n + 1 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#427)
+UnicornBase.minusFreezingTime(uint256,uint64) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#494-499) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(unicorns[_unicornId].freezingEndTime > now) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#496)
+UnicornBase.minusTourFreezingTime(uint256,uint64) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#502-507) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(unicorns[_unicornId].freezingTourEndTime > now) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#504)
+UnicornBase.isUnfreezed(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#509-511) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (unicorns[_unicornId].birthTime > 0 && unicorns[_unicornId].freezingEndTime <= uint64(now)) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#510)
+UnicornBase.isTourUnfreezed(uint256) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#513-515) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (unicorns[_unicornId].birthTime > 0 && unicorns[_unicornId].freezingTourEndTime <= uint64(now)) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#514)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Deprecated standard detected time += (uint256(block.blockhash(block.number - 1)) % freezingPlusCount[freezingIndex]) * 3600 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#488):
+	- Usage of "block.blockhash()" should be replaced with "blockhash()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter UnicornBase.ownerOf(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#220) is not in mixedCase
+Parameter UnicornBase.balanceOf(address)._owner (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#236) is not in mixedCase
+Parameter UnicornBase.unicornsOf(address)._owner (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#245) is not in mixedCase
+Parameter UnicornBase.approvedFor(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#254) is not in mixedCase
+Parameter UnicornBase.allowance(address,uint256)._owner (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#265) is not in mixedCase
+Parameter UnicornBase.allowance(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#265) is not in mixedCase
+Parameter UnicornBase.approve(address,uint256)._to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#274) is not in mixedCase
+Parameter UnicornBase.approve(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#274) is not in mixedCase
+Parameter UnicornBase.takeOwnership(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#288) is not in mixedCase
+Parameter UnicornBase.transfer(address,uint256)._to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#298) is not in mixedCase
+Parameter UnicornBase.transfer(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#298) is not in mixedCase
+Parameter UnicornBase.clearApprovalAndTransfer(address,address,uint256)._from (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#309) is not in mixedCase
+Parameter UnicornBase.clearApprovalAndTransfer(address,address,uint256)._to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#309) is not in mixedCase
+Parameter UnicornBase.clearApprovalAndTransfer(address,address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#309) is not in mixedCase
+Parameter UnicornBase.clearApproval(address,uint256)._owner (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#324) is not in mixedCase
+Parameter UnicornBase.clearApproval(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#324) is not in mixedCase
+Parameter UnicornBase.addUnicorn(address,uint256)._to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#335) is not in mixedCase
+Parameter UnicornBase.addUnicorn(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#335) is not in mixedCase
+Parameter UnicornBase.removeUnicorn(address,uint256)._from (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#350) is not in mixedCase
+Parameter UnicornBase.removeUnicorn(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#350) is not in mixedCase
+Parameter UnicornBase.createUnicorn(address)._owner (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#390) is not in mixedCase
+Parameter UnicornBase.owns(address,uint256)._claimant (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#407) is not in mixedCase
+Parameter UnicornBase.owns(address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#407) is not in mixedCase
+Parameter UnicornBase.transferFrom(address,address,uint256)._from (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#412) is not in mixedCase
+Parameter UnicornBase.transferFrom(address,address,uint256)._to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#412) is not in mixedCase
+Parameter UnicornBase.transferFrom(address,address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#412) is not in mixedCase
+Parameter UnicornBase.fromHexChar(uint8)._c (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#419) is not in mixedCase
+Parameter UnicornBase.getUnicornGenByte(uint256,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#424) is not in mixedCase
+Parameter UnicornBase.getUnicornGenByte(uint256,uint256)._byteNo (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#424) is not in mixedCase
+Parameter UnicornBase.setName(uint256,string)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#434) is not in mixedCase
+Parameter UnicornBase.setName(uint256,string)._name (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#434) is not in mixedCase
+Parameter UnicornBase.getGen(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#443) is not in mixedCase
+Parameter UnicornBase.setGene(uint256,bytes)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#447) is not in mixedCase
+Parameter UnicornBase.setGene(uint256,bytes)._gene (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#447) is not in mixedCase
+Parameter UnicornBase.updateGene(uint256,bytes)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454) is not in mixedCase
+Parameter UnicornBase.updateGene(uint256,bytes)._gene (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454) is not in mixedCase
+Parameter UnicornBase.approveForGeneLab(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#461) is not in mixedCase
+Parameter UnicornBase.clearApprovalForGeneLab(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#465) is not in mixedCase
+Parameter UnicornBase.marketTransfer(address,address,uint256)._from (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470) is not in mixedCase
+Parameter UnicornBase.marketTransfer(address,address,uint256)._to (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470) is not in mixedCase
+Parameter UnicornBase.marketTransfer(address,address,uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#470) is not in mixedCase
+Parameter UnicornBase.plusFreezingTime(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#474) is not in mixedCase
+Parameter UnicornBase.plusTourFreezingTime(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#479) is not in mixedCase
+Parameter UnicornBase.minusFreezingTime(uint256,uint64)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#494) is not in mixedCase
+Parameter UnicornBase.minusFreezingTime(uint256,uint64)._time (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#494) is not in mixedCase
+Parameter UnicornBase.minusTourFreezingTime(uint256,uint64)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#502) is not in mixedCase
+Parameter UnicornBase.minusTourFreezingTime(uint256,uint64)._time (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#502) is not in mixedCase
+Parameter UnicornBase.isUnfreezed(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#509) is not in mixedCase
+Parameter UnicornBase.isTourUnfreezed(uint256)._unicornId (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#513) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+UnicornBase.maxFreezingIndex (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#168) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+setName(uint256,string) should be declared external:
+	- UnicornBase.setName(uint256,string) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#434-440)
+updateGene(uint256,bytes) should be declared external:
+	- UnicornBase.updateGene(uint256,bytes) (../sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol#454-459)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xcf0010af06edff540af798d06e866d95cbdc8488.sol analyzed (6 contracts with 100 detectors), 81 result(s) found

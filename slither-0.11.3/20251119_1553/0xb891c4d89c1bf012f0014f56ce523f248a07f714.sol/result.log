@@ -1,0 +1,481 @@
+'solc --version' running
+'solc /sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol:
+/sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol:797:28: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function onERC998Removed(address _operator, address _toContract, uint256 _childTokenId, bytes _data) external {
+                           ^---------------^
+/sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol:797:47: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function onERC998Removed(address _operator, address _toContract, uint256 _childTokenId, bytes _data) external {
+                                              ^-----------------^
+/sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol:797:91: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function onERC998Removed(address _operator, address _toContract, uint256 _childTokenId, bytes _data) external {
+                                                                                          ^---------^
+/sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol:868:29: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function onERC721Received(address _operator, address _from, uint256 _childTokenId, bytes _data) external returns(bytes4) {
+                            ^---------------^
+
+
+ComposableTopDown.getERC20(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1074-1094) uses arbitrary from in transferFrom: require(bool,string)(ERC20AndERC223(_erc223Contract).transferFrom(_from,this,_value),ERC20 transfer failed.) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1093)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+ComposableTopDown (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#543-1138) contract sets array length with a user-controlled value:
+	- childContracts[_tokenId].push(_childContract) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#934)
+ComposableTopDown (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#543-1138) contract sets array length with a user-controlled value:
+	- erc223Contracts[_tokenId].push(_erc223Contract) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1104)
+ComposableTopDown (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#543-1138) contract sets array length with a user-controlled value:
+	- childTokens[_tokenId][_childContract].push(_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#936)
+ERC998TopDownToken (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1140-1309) contract sets array length with a user-controlled value:
+	- ownedTokens[_to].push(_tokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1264)
+AvatarToken (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1312-1433) contract sets array length with a user-controlled value:
+	- _tokenId = avatars.push(avatar) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1400)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+AddressUtils.isContract(address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#65-76) is declared view but contains assembly code
+ComposableTopDown.isContract(address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#597-601) is declared view but contains assembly code
+ComposableTopDown.tokenOwnerOf(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#603-629) is declared view but contains assembly code
+ComposableTopDown._ownerOf(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#636-681) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Contract locking ether found:
+	Contract AvatarToken (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1312-1433) has payable functions:
+	 - AvatarToken.fallback() (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1428-1430)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Reentrancy in AvatarToken._getChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1423-1426):
+	External calls:
+	- _unmountSameSocketItem(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1424)
+		- AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- require(bool)(_from == msg.sender || ERC721(_childContract).isApprovedForAll(_from,msg.sender) || ERC721(_childContract).getApproved(_childTokenId) == msg.sender) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#920-922)
+		- ERC721(_childContract).transferFrom(_from,this,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#923)
+	State variables written after the call(s):
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- childContractIndex[_tokenId][_childContract] = childContracts[_tokenId].length (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#933)
+	ComposableTopDown.childContractIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#786) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- childContracts[_tokenId].push(_childContract) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#934)
+	ComposableTopDown.childContracts (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#783) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childContractByIndex(uint256,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#993-996)
+	- ComposableTopDown.totalChildContracts(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#989-991)
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- childTokenIndex[_tokenId][_childContract][_childTokenId] = childTokensLength + 1 (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#937)
+	ComposableTopDown.childTokenIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#792) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childExists(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984-987)
+	- ComposableTopDown.ownerOfChild(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976-982)
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- childTokenOwner[_childContract][_childTokenId] = _tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#938)
+	ComposableTopDown.childTokenOwner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#795) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childExists(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984-987)
+	- ComposableTopDown.onERC998Removed(address,address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#797-800)
+	- ComposableTopDown.ownerOfChild(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976-982)
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- childTokens[_tokenId][_childContract].push(_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#936)
+	ComposableTopDown.childTokens (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#789) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413)
+	- ComposableTopDown.childTokenByIndex(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1002-1005)
+	- AvatarToken.getMountTokenIds(address,uint256,address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1335-1343)
+	- ComposableTopDown.totalChildTokens(uint256,address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#998-1000)
+Reentrancy in AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413):
+	External calls:
+	- AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	State variables written after the call(s):
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- childContractIndex[_tokenId][lastContract] = contractIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#969)
+		- delete childContractIndex[_tokenId][_childContract] (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#972)
+	ComposableTopDown.childContractIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#786) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- childContracts[_tokenId][contractIndex] = lastContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#968)
+		- childContracts[_tokenId].length -- (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#971)
+	ComposableTopDown.childContracts (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#783) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childContractByIndex(uint256,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#993-996)
+	- ComposableTopDown.totalChildContracts(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#989-991)
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- childTokenIndex[_tokenId][_childContract][lastToken] = tokenIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#954)
+		- delete childTokenIndex[_tokenId][_childContract][_childTokenId] (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#959)
+	ComposableTopDown.childTokenIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#792) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childExists(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984-987)
+	- ComposableTopDown.ownerOfChild(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976-982)
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- delete childTokenOwner[_childContract][_childTokenId] (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#960)
+	ComposableTopDown.childTokenOwner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#795) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childExists(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984-987)
+	- ComposableTopDown.onERC998Removed(address,address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#797-800)
+	- ComposableTopDown.ownerOfChild(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976-982)
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- childTokens[_tokenId][_childContract][tokenIndex - 1] = lastToken (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#953)
+		- childTokens[_tokenId][_childContract].length -- (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#957)
+	ComposableTopDown.childTokens (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#789) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413)
+	- ComposableTopDown.childTokenByIndex(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1002-1005)
+	- AvatarToken.getMountTokenIds(address,uint256,address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1335-1343)
+	- ComposableTopDown.totalChildTokens(uint256,address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#998-1000)
+Reentrancy in AvatarToken.batchMount(address,uint256[],uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1371-1382):
+	External calls:
+	- require(bool)(ERC721(_childContract).ownerOf(childTokenId) == tokenOwner) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1378)
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- require(bool)(_from == msg.sender || ERC721(_childContract).isApprovedForAll(_from,msg.sender) || ERC721(_childContract).getApproved(_childTokenId) == msg.sender) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#920-922)
+		- ERC721(_childContract).transferFrom(_from,this,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#923)
+		- AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	State variables written after the call(s):
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- childContractIndex[_tokenId][_childContract] = childContracts[_tokenId].length (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#933)
+		- childContractIndex[_tokenId][lastContract] = contractIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#969)
+		- delete childContractIndex[_tokenId][_childContract] (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#972)
+	ComposableTopDown.childContractIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#786) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- childContracts[_tokenId].push(_childContract) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#934)
+		- childContracts[_tokenId][contractIndex] = lastContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#968)
+		- childContracts[_tokenId].length -- (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#971)
+	ComposableTopDown.childContracts (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#783) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childContractByIndex(uint256,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#993-996)
+	- ComposableTopDown.totalChildContracts(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#989-991)
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- childTokenIndex[_tokenId][_childContract][lastToken] = tokenIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#954)
+		- delete childTokenIndex[_tokenId][_childContract][_childTokenId] (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#959)
+		- childTokenIndex[_tokenId][_childContract][_childTokenId] = childTokensLength + 1 (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#937)
+	ComposableTopDown.childTokenIndex (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#792) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childExists(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984-987)
+	- ComposableTopDown.ownerOfChild(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976-982)
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- delete childTokenOwner[_childContract][_childTokenId] (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#960)
+		- childTokenOwner[_childContract][_childTokenId] = _tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#938)
+	ComposableTopDown.childTokenOwner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#795) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- ComposableTopDown.childExists(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984-987)
+	- ComposableTopDown.onERC998Removed(address,address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#797-800)
+	- ComposableTopDown.ownerOfChild(address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976-982)
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- childTokens[_tokenId][_childContract][tokenIndex - 1] = lastToken (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#953)
+		- childTokens[_tokenId][_childContract].length -- (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#957)
+		- childTokens[_tokenId][_childContract].push(_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#936)
+	ComposableTopDown.childTokens (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#789) can be used in cross function reentrancies:
+	- ComposableTopDown._receiveChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#928-940)
+	- ComposableTopDown._removeChild(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#942-974)
+	- AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413)
+	- ComposableTopDown.childTokenByIndex(uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1002-1005)
+	- AvatarToken.getMountTokenIds(address,uint256,address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1335-1343)
+	- ComposableTopDown.totalChildTokens(uint256,address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#998-1000)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+ERC998TopDownToken.existsToken(uint256).owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1179) shadows:
+	- BitGuildAccessAdmin.owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#344) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413) has external calls inside a loop: AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+	Calls stack containing the loop:
+		ComposableTopDown.getChild(address,uint256,address,uint256)
+		AvatarToken._getChild(address,uint256,address,uint256)
+ComposableTopDown._transferChild(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#894-915) has external calls inside a loop: ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Calls stack containing the loop:
+		ComposableTopDown.getChild(address,uint256,address,uint256)
+		AvatarToken._getChild(address,uint256,address,uint256)
+		AvatarToken._unmountSameSocketItem(address,uint256,address,uint256)
+AvatarToken.batchMount(address,uint256[],uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1371-1382) has external calls inside a loop: require(bool)(ERC721(_childContract).ownerOf(childTokenId) == tokenOwner) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1378)
+AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413) has external calls inside a loop: AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+	Calls stack containing the loop:
+		AvatarToken.batchMount(address,uint256[],uint256)
+		AvatarToken._getChild(address,uint256,address,uint256)
+ComposableTopDown._transferChild(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#894-915) has external calls inside a loop: ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Calls stack containing the loop:
+		AvatarToken.batchMount(address,uint256[],uint256)
+		AvatarToken._getChild(address,uint256,address,uint256)
+		AvatarToken._unmountSameSocketItem(address,uint256,address,uint256)
+ComposableTopDown._getChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#918-926) has external calls inside a loop: require(bool)(_from == msg.sender || ERC721(_childContract).isApprovedForAll(_from,msg.sender) || ERC721(_childContract).getApproved(_childTokenId) == msg.sender) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#920-922)
+	Calls stack containing the loop:
+		AvatarToken.batchMount(address,uint256[],uint256)
+		AvatarToken._getChild(address,uint256,address,uint256)
+ComposableTopDown._getChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#918-926) has external calls inside a loop: ERC721(_childContract).transferFrom(_from,this,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#923)
+	Calls stack containing the loop:
+		AvatarToken.batchMount(address,uint256[],uint256)
+		AvatarToken._getChild(address,uint256,address,uint256)
+ComposableTopDown._transferChild(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#894-915) has external calls inside a loop: ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Calls stack containing the loop:
+		AvatarToken.batchUnmount(address,uint256[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in AvatarToken._getChild(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1423-1426):
+	External calls:
+	- _unmountSameSocketItem(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1424)
+		- AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+		- require(bool)(_from == msg.sender || ERC721(_childContract).isApprovedForAll(_from,msg.sender) || ERC721(_childContract).getApproved(_childTokenId) == msg.sender) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#920-922)
+		- ERC721(_childContract).transferFrom(_from,this,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#923)
+	Event emitted after the call(s):
+	- ReceivedChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#939)
+		- super._getChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1425)
+Reentrancy in ComposableTopDown._transferChild(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#894-915):
+	External calls:
+	- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Event emitted after the call(s):
+	- TransferChild(tokenId,_to,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#914)
+Reentrancy in AvatarToken._unmountSameSocketItem(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1404-1413):
+	External calls:
+	- AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+	- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Event emitted after the call(s):
+	- TransferChild(tokenId,_to,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#914)
+		- _transferChild(_owner,_childContract,tokens[i]) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1410)
+Reentrancy in AvatarToken.batchMount(address,uint256[],uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1371-1382):
+	External calls:
+	- require(bool)(ERC721(_childContract).ownerOf(childTokenId) == tokenOwner) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1378)
+	- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+		- require(bool)(_from == msg.sender || ERC721(_childContract).isApprovedForAll(_from,msg.sender) || ERC721(_childContract).getApproved(_childTokenId) == msg.sender) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#920-922)
+		- ERC721(_childContract).transferFrom(_from,this,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#923)
+		- AvatarChildService(_childContract).compareItemSlots(tokens[i],_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1408)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Event emitted after the call(s):
+	- BatchMount(msg.sender,_tokenId,_childContract,_childTokenIds) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1381)
+	- ReceivedChild(_from,_tokenId,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#939)
+		- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+	- TransferChild(tokenId,_to,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#914)
+		- _getChild(msg.sender,_tokenId,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1379)
+Reentrancy in AvatarToken.batchUnmount(address,uint256[],uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1384-1394):
+	External calls:
+	- _transferChild(msg.sender,_childContract,childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1391)
+		- ERC721(_childContract).transferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#913)
+	Event emitted after the call(s):
+	- BatchUnmount(msg.sender,_tokenId,_childContract,_childTokenIds) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1393)
+Reentrancy in ComposableTopDown.safeTransferChild(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#803-816):
+	External calls:
+	- ERC721(_childContract).safeTransferFrom(this,_to,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#814)
+	Event emitted after the call(s):
+	- TransferChild(tokenId,_to,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#815)
+Reentrancy in ComposableTopDown.safeTransferChild(address,address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#818-831):
+	External calls:
+	- ERC721(_childContract).safeTransferFrom(this,_to,_childTokenId,_data) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#829)
+	Event emitted after the call(s):
+	- TransferChild(tokenId,_to,_childContract,_childTokenId) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#830)
+Reentrancy in ComposableTopDown.transferERC20(uint256,address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1046-1057):
+	External calls:
+	- require(bool,string)(ERC20AndERC223(_erc223Contract).transfer(_to,_value),ERC20 transfer failed.) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1055)
+	Event emitted after the call(s):
+	- TransferERC20(_tokenId,_to,_erc223Contract,_value) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1056)
+Reentrancy in ComposableTopDown.transferERC223(uint256,address,address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1060-1071):
+	External calls:
+	- require(bool,string)(ERC20AndERC223(_erc223Contract).transfer(_to,_value,_data),ERC223 transfer failed.) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1069)
+	Event emitted after the call(s):
+	- TransferERC20(_tokenId,_to,_erc223Contract,_value) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1070)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+AddressUtils.isContract(address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#65-76) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#74-75)
+ComposableTopDown.isContract(address) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#597-601) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#599-600)
+ComposableTopDown.tokenOwnerOf(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#603-629) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#613-620)
+ComposableTopDown._ownerOf(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#636-681) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#653-662)
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#665-671)
+ComposableTopDown._transfer(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#720-756) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#751-754)
+ComposableTopDown.onERC721Received(address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#841-865) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#849-854)
+ComposableTopDown.onERC721Received(address,address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#868-892) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#876-881)
+ComposableTopDown._transferChild(address,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#894-915) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#910-913)
+ComposableTopDown.getERC20(address,uint256,address,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1074-1094) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1081-1087)
+ComposableTopDown.tokenFallback(address,uint256,bytes) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1111-1127) uses assembly
+	- INLINE ASM (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1119-1122)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ComposableTopDown._ownerOf(uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#636-681) compares to a boolean constant:
+	-callSuccess == false || isParent >> 8 != TOKEN_OWNER_OF (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#662)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+ERC998TopDownToken._setTokenURI(uint256,string) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1253-1255) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter UrlStr.generateUrl(string,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#84) is not in mixedCase
+Parameter SupportsInterfaceWithLookup.supportsInterface(bytes4)._interfaceId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#317) is not in mixedCase
+Parameter BitGuildAccessAdmin.transferOwnership(address)._newOwner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#381) is not in mixedCase
+Parameter BitGuildAccessAdmin.addOperator(address)._newOperator (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#394) is not in mixedCase
+Parameter BitGuildAccessAdmin.removeOperator(address)._operator (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#422) is not in mixedCase
+Variable BitGuildAccessAdmin.MAX_OPS (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#347) is not in mixedCase
+Parameter ERC998ERC20TopDown.balanceOfERC20(uint256,address).__erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#524) is not in mixedCase
+Parameter ComposableTopDown.tokenOwnerOf(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#603) is not in mixedCase
+Parameter ComposableTopDown.ownerOf(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#631) is not in mixedCase
+Parameter ComposableTopDown.balanceOf(address)._tokenOwner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#683) is not in mixedCase
+Parameter ComposableTopDown.approve(address,uint256)._approved (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#689) is not in mixedCase
+Parameter ComposableTopDown.approve(address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#689) is not in mixedCase
+Parameter ComposableTopDown.getApproved(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#703) is not in mixedCase
+Parameter ComposableTopDown.setApprovalForAll(address,bool)._operator (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#708) is not in mixedCase
+Parameter ComposableTopDown.setApprovalForAll(address,bool)._approved (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#708) is not in mixedCase
+Parameter ComposableTopDown.isApprovedForAll(address,address)._owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#714) is not in mixedCase
+Parameter ComposableTopDown.isApprovedForAll(address,address)._operator (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#714) is not in mixedCase
+Parameter ComposableTopDown.transferFrom(address,address,uint256)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#758) is not in mixedCase
+Parameter ComposableTopDown.transferFrom(address,address,uint256)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#758) is not in mixedCase
+Parameter ComposableTopDown.transferFrom(address,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#758) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#762) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#762) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#762) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256,bytes)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#770) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256,bytes)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#770) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256,bytes)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#770) is not in mixedCase
+Parameter ComposableTopDown.safeTransferFrom(address,address,uint256,bytes)._data (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#770) is not in mixedCase
+Parameter ComposableTopDown.onERC998Removed(address,address,uint256,bytes)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#797) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#803) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#803) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#803) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256,bytes)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#818) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256,bytes)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#818) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256,bytes)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#818) is not in mixedCase
+Parameter ComposableTopDown.safeTransferChild(address,address,uint256,bytes)._data (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#818) is not in mixedCase
+Parameter ComposableTopDown.transferChild(address,address,uint256)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#833) is not in mixedCase
+Parameter ComposableTopDown.transferChild(address,address,uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#833) is not in mixedCase
+Parameter ComposableTopDown.transferChild(address,address,uint256)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#833) is not in mixedCase
+Parameter ComposableTopDown.getChild(address,uint256,address,uint256)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#837) is not in mixedCase
+Parameter ComposableTopDown.getChild(address,uint256,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#837) is not in mixedCase
+Parameter ComposableTopDown.getChild(address,uint256,address,uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#837) is not in mixedCase
+Parameter ComposableTopDown.getChild(address,uint256,address,uint256)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#837) is not in mixedCase
+Parameter ComposableTopDown.onERC721Received(address,uint256,bytes)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#841) is not in mixedCase
+Parameter ComposableTopDown.onERC721Received(address,uint256,bytes)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#841) is not in mixedCase
+Parameter ComposableTopDown.onERC721Received(address,uint256,bytes)._data (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#841) is not in mixedCase
+Parameter ComposableTopDown.onERC721Received(address,address,uint256,bytes)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#868) is not in mixedCase
+Parameter ComposableTopDown.onERC721Received(address,address,uint256,bytes)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#868) is not in mixedCase
+Parameter ComposableTopDown.onERC721Received(address,address,uint256,bytes)._data (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#868) is not in mixedCase
+Parameter ComposableTopDown.ownerOfChild(address,uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976) is not in mixedCase
+Parameter ComposableTopDown.ownerOfChild(address,uint256)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#976) is not in mixedCase
+Parameter ComposableTopDown.childExists(address,uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984) is not in mixedCase
+Parameter ComposableTopDown.childExists(address,uint256)._childTokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#984) is not in mixedCase
+Parameter ComposableTopDown.totalChildContracts(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#989) is not in mixedCase
+Parameter ComposableTopDown.childContractByIndex(uint256,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#993) is not in mixedCase
+Parameter ComposableTopDown.childContractByIndex(uint256,uint256)._index (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#993) is not in mixedCase
+Parameter ComposableTopDown.totalChildTokens(uint256,address)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#998) is not in mixedCase
+Parameter ComposableTopDown.totalChildTokens(uint256,address)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#998) is not in mixedCase
+Parameter ComposableTopDown.childTokenByIndex(uint256,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1002) is not in mixedCase
+Parameter ComposableTopDown.childTokenByIndex(uint256,address,uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1002) is not in mixedCase
+Parameter ComposableTopDown.childTokenByIndex(uint256,address,uint256)._index (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1002) is not in mixedCase
+Parameter ComposableTopDown.balanceOfERC20(uint256,address)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1020) is not in mixedCase
+Parameter ComposableTopDown.balanceOfERC20(uint256,address)._erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1020) is not in mixedCase
+Parameter ComposableTopDown.removeERC223(uint256,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1024) is not in mixedCase
+Parameter ComposableTopDown.removeERC223(uint256,address,uint256)._erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1024) is not in mixedCase
+Parameter ComposableTopDown.removeERC223(uint256,address,uint256)._value (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1024) is not in mixedCase
+Parameter ComposableTopDown.transferERC20(uint256,address,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1046) is not in mixedCase
+Parameter ComposableTopDown.transferERC20(uint256,address,address,uint256)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1046) is not in mixedCase
+Parameter ComposableTopDown.transferERC20(uint256,address,address,uint256)._erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1046) is not in mixedCase
+Parameter ComposableTopDown.transferERC20(uint256,address,address,uint256)._value (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1046) is not in mixedCase
+Parameter ComposableTopDown.transferERC223(uint256,address,address,uint256,bytes)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1060) is not in mixedCase
+Parameter ComposableTopDown.transferERC223(uint256,address,address,uint256,bytes)._to (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1060) is not in mixedCase
+Parameter ComposableTopDown.transferERC223(uint256,address,address,uint256,bytes)._erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1060) is not in mixedCase
+Parameter ComposableTopDown.transferERC223(uint256,address,address,uint256,bytes)._value (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1060) is not in mixedCase
+Parameter ComposableTopDown.transferERC223(uint256,address,address,uint256,bytes)._data (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1060) is not in mixedCase
+Parameter ComposableTopDown.getERC20(address,uint256,address,uint256)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1074) is not in mixedCase
+Parameter ComposableTopDown.getERC20(address,uint256,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1074) is not in mixedCase
+Parameter ComposableTopDown.getERC20(address,uint256,address,uint256)._erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1074) is not in mixedCase
+Parameter ComposableTopDown.getERC20(address,uint256,address,uint256)._value (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1074) is not in mixedCase
+Parameter ComposableTopDown.erc223Received(address,uint256,address,uint256)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1096) is not in mixedCase
+Parameter ComposableTopDown.erc223Received(address,uint256,address,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1096) is not in mixedCase
+Parameter ComposableTopDown.erc223Received(address,uint256,address,uint256)._erc223Contract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1096) is not in mixedCase
+Parameter ComposableTopDown.erc223Received(address,uint256,address,uint256)._value (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1096) is not in mixedCase
+Parameter ComposableTopDown.tokenFallback(address,uint256,bytes)._from (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1111) is not in mixedCase
+Parameter ComposableTopDown.tokenFallback(address,uint256,bytes)._value (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1111) is not in mixedCase
+Parameter ComposableTopDown.tokenFallback(address,uint256,bytes)._data (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1111) is not in mixedCase
+Parameter ComposableTopDown.erc20ContractByIndex(uint256,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1129) is not in mixedCase
+Parameter ComposableTopDown.erc20ContractByIndex(uint256,uint256)._index (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1129) is not in mixedCase
+Parameter ComposableTopDown.totalERC20Contracts(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1134) is not in mixedCase
+Constant ComposableTopDown.InterfaceId_ERC998 (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#574) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter ERC998TopDownToken.tokenURI(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1205) is not in mixedCase
+Parameter ERC998TopDownToken.tokenOfOwnerByIndex(address,uint256)._owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1216) is not in mixedCase
+Parameter ERC998TopDownToken.tokenOfOwnerByIndex(address,uint256)._index (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1217) is not in mixedCase
+Parameter ERC998TopDownToken.tokenByIndex(uint256)._index (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1242) is not in mixedCase
+Constant ERC998TopDownToken.InterfaceId_ERC721Enumerable (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1144) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC998TopDownToken.InterfaceId_ERC721Metadata (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1151) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter AvatarToken.createAvatar(address,string,uint256)._owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1331) is not in mixedCase
+Parameter AvatarToken.createAvatar(address,string,uint256)._name (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1331) is not in mixedCase
+Parameter AvatarToken.createAvatar(address,string,uint256)._dna (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1331) is not in mixedCase
+Parameter AvatarToken.getMountTokenIds(address,uint256,address)._owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1335) is not in mixedCase
+Parameter AvatarToken.getMountTokenIds(address,uint256,address)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1335) is not in mixedCase
+Parameter AvatarToken.getMountTokenIds(address,uint256,address)._avatarItemAddress (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1335) is not in mixedCase
+Parameter AvatarToken.updateAvatarInfo(address,uint256,string,uint256)._owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1345) is not in mixedCase
+Parameter AvatarToken.updateAvatarInfo(address,uint256,string,uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1345) is not in mixedCase
+Parameter AvatarToken.updateAvatarInfo(address,uint256,string,uint256)._name (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1345) is not in mixedCase
+Parameter AvatarToken.updateAvatarInfo(address,uint256,string,uint256)._dna (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1345) is not in mixedCase
+Parameter AvatarToken.updateBaseURI(string)._url (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1353) is not in mixedCase
+Parameter AvatarToken.tokenURI(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1357) is not in mixedCase
+Parameter AvatarToken.getOwnedTokenIds(address)._owner (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1361) is not in mixedCase
+Parameter AvatarToken.getAvatarInfo(uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1365) is not in mixedCase
+Parameter AvatarToken.batchMount(address,uint256[],uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1371) is not in mixedCase
+Parameter AvatarToken.batchMount(address,uint256[],uint256)._childTokenIds (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1371) is not in mixedCase
+Parameter AvatarToken.batchMount(address,uint256[],uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1371) is not in mixedCase
+Parameter AvatarToken.batchUnmount(address,uint256[],uint256)._childContract (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1384) is not in mixedCase
+Parameter AvatarToken.batchUnmount(address,uint256[],uint256)._childTokenIds (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1384) is not in mixedCase
+Parameter AvatarToken.batchUnmount(address,uint256[],uint256)._tokenId (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1384) is not in mixedCase
+Variable AvatarToken.BASE_URL (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1327) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+UrlStr.generateUrl(string,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#84-96) uses literals with too many digits:
+	- _tokenURIBytes[base_len - 7] = bytes1(48 + _tokenId / 10000000 % 10) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#88)
+UrlStr.generateUrl(string,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#84-96) uses literals with too many digits:
+	- _tokenURIBytes[base_len - 6] = bytes1(48 + _tokenId / 1000000 % 10) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#89)
+UrlStr.generateUrl(string,uint256) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#84-96) uses literals with too many digits:
+	- _tokenURIBytes[base_len - 5] = bytes1(48 + _tokenId / 100000 % 10) (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#90)
+AvatarToken.slitherConstructorVariables() (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1312-1433) uses literals with too many digits:
+	- BASE_URL = https://www.bitguild.com/bitizens/api/avatar/getAvatar/00000000 (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#1327)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Loop condition i < operators.length (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#439) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < operators.length (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#452) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+BitGuildAccessAdmin.MAX_OPS (../sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol#347) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xb891c4d89c1bf012f0014f56ce523f248a07f714.sol analyzed (21 contracts with 100 detectors), 169 result(s) found

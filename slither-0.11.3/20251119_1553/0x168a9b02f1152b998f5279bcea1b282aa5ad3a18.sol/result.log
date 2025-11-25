@@ -1,0 +1,76 @@
+'solc --version' running
+'solc /sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:59:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:97:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function LaboToken() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:73:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnershipTransferred(owner, newOwner);
+        ^-----------------------------------^
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:103:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0), 0x71951686b2a1Ef7481052053728399aa9F438f54, _totalSupply);
+        ^----------------------------------------------------------------------------^
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:131:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, to, tokens);
+        ^------------------------------^
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:146:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, tokens);
+        ^-----------------------------------^
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:164:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(from, to, tokens);
+        ^------------------------^
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol:185:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, spender, tokens);
+        ^-----------------------------------^
+
+
+Contract locking ether found:
+	Contract LaboToken (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#84-206) has payable functions:
+	 - LaboToken.fallback() (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#194-196)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Owned.transferOwnership(address)._newOwner (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#68) lacks a zero-check on :
+		- newOwner = _newOwner (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#69)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Owned.transferOwnership(address)._newOwner (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#68) is not in mixedCase
+Variable LaboToken._totalSupply (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#88) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+LaboToken.LaboToken() (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#97-104) uses literals with too many digits:
+	- _totalSupply = 3000000000000000000000000000 (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#101)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- ApproveAndCallFallBack.receiveApproval(address,uint256,address,bytes) (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#46)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- LaboToken.approveAndCall(address,uint256,bytes) (../sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol#183-188)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x168a9b02f1152b998f5279bcea1b282aa5ad3a18.sol analyzed (5 contracts with 100 detectors), 9 result(s) found

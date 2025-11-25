@@ -1,0 +1,461 @@
+'solc --version' running
+'solc /sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:171:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function UnilotToken()
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:709:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function UNITv2(address _sourceToken)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:970:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function UNITDummyPaymentGateway(address _token)
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:31:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() public constant returns (uint);
+    ^----------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:32:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner) public constant returns (uint balance);
+    ^------------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:33:5: Warning: Functions in interfaces should be declared external.
+    function transfer(address _to, uint _value) public returns (bool success);
+    ^------------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:34:5: Warning: Functions in interfaces should be declared external.
+    function transferFrom(address _from, address _to, uint _value) public returns (bool success);
+    ^-------------------------------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:35:5: Warning: Functions in interfaces should be declared external.
+    function approve(address _spender, uint _value) public returns (bool success);
+    ^----------------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:36:5: Warning: Functions in interfaces should be declared external.
+    function allowance(address _owner, address _spender) public constant returns (uint remaining);
+    ^--------------------------------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:326:21: Warning: Invoking events without "emit" prefix is deprecated.
+                    StageUpdated(stages[currentStage - 1].name, stages[currentStage].name);
+                    ^--------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:384:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, _to, _amount);
+            ^--------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:417:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(_from, _to, _amount);
+            ^---------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:434:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _amount);
+        ^-------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:503:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokenPurchased(stages[currentStage].name, msg.value, refund, amountToBuy);
+        ^-----------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:516:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        STORAGE_WALLET.transfer(this.balance);
+                                ^----------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:571:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(msg.sender, _to, _amount);
+            ^--------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:601:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(_from, _to, _amount);
+            ^---------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:616:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _amount);
+        ^-------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:631:5: Warning: Functions in interfaces should be declared external.
+    function isDebug() public constant returns(bool);
+    ^-----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:632:5: Warning: Functions in interfaces should be declared external.
+    function setToken(address tokenAddress) public;
+    ^---------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:633:5: Warning: Functions in interfaces should be declared external.
+    function getPool() public constant returns (uint96);
+    ^--------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:634:5: Warning: Functions in interfaces should be declared external.
+    function getBonus() public constant returns (uint8);
+    ^--------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:635:5: Warning: Functions in interfaces should be declared external.
+    function isFreezeTimeout() public constant returns (bool);
+    ^--------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:636:5: Warning: Functions in interfaces should be declared external.
+    function isTimeout() public constant returns (bool);
+    ^--------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:637:5: Warning: Functions in interfaces should be declared external.
+    function isICO() public view returns(bool);
+    ^-----------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:638:5: Warning: Functions in interfaces should be declared external.
+    function isCanList() public view returns (bool);
+    ^----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:639:5: Warning: Functions in interfaces should be declared external.
+    function calculateBonus(uint96 amount) public view returns (uint88);
+    ^------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:640:5: Warning: Functions in interfaces should be declared external.
+    function delegateFromPool(uint96 amount) public;
+    ^----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:641:5: Warning: Functions in interfaces should be declared external.
+    function delegateFromBonus(uint88 amount) public;
+    ^-----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:642:5: Warning: Functions in interfaces should be declared external.
+    function delegateFromReferral(uint88 amount) public;
+    ^--------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:644:5: Warning: Functions in interfaces should be declared external.
+    function getBonusPool() public constant returns(uint88);
+    ^------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:645:5: Warning: Functions in interfaces should be declared external.
+    function getReferralPool() public constant returns(uint88);
+    ^---------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:649:5: Warning: Functions in interfaces should be declared external.
+    function add(address _wlAddress) public;
+    ^--------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:650:5: Warning: Functions in interfaces should be declared external.
+    function addBulk(address[] _wlAddresses) public;
+    ^----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:651:5: Warning: Functions in interfaces should be declared external.
+    function remove(address _wlAddresses) public;
+    ^-------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:652:5: Warning: Functions in interfaces should be declared external.
+    function removeBulk(address[] _wlAddresses) public;
+    ^-------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:653:5: Warning: Functions in interfaces should be declared external.
+    function getAll() public constant returns(address[]);
+    ^---------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:654:5: Warning: Functions in interfaces should be declared external.
+    function isInList(address _checkAddress) public constant returns(bool);
+    ^---------------------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:794:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TokensImported(_tokenHolder, oldBalance, _sourceToken);
+            ^----------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:890:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensDelegated(tokenHolder, amount, msg.sender);
+        ^----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:904:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensDelegated(tokenHolder, uint96(amount), msg.sender);
+        ^------------------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:918:9: Warning: Invoking events without "emit" prefix is deprecated.
+        TokensDelegated(tokenHolder, amount, msg.sender);
+        ^----------------------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:940:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Unlocked();
+        ^--------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:955:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burned(burnAmount);
+        ^----------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:990:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Payment(tokenHolder, 0, 0, numTokens);
+        ^-----------------------------------^
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol:994:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        storageAddress.transfer(this.balance);
+                                ^----------^
+
+
+UNITv2.symbol (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#659) shadows:
+	- ERC20Contract.symbol (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#531)
+UNITv2.name (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#661) shadows:
+	- ERC20Contract.name (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#534)
+UNITv2.decimals (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#663) shadows:
+	- ERC20Contract.decimals (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#537)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+UnilotToken.fallback() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#479-517) performs a multiplication on the result of a division:
+	- refund = (((requestedAmountOfTokens - amountToBuy) / accuracy) * price) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#497)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Reentrancy in UNITv2.importFromSource(ERC20,address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#786-796):
+	External calls:
+	- oldBalance = uint96(_sourceToken.balanceOf(_tokenHolder)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#790)
+	State variables written after the call(s):
+	- markAsImported(_sourceToken,_tokenHolder) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#792)
+		- tokenImport[_tokenHolder][_sourceToken] = true (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#783)
+	UNITv2.tokenImport (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#681) can be used in cross function reentrancies:
+	- UNITv2.isImported(address,address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#772-778)
+	- UNITv2.markAsImported(address,address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#780-784)
+	- UNITv2.tokenImport (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#681)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+UNITv2.importFromSource(ERC20,address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#786-796) has external calls inside a loop: oldBalance = uint96(_sourceToken.balanceOf(_tokenHolder)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#790)
+	Calls stack containing the loop:
+		UNITv2.importTokensSourceBulk(ERC20,address[])
+UNITv2.delegateReferalTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#907-919) has external calls inside a loop: require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#911)
+	Calls stack containing the loop:
+		UNITv2.delegateReferralTokensBulk(address[],uint88[])
+UNITv2.delegateReferalTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#907-919) has external calls inside a loop: require(bool)(stagesManager.getReferralPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#912)
+	Calls stack containing the loop:
+		UNITv2.delegateReferralTokensBulk(address[],uint88[])
+UNITv2.delegateReferalTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#907-919) has external calls inside a loop: stagesManager.delegateFromReferral(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#914)
+	Calls stack containing the loop:
+		UNITv2.delegateReferralTokensBulk(address[],uint88[])
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in UNITv2.approve(address,uint256) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#868-874):
+	External calls:
+	- isTransferAllowed(msg.sender,_spender) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#870)
+		- sourceToken.RESERVE_WALLET() == _from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#699)
+		- require(bool)(stagesManager.isFreezeTimeout()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#700)
+		- require(bool)(unlocked || (stagesManager != address(0) && stagesManager.isCanList()) || (transferWhiteList != address(0) && (transferWhiteList.isInList(_from) || transferWhiteList.isInList(_to)))) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#702-705)
+	State variables written after the call(s):
+	- super.approve(_spender,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#873)
+		- allowed[msg.sender][_spender] = uint96(_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#615)
+Reentrancy in UNITv2.burn() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#943-956):
+	External calls:
+	- require(bool)(! stagesManager.isICO()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#947)
+	- burnAmount = stagesManager.getPool() + stagesManager.getBonusPool() + stagesManager.getReferralPool() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#949-951)
+	State variables written after the call(s):
+	- _totalSupply -= burnAmount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#953)
+	- burned = true (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#954)
+Reentrancy in UNITv2.delegateBonusTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#893-905):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#897)
+	- require(bool)(stagesManager.getBonusPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#898)
+	- stagesManager.delegateFromBonus(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#900)
+	State variables written after the call(s):
+	- balances[tokenHolder] += amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#902)
+Reentrancy in UNITv2.delegateReferalTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#907-919):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#911)
+	- require(bool)(stagesManager.getReferralPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#912)
+	- stagesManager.delegateFromReferral(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#914)
+	State variables written after the call(s):
+	- balances[tokenHolder] += amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#916)
+Reentrancy in UNITv2.delegateTokens(address,uint96) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#877-891):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#881)
+	- require(bool)(stagesManager.isICO()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#882)
+	- require(bool)(stagesManager.getPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#883)
+	- bonus = stagesManager.calculateBonus(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#885)
+	- stagesManager.delegateFromPool(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#886)
+	State variables written after the call(s):
+	- balances[tokenHolder] += amount + uint96(bonus) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#888)
+Reentrancy in UNITv2.importFromSource(ERC20,address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#786-796):
+	External calls:
+	- oldBalance = uint96(_sourceToken.balanceOf(_tokenHolder)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#790)
+	State variables written after the call(s):
+	- balances[_tokenHolder] += oldBalance (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#791)
+Reentrancy in UNITv2.transfer(address,uint256) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#848-854):
+	External calls:
+	- isTransferAllowed(msg.sender,_to) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#850)
+		- sourceToken.RESERVE_WALLET() == _from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#699)
+		- require(bool)(stagesManager.isFreezeTimeout()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#700)
+		- require(bool)(unlocked || (stagesManager != address(0) && stagesManager.isCanList()) || (transferWhiteList != address(0) && (transferWhiteList.isInList(_from) || transferWhiteList.isInList(_to)))) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#702-705)
+	State variables written after the call(s):
+	- super.transfer(_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#853)
+		- balances[msg.sender] -= uint96(_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#569)
+		- balances[_to] += uint96(_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#570)
+Reentrancy in UNITv2.transferFrom(address,address,uint256) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#856-866):
+	External calls:
+	- isTransferAllowed(_from,_to) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#862)
+		- sourceToken.RESERVE_WALLET() == _from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#699)
+		- require(bool)(stagesManager.isFreezeTimeout()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#700)
+		- require(bool)(unlocked || (stagesManager != address(0) && stagesManager.isCanList()) || (transferWhiteList != address(0) && (transferWhiteList.isInList(_from) || transferWhiteList.isInList(_to)))) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#702-705)
+	State variables written after the call(s):
+	- super.transferFrom(_from,_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#865)
+		- allowed[_from][msg.sender] -= uint96(_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#599)
+	- super.transferFrom(_from,_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#865)
+		- balances[_from] -= uint96(_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#598)
+		- balances[_to] += uint96(_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#600)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in UNITv2.approve(address,uint256) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#868-874):
+	External calls:
+	- isTransferAllowed(msg.sender,_spender) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#870)
+		- sourceToken.RESERVE_WALLET() == _from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#699)
+		- require(bool)(stagesManager.isFreezeTimeout()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#700)
+		- require(bool)(unlocked || (stagesManager != address(0) && stagesManager.isCanList()) || (transferWhiteList != address(0) && (transferWhiteList.isInList(_from) || transferWhiteList.isInList(_to)))) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#702-705)
+	Event emitted after the call(s):
+	- Approval(msg.sender,_spender,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#616)
+		- super.approve(_spender,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#873)
+Reentrancy in UNITv2.burn() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#943-956):
+	External calls:
+	- require(bool)(! stagesManager.isICO()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#947)
+	- burnAmount = stagesManager.getPool() + stagesManager.getBonusPool() + stagesManager.getReferralPool() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#949-951)
+	Event emitted after the call(s):
+	- Burned(burnAmount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#955)
+Reentrancy in UNITv2.delegateBonusTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#893-905):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#897)
+	- require(bool)(stagesManager.getBonusPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#898)
+	- stagesManager.delegateFromBonus(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#900)
+	Event emitted after the call(s):
+	- TokensDelegated(tokenHolder,uint96(amount),msg.sender) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#904)
+Reentrancy in UNITv2.delegateReferalTokens(address,uint88) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#907-919):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#911)
+	- require(bool)(stagesManager.getReferralPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#912)
+	- stagesManager.delegateFromReferral(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#914)
+	Event emitted after the call(s):
+	- TokensDelegated(tokenHolder,amount,msg.sender) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#918)
+Reentrancy in UNITv2.delegateReferralTokensBulk(address[],uint88[]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#921-932):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#925)
+	- delegateReferalTokens(tokenHolders[i],amounts[i]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#930)
+		- require(bool)(paymentGateways.isInList(msg.sender) || tx.origin == administrator) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#911)
+		- require(bool)(stagesManager.getReferralPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#912)
+		- stagesManager.delegateFromReferral(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#914)
+	Event emitted after the call(s):
+	- TokensDelegated(tokenHolder,amount,msg.sender) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#918)
+		- delegateReferalTokens(tokenHolders[i],amounts[i]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#930)
+Reentrancy in UNITv2.delegateTokens(address,uint96) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#877-891):
+	External calls:
+	- require(bool)(paymentGateways.isInList(msg.sender)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#881)
+	- require(bool)(stagesManager.isICO()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#882)
+	- require(bool)(stagesManager.getPool() >= amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#883)
+	- bonus = stagesManager.calculateBonus(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#885)
+	- stagesManager.delegateFromPool(amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#886)
+	Event emitted after the call(s):
+	- TokensDelegated(tokenHolder,amount,msg.sender) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#890)
+Reentrancy in UNITv2.importFromSource(ERC20,address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#786-796):
+	External calls:
+	- oldBalance = uint96(_sourceToken.balanceOf(_tokenHolder)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#790)
+	Event emitted after the call(s):
+	- TokensImported(_tokenHolder,oldBalance,_sourceToken) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#794)
+Reentrancy in UNITv2.transfer(address,uint256) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#848-854):
+	External calls:
+	- isTransferAllowed(msg.sender,_to) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#850)
+		- sourceToken.RESERVE_WALLET() == _from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#699)
+		- require(bool)(stagesManager.isFreezeTimeout()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#700)
+		- require(bool)(unlocked || (stagesManager != address(0) && stagesManager.isCanList()) || (transferWhiteList != address(0) && (transferWhiteList.isInList(_from) || transferWhiteList.isInList(_to)))) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#702-705)
+	Event emitted after the call(s):
+	- Transfer(msg.sender,_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#571)
+		- super.transfer(_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#853)
+Reentrancy in UNITv2.transferFrom(address,address,uint256) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#856-866):
+	External calls:
+	- isTransferAllowed(_from,_to) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#862)
+		- sourceToken.RESERVE_WALLET() == _from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#699)
+		- require(bool)(stagesManager.isFreezeTimeout()) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#700)
+		- require(bool)(unlocked || (stagesManager != address(0) && stagesManager.isCanList()) || (transferWhiteList != address(0) && (transferWhiteList.isInList(_from) || transferWhiteList.isInList(_to)))) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#702-705)
+	Event emitted after the call(s):
+	- Transfer(_from,_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#601)
+		- super.transferFrom(_from,_to,_amount) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#865)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+UnilotToken._proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#295-332) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentStage < stages.length && (now >= stages[currentStage].endsAt || getAvailableCoinsForCurrentStage() == 0) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#299-300)
+UnilotToken.fallback() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#479-517) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(stages[currentStage].startsAt <= now && now < stages[currentStage].endsAt) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#488)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+UNITv2.isLocked() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#688-691) compares to a boolean constant:
+	-require(bool)(unlocked == false) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#689)
+UNITv2.isNotBurned() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#693-696) compares to a boolean constant:
+	-require(bool)(burned == false) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#694)
+UNITDummyPaymentGateway.delegateTokens(address,uint96) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#984-995) compares to a boolean constant:
+	-require(bool)(locked == false) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#988)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+UnilotToken.prealocateCoins() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#183-203) has costly operations inside a loop:
+	- totalCoinsAvailable -= memberAmount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#201)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+UNITv2.importTokensFromSourceToken(address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#799-803) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Administrated.setAdministrator(address)._administrator (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#20) is not in mixedCase
+Parameter UnilotToken.balanceOf(address)._owner (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#363) is not in mixedCase
+Parameter UnilotToken.transfer(address,uint256)._to (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#373) is not in mixedCase
+Parameter UnilotToken.transfer(address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#373) is not in mixedCase
+Parameter UnilotToken.transferFrom(address,address,uint256)._from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#400) is not in mixedCase
+Parameter UnilotToken.transferFrom(address,address,uint256)._to (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#401) is not in mixedCase
+Parameter UnilotToken.transferFrom(address,address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#402) is not in mixedCase
+Parameter UnilotToken.approve(address,uint256)._spender (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#427) is not in mixedCase
+Parameter UnilotToken.approve(address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#427) is not in mixedCase
+Parameter UnilotToken.allowance(address,address)._owner (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#439) is not in mixedCase
+Parameter UnilotToken.allowance(address,address)._spender (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#439) is not in mixedCase
+Parameter ERC20Contract.balanceOf(address)._owner (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#552) is not in mixedCase
+Parameter ERC20Contract.transfer(address,uint256)._to (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#562) is not in mixedCase
+Parameter ERC20Contract.transfer(address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#562) is not in mixedCase
+Parameter ERC20Contract.transferFrom(address,address,uint256)._from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#587) is not in mixedCase
+Parameter ERC20Contract.transferFrom(address,address,uint256)._to (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#588) is not in mixedCase
+Parameter ERC20Contract.transferFrom(address,address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#589) is not in mixedCase
+Parameter ERC20Contract.approve(address,uint256)._spender (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#611) is not in mixedCase
+Parameter ERC20Contract.approve(address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#611) is not in mixedCase
+Parameter ERC20Contract.allowance(address,address)._owner (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#621) is not in mixedCase
+Parameter ERC20Contract.allowance(address,address)._spender (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#621) is not in mixedCase
+Parameter UNITv2.isImported(address,address)._sourceToken (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#772) is not in mixedCase
+Parameter UNITv2.isImported(address,address)._tokenHolder (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#772) is not in mixedCase
+Parameter UNITv2.markAsImported(address,address)._sourceToken (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#780) is not in mixedCase
+Parameter UNITv2.markAsImported(address,address)._tokenHolder (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#780) is not in mixedCase
+Parameter UNITv2.importFromSource(ERC20,address)._sourceToken (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#786) is not in mixedCase
+Parameter UNITv2.importFromSource(ERC20,address)._tokenHolder (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#786) is not in mixedCase
+Parameter UNITv2.importTokensFromSourceToken(address)._tokenHolder (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#799) is not in mixedCase
+Parameter UNITv2.importFromExternal(ERC20,address)._sourceToken (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#805) is not in mixedCase
+Parameter UNITv2.importFromExternal(ERC20,address)._tokenHolder (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#805) is not in mixedCase
+Parameter UNITv2.importTokensSourceBulk(ERC20,address[])._sourceToken (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#814) is not in mixedCase
+Parameter UNITv2.importTokensSourceBulk(ERC20,address[])._tokenHolders (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#814) is not in mixedCase
+Parameter UNITv2.balanceOf(address)._owner (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#836) is not in mixedCase
+Parameter UNITv2.transfer(address,uint256)._to (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#848) is not in mixedCase
+Parameter UNITv2.transfer(address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#848) is not in mixedCase
+Parameter UNITv2.transferFrom(address,address,uint256)._from (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#857) is not in mixedCase
+Parameter UNITv2.transferFrom(address,address,uint256)._to (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#858) is not in mixedCase
+Parameter UNITv2.transferFrom(address,address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#859) is not in mixedCase
+Parameter UNITv2.approve(address,uint256)._spender (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#868) is not in mixedCase
+Parameter UNITv2.approve(address,uint256)._amount (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#868) is not in mixedCase
+Variable UNITv2._totalSupply (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#666) is not in mixedCase
+Parameter UNITDummyPaymentGateway.setToken(address)._token (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#977) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in UnilotToken.fallback() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#479-517):
+	External calls:
+	- msg.sender.transfer(refund) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#500)
+	State variables written after the call(s):
+	- _proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#513)
+		- _totalSupply -= (((stages[(stages.length - 1)].coinsAvailable * DST_BOUNTY) / 100) + ((stages[(stages.length - 1)].coinsAvailable * DST_R_N_B_PROGRAM) / 100)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#311-312)
+	- balances[msg.sender] += amountDelivered (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#509)
+	- _proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#513)
+		- balances[BOUNTY_WALLET] = (((totalTokensForSale - stages[(stages.length - 1)].coinsAvailable) * DST_BOUNTY) / 100) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#314)
+		- balances[R_N_D_WALLET] = (((totalTokensForSale - stages[(stages.length - 1)].coinsAvailable) * DST_R_N_B_PROGRAM) / 100) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#315)
+	- _proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#513)
+		- currentStage ++ (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#301)
+	- stages[currentStage].coinsAvailable -= amountToBuy (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#504)
+	- stages[currentStage].balance += (msg.value - refund) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#505)
+	- _proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#513)
+		- stages[currentStage].numCoinsStart = totalCoinsAvailable (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#321)
+		- stages[(stages.length - 1)].coinsAvailable += stages[(currentStage - 1)].coinsAvailable (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#325)
+	- totalCoinsAvailable -= amountDelivered (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#510)
+	- _proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#513)
+		- totalCoinsAvailable = 0 (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#317)
+	Event emitted after the call(s):
+	- StageUpdated(stages[currentStage - 1].name,stages[currentStage].name) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#326)
+		- _proceedStage() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#513)
+	- TokenPurchased(stages[currentStage].name,msg.value,refund,amountToBuy) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#503)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+UnilotToken.slitherConstructorConstantVariables() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#39-527) uses literals with too many digits:
+	- accuracy = 1000000000000000000 (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#59)
+UNITv2.UNITv2(address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#709-737) uses literals with too many digits:
+	- balances[0xd13289203889bD898d49e31a1500388441C03663] += 1400000000000000000 * 3 (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#720)
+UNITv2.UNITv2(address) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#709-737) uses literals with too many digits:
+	- balances[0xE33305B2EFbcB302DA513C38671D01646651a868] += 1400000000000000000 (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#724)
+UNITv2.slitherConstructorVariables() (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#657-957) uses literals with too many digits:
+	- _totalSupply = uint96(500000000 * (10 ** 18)) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#666)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+UNITDummyPaymentGateway.storageAddress (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#966) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+addBulk(address[]) should be declared external:
+	- Whitelist.addBulk(address[]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#650)
+removeBulk(address[]) should be declared external:
+	- Whitelist.removeBulk(address[]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#652)
+importTokensSourceBulk(ERC20,address[]) should be declared external:
+	- UNITv2.importTokensSourceBulk(ERC20,address[]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#814-824)
+delegateReferralTokensBulk(address[],uint88[]) should be declared external:
+	- UNITv2.delegateReferralTokensBulk(address[],uint88[]) (../sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol#921-932)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x136b1e6e149f0dadf3c662fb6feec3d7587aaadd.sol analyzed (9 contracts with 100 detectors), 87 result(s) found

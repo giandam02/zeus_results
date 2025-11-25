@@ -1,0 +1,1090 @@
+'solc --version' running
+'solc /sb/0x31c643c416368c988f2b8894684e419e260b174a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Buffer.init(Buffer.buffer,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#140-151) is declared view but contains assembly code
+Buffer.append(Buffer.buffer,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#173-211) is declared view but contains assembly code
+Buffer.append(Buffer.buffer,uint8) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#220-236) is declared view but contains assembly code
+Buffer.appendInt(Buffer.buffer,uint256,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#245-263) is declared view but contains assembly code
+usingOraclize.getCodeSize(address) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#818-822) is declared view but contains assembly code
+usingOraclize.copyBytes(bytes,uint256,uint256,bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1186-1206) is declared view but contains assembly code
+usingOraclize.safeMemoryCleaner() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1278-1283) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Reentrancy in usingOraclize.oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#357-365):
+	External calls:
+	- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+	- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	State variables written after the call(s):
+	- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	usingOraclize.oraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#356) can be used in cross function reentrancies:
+	- usingOraclize.__callback(bytes32,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#414-421)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+usingOraclize.ba2cbor(bytes[]).buf (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#974) is a local variable never initialized
+usingOraclize.stra2cbor(string[]).buf (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#962) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+CBOR.encodeType(Buffer.buffer,uint8,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#277-293) ignores return value by buf.appendInt(value,1) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#282)
+CBOR.encodeType(Buffer.buffer,uint8,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#277-293) ignores return value by buf.appendInt(value,2) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#285)
+CBOR.encodeType(Buffer.buffer,uint8,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#277-293) ignores return value by buf.appendInt(value,4) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#288)
+CBOR.encodeType(Buffer.buffer,uint8,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#277-293) ignores return value by buf.appendInt(value,8) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#291)
+CBOR.encodeBytes(Buffer.buffer,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#311-314) ignores return value by buf.append(value) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#313)
+CBOR.encodeString(Buffer.buffer,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#316-319) ignores return value by buf.append(bytes(value)) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#318)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+ERC20Detailed.constructor(string,string,uint8).name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1398) shadows:
+	- ERC20Detailed.name() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1407-1409) (function)
+ERC20Detailed.constructor(string,string,uint8).symbol (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1398) shadows:
+	- ERC20Detailed.symbol() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1414-1416) (function)
+ERC20Detailed.constructor(string,string,uint8).decimals (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1398) shadows:
+	- ERC20Detailed.decimals() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1421-1423) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+BonusToken.setGameAddress(address) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1622-1625) should emit an event for: 
+	- gameAddress = newGameAddress (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1624) 
+BonusToken.setInvestTokenAddress(address) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1702-1705) should emit an event for: 
+	- investTokenAddress = newInvestTokenAddress (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1704) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+BonusToken.updateEthLotteryBank(uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1657-1659) should emit an event for: 
+	- ethLotteryBank = ethLotteryBank.sub(value) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1658) 
+BonusToken.updateTokensLotteryBank(uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1661-1663) should emit an event for: 
+	- tokensLotteryBank = tokensLotteryBank.sub(value) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1662) 
+BonusToken.setMaxLotteryParticipants(uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1707-1709) should emit an event for: 
+	- maxLotteryParticipants = participants (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1708) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993-1039):
+	External calls:
+	- sessionKeyHash_bytes32 = oraclize_randomDS_getSessionPubKeyHash() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1001)
+		- oraclize.randomDS_getSessionPubKeyHash() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#815)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	- queryId = oraclize_query(random,args,_customGasLimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1020)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#656)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	External calls sending eth:
+	- queryId = oraclize_query(random,args,_customGasLimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1020)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	State variables written after the call(s):
+	- queryId = oraclize_query(random,args,_customGasLimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1020)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+	- oraclize_randomDS_setCommitment(queryId,keccak256()(abi.encodePacked(delay_bytes8_left,args[1],sha256()(args[0]),args[2]))) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1037)
+		- oraclize_randomDS_args[queryId] = commitment (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1042)
+Reentrancy in usingOraclize.oraclize_query(string,string[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#495-499):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#498)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#472)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#495)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#498)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#498)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#500-504):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#503)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#478)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#500)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#503)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#503)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#505-509):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#508)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#484)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#505)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#508)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#508)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#510-514):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#513)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#490)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#510)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#513)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#513)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#516-521):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#520)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#472)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#516)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#520)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#520)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#522-527):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#526)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#478)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#522)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#526)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#526)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#528-533):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#532)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#484)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#528)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#532)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#532)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#534-539):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#538)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#490)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#534)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#538)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#538)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#540-546):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#545)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#472)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#540)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#545)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#545)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#547-553):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#552)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#478)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#547)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#552)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#552)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#554-560):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#559)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#484)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#554)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#559)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#559)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#561-567):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#566)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#490)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#561)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#566)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#566)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#569-576):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#575)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#472)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#569)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#575)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#575)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#577-584):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#583)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#478)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#577)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#583)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#583)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#585-592):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#591)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#484)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#585)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#591)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#591)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#593-600):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#599)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#490)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#593)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#599)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#599)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#601-609):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#608)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#472)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#601)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#608)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#475)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#608)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#610-618):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#617)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#478)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#610)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#617)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#481)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#617)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,string[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#619-627):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#626)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#484)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#619)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#626)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#487)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#626)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,string[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#628-636):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#635)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#490)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#628)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#635)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#493)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#635)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#661-665):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#664)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#638)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#661)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#664)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#664)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#666-670):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#669)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#644)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#666)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#669)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#669)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#671-675):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#674)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#650)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#671)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#674)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#674)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#676-680):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#679)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#656)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#676)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#679)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#679)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#682-687):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#686)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#638)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#682)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#686)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#686)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#688-693):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#692)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#644)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#688)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#692)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#692)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#694-699):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#698)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#650)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#694)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#698)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#698)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#700-705):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#704)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#656)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#700)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#704)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#704)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#706-712):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#711)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#638)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#706)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#711)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#711)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#713-719):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#718)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#644)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#713)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#718)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#718)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#720-726):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#725)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#650)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#720)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#725)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#725)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#727-733):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#732)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#656)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#727)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#732)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#732)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#735-742):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#741)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#638)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#735)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#741)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#741)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#743-750):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#749)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#644)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#743)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#749)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#749)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#751-758):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#757)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#650)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#751)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#757)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#757)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#759-766):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#765)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#656)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#759)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#765)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#765)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#767-775):
+	External calls:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#774)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#638)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#767)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#774)
+		- oraclize.queryN.value(price)(0,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#641)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#774)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#776-784):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#783)
+		- price = oraclize.getPrice(datasource) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#644)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#776)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#783)
+		- oraclize.queryN.value(price)(timestamp,datasource,args) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#647)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#783)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(uint256,string,bytes[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#785-793):
+	External calls:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#792)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#650)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#785)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#792)
+		- oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#653)
+	State variables written after the call(s):
+	- oraclize_query(timestamp,datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#792)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reentrancy in usingOraclize.oraclize_query(string,bytes[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#794-802):
+	External calls:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#801)
+		- price = oraclize.getPrice(datasource,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#656)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	- oraclizeAPI() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#794)
+		- address(oraclize) != OAR.getAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#361)
+		- oraclize = OraclizeI(OAR.getAddress()) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#362)
+	External calls sending eth:
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#801)
+		- oraclize.queryN_withGasLimit.value(price)(0,datasource,args,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#659)
+	State variables written after the call(s):
+	- oraclize_query(datasource,dynargs,gaslimit) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#801)
+		- oraclize_network_name = _network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#986)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Buffer.init(Buffer.buffer,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#140-151) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#145-151)
+Buffer.append(Buffer.buffer,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#173-211) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#181-194)
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#195-198)
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#204-210)
+Buffer.append(Buffer.buffer,uint8) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#220-236) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#225-236)
+Buffer.appendInt(Buffer.buffer,uint256,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#245-263) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#251-262)
+usingOraclize.getCodeSize(address) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#818-822) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#819-822)
+usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993-1039) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1002-1011)
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1012-1016)
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1024-1037)
+usingOraclize.verifySig(bytes32,bytes,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1048-1074) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1062-1068)
+usingOraclize.copyBytes(bytes,uint256,uint256,bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1186-1206) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1197-1201)
+usingOraclize.safer_ecrecover(bytes32,uint8,bytes32,bytes32) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1210-1235) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1221-1234)
+usingOraclize.ecrecovery(bytes32,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1238-1276) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1249-1269)
+usingOraclize.safeMemoryCleaner() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1278-1283) uses assembly
+	- INLINE ASM (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1279-1283)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+usingOraclize.oraclize_randomDS_proofVerify__sessionKeyValidity(bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1076-1109) compares to a boolean constant:
+	-sigok == false (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1093)
+usingOraclize.oraclize_randomDS_proofVerify__returnCode(bytes32,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1121-1129) compares to a boolean constant:
+	-proofVerified == false (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1126)
+usingOraclize.oraclize_randomDS_proofVerify__main(bytes,bytes32,bytes,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1143-1183) compares to a boolean constant:
+	-oraclize_randomDS_sessionKeysHashVerified[sessionPubkeyHash] == false (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1178)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+2 different versions of Solidity are used:
+	- Version constraint ^0.4.24 is used by:
+		-^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1)
+		-^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1288)
+		-^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1361)
+		-^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1385)
+	- Version constraint >=0.4.22<0.5 is used by:
+		->=0.4.22<0.5 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#91)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used
+
+usingOraclize.ba2cbor(bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#972-982) is never used and should be removed
+usingOraclize.copyBytes(bytes,uint256,uint256,bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1186-1206) is never used and should be removed
+usingOraclize.ecrecovery(bytes32,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1238-1276) is never used and should be removed
+usingOraclize.getCodeSize(address) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#818-822) is never used and should be removed
+usingOraclize.indexOf(string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#862-887) is never used and should be removed
+usingOraclize.matchBytes32Prefix(bytes32,bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1131-1141) is never used and should be removed
+usingOraclize.oraclize_cbAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#804-806) is never used and should be removed
+usingOraclize.oraclize_getNetworkName() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#989-991) is never used and should be removed
+usingOraclize.oraclize_getPrice(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#423-425) is never used and should be removed
+usingOraclize.oraclize_getPrice(string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#427-429) is never used and should be removed
+usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993-1039) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#661-665) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#676-680) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#682-687) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#700-705) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#706-712) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#727-733) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#735-742) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#759-766) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#767-775) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#794-802) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#637-642) is never used and should be removed
+usingOraclize.oraclize_query(string,bytes[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#655-660) is never used and should be removed
+usingOraclize.oraclize_query(string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#431-435) is never used and should be removed
+usingOraclize.oraclize_query(string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#451-455) is never used and should be removed
+usingOraclize.oraclize_query(string,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#466-470) is never used and should be removed
+usingOraclize.oraclize_query(string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#446-450) is never used and should be removed
+usingOraclize.oraclize_query(string,string[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#495-499) is never used and should be removed
+usingOraclize.oraclize_query(string,string[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#510-514) is never used and should be removed
+usingOraclize.oraclize_query(string,string[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#516-521) is never used and should be removed
+usingOraclize.oraclize_query(string,string[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#534-539) is never used and should be removed
+usingOraclize.oraclize_query(string,string[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#540-546) is never used and should be removed
+usingOraclize.oraclize_query(string,string[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#561-567) is never used and should be removed
+usingOraclize.oraclize_query(string,string[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#569-576) is never used and should be removed
+usingOraclize.oraclize_query(string,string[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#593-600) is never used and should be removed
+usingOraclize.oraclize_query(string,string[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#601-609) is never used and should be removed
+usingOraclize.oraclize_query(string,string[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#628-636) is never used and should be removed
+usingOraclize.oraclize_query(string,string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#471-476) is never used and should be removed
+usingOraclize.oraclize_query(string,string[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#489-494) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#666-670) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#671-675) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#688-693) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#694-699) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#713-719) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#720-726) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#743-750) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#751-758) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#776-784) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#785-793) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#643-648) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,bytes[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#649-654) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#436-440) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#456-460) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#461-465) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#441-445) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#500-504) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#505-509) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#522-527) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#528-533) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#547-553) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#554-560) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#577-584) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#585-592) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#610-618) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#619-627) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#477-482) is never used and should be removed
+usingOraclize.oraclize_query(uint256,string,string[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#483-488) is never used and should be removed
+usingOraclize.oraclize_randomDS_getSessionPubKeyHash() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#814-816) is never used and should be removed
+usingOraclize.oraclize_randomDS_proofVerify__main(bytes,bytes32,bytes,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1143-1183) is never used and should be removed
+usingOraclize.oraclize_randomDS_proofVerify__returnCode(bytes32,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1121-1129) is never used and should be removed
+usingOraclize.oraclize_randomDS_proofVerify__sessionKeyValidity(bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1076-1109) is never used and should be removed
+usingOraclize.oraclize_randomDS_setCommitment(bytes32,bytes32) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1041-1043) is never used and should be removed
+usingOraclize.oraclize_setCustomGasPrice(uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#810-812) is never used and should be removed
+usingOraclize.oraclize_setNetwork() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#375-409) is never used and should be removed
+usingOraclize.oraclize_setNetwork(uint8) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#371-374) is never used and should be removed
+usingOraclize.oraclize_setNetworkName(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#985-987) is never used and should be removed
+usingOraclize.oraclize_setProof(bytes1) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#807-809) is never used and should be removed
+usingOraclize.parseAddr(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#824-842) is never used and should be removed
+usingOraclize.parseInt(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#919-921) is never used and should be removed
+usingOraclize.parseInt(string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#924-940) is never used and should be removed
+usingOraclize.safeMemoryCleaner() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1278-1283) is never used and should be removed
+usingOraclize.safer_ecrecover(bytes32,uint8,bytes32,bytes32) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1210-1235) is never used and should be removed
+usingOraclize.strCompare(string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#844-860) is never used and should be removed
+usingOraclize.strConcat(string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#914-916) is never used and should be removed
+usingOraclize.strConcat(string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#910-912) is never used and should be removed
+usingOraclize.strConcat(string,string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#906-908) is never used and should be removed
+usingOraclize.strConcat(string,string,string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#889-904) is never used and should be removed
+usingOraclize.stra2cbor(string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#960-970) is never used and should be removed
+usingOraclize.uint2str(uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#942-957) is never used and should be removed
+usingOraclize.verifySig(bytes32,bytes,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1048-1074) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1)
+	- ^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1288)
+	- ^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1361)
+	- ^0.4.24 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1385)
+Version constraint >=0.4.22<0.5 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- OneOfTwoConstructorsSkipped.
+It is used by:
+	- >=0.4.22<0.5 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#91)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function OraclizeI.query_withGasLimit(uint256,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#96) is not in mixedCase
+Function OraclizeI.query2_withGasLimit(uint256,string,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#98) is not in mixedCase
+Function OraclizeI.queryN_withGasLimit(uint256,string,bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#100) is not in mixedCase
+Function OraclizeI.randomDS_getSessionPubKeyHash() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#105) is not in mixedCase
+Struct Buffer.buffer (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#135-138) is not in CapWords
+Parameter Buffer.init(Buffer.buffer,uint256)._capacity (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#140) is not in mixedCase
+Contract usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285) is not in CapWords
+Function usingOraclize.oraclize_setNetwork(uint8) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#371-374) is not in mixedCase
+Function usingOraclize.oraclize_setNetwork() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#375-409) is not in mixedCase
+Function usingOraclize.__callback(bytes32,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#411-413) is not in mixedCase
+Function usingOraclize.__callback(bytes32,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#414-421) is not in mixedCase
+Function usingOraclize.oraclize_getPrice(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#423-425) is not in mixedCase
+Function usingOraclize.oraclize_getPrice(string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#427-429) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#431-435) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#436-440) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#441-445) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#446-450) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#451-455) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#456-460) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#461-465) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string,string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#466-470) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#471-476) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#477-482) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#483-488) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#489-494) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#495-499) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#500-504) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#505-509) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#510-514) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#516-521) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#522-527) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#528-533) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#534-539) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#540-546) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#547-553) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#554-560) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#561-567) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#569-576) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#577-584) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#585-592) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#593-600) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#601-609) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#610-618) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,string[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#619-627) is not in mixedCase
+Function usingOraclize.oraclize_query(string,string[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#628-636) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#637-642) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#643-648) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#649-654) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#655-660) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#661-665) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[1]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#666-670) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#671-675) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[1],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#676-680) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#682-687) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[2]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#688-693) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#694-699) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[2],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#700-705) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#706-712) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[3]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#713-719) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#720-726) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[3],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#727-733) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#735-742) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[4]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#743-750) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#751-758) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[4],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#759-766) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#767-775) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[5]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#776-784) is not in mixedCase
+Function usingOraclize.oraclize_query(uint256,string,bytes[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#785-793) is not in mixedCase
+Function usingOraclize.oraclize_query(string,bytes[5],uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#794-802) is not in mixedCase
+Function usingOraclize.oraclize_cbAddress() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#804-806) is not in mixedCase
+Function usingOraclize.oraclize_setProof(bytes1) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#807-809) is not in mixedCase
+Function usingOraclize.oraclize_setCustomGasPrice(uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#810-812) is not in mixedCase
+Function usingOraclize.oraclize_randomDS_getSessionPubKeyHash() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#814-816) is not in mixedCase
+Parameter usingOraclize.parseAddr(string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#824) is not in mixedCase
+Parameter usingOraclize.strCompare(string,string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#844) is not in mixedCase
+Parameter usingOraclize.strCompare(string,string)._b (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#844) is not in mixedCase
+Parameter usingOraclize.indexOf(string,string)._haystack (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#862) is not in mixedCase
+Parameter usingOraclize.indexOf(string,string)._needle (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#862) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string,string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#889) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string,string)._b (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#889) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string,string)._c (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#889) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string,string)._d (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#889) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string,string)._e (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#889) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#906) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string)._b (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#906) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string)._c (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#906) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string,string)._d (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#906) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#910) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string)._b (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#910) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string,string)._c (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#910) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#914) is not in mixedCase
+Parameter usingOraclize.strConcat(string,string)._b (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#914) is not in mixedCase
+Parameter usingOraclize.parseInt(string)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#919) is not in mixedCase
+Parameter usingOraclize.parseInt(string,uint256)._a (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#924) is not in mixedCase
+Parameter usingOraclize.parseInt(string,uint256)._b (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#924) is not in mixedCase
+Function usingOraclize.oraclize_setNetworkName(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#985-987) is not in mixedCase
+Parameter usingOraclize.oraclize_setNetworkName(string)._network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#985) is not in mixedCase
+Function usingOraclize.oraclize_getNetworkName() (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#989-991) is not in mixedCase
+Function usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993-1039) is not in mixedCase
+Parameter usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256)._delay (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993) is not in mixedCase
+Parameter usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256)._nbytes (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993) is not in mixedCase
+Parameter usingOraclize.oraclize_newRandomDSQuery(uint256,uint256,uint256)._customGasLimit (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#993) is not in mixedCase
+Function usingOraclize.oraclize_randomDS_setCommitment(bytes32,bytes32) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1041-1043) is not in mixedCase
+Function usingOraclize.oraclize_randomDS_proofVerify__sessionKeyValidity(bytes,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1076-1109) is not in mixedCase
+Function usingOraclize.oraclize_randomDS_proofVerify__returnCode(bytes32,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1121-1129) is not in mixedCase
+Parameter usingOraclize.oraclize_randomDS_proofVerify__returnCode(bytes32,string,bytes)._queryId (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1121) is not in mixedCase
+Parameter usingOraclize.oraclize_randomDS_proofVerify__returnCode(bytes32,string,bytes)._result (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1121) is not in mixedCase
+Parameter usingOraclize.oraclize_randomDS_proofVerify__returnCode(bytes32,string,bytes)._proof (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1121) is not in mixedCase
+Parameter usingOraclize.matchBytes32Prefix(bytes32,bytes,uint256).n_random_bytes (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1131) is not in mixedCase
+Function usingOraclize.oraclize_randomDS_proofVerify__main(bytes,bytes32,bytes,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1143-1183) is not in mixedCase
+Parameter usingOraclize.oraclize_randomDS_proofVerify__main(bytes,bytes32,bytes,string).context_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1143) is not in mixedCase
+Function usingOraclize.safer_ecrecover(bytes32,uint8,bytes32,bytes32) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1210-1235) is not in mixedCase
+Constant usingOraclize.day (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#339) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.week (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#340) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.month (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#341) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.proofType_NONE (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#342) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.proofType_TLSNotary (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#343) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.proofType_Ledger (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#344) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.proofType_Android (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#345) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.proofType_Native (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#346) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.proofStorage_IPFS (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#347) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_auto (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#348) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_mainnet (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#349) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_testnet (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#350) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_morden (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#351) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant usingOraclize.networkID_consensys (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#352) is not in UPPER_CASE_WITH_UNDERSCORES
+Variable usingOraclize.OAR (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#354) is not in mixedCase
+Variable usingOraclize.oraclize_network_name (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#984) is not in mixedCase
+Variable usingOraclize.oraclize_randomDS_args (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1045) is not in mixedCase
+Variable usingOraclize.oraclize_randomDS_sessionKeysHashVerified (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1046) is not in mixedCase
+Modifier usingOraclize.oraclize_randomDS_proofVerify(bytes32,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1111-1119) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Redundant expression "networkID (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#373)" inusingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+Redundant expression "myid (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#419)" inusingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+Redundant expression "result (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#419)" inusingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+Redundant expression "proof (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#419)" inusingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#redundant-statements
+
+usingOraclize.oraclize_query(string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#431-435) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#433)
+usingOraclize.oraclize_query(uint256,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#436-440) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#438)
+usingOraclize.oraclize_query(string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#451-455) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#453)
+usingOraclize.oraclize_query(uint256,string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#456-460) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#458)
+usingOraclize.oraclize_query(string,string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#471-476) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#473)
+usingOraclize.oraclize_query(uint256,string,string[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#477-482) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#479)
+usingOraclize.oraclize_query(string,bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#637-642) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#639)
+usingOraclize.oraclize_query(uint256,string,bytes[]) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#643-648) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#645)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+usingOraclize.day (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#339) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.week (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#340) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.month (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#341) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.proofType_NONE (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#342) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.proofType_TLSNotary (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#343) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.proofType_Ledger (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#344) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.proofType_Android (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#345) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.proofType_Native (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#346) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.proofStorage_IPFS (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#347) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.networkID_mainnet (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#349) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.networkID_testnet (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#350) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.networkID_morden (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#351) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+usingOraclize.networkID_consensys (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#352) is never used in usingOraclize (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#338-1285)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+Loop condition i < ethLotteryParticipants.length (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1640) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < tokensLotteryParticipants.length (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#1649) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+query2(uint256,string,string,string) should be declared external:
+	- OraclizeI.query2(uint256,string,string,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#97)
+queryN(uint256,string,bytes) should be declared external:
+	- OraclizeI.queryN(uint256,string,bytes) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#99)
+getPrice(string) should be declared external:
+	- OraclizeI.getPrice(string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#101)
+getPrice(string,uint256) should be declared external:
+	- OraclizeI.getPrice(string,uint256) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#102)
+__callback(bytes32,string) should be declared external:
+	- usingOraclize.__callback(bytes32,string) (../sb/0x31c643c416368c988f2b8894684e419e260b174a.sol#411-413)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x31c643c416368c988f2b8894684e419e260b174a.sol analyzed (11 contracts with 100 detectors), 336 result(s) found

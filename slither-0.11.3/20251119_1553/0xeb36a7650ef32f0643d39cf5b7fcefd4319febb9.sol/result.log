@@ -1,0 +1,432 @@
+'solc --version' running
+'solc /sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Cycle (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#287-719) contract sets array length with a user-controlled value:
+	- roundPrices.push(FundingRound(0,0,0,false)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#436)
+Cycle (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#287-719) contract sets array length with a user-controlled value:
+	- etherPartition[_investor].push(milestoneEtherAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#699)
+Cycle (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#287-719) contract sets array length with a user-controlled value:
+	- tokenPartition[_investor].push(milestoneTokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#700)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481):
+	External calls:
+	- require(bool)(jotter.call.value(jotAllowance)(abi.encodeWithSignature(swapMe()))) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#474)
+	External calls sending eth:
+	- require(bool)(msg.sender.send(deals[msg.sender].sumEther)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#465)
+	- require(bool)(projectWallet.send(ethForMilestone + postDisputeEth)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#468)
+	- require(bool)(juryOnlineWallet.send(etherAllowance)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#473)
+	- require(bool)(jotter.call.value(jotAllowance)(abi.encodeWithSignature(swapMe()))) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#474)
+	State variables written after the call(s):
+	- etherAllowance = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#475)
+	Cycle.etherAllowance (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#357) can be used in cross function reentrancies:
+	- Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615)
+	- Cycle.etherAllowance (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#357)
+	- Cycle.payCommission() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#642-652)
+	- Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481)
+	- jotAllowance = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#476)
+	Cycle.jotAllowance (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#358) can be used in cross function reentrancies:
+	- Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615)
+	- Cycle.jotAllowance (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#358)
+	- Cycle.payCommission() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#642-652)
+	- Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Cycle.roundFailedToStart (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#370) is never initialized. It is used in:
+	- Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+Cycle.notSealed() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#405-409) uses a dangerous strict equality:
+	- require(bool)(sealTimestamp == 0) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#406)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Contract locking ether found:
+	Contract Jotter (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#811-834) has payable functions:
+	 - Jotter.swapMe() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#822-825)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Reentrancy in Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= promisedTokens + _tokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#593)
+	State variables written after the call(s):
+	- offers[_investor][_offerNumber].etherAmount = _etherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#599)
+	Cycle.offers (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#345) can be used in cross function reentrancies:
+	- Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615)
+	- Cycle.fallback() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#514-523)
+	- Cycle.offers (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#345)
+	- Cycle.withdrawOffer(uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#526-531)
+	- promisedTokens += _tokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#613)
+	Cycle.promisedTokens (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#363) can be used in cross function reentrancies:
+	- Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615)
+	- Cycle.promisedTokens (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#363)
+Reentrancy in Arbitration.openDispute(address,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779-794):
+	External calls:
+	- milestoneDispute = icoRound.currentMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#781)
+	- require(bool)(icoRound.investorExists(msg.sender) == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#783)
+	- icoRound.disputeOpened(msg.sender) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#792)
+	State variables written after the call(s):
+	- disputeLength += 1 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#793)
+	Arbitration.disputeLength (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#742) can be used in cross function reentrancies:
+	- Arbitration.disputeLength (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#742)
+	- Arbitration.openDispute(address,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779-794)
+Reentrancy in Cycle.seal() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#577-581):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= totalToken) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#579)
+	State variables written after the call(s):
+	- sealTimestamp = now (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#580)
+	Cycle.sealTimestamp (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#318) can be used in cross function reentrancies:
+	- Cycle.notSealed() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#405-409)
+	- Cycle.seal() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#577-581)
+	- Cycle.sealTimestamp (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#318)
+	- Cycle.sealed() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#399-403)
+Reentrancy in Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776):
+	External calls:
+	- executeVerdict(_disputeId,true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#770)
+		- icoRound.verdictExecuted(disputes[_disputeId].investorAddress,_verdictForInvestor,milestoneDispute) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#801)
+	- executeVerdict(_disputeId,false) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#773)
+		- icoRound.verdictExecuted(disputes[_disputeId].investorAddress,_verdictForInvestor,milestoneDispute) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#801)
+	State variables written after the call(s):
+	- executeVerdict(_disputeId,false) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#773)
+		- disputes[_disputeId].pending = false (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#798)
+	Arbitration.disputes (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#740) can be used in cross function reentrancies:
+	- Arbitration.disputes (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#740)
+	- Arbitration.executeVerdict(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#797-803)
+	- Arbitration.isPending(uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#805-807)
+	- Arbitration.openDispute(address,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779-794)
+	- Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776)
+Reentrancy in Cycle.withdrawToken() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#484-487):
+	External calls:
+	- require(bool)(token.transfer(msg.sender,deals[msg.sender].tokenAllowance)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#485)
+	State variables written after the call(s):
+	- deals[msg.sender].tokenAllowance = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#486)
+	Cycle.deals (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#343) can be used in cross function reentrancies:
+	- Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615)
+	- Cycle.assignPartition(address,uint256,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#681-707)
+	- Cycle.deals (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#343)
+	- Cycle.disputeOpened(address) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#535-538)
+	- Cycle.fallback() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#514-523)
+	- Cycle.investorExists(address) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#714-717)
+	- Cycle.isDisputing(address) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#710-712)
+	- Cycle.startMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#618-639)
+	- Cycle.verdictExecuted(address,bool,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#541-554)
+	- Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481)
+	- Cycle.withdrawToken() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#484-487)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Cycle.assignPartition(address,uint256,uint256).totalTokenInvestment (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#687) is a local variable never initialized
+Cycle.assignPartition(address,uint256,uint256).totalEtherInvestment (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#686) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Cycle.sealed() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#399-403) (modifier) shadows built-in symbol"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#builtin-symbol-shadowing
+
+Cycle.setCurrentFundingRound(uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#507-511) should emit an event for: 
+	- currentFundingRound = _fundingRound (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#509) 
+Cycle.addMilestone(uint256,uint256,uint256,uint256,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558-562) should emit an event for: 
+	- totalEther = totalEther.add(_etherAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#559) 
+	- totalToken = totalToken.add(_tokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#560) 
+Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565-574) should emit an event for: 
+	- totalEther = (totalEther - milestones[_id].etherAmount).add(_etherAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#567) 
+	- totalToken = (totalToken - milestones[_id].tokenAmount).add(_tokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#568) 
+Jotter.setEth(uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#828-831) should emit an event for: 
+	- ethToJot = _newEth (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#830) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Owned.transferOwnership(address)._newOwner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#43) lacks a zero-check on :
+		- newOwner = _newOwner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#44)
+ICO.constructor(string,address,address,address,address,address)._operator (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#263) lacks a zero-check on :
+		- operator = _operator (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#265)
+ICO.constructor(string,address,address,address,address,address)._projectWallet (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#263) lacks a zero-check on :
+		- projectWallet = _projectWallet (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#266)
+ICO.constructor(string,address,address,address,address,address)._arbitrationAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#263) lacks a zero-check on :
+		- arbitrationAddress = _arbitrationAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#268)
+ICO.constructor(string,address,address,address,address,address)._juryOnlineWallet (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#263) lacks a zero-check on :
+		- juryOnlineWallet = _juryOnlineWallet (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#269)
+Cycle.constructor(address,address,uint256,address,uint256[],uint256[],uint256,uint256)._icoAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#419) lacks a zero-check on :
+		- icoAddress = _icoAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#430)
+Cycle.constructor(address,address,uint256,address,uint256[],uint256[],uint256,uint256)._operator (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#420) lacks a zero-check on :
+		- operator = _operator (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#431)
+Cycle.constructor(address,address,uint256,address,uint256[],uint256[],uint256,uint256)._jotter (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#422) lacks a zero-check on :
+		- jotter = _jotter (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#433)
+Cycle.setJotter(address)._jotter (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#443) lacks a zero-check on :
+		- jotter = _jotter (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#445)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615):
+	External calls:
+	- require(bool)(token.balanceOf(address(this)) >= promisedTokens + _tokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#593)
+	State variables written after the call(s):
+	- deals[_investor].tokenAllowance = _tokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#607)
+	- deals[_investor].sumEther += _etherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#610)
+	- deals[_investor].sumToken += _tokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#611)
+	- dealsList.push(_investor) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#605)
+	- etherAllowance += etherCommission (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#601)
+	- assignPartition(_investor,_etherAmount,_tokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#604)
+		- etherPartition[_investor][i] += milestoneEtherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#696)
+		- etherPartition[_investor].push(milestoneEtherAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#699)
+		- etherPartition[_investor][currentMilestone] += _etherAmount - totalEtherInvestment (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#705)
+	- jotAllowance += jotCommission (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#602)
+	- raisedEther += _etherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#614)
+	- assignPartition(_investor,_etherAmount,_tokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#604)
+		- tokenPartition[_investor][i] += milestoneTokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#697)
+		- tokenPartition[_investor].push(milestoneTokenAmount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#700)
+		- tokenPartition[_investor][currentMilestone] += _tokenAmount - totalTokenInvestment (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#706)
+Reentrancy in Cycle.activate() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#450-458):
+	External calls:
+	- require(bool)(icoContract.operator() == operator) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#452)
+	- juryOnlineWallet = icoContract.juryOnlineWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#453)
+	State variables written after the call(s):
+	- juryOnlineWallet = icoContract.juryOnlineWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#453)
+Reentrancy in Cycle.activate() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#450-458):
+	External calls:
+	- require(bool)(icoContract.operator() == operator) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#452)
+	- juryOnlineWallet = icoContract.juryOnlineWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#453)
+	- projectWallet = icoContract.projectWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#454)
+	State variables written after the call(s):
+	- projectWallet = icoContract.projectWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#454)
+Reentrancy in Cycle.activate() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#450-458):
+	External calls:
+	- require(bool)(icoContract.operator() == operator) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#452)
+	- juryOnlineWallet = icoContract.juryOnlineWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#453)
+	- projectWallet = icoContract.projectWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#454)
+	- arbitrationAddress = icoContract.arbitrationAddress() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#455)
+	State variables written after the call(s):
+	- arbitrationAddress = icoContract.arbitrationAddress() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#455)
+Reentrancy in Cycle.activate() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#450-458):
+	External calls:
+	- require(bool)(icoContract.operator() == operator) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#452)
+	- juryOnlineWallet = icoContract.juryOnlineWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#453)
+	- projectWallet = icoContract.projectWallet() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#454)
+	- arbitrationAddress = icoContract.arbitrationAddress() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#455)
+	- token = icoContract.token() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#456)
+	State variables written after the call(s):
+	- token = icoContract.token() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#456)
+Reentrancy in Arbitration.openDispute(address,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779-794):
+	External calls:
+	- milestoneDispute = icoRound.currentMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#781)
+	- require(bool)(icoRound.investorExists(msg.sender) == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#783)
+	State variables written after the call(s):
+	- disputes[disputeLength].milestone = milestoneDispute (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#784)
+	- disputes[disputeLength].icoRoundAddress = _icoRoundAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#786)
+	- disputes[disputeLength].investorAddress = msg.sender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#787)
+	- disputes[disputeLength].timestamp = now (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#788)
+	- disputes[disputeLength].reason = _reason (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#789)
+	- disputes[disputeLength].pending = true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#790)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Cycle.finishMilestone(string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#655-661) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(interval > 604800) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#658)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481) compares to a boolean constant:
+	-roundFailedToStart == true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#464)
+Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481) compares to a boolean constant:
+	-deals[msg.sender].verdictForInvestor == true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#478)
+Cycle.fallback() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#514-523) compares to a boolean constant:
+	-roundPrices[currentFundingRound].hasWhitelist == true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#516)
+Cycle.fallback() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#514-523) compares to a boolean constant:
+	-require(bool)(whitelist[currentFundingRound][msg.sender] == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#517)
+Cycle.withdrawOffer(uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#526-531) compares to a boolean constant:
+	-require(bool)(offers[msg.sender][_offerNumber].accepted == false) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#527)
+Cycle.verdictExecuted(address,bool,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#541-554) compares to a boolean constant:
+	-require(bool)(deals[_investor].disputing == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#543)
+Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615) compares to a boolean constant:
+	-tokenReleaseAtStart == true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#606)
+Cycle.acceptOffer(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584-615) compares to a boolean constant:
+	-require(bool)(offers[_investor][_offerNumber].accepted != true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#587)
+Cycle.startMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#618-639) compares to a boolean constant:
+	-deals[investor].disputing == false (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#625)
+Cycle.startMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#618-639) compares to a boolean constant:
+	-deals[investor].verdictForInvestor != true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#626)
+Cycle.startMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#618-639) compares to a boolean constant:
+	-tokenReleaseAtStart == false (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#629)
+Cycle.failSafe() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#665-675) compares to a boolean constant:
+	-require(bool)(saveMe == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#670)
+Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776) compares to a boolean constant:
+	-require(bool)(arbiterPool[disputes[_disputeId].icoRoundAddress][msg.sender] == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#765)
+Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776) compares to a boolean constant:
+	-_voteForInvestor == true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#767)
+Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776) compares to a boolean constant:
+	-require(bool)(disputes[_disputeId].pending == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#764)
+Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776) compares to a boolean constant:
+	-disputes[_disputeId].voters[msg.sender] == true (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#775)
+Arbitration.vote(uint256,bool) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763-776) compares to a boolean constant:
+	-require(bool)(disputes[_disputeId].voters[msg.sender] != true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#766)
+Arbitration.openDispute(address,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779-794) compares to a boolean constant:
+	-require(bool)(icoRound.investorExists(msg.sender) == true) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#783)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Token.mint(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#138-143) has costly operations inside a loop:
+	- totalSupply = totalSupply.add(_amount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#139)
+	Calls stack containing the loop:
+		Token.multimint(address[],uint256[])
+TokenWithoutStart.mint(address,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#215-220) has costly operations inside a loop:
+	- totalSupply = totalSupply.add(_amount) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#216)
+	Calls stack containing the loop:
+		TokenWithoutStart.multimint(address[],uint256[])
+Cycle.verdictExecuted(address,bool,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#541-554) has costly operations inside a loop:
+	- postDisputeEth += etherPartition[_investor][i] (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#549)
+Cycle.startMilestone() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#618-639) has costly operations inside a loop:
+	- ethForMilestone += etherPartition[investor][currentMilestone] (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#627)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.20 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481):
+	- require(bool)(jotter.call.value(jotAllowance)(abi.encodeWithSignature(swapMe()))) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#474)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Parameter Owned.transferOwnership(address)._newOwner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#43) is not in mixedCase
+Parameter ERC20.transfer(address,uint256)._to (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#77) is not in mixedCase
+Parameter ERC20.transfer(address,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#77) is not in mixedCase
+Parameter ERC20.transferFrom(address,address,uint256)._from (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#85) is not in mixedCase
+Parameter ERC20.transferFrom(address,address,uint256)._to (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#85) is not in mixedCase
+Parameter ERC20.transferFrom(address,address,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#85) is not in mixedCase
+Parameter ERC20.balanceOf(address)._owner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#94) is not in mixedCase
+Function ERC20.approve_fixed(address,uint256,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#98-106) is not in mixedCase
+Parameter ERC20.approve_fixed(address,uint256,uint256)._spender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#98) is not in mixedCase
+Parameter ERC20.approve_fixed(address,uint256,uint256)._currentValue (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#98) is not in mixedCase
+Parameter ERC20.approve_fixed(address,uint256,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#98) is not in mixedCase
+Parameter ERC20.approve(address,uint256)._spender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#108) is not in mixedCase
+Parameter ERC20.approve(address,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#108) is not in mixedCase
+Parameter ERC20.allowance(address,address)._owner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#114) is not in mixedCase
+Parameter ERC20.allowance(address,address)._spender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#114) is not in mixedCase
+Parameter Token.mint(address,uint256)._to (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#138) is not in mixedCase
+Parameter Token.mint(address,uint256)._amount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#138) is not in mixedCase
+Parameter TokenWithoutStart.transfer(address,uint256)._to (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#174) is not in mixedCase
+Parameter TokenWithoutStart.transfer(address,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#174) is not in mixedCase
+Parameter TokenWithoutStart.transferFrom(address,address,uint256)._from (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#182) is not in mixedCase
+Parameter TokenWithoutStart.transferFrom(address,address,uint256)._to (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#182) is not in mixedCase
+Parameter TokenWithoutStart.transferFrom(address,address,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#182) is not in mixedCase
+Parameter TokenWithoutStart.balanceOf(address)._owner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#191) is not in mixedCase
+Function TokenWithoutStart.approve_fixed(address,uint256,uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#195-203) is not in mixedCase
+Parameter TokenWithoutStart.approve_fixed(address,uint256,uint256)._spender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#195) is not in mixedCase
+Parameter TokenWithoutStart.approve_fixed(address,uint256,uint256)._currentValue (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#195) is not in mixedCase
+Parameter TokenWithoutStart.approve_fixed(address,uint256,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#195) is not in mixedCase
+Parameter TokenWithoutStart.approve(address,uint256)._spender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#205) is not in mixedCase
+Parameter TokenWithoutStart.approve(address,uint256)._value (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#205) is not in mixedCase
+Parameter TokenWithoutStart.allowance(address,address)._owner (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#211) is not in mixedCase
+Parameter TokenWithoutStart.allowance(address,address)._spender (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#211) is not in mixedCase
+Parameter TokenWithoutStart.mint(address,uint256)._to (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#215) is not in mixedCase
+Parameter TokenWithoutStart.mint(address,uint256)._amount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#215) is not in mixedCase
+Parameter ICO.approveRound(address)._icoRoundAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#279) is not in mixedCase
+Parameter Cycle.setJotter(address)._jotter (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#443) is not in mixedCase
+Parameter Cycle.addRoundPrice(uint256,uint256,uint256,address[])._startTime (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#490) is not in mixedCase
+Parameter Cycle.addRoundPrice(uint256,uint256,uint256,address[])._endTime (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#490) is not in mixedCase
+Parameter Cycle.addRoundPrice(uint256,uint256,uint256,address[])._price (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#490) is not in mixedCase
+Parameter Cycle.addRoundPrice(uint256,uint256,uint256,address[])._whitelist (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#490) is not in mixedCase
+Parameter Cycle.setRate(uint256)._rate (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#502) is not in mixedCase
+Parameter Cycle.setCurrentFundingRound(uint256)._fundingRound (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#507) is not in mixedCase
+Parameter Cycle.withdrawOffer(uint256)._offerNumber (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#526) is not in mixedCase
+Parameter Cycle.disputeOpened(address)._investor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#535) is not in mixedCase
+Parameter Cycle.verdictExecuted(address,bool,uint256)._investor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#541) is not in mixedCase
+Parameter Cycle.verdictExecuted(address,bool,uint256)._verdictForInvestor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#541) is not in mixedCase
+Parameter Cycle.verdictExecuted(address,bool,uint256)._milestoneDispute (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#541) is not in mixedCase
+Parameter Cycle.addMilestone(uint256,uint256,uint256,uint256,string)._etherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558) is not in mixedCase
+Parameter Cycle.addMilestone(uint256,uint256,uint256,uint256,string)._tokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558) is not in mixedCase
+Parameter Cycle.addMilestone(uint256,uint256,uint256,uint256,string)._startTime (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558) is not in mixedCase
+Parameter Cycle.addMilestone(uint256,uint256,uint256,uint256,string)._duration (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558) is not in mixedCase
+Parameter Cycle.addMilestone(uint256,uint256,uint256,uint256,string)._description (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558) is not in mixedCase
+Parameter Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string)._id (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565) is not in mixedCase
+Parameter Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string)._etherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565) is not in mixedCase
+Parameter Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string)._tokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565) is not in mixedCase
+Parameter Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string)._startTime (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565) is not in mixedCase
+Parameter Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string)._duration (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565) is not in mixedCase
+Parameter Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string)._description (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565) is not in mixedCase
+Parameter Cycle.acceptOffer(address,uint256)._investor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584) is not in mixedCase
+Parameter Cycle.acceptOffer(address,uint256)._offerNumber (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#584) is not in mixedCase
+Parameter Cycle.finishMilestone(string)._result (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#655) is not in mixedCase
+Parameter Cycle.assignPartition(address,uint256,uint256)._investor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#681) is not in mixedCase
+Parameter Cycle.assignPartition(address,uint256,uint256)._etherAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#681) is not in mixedCase
+Parameter Cycle.assignPartition(address,uint256,uint256)._tokenAmount (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#681) is not in mixedCase
+Parameter Cycle.isDisputing(address)._investor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#710) is not in mixedCase
+Parameter Cycle.investorExists(address)._investor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#714) is not in mixedCase
+Parameter Arbitration.setArbiters(address,address[])._icoRoundAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#756) is not in mixedCase
+Parameter Arbitration.setArbiters(address,address[])._arbiters (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#756) is not in mixedCase
+Parameter Arbitration.vote(uint256,bool)._disputeId (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763) is not in mixedCase
+Parameter Arbitration.vote(uint256,bool)._voteForInvestor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#763) is not in mixedCase
+Parameter Arbitration.openDispute(address,string)._icoRoundAddress (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779) is not in mixedCase
+Parameter Arbitration.openDispute(address,string)._reason (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779) is not in mixedCase
+Parameter Arbitration.executeVerdict(uint256,bool)._disputeId (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#797) is not in mixedCase
+Parameter Arbitration.executeVerdict(uint256,bool)._verdictForInvestor (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#797) is not in mixedCase
+Parameter Arbitration.isPending(uint256)._disputedId (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#805) is not in mixedCase
+Parameter Jotter.setEth(uint256)._newEth (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#828) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481):
+	External calls:
+	- require(bool)(msg.sender.send(deals[msg.sender].sumEther)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#465)
+	- require(bool)(projectWallet.send(ethForMilestone + postDisputeEth)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#468)
+	State variables written after the call(s):
+	- ethForMilestone = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#469)
+	- postDisputeEth = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#470)
+Reentrancy in Cycle.withdrawEther() (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#463-481):
+	External calls:
+	- require(bool)(msg.sender.send(deals[msg.sender].sumEther)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#465)
+	- require(bool)(projectWallet.send(ethForMilestone + postDisputeEth)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#468)
+	- require(bool)(juryOnlineWallet.send(etherAllowance)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#473)
+	External calls sending eth:
+	- require(bool)(msg.sender.send(deals[msg.sender].sumEther)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#465)
+	- require(bool)(projectWallet.send(ethForMilestone + postDisputeEth)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#468)
+	- require(bool)(juryOnlineWallet.send(etherAllowance)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#473)
+	- require(bool)(jotter.call.value(jotAllowance)(abi.encodeWithSignature(swapMe()))) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#474)
+	State variables written after the call(s):
+	- etherAllowance = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#475)
+	- jotAllowance = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#476)
+Reentrancy in Cycle.withdrawOffer(uint256) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#526-531):
+	External calls:
+	- require(bool)(msg.sender.send(offers[msg.sender][_offerNumber].etherAmount)) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#528)
+	State variables written after the call(s):
+	- offers[msg.sender][_offerNumber].etherAmount = 0 (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#529)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Loop condition i < dealsList.length (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#623) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < milestones.length (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#688) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+Arbitration.quorum (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#725) should be constant 
+Cycle.roundFailedToStart (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#370) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+multimint(address[],uint256[]) should be declared external:
+	- Token.multimint(address[],uint256[]) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#145-152)
+multimint(address[],uint256[]) should be declared external:
+	- TokenWithoutStart.multimint(address[],uint256[]) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#222-229)
+addRoundPrice(uint256,uint256,uint256,address[]) should be declared external:
+	- Cycle.addRoundPrice(uint256,uint256,uint256,address[]) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#490-499)
+addMilestone(uint256,uint256,uint256,uint256,string) should be declared external:
+	- Cycle.addMilestone(uint256,uint256,uint256,uint256,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#558-562)
+editMilestone(uint256,uint256,uint256,uint256,uint256,string) should be declared external:
+	- Cycle.editMilestone(uint256,uint256,uint256,uint256,uint256,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#565-574)
+finishMilestone(string) should be declared external:
+	- Cycle.finishMilestone(string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#655-661)
+setArbiters(address,address[]) should be declared external:
+	- Arbitration.setArbiters(address,address[]) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#756-760)
+openDispute(address,string) should be declared external:
+	- Arbitration.openDispute(address,string) (../sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol#779-794)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xeb36a7650ef32f0643d39cf5b7fcefd4319febb9.sol analyzed (9 contracts with 100 detectors), 150 result(s) found

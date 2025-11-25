@@ -1,0 +1,78 @@
+'solc --version' running
+'solc /sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+WhiskyToken._transfer(address,address,uint256) (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#318-340) performs a multiplication on the result of a division:
+	- fee = _value.div(1000).mul(feeCharge) (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#327)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+WhiskyToken.balanceOf(address)._owner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#304) shadows:
+	- Ownable._owner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#90) (state variable)
+WhiskyToken.allowance(address,address)._owner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#397) shadows:
+	- Ownable._owner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#90) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+WhiskyToken.constructor(address)._tokenOwner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#276) lacks a zero-check on :
+		- feeReceiver = _tokenOwner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#280)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+WhiskyToken.initialSupply (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#238) is set pre-construction with a non-constant function or state variable:
+	- 28100000 * (10 ** uint256(decimals))
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#function-initializing-state
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Operated.setOps(address,bool)._account (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#78) is not in mixedCase
+Parameter Operated.setOps(address,bool)._active (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#78) is not in mixedCase
+Parameter WhiskyToken.balanceOf(address)._owner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#304) is not in mixedCase
+Parameter WhiskyToken.transfer(address,uint256)._to (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#349) is not in mixedCase
+Parameter WhiskyToken.transfer(address,uint256)._value (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#349) is not in mixedCase
+Parameter WhiskyToken.transferFrom(address,address,uint256)._from (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#362) is not in mixedCase
+Parameter WhiskyToken.transferFrom(address,address,uint256)._to (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#362) is not in mixedCase
+Parameter WhiskyToken.transferFrom(address,address,uint256)._value (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#362) is not in mixedCase
+Parameter WhiskyToken.approve(address,uint256)._spender (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#380) is not in mixedCase
+Parameter WhiskyToken.approve(address,uint256)._value (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#380) is not in mixedCase
+Parameter WhiskyToken.allowance(address,address)._owner (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#397) is not in mixedCase
+Parameter WhiskyToken.allowance(address,address)._spender (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#397) is not in mixedCase
+Parameter WhiskyToken.increaseApproval(address,uint256)._spender (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#411) is not in mixedCase
+Parameter WhiskyToken.increaseApproval(address,uint256)._addedValue (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#411) is not in mixedCase
+Parameter WhiskyToken.decreaseApproval(address,uint256)._spender (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#431) is not in mixedCase
+Parameter WhiskyToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#431) is not in mixedCase
+Parameter WhiskyToken.burn(uint256)._value (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#451) is not in mixedCase
+Parameter WhiskyToken.setAssetValue(uint64)._value (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#466) is not in mixedCase
+Parameter WhiskyToken.setFeeCharge(uint64)._value (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#477) is not in mixedCase
+Parameter WhiskyToken.freezeAccount(address,bool)._target (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#491) is not in mixedCase
+Parameter WhiskyToken.freezeAccount(address,bool)._freeze (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#491) is not in mixedCase
+Parameter WhiskyToken.setFreezeTransfer(bool)._freeze (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#503) is not in mixedCase
+Parameter WhiskyToken.setFeeReceiver(address)._feeReceiver (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#513) is not in mixedCase
+Parameter WhiskyToken.setTokenAvailable(bool)._available (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#523) is not in mixedCase
+Constant WhiskyToken.feeChargeMax (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#257) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+WhiskyToken.slitherConstructorVariables() (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#230-527) uses literals with too many digits:
+	- initialSupply = 28100000 * (10 ** uint256(decimals)) (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#238)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+WhiskyToken.decimals (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#237) should be constant 
+WhiskyToken.name (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#235) should be constant 
+WhiskyToken.symbol (../sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol#236) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x4b599012547191f19afc7d9f347ecab0cfdac840.sol analyzed (5 contracts with 100 detectors), 36 result(s) found

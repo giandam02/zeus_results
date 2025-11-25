@@ -1,0 +1,201 @@
+'solc --version' running
+'solc /sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol:
+/sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol:100:39: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x0e21902D93573C18FD0aCBadaC4A5464e9732F54'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+  address public templeOfEthaddress = 0x0e21902d93573c18fd0acbadac4a5464e9732f54; // MAINNET
+                                      ^----------------------------------------^
+
+
+Reentrancy in TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289):
+	External calls:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	External calls sending eth:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	State variables written after the call(s):
+	- _transfer(oldOwner,newOwner,_tokenId) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#274)
+		- tikiIndexToOwner[_tokenId] = _to (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#364)
+	TikiMadness.tikiIndexToOwner (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#85) can be used in cross function reentrancies:
+	- TikiMadness._transfer(address,address,uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#355-369)
+	- TikiMadness.collectBagHolderFund(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321-337)
+	- TikiMadness.getTiki(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210-225)
+	- TikiMadness.ownerOf(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#230-237)
+	- TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289)
+	- TikiMadness.tikiIndexToOwner (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#85)
+	- tikiMasks[_tokenId].highPrice = SafeMath.mul(SafeMath.div(currentPrice,100),increaseRatePercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#277)
+	TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118) can be used in cross function reentrancies:
+	- TikiMadness.collectBagHolderFund(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321-337)
+	- TikiMadness.constructor() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#120-199)
+	- TikiMadness.getTiki(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210-225)
+	- TikiMadness.priceOf(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#304-318)
+	- TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289)
+	- TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118)
+	- tikiMasks[_tokenId].saleTime = now (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#278)
+	TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118) can be used in cross function reentrancies:
+	- TikiMadness.collectBagHolderFund(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321-337)
+	- TikiMadness.constructor() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#120-199)
+	- TikiMadness.getTiki(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210-225)
+	- TikiMadness.priceOf(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#304-318)
+	- TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289)
+	- TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118)
+	- tikiMasks[_tokenId].bagHolderFund = bagHolderFundAmount + bagHolderFundAmount (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#279)
+	TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118) can be used in cross function reentrancies:
+	- TikiMadness.collectBagHolderFund(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321-337)
+	- TikiMadness.constructor() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#120-199)
+	- TikiMadness.getTiki(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210-225)
+	- TikiMadness.priceOf(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#304-318)
+	- TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289)
+	- TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118)
+	- tikiMasks[_tokenId].basePrice = max(tikiMasks[_tokenId].basePrice,SafeMath.div(tikiMasks[_tokenId].bagHolderFund,8)) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#280)
+	TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118) can be used in cross function reentrancies:
+	- TikiMadness.collectBagHolderFund(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321-337)
+	- TikiMadness.constructor() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#120-199)
+	- TikiMadness.getTiki(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210-225)
+	- TikiMadness.priceOf(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#304-318)
+	- TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289)
+	- TikiMadness.tikiMasks (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#118)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) performs a multiplication on the result of a division:
+	- previousOwnerGets = SafeMath.mul(SafeMath.div(currentPrice,increaseRatePercent),previousOwnerPercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#256)
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) performs a multiplication on the result of a division:
+	- exchangeTokensAmount = SafeMath.mul(SafeMath.div(currentPrice,increaseRatePercent),exchangeTokenPercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#257)
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) performs a multiplication on the result of a division:
+	- devFeeAmount = SafeMath.mul(SafeMath.div(currentPrice,increaseRatePercent),devFeePercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#258)
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) performs a multiplication on the result of a division:
+	- bagHolderFundAmount = SafeMath.mul(SafeMath.div(currentPrice,increaseRatePercent),bagHolderFundPercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#259)
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) performs a multiplication on the result of a division:
+	- godTikiGets = SafeMath.mul(SafeMath.div(currentPrice,increaseRatePercent),godTikiPercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#260)
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) performs a multiplication on the result of a division:
+	- tikiMasks[_tokenId].highPrice = SafeMath.mul(SafeMath.div(currentPrice,100),increaseRatePercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#277)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) ignores return value by templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Reentrancy in TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289):
+	External calls:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	External calls sending eth:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	State variables written after the call(s):
+	- _transfer(oldOwner,newOwner,_tokenId) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#274)
+		- ownershipTokenCount[_to] ++ (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#362)
+		- ownershipTokenCount[_from] -- (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#367)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289):
+	External calls:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	External calls sending eth:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	- oldOwner.send(previousOwnerGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#284)
+	Event emitted after the call(s):
+	- onTokenSold(_tokenId,currentPrice,oldOwner,newOwner,tikiMasks[_tokenId].name) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#287)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TikiMadness.getTiki(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210-225) uses timestamp for comparisons
+	Dangerous comparisons:
+	- isBagFundAvailable = now > (tiki.saleTime + priceFallDuration) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#224)
+TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(msg.value >= currentPrice) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#254)
+	- msg.value > currentPrice (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#262)
+TikiMadness.godTiki() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#292-301) uses timestamp for comparisons
+	Dangerous comparisons:
+	- priceOf(x) < lowestPrice (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#296)
+TikiMadness.priceOf(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#304-318) uses timestamp for comparisons
+	Dangerous comparisons:
+	- secondsPassed >= tiki.fallDuration || tiki.highPrice == tiki.basePrice (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#309)
+TikiMadness.collectBagHolderFund(uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321-337) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(isBagFundAvailable && bagHolderFund > 0) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#333)
+TikiMadness.paused() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#339-341) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (now < startTime) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#340)
+TikiMadness.collectDevFees() (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#372-378) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentDevFee < address(this).balance (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#373)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+TikiMadness._transfer(address,address,uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#355-369) uses assembly
+	- INLINE ASM (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#359-360)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+TikiMadness._owns(address,uint256) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#350-352) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event TikiMadness.onTokenSold(uint256,uint256,address,address,string) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#59-65) is not in CapWords
+Parameter TikiMadness.balanceOf(address)._owner (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#204) is not in mixedCase
+Parameter TikiMadness.getTiki(uint256)._tokenId (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#210) is not in mixedCase
+Parameter TikiMadness.ownerOf(uint256)._tokenId (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#230) is not in mixedCase
+Parameter TikiMadness.purchase(uint256,address)._tokenId (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240) is not in mixedCase
+Parameter TikiMadness.purchase(uint256,address)._referredBy (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240) is not in mixedCase
+Parameter TikiMadness.priceOf(uint256)._tokenId (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#304) is not in mixedCase
+Parameter TikiMadness.collectBagHolderFund(uint256)._tokenId (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#321) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289):
+	External calls:
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	External calls sending eth:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	State variables written after the call(s):
+	- _transfer(oldOwner,newOwner,_tokenId) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#274)
+		- ownershipTokenCount[_to] ++ (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#362)
+		- ownershipTokenCount[_from] -- (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#367)
+	- _transfer(oldOwner,newOwner,_tokenId) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#274)
+		- tikiIndexToOwner[_tokenId] = _to (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#364)
+	- tikiMasks[_tokenId].highPrice = SafeMath.mul(SafeMath.div(currentPrice,100),increaseRatePercent) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#277)
+	- tikiMasks[_tokenId].saleTime = now (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#278)
+	- tikiMasks[_tokenId].bagHolderFund = bagHolderFundAmount + bagHolderFundAmount (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#279)
+	- tikiMasks[_tokenId].basePrice = max(tikiMasks[_tokenId].basePrice,SafeMath.div(tikiMasks[_tokenId].bagHolderFund,8)) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#280)
+Reentrancy in TikiMadness.purchase(uint256,address) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#240-289):
+	External calls:
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	- oldOwner.send(previousOwnerGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#284)
+	External calls sending eth:
+	- templeContract.purchaseFor.value(exchangeTokensAmount)(_referredBy,msg.sender) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#268)
+	- ownerOf(godTiki()).transfer(godTikiGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#271)
+	- oldOwner.send(previousOwnerGets) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#284)
+	Event emitted after the call(s):
+	- onTokenSold(_tokenId,currentPrice,oldOwner,newOwner,tikiMasks[_tokenId].name) (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#287)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+TikiMadness.bagHolderFundPercent (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#75) should be constant 
+TikiMadness.devFeePercent (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#74) should be constant 
+TikiMadness.exchangeTokenPercent (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#76) should be constant 
+TikiMadness.godTikiPercent (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#73) should be constant 
+TikiMadness.increaseRatePercent (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#72) should be constant 
+TikiMadness.previousOwnerPercent (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#77) should be constant 
+TikiMadness.priceFallDuration (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#78) should be constant 
+TikiMadness.startTime (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#94) should be constant 
+TikiMadness.templeOfEthaddress (../sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol#100) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x7a2ed6b8566e0a0a1342ffc56dc952cbe329a12b.sol analyzed (3 contracts with 100 detectors), 40 result(s) found

@@ -1,0 +1,54 @@
+'solc --version' running
+'solc /sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol:
+/sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol:4:5: Warning: No visibility specified. Defaulting to "public". 
+    function isOwner() returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol:4:5: Warning: Function state mutability can be restricted to view
+    function isOwner() returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+PresaleHold.Owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#19) shadows:
+	- Ownable.Owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#7)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+Ownable.transferOwner(address)._owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#8) lacks a zero-check on :
+		- Owner = _owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#9)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+PresaleHold.withdraw(uint256) (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#34-41) uses timestamp for comparisons
+	Dangerous comparisons:
+	- isOwner() && now >= openDate (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#35)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.10 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.10 (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwner(address)._owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#8) is not in mixedCase
+Variable Ownable.Owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#7) is not in mixedCase
+Parameter PresaleHold.setup(uint256)._openDate (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#21) is not in mixedCase
+Variable PresaleHold.Owner (../sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol#19) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xb31820c1d84e183377030b6d3f0e1ee5c1cff643.sol analyzed (2 contracts with 100 detectors), 9 result(s) found

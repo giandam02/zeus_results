@@ -1,0 +1,81 @@
+'solc --version' running
+'solc /sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:3:28: Warning: Functions in interfaces should be declared external.
+interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
+                           ^-----------------------------------------------------------------------------------------------^
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:55:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:132:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(msg.sender, _value);
+        ^----------------------^
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:150:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(_from, _value);
+        ^-----------------^
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:30:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        string tokenName,
+        ^--------------^
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol:31:9: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+        string tokenSymbol
+        ^----------------^
+
+
+XiDingCoin (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#5-154) has incorrect ERC20 function interface:XiDingCoin.transfer(address,uint256) (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#68-70)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Version constraint ^0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.16 (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#3) is not in CapWords
+Function XiDingCoin.TokenERC20(uint256,string,string) (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#28-37) is not in mixedCase
+Parameter XiDingCoin.transfer(address,uint256)._to (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#68) is not in mixedCase
+Parameter XiDingCoin.transfer(address,uint256)._value (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#68) is not in mixedCase
+Parameter XiDingCoin.transferFrom(address,address,uint256)._from (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#81) is not in mixedCase
+Parameter XiDingCoin.transferFrom(address,address,uint256)._to (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#81) is not in mixedCase
+Parameter XiDingCoin.transferFrom(address,address,uint256)._value (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#81) is not in mixedCase
+Parameter XiDingCoin.approve(address,uint256)._spender (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#96) is not in mixedCase
+Parameter XiDingCoin.approve(address,uint256)._value (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#96) is not in mixedCase
+Parameter XiDingCoin.approveAndCall(address,uint256,bytes)._spender (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#111) is not in mixedCase
+Parameter XiDingCoin.approveAndCall(address,uint256,bytes)._value (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#111) is not in mixedCase
+Parameter XiDingCoin.approveAndCall(address,uint256,bytes)._extraData (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#111) is not in mixedCase
+Parameter XiDingCoin.burn(uint256)._value (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#128) is not in mixedCase
+Parameter XiDingCoin.burnFrom(address,uint256)._from (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#144) is not in mixedCase
+Parameter XiDingCoin.burnFrom(address,uint256)._value (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#144) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+XiDingCoin.TokenERC20(uint256,string,string) (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#28-37) uses literals with too many digits:
+	- totalSupply = initialSupply * 168000000 (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+XiDingCoin.decimals (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+receiveApproval(address,uint256,address,bytes) should be declared external:
+	- tokenRecipient.receiveApproval(address,uint256,address,bytes) (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#3)
+TokenERC20(uint256,string,string) should be declared external:
+	- XiDingCoin.TokenERC20(uint256,string,string) (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#28-37)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- XiDingCoin.approveAndCall(address,uint256,bytes) (../sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol#111-119)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x976c1926b162f4cebbd461a39fe5e5a695c132ae.sol analyzed (2 contracts with 100 detectors), 23 result(s) found

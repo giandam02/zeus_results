@@ -1,0 +1,46 @@
+'solc --version' running
+'solc /sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Ownable.transferOwnership(address) (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#64-68) should emit an event for: 
+	- owner = newOwner (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#66) 
+TreeCoin.initialize(address,uint256) (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#214-222) should emit an event for: 
+	- wallet = _wallet (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#218) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#99) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#99) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#111) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#147) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#147) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#147) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#165) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#165) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#184) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#184) is not in mixedCase
+Parameter TreeCoin.initialize(address,uint256)._wallet (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#214) is not in mixedCase
+Parameter TreeCoin.initialize(address,uint256)._totalSupply (../sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol#214) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x7dd2f15b4a8c8e14da5eaa7b635221d4b39c41cc.sol analyzed (7 contracts with 100 detectors), 16 result(s) found

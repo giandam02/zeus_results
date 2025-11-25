@@ -1,0 +1,69 @@
+'solc --version' running
+'solc /sb/0xc58492b3b14f658adff566c988029308505f81b5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:10:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function PonziScheme(uint _startingAmount) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:19:9: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        throw;
+        ^---^
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:36:7: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+      throw;
+      ^---^
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:24:7: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+      lastDepositor.send(msg.value);
+      ^---------------------------^
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:10:3: Warning: No visibility specified. Defaulting to "public". 
+  function PonziScheme(uint _startingAmount) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:16:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol:34:3: Warning: Function state mutability can be restricted to view
+  function checkAmount(uint amount) private {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+PonziScheme.fallback() (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#16-32) ignores return value by lastDepositor.send(msg.value) (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Deprecated standard detected THROW (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#19):
+	- Usage of "throw" should be replaced with "revert()"
+Deprecated standard detected THROW (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#36):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Reentrancy in PonziScheme.fallback() (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#16-32):
+	External calls:
+	- lastDepositor.send(msg.value) (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#24)
+	State variables written after the call(s):
+	- lastDepositor = msg.sender (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#28)
+	- lastDepositorAmount = msg.value (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#27)
+	- nextAmount = msg.value * 2 (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#29)
+	- increaseRound() (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#31)
+		- round = round + 1 (../sb/0xc58492b3b14f658adff566c988029308505f81b5.sol#41)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xc58492b3b14f658adff566c988029308505f81b5.sol analyzed (1 contracts with 100 detectors), 6 result(s) found

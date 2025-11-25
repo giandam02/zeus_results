@@ -1,0 +1,118 @@
+'solc --version' running
+'solc /sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:95:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:141:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function HasNoEther() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:115:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:155:23: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    assert(owner.send(this.balance));
+                      ^----------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:239:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:280:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:296:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:318:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:329:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:363:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_to, _amount);
+    ^----------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:364:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(address(0), _to, _amount);
+    ^--------------------------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:374:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MintFinished();
+    ^------------^
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:95:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:141:3: Warning: No visibility specified. Defaulting to "public". 
+  function HasNoEther() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:393:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint256 _value) canTransfer returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:397:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint256 _value) canTransfer returns (bool) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:33:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:46:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:51:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol:212:3: Warning: Function state mutability can be restricted to pure
+  function tokenFallback(address /*from_*/, uint256 /*value_*/, bytes /*data_*/) external {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#70-72) uses arbitrary from in transferFrom: assert(bool)(token.transferFrom(from,to,value)) (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#71)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Version constraint ^0.4.15 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.15 (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#232) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#232) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#248) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#272) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#272) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#272) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#294) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#294) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#306) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#306) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#316) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#316) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#322) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#322) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#360) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#360) is not in mixedCase
+Parameter ZDRToken.transfer(address,uint256)._to (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#393) is not in mixedCase
+Parameter ZDRToken.transfer(address,uint256)._value (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#393) is not in mixedCase
+Parameter ZDRToken.transferFrom(address,address,uint256)._from (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#397) is not in mixedCase
+Parameter ZDRToken.transferFrom(address,address,uint256)._to (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#397) is not in mixedCase
+Parameter ZDRToken.transferFrom(address,address,uint256)._value (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#397) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ZDRToken.name (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#382) should be constant 
+ZDRToken.symbol (../sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol#381) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x956d760f8665358ea1a9f11b82913020e5479376.sol analyzed (13 contracts with 100 detectors), 26 result(s) found

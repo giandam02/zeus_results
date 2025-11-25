@@ -1,0 +1,116 @@
+'solc --version' running
+'solc /sb/0x351544927a64a458a87a91c33718487098873b87.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x351544927a64a458a87a91c33718487098873b87.sol:
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol:157:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onReinvestment(_customerAddress, _dividends, _tokens);
+        ^---------------------------------------------------^
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol:188:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onWithdraw(_customerAddress, _dividends);
+        ^--------------------------------------^
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol:217:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenSell(_customerAddress, _tokens, _taxedEthereum, now, buyPrice());
+        ^---------------------------------------------------------------------^
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol:258:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_customerAddress, _toAddress, _taxedTokens);
+        ^--------------------------------------------------^
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol:274:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol:422:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenPurchase(_customerAddress, _incomingEthereum, _amountOfTokens, _referredBy, now, buyPrice());
+        ^-------------------------------------------------------------------------------------------------^
+
+
+PoMN.sell(uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#192-218) performs a multiplication on the result of a division:
+	- _dividends = SafeMath.div(SafeMath.mul(_ethereum,exitFee_),100) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#199)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#213)
+PoMN.purchaseTokens(uint256,address) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#361-425) performs a multiplication on the result of a division:
+	- _undividedDividends = SafeMath.div(SafeMath.mul(_incomingEthereum,entryFee_),100) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#364)
+	- _referralBonus = SafeMath.div(SafeMath.mul(_undividedDividends,refferalFee_),100) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#365)
+PoMN.purchaseTokens(uint256,address) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#361-425) performs a multiplication on the result of a division:
+	- _fee = _fee - (_fee - (_amountOfTokens * (_dividends * magnitude / tokenSupply_))) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#407)
+PoMN.tokensToEthereum_(uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#462-480) performs a multiplication on the result of a division:
+	- _etherReceived = (SafeMath.sub((((tokenPriceInitial_ + (tokenPriceIncremental_ * (_tokenSupply / 1e18))) - tokenPriceIncremental_) * (tokens_ - 1e18)),(tokenPriceIncremental_ * ((tokens_ ** 2 - tokens_) / 1e18)) / 2) / 1e18) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#465-477)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Version constraint ^0.4.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.20 (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event PoMN.onTokenPurchase(address,uint256,uint256,address,uint256,uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#47-54) is not in CapWords
+Event PoMN.onTokenSell(address,uint256,uint256,uint256,uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#56-62) is not in CapWords
+Event PoMN.onReinvestment(address,uint256,uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#64-68) is not in CapWords
+Event PoMN.onWithdraw(address,uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#70-73) is not in CapWords
+Parameter PoMN.buy(address)._referredBy (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#128) is not in mixedCase
+Parameter PoMN.sell(uint256)._amountOfTokens (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#192) is not in mixedCase
+Parameter PoMN.transfer(address,uint256)._toAddress (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#225) is not in mixedCase
+Parameter PoMN.transfer(address,uint256)._amountOfTokens (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#225) is not in mixedCase
+Parameter PoMN.myDividends(bool)._includeReferralBonus (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#294) is not in mixedCase
+Parameter PoMN.balanceOf(address)._customerAddress (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#300) is not in mixedCase
+Parameter PoMN.dividendsOf(address)._customerAddress (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#305) is not in mixedCase
+Parameter PoMN.calculateTokensReceived(uint256)._ethereumToSpend (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#338) is not in mixedCase
+Parameter PoMN.calculateEthereumReceived(uint256)._tokensToSell (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#347) is not in mixedCase
+Parameter PoMN.purchaseTokens(uint256,address)._incomingEthereum (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#361) is not in mixedCase
+Parameter PoMN.purchaseTokens(uint256,address)._referredBy (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#361) is not in mixedCase
+Parameter PoMN.ethereumToTokens_(uint256)._ethereum (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#432) is not in mixedCase
+Parameter PoMN.tokensToEthereum_(uint256)._tokens (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#462) is not in mixedCase
+Constant PoMN.entryFee_ (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#92) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PoMN.transferFee_ (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#95) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PoMN.exitFee_ (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#98) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PoMN.refferalFee_ (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#101) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PoMN.tokenPriceInitial_ (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#103) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PoMN.tokenPriceIncremental_ (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#104) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant PoMN.magnitude (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#105) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in PoMN.transfer(address,uint256) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#225-262):
+	External calls:
+	- withdraw() (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#234)
+		- _customerAddress.transfer(_dividends) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#185)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] -= int256(profitPerShare_ * _amountOfTokens) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#251)
+	- payoutsTo_[_toAddress] += int256(profitPerShare_ * _taxedTokens) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#252)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#255)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.sub(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#247)
+	- tokenBalanceLedger_[_toAddress] = SafeMath.add(tokenBalanceLedger_[_toAddress],_taxedTokens) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#248)
+	- tokenSupply_ = SafeMath.sub(tokenSupply_,_tokenFee) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#244)
+	Event emitted after the call(s):
+	- Transfer(_customerAddress,_toAddress,_taxedTokens) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#258)
+Reentrancy in PoMN.withdraw() (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#172-189):
+	External calls:
+	- _customerAddress.transfer(_dividends) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#185)
+	Event emitted after the call(s):
+	- onWithdraw(_customerAddress,_dividends) (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#188)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+PoMN.slitherConstructorConstantVariables() (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#23-494) uses literals with too many digits:
+	- tokenPriceInitial_ = 10000000000 (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#103)
+PoMN.slitherConstructorConstantVariables() (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#23-494) uses literals with too many digits:
+	- tokenPriceIncremental_ = 1000000000 (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#104)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+PoMN.name (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#87) should be constant 
+PoMN.stakingRequirement (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#108) should be constant 
+PoMN.symbol (../sb/0x351544927a64a458a87a91c33718487098873b87.sol#88) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x351544927a64a458a87a91c33718487098873b87.sol analyzed (2 contracts with 100 detectors), 37 result(s) found

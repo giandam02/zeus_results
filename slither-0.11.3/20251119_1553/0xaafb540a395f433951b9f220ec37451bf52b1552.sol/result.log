@@ -1,0 +1,71 @@
+'solc --version' running
+'solc /sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol:
+/sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol:100:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol:140:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol:156:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol:182:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol:203:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+
+
+Version constraint ^0.4.17 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.17 (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#93) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#93) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#109) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#132) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#132) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#132) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#154) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#154) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#166) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#166) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#180) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#180) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#196) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#196) is not in mixedCase
+Variable LTT.INITIAL_SUPPLY (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#217) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+LTT.slitherConstructorVariables() (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#209-227) uses literals with too many digits:
+	- INITIAL_SUPPLY = 100000000e18 (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#217)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+LTT.INITIAL_SUPPLY (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#217) should be constant 
+LTT.decimals (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#215) should be constant 
+LTT.name (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#211) should be constant 
+LTT.symbol (../sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol#213) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xaafb540a395f433951b9f220ec37451bf52b1552.sol analyzed (6 contracts with 100 detectors), 22 result(s) found

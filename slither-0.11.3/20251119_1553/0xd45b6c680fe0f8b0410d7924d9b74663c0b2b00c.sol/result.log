@@ -1,0 +1,740 @@
+'solc --version' running
+'solc /sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+DiscountStructs (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#948-1088) contract sets array length with a user-controlled value:
+	- discountSteps[index].push(DiscountStep(_fromWei[i],_toWei[i],_percent[i])) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1076)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791) ignores return value by tokenContract.transfer(msg.sender,purchasedTokens.add(receivedTokens)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#769)
+Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791) ignores return value by tokenContract.transfer(msg.sender,bonusTokens_.add(refTokens)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#785)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+PromoCodes.removePromoCode(bytes32) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1156-1159) deletes PromoCodes.PromoCode (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1099-1104) which contains a mapping:
+	-delete promoCodes[_code] (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1157)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deletion-on-mapping-containing-a-structure
+
+Reentrancy in Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705):
+	External calls:
+	- promoCodeBonusAmount = promoCodesContract.applyBonusAmount(msg.sender,purchasedAmount,_promoCode) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#642)
+	- discountPhaseBonusAmount = discountPhasesContract.calculateBonusAmount(purchasedAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#643)
+	- discountStructBonusAmount = discountStructsContract.getBonus(msg.sender,purchasedAmount,msg.value) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#644)
+	- require(bool)(fitsTokensForSaleCap(purchasedAmount.add(bonusAmount).add(referrerBonusAmount))) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#660)
+		- tokenContract.balanceOf(this) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#518)
+	State variables written after the call(s):
+	- bonusTokens = bonusTokens.add(bonusAmount).add(referrerBonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#665)
+	Crowdsale.bonusTokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#373) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.getDistributedTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#523-525)
+	- Crowdsale.getState() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#483-510)
+	- investors[referrerAddr].referralTokens = investors[referrerAddr].referralTokens.add(referrerBonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#668)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- investors[msg.sender].purchasedTokens = investors[msg.sender].purchasedTokens.add(purchasedAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#671)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- investors[msg.sender].bonusTokens = investors[msg.sender].bonusTokens.add(bonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#674)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- investors[msg.sender].contributionInWei = investors[msg.sender].contributionInWei.add(msg.value) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#677)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- tokensPurchasesLength = investors[msg.sender].tokensPurchases.push(TokensPurchase({value:msg.value,amount:purchasedAmount,bonus:bonusAmount,referrer:referrerAddr,referrerSentAmount:referrerBonusAmount})) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#680-687)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- soldTokens = soldTokens.add(purchasedAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#664)
+	Crowdsale.soldTokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#372) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.getDistributedTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#523-525)
+	- Crowdsale.getState() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#483-510)
+Reentrancy in Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791):
+	External calls:
+	- tokenContract.transfer(msg.sender,purchasedTokens.add(receivedTokens)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#769)
+	State variables written after the call(s):
+	- investors[msg.sender].bonusTokens = 0 (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#777)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- investors[msg.sender].referralTokens = 0 (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#778)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+Reentrancy in Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725):
+	External calls:
+	- require(bool)(fitsTokensForSaleCap(_amount)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#710)
+		- tokenContract.balanceOf(this) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#518)
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- investors[_investor].receivedTokens = investors[_investor].receivedTokens.add(_amount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#716)
+	Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380) can be used in cross function reentrancies:
+	- Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850)
+	- Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571)
+	- Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562)
+	- Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705)
+	- Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791)
+	- Crowdsale.getInvestorTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#856-871)
+	- Crowdsale.getInvestorTokensPurchasesLength(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852-854)
+	- Crowdsale.investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#380)
+	- Crowdsale.isBlockpassInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541-543)
+	- Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817)
+	- Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+	- Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553)
+	- sentTokens = sentTokens.add(_amount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#713)
+	Crowdsale.sentTokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#374) can be used in cross function reentrancies:
+	- Crowdsale.getDistributedTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#523-525)
+	- Crowdsale.getState() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#483-510)
+	- Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725)
+Reentrancy in DiscountStructs.setCrowdsale(Crowdsale) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1001-1005):
+	External calls:
+	- require(bool)(_crowdsale.staffContract() == staffContract) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1003)
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1001)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- crowdsale = _crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1004)
+	DiscountStructs.crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#951) can be used in cross function reentrancies:
+	- DiscountStructs.crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#951)
+	- DiscountStructs.onlyCrowdsale() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#996-999)
+	- DiscountStructs.setCrowdsale(Crowdsale) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1001-1005)
+Reentrancy in PromoCodes.setCrowdsale(Crowdsale) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1116-1120):
+	External calls:
+	- require(bool)(_crowdsale.staffContract() == staffContract) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1118)
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1116)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- crowdsale = _crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1119)
+	PromoCodes.crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1093) can be used in cross function reentrancies:
+	- PromoCodes.crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1093)
+	- PromoCodes.onlyCrowdsale() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1111-1114)
+	- PromoCodes.setCrowdsale(Crowdsale) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1116-1120)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Crowdsale.setTokenContract(Token) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#527-532) contains a tautology or contradiction:
+	- require(bool)(token.balanceOf(this) >= 0) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#528)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+Crowdsale.claimTokens().clBonusTokens_ (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#747) is a local variable never initialized
+Crowdsale.claimTokens().clRefTokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#748) is a local variable never initialized
+Crowdsale.claimTokens().clPurchasedTokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#745) is a local variable never initialized
+Crowdsale.claimTokens().clReceivedTokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#746) is a local variable never initialized
+Crowdsale.buyTokens(bytes32,address).referrerBonusAmount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#648) is a local variable never initialized
+Crowdsale.buyTokens(bytes32,address).referrerAddr (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#649) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+DiscountStructs.setCrowdsale(Crowdsale) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1001-1005) should emit an event for: 
+	- crowdsale = _crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1004) 
+PromoCodes.setCrowdsale(Crowdsale) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1116-1120) should emit an event for: 
+	- crowdsale = _crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1119) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Reentrancy in DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923-939):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- index = discountPhases.push(DiscountPhase({percent:_percent,fromDate:_fromDate,toDate:_toDate})) - 1 (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#936)
+Reentrancy in DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057-1080):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- discountSteps[index].push(DiscountStep(_fromWei[i],_toWei[i],_percent[i])) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1076)
+	- index = discountStructs.push(ds) - 1 (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1068)
+Reentrancy in PromoCodes.addPromoCode(string,bytes32,uint256,uint8) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143-1154):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- promoCodes[_code].percent = _percent (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1150)
+	- promoCodes[_code].maxUses = _maxUses (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1151)
+Reentrancy in Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- investors[_investor].status = InvestorStatus.BLOCKED (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#568)
+Reentrancy in Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- investors[_investors[i]].status = InvestorStatus.WHITELISTED (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#558)
+Reentrancy in Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705):
+	External calls:
+	- promoCodeBonusAmount = promoCodesContract.applyBonusAmount(msg.sender,purchasedAmount,_promoCode) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#642)
+	- discountPhaseBonusAmount = discountPhasesContract.calculateBonusAmount(purchasedAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#643)
+	- discountStructBonusAmount = discountStructsContract.getBonus(msg.sender,purchasedAmount,msg.value) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#644)
+	- require(bool)(fitsTokensForSaleCap(purchasedAmount.add(bonusAmount).add(referrerBonusAmount))) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#660)
+		- tokenContract.balanceOf(this) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#518)
+	State variables written after the call(s):
+	- weiRaised = weiRaised.add(msg.value) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#663)
+Reentrancy in Crowdsale.changeTokenRate(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#616-620):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#616)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- tokenRate = _tokenRate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#618)
+Reentrancy in Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791):
+	External calls:
+	- tokenContract.transfer(msg.sender,purchasedTokens.add(receivedTokens)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#769)
+	State variables written after the call(s):
+	- claimedBonusTokens = claimedBonusTokens.add(bonusTokens_).add(refTokens) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#780)
+Reentrancy in Crowdsale.finalize() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#889-895):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#889)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- finalized = true (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#892)
+Reentrancy in Crowdsale.lockBonusTokensClaim(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#584-588):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#584)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- bonusTokensClaimDate = _date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#586)
+Reentrancy in Crowdsale.lockPurchasedTokensClaim(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#573-577):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#573)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- purchasedTokensClaimDate = _date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#575)
+Reentrancy in Crowdsale.pause() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#873-879):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#873)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- paused = true (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#876)
+Reentrancy in Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- _refundTokensPurchase(_investor,i) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#812)
+		- bonusTokens = bonusTokens.sub(sentAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#825)
+		- bonusTokens = bonusTokens.sub(bonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#843)
+	- _refundTokensPurchase(_investor,i) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#812)
+		- investors[referrer].referralTokens = investors[referrer].referralTokens.sub(sentAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#824)
+		- investors[_investor].contributionInWei = investors[_investor].contributionInWei.sub(purchaseValue) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#830)
+		- investors[_investor].purchasedTokens = investors[_investor].purchasedTokens.sub(purchaseAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#834)
+		- investors[_investor].bonusTokens = investors[_investor].bonusTokens.sub(bonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#838)
+		- delete (investors[_investor].tokensPurchases[_purchaseId]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#846)
+	- _refundTokensPurchase(_investor,i) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#812)
+		- soldTokens = soldTokens.sub(purchaseAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#842)
+	- _refundTokensPurchase(_investor,i) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#812)
+		- weiRaised = weiRaised.sub(purchaseValue) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#841)
+Reentrancy in Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- _refundTokensPurchase(_investor,_purchaseId) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#797)
+		- bonusTokens = bonusTokens.sub(sentAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#825)
+		- bonusTokens = bonusTokens.sub(bonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#843)
+	- _refundTokensPurchase(_investor,_purchaseId) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#797)
+		- investors[referrer].referralTokens = investors[referrer].referralTokens.sub(sentAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#824)
+		- investors[_investor].contributionInWei = investors[_investor].contributionInWei.sub(purchaseValue) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#830)
+		- investors[_investor].purchasedTokens = investors[_investor].purchasedTokens.sub(purchaseAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#834)
+		- investors[_investor].bonusTokens = investors[_investor].bonusTokens.sub(bonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#838)
+		- delete (investors[_investor].tokensPurchases[_purchaseId]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#846)
+	- _refundTokensPurchase(_investor,_purchaseId) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#797)
+		- soldTokens = soldTokens.sub(purchaseAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#842)
+	- _refundTokensPurchase(_investor,_purchaseId) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#797)
+		- weiRaised = weiRaised.sub(purchaseValue) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#841)
+Reentrancy in DiscountPhases.removeDiscountPhase(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#941-945):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#941)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- delete discountPhases[_index] (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#943)
+Reentrancy in DiscountStructs.removeDiscountStruct(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1082-1087):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1082)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- delete discountSteps[_index] (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1085)
+	- delete discountStructs[_index] (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1084)
+Reentrancy in PromoCodes.removePromoCode(bytes32) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1156-1159):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1156)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- delete promoCodes[_code] (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1157)
+Reentrancy in Crowdsale.resume() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#881-887):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#881)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- paused = false (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#884)
+Reentrancy in Crowdsale.setCrowdsaleStartDate(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#595-598):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#595)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- crowdsaleStartDate = _date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#596)
+Reentrancy in Crowdsale.setEndDate(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#600-603):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#600)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- endDate = _date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#601)
+Reentrancy in Crowdsale.setMaxInvestorContributionInWei(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#610-614):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#610)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- maxInvestorContributionInWei = _maxInvestorContributionInWei (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#612)
+Reentrancy in Crowdsale.setMinPurchaseInWei(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#605-608):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#605)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- minPurchaseInWei = _minPurchaseInWei (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#606)
+Reentrancy in Crowdsale.setTokenContract(Token) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#527-532):
+	External calls:
+	- require(bool)(token.balanceOf(this) >= 0) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#528)
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#527)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- tokenContract = token (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#531)
+Reentrancy in Crowdsale.unlockBonusTokensClaim() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#590-593):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#590)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- bonusTokensClaimDate = now (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#591)
+Reentrancy in Crowdsale.unlockPurchasedTokensClaim() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#579-582):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#579)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	State variables written after the call(s):
+	- purchasedTokensClaimDate = now (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#580)
+Reentrancy in Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	State variables written after the call(s):
+	- investors[_investor].status = InvestorStatus.WHITELISTED (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#549)
+	- investors[_investor].isBlockpass = _isBlockpass (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#550)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923-939):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- DiscountPhaseAdded(index,_name,_percent,_fromDate,_toDate,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#938)
+Reentrancy in DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057-1080):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- DiscountStructAdded(index,_name,_tokens,_dates,_fromWei,_toWei,_percent,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1079)
+Reentrancy in PromoCodes.addPromoCode(string,bytes32,uint256,uint8) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143-1154):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- PromoCodeAdded(_code,_name,_percent,_maxUses,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1153)
+Reentrancy in Crowdsale.blockInvestor(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564-571):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- InvestorBlocked(_investor,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#570)
+Reentrancy in Crowdsale.bulkWhitelistInvestor(address[]) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555-562):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- InvestorWhitelisted(_investors[i],now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#559)
+Reentrancy in Crowdsale.burnUnsoldTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#727-738):
+	External calls:
+	- tokensToBurn = tokenContract.balanceOf(this).sub(getDistributedTokens()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#731)
+	- tokenContract.burn(tokensToBurn) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#734)
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#727)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- TokensBurned(tokensToBurn,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#737)
+Reentrancy in Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705):
+	External calls:
+	- promoCodeBonusAmount = promoCodesContract.applyBonusAmount(msg.sender,purchasedAmount,_promoCode) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#642)
+	- discountPhaseBonusAmount = discountPhasesContract.calculateBonusAmount(purchasedAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#643)
+	- discountStructBonusAmount = discountStructsContract.getBonus(msg.sender,purchasedAmount,msg.value) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#644)
+	- require(bool)(fitsTokensForSaleCap(purchasedAmount.add(bonusAmount).add(referrerBonusAmount))) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#660)
+		- tokenContract.balanceOf(this) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#518)
+	Event emitted after the call(s):
+	- TokensPurchased(msg.sender,tokensPurchasesLength - 1,msg.value,purchasedAmount,promoCodeBonusAmount,discountPhaseBonusAmount,discountStructBonusAmount,referrerAddr,referrerBonusAmount,now) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#690-701)
+Reentrancy in Crowdsale.changeTokenRate(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#616-620):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#616)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- TokenRateChanged(_tokenRate,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#619)
+Reentrancy in Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791):
+	External calls:
+	- tokenContract.transfer(msg.sender,purchasedTokens.add(receivedTokens)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#769)
+	- tokenContract.transfer(msg.sender,bonusTokens_.add(refTokens)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#785)
+	Event emitted after the call(s):
+	- TokensClaimed(msg.sender,clPurchasedTokens,clBonusTokens_,clRefTokens,clReceivedTokens,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#790)
+Reentrancy in Crowdsale.finalize() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#889-895):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#889)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- Finalized(now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#894)
+Reentrancy in Crowdsale.lockBonusTokensClaim(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#584-588):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#584)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- BonusTokensClaimLocked(_date,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#587)
+Reentrancy in Crowdsale.lockPurchasedTokensClaim(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#573-577):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#573)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- PurchasedTokensClaimLocked(_date,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#576)
+Reentrancy in Crowdsale.pause() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#873-879):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#873)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- Paused(now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#878)
+Reentrancy in Crowdsale.refundAllInvestorTokensPurchases(address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803-817):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- TokensPurchaseRefunded(_investor,_purchaseId,purchaseValue,purchaseAmount,bonusAmount,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#849)
+		- _refundTokensPurchase(_investor,i) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#812)
+Reentrancy in Crowdsale.refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793-801):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- TokensPurchaseRefunded(_investor,_purchaseId,purchaseValue,purchaseAmount,bonusAmount,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#849)
+		- _refundTokensPurchase(_investor,_purchaseId) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#797)
+Reentrancy in DiscountPhases.removeDiscountPhase(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#941-945):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#941)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- DiscountPhaseRemoved(_index,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#944)
+Reentrancy in DiscountStructs.removeDiscountStruct(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1082-1087):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1082)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- DiscountStructRemoved(_index,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1086)
+Reentrancy in PromoCodes.removePromoCode(bytes32) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1156-1159):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1156)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- PromoCodeRemoved(_code,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1158)
+Reentrancy in Crowdsale.resume() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#881-887):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#881)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- Resumed(now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#886)
+Reentrancy in Crowdsale.sendTokens(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707-725):
+	External calls:
+	- require(bool)(fitsTokensForSaleCap(_amount)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#710)
+		- tokenContract.balanceOf(this) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#518)
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- TokensSent(_investor,_amount,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#719-724)
+Reentrancy in Crowdsale.setCrowdsaleStartDate(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#595-598):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#595)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- CrowdsaleStartDateUpdated(_date,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#597)
+Reentrancy in Crowdsale.setEndDate(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#600-603):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#600)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- EndDateUpdated(_date,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#602)
+Reentrancy in Crowdsale.setMaxInvestorContributionInWei(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#610-614):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#610)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- MaxInvestorContributionChanged(_maxInvestorContributionInWei,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#613)
+Reentrancy in Crowdsale.setMinPurchaseInWei(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#605-608):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#605)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- MinPurchaseChanged(_minPurchaseInWei,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#607)
+Reentrancy in Crowdsale.unlockBonusTokensClaim() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#590-593):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#590)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- BonusTokensClaimUnlocked(now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#592)
+Reentrancy in Crowdsale.unlockPurchasedTokensClaim() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#579-582):
+	External calls:
+	- onlyOwner() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#579)
+		- require(bool)(msg.sender == staffContract.owner()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#340)
+	Event emitted after the call(s):
+	- PurchasedTokensClaimUnlocked(now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#581)
+Reentrancy in Crowdsale.whitelistInvestor(address,bool) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545-553):
+	External calls:
+	- onlyOwnerOrStaff() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545)
+		- require(bool)(msg.sender == staffContract.owner() || staffContract.isStaff(msg.sender)) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#345)
+	Event emitted after the call(s):
+	- InvestorWhitelisted(_investor,now,msg.sender) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#552)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705) tries to limit the gas of an external call that controls implicit decoding
+	require(bool)(ethFundsWallet.call.gas(300000).value(msg.value)()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#704)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#return-bomb
+
+Crowdsale.lockPurchasedTokensClaim(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#573-577) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_date > now) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#574)
+Crowdsale.lockBonusTokensClaim(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#584-588) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_date > now) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#585)
+Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(startDate < now) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#625)
+Crowdsale.claimTokens() (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#740-791) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(purchasedTokensClaimDate < now || bonusTokensClaimDate < now) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#750)
+	- purchasedTokensClaimDate < now && (purchasedTokens > 0 || receivedTokens > 0) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#755)
+	- bonusTokensClaimDate < now && (bonusTokens_ > 0 || refTokens > 0) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#776)
+DiscountPhases.calculateBonusAmount(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#915-921) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < discountPhases.length (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#916)
+	- now >= discountPhases[i].fromDate && now <= discountPhases[i].toDate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#917)
+DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923-939) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > _fromDate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#927)
+	- require(bool)(_fromDate < _toDate) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#930)
+	- require(bool)(_fromDate > discountPhases[i].toDate || _toDate < discountPhases[i].fromDate) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#933)
+DiscountPhases.removeDiscountPhase(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#941-945) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now < discountPhases[_index].toDate) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#942)
+DiscountStructs.getBonus(address,uint256,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1007-1031) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= discountStructs[i].fromDate && now <= discountStructs[i].toDate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1009)
+DiscountStructs.calculateBonus(uint256,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1033-1055) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= discountStructs[i].fromDate && now <= discountStructs[i].toDate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1035)
+DiscountStructs.removeDiscountStruct(uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1082-1087) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now < discountStructs[_index].toDate) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1083)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850) has costly operations inside a loop:
+	- bonusTokens = bonusTokens.sub(sentAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#825)
+	Calls stack containing the loop:
+		Crowdsale.refundAllInvestorTokensPurchases(address)
+Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850) has costly operations inside a loop:
+	- weiRaised = weiRaised.sub(purchaseValue) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#841)
+	Calls stack containing the loop:
+		Crowdsale.refundAllInvestorTokensPurchases(address)
+Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850) has costly operations inside a loop:
+	- soldTokens = soldTokens.sub(purchaseAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#842)
+	Calls stack containing the loop:
+		Crowdsale.refundAllInvestorTokensPurchases(address)
+Crowdsale._refundTokensPurchase(address,uint256) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#819-850) has costly operations inside a loop:
+	- bonusTokens = bonusTokens.sub(bonusAmount) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#843)
+	Calls stack containing the loop:
+		Crowdsale.refundAllInvestorTokensPurchases(address)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.13 (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Low level call in Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705):
+	- require(bool)(ethFundsWallet.call.gas(300000).value(msg.value)()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#704)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#88) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#269) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#269) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#284) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#298) is not in mixedCase
+Parameter Staff.addStaff(address)._staff (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#318) is not in mixedCase
+Parameter Staff.removeStaff(address)._staff (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#322) is not in mixedCase
+Parameter Staff.isStaff(address)._staff (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#326) is not in mixedCase
+Parameter Crowdsale.fitsTokensForSaleCap(uint256)._amount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#512) is not in mixedCase
+Parameter Crowdsale.getInvestorClaimedTokens(address)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#534) is not in mixedCase
+Parameter Crowdsale.isBlockpassInvestor(address)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#541) is not in mixedCase
+Parameter Crowdsale.whitelistInvestor(address,bool)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545) is not in mixedCase
+Parameter Crowdsale.whitelistInvestor(address,bool)._isBlockpass (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#545) is not in mixedCase
+Parameter Crowdsale.bulkWhitelistInvestor(address[])._investors (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#555) is not in mixedCase
+Parameter Crowdsale.blockInvestor(address)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#564) is not in mixedCase
+Parameter Crowdsale.lockPurchasedTokensClaim(uint256)._date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#573) is not in mixedCase
+Parameter Crowdsale.lockBonusTokensClaim(uint256)._date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#584) is not in mixedCase
+Parameter Crowdsale.setCrowdsaleStartDate(uint256)._date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#595) is not in mixedCase
+Parameter Crowdsale.setEndDate(uint256)._date (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#600) is not in mixedCase
+Parameter Crowdsale.setMinPurchaseInWei(uint256)._minPurchaseInWei (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#605) is not in mixedCase
+Parameter Crowdsale.setMaxInvestorContributionInWei(uint256)._maxInvestorContributionInWei (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#610) is not in mixedCase
+Parameter Crowdsale.changeTokenRate(uint256)._tokenRate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#616) is not in mixedCase
+Parameter Crowdsale.buyTokens(bytes32,address)._promoCode (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622) is not in mixedCase
+Parameter Crowdsale.buyTokens(bytes32,address)._referrer (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622) is not in mixedCase
+Parameter Crowdsale.sendTokens(address,uint256)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707) is not in mixedCase
+Parameter Crowdsale.sendTokens(address,uint256)._amount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#707) is not in mixedCase
+Parameter Crowdsale.refundTokensPurchase(address,uint256)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793) is not in mixedCase
+Parameter Crowdsale.refundTokensPurchase(address,uint256)._purchaseId (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#793) is not in mixedCase
+Parameter Crowdsale.refundAllInvestorTokensPurchases(address)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#803) is not in mixedCase
+Parameter Crowdsale.getInvestorTokensPurchasesLength(address)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#852) is not in mixedCase
+Parameter Crowdsale.getInvestorTokensPurchase(address,uint256)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#857) is not in mixedCase
+Parameter Crowdsale.getInvestorTokensPurchase(address,uint256)._purchaseId (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#858) is not in mixedCase
+Parameter DiscountPhases.calculateBonusAmount(uint256)._purchasedAmount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#915) is not in mixedCase
+Parameter DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256)._name (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923) is not in mixedCase
+Parameter DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256)._percent (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923) is not in mixedCase
+Parameter DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256)._fromDate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923) is not in mixedCase
+Parameter DiscountPhases.addDiscountPhase(string,uint8,uint256,uint256)._toDate (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#923) is not in mixedCase
+Parameter DiscountPhases.removeDiscountPhase(uint256)._index (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#941) is not in mixedCase
+Parameter DiscountStructs.setCrowdsale(Crowdsale)._crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1001) is not in mixedCase
+Parameter DiscountStructs.getBonus(address,uint256,uint256)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1007) is not in mixedCase
+Parameter DiscountStructs.getBonus(address,uint256,uint256)._purchasedAmount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1007) is not in mixedCase
+Parameter DiscountStructs.getBonus(address,uint256,uint256)._purchasedValue (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1007) is not in mixedCase
+Parameter DiscountStructs.calculateBonus(uint256,uint256)._purchasedAmount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1033) is not in mixedCase
+Parameter DiscountStructs.calculateBonus(uint256,uint256)._purchasedValue (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1033) is not in mixedCase
+Parameter DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[])._name (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057) is not in mixedCase
+Parameter DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[])._tokens (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057) is not in mixedCase
+Parameter DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[])._dates (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057) is not in mixedCase
+Parameter DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[])._fromWei (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057) is not in mixedCase
+Parameter DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[])._toWei (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057) is not in mixedCase
+Parameter DiscountStructs.addDiscountStruct(bytes32,uint256,uint256[2],uint256[],uint256[],uint256[])._percent (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1057) is not in mixedCase
+Parameter DiscountStructs.removeDiscountStruct(uint256)._index (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1082) is not in mixedCase
+Parameter PromoCodes.setCrowdsale(Crowdsale)._crowdsale (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1116) is not in mixedCase
+Parameter PromoCodes.applyBonusAmount(address,uint256,bytes32)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1122) is not in mixedCase
+Parameter PromoCodes.applyBonusAmount(address,uint256,bytes32)._purchasedAmount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1122) is not in mixedCase
+Parameter PromoCodes.applyBonusAmount(address,uint256,bytes32)._promoCode (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1122) is not in mixedCase
+Parameter PromoCodes.calculateBonusAmount(address,uint256,bytes32)._investor (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1134) is not in mixedCase
+Parameter PromoCodes.calculateBonusAmount(address,uint256,bytes32)._purchasedAmount (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1134) is not in mixedCase
+Parameter PromoCodes.calculateBonusAmount(address,uint256,bytes32)._promoCode (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1134) is not in mixedCase
+Parameter PromoCodes.addPromoCode(string,bytes32,uint256,uint8)._name (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143) is not in mixedCase
+Parameter PromoCodes.addPromoCode(string,bytes32,uint256,uint8)._code (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143) is not in mixedCase
+Parameter PromoCodes.addPromoCode(string,bytes32,uint256,uint8)._maxUses (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143) is not in mixedCase
+Parameter PromoCodes.addPromoCode(string,bytes32,uint256,uint8)._percent (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143) is not in mixedCase
+Parameter PromoCodes.removePromoCode(bytes32)._code (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1156) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Crowdsale.buyTokens(bytes32,address) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#622-705) uses literals with too many digits:
+	- require(bool)(ethFundsWallet.call.gas(300000).value(msg.value)()) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#704)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Loop condition i < discountPhases.length (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#916) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < discountPhases.length (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#932) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < discountStructs.length (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1008) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < discountStructs.length (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1034) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition j < discountStructs.length (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1063) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+addPromoCode(string,bytes32,uint256,uint8) should be declared external:
+	- PromoCodes.addPromoCode(string,bytes32,uint256,uint8) (../sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol#1143-1154)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xd45b6c680fe0f8b0410d7924d9b74663c0b2b00c.sol analyzed (14 contracts with 100 detectors), 159 result(s) found

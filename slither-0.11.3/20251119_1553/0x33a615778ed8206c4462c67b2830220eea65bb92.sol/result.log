@@ -1,0 +1,86 @@
+'solc --version' running
+'solc /sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ZXCoin.getBounsByAmount(uint256,uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#310-320) performs a multiplication on the result of a division:
+	- bonusRatio = etherAmount.div(500000000000000000000) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#312)
+	- bonusCount = SafeMath.mul(bonusRatio,10) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#316)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Ownable.transferOwnership(address) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#66-70) should emit an event for: 
+	- owner = newOwner (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#68) 
+ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#237-254) should emit an event for: 
+	- tokenWallet = _tokenWallet (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#248) 
+	- fundWallet = _fundWallet (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#249) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#237-254) should emit an event for: 
+	- startDate1 = _start1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#245) 
+	- endDate1 = _end1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#246) 
+	- saleCap = _saleCap (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#247) 
+ZXCoin.setPeriod(uint256,uint256,uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#257-267) should emit an event for: 
+	- startDate1 = _start (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#260) 
+	- endDate1 = _end (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#261) 
+	- startDate2 = _start (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#264) 
+	- endDate2 = _end (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#265) 
+ZXCoin.setSaleCap(uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#282-295) should emit an event for: 
+	- saleCap = _saleCap (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#294) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+ZXCoin.getBonusByTime(uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#298-308) uses timestamp for comparisons
+	Dangerous comparisons:
+	- atTime < startDate1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#299)
+	- endDate1 > atTime && atTime > startDate1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#301)
+	- endDate2 > atTime && atTime > startDate2 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#303)
+ZXCoin.saleActive() (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#332-339) uses timestamp for comparisons
+	Dangerous comparisons:
+	- ((getCurrentTimestamp() >= startDate1 && getCurrentTimestamp() < endDate1 && saleCap > 0) || (getCurrentTimestamp() >= startDate2 && getCurrentTimestamp() < endDate2 && saleCap > 0)) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#333-338)
+ZXCoin.buyTokens(address,uint256) (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#347-378) uses timestamp for comparisons
+	Dangerous comparisons:
+	- getCurrentTimestamp() >= startDate1 && getCurrentTimestamp() < endDate1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#358)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#101) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#101) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#113) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#148) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#148) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#148) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#164) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#164) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#183) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#183) is not in mixedCase
+Parameter ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256)._tokenWallet (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#237) is not in mixedCase
+Parameter ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256)._fundWallet (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#237) is not in mixedCase
+Parameter ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256)._start1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#237) is not in mixedCase
+Parameter ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256)._end1 (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#237) is not in mixedCase
+Parameter ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256)._saleCap (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#238) is not in mixedCase
+Parameter ZXCoin.initialize(address,address,uint256,uint256,uint256,uint256)._totalSupply (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#238) is not in mixedCase
+Parameter ZXCoin.setPeriod(uint256,uint256,uint256)._start (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#257) is not in mixedCase
+Parameter ZXCoin.setPeriod(uint256,uint256,uint256)._end (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#257) is not in mixedCase
+Parameter ZXCoin.setSaleCap(uint256)._saleCap (../sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol#282) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x33a615778ed8206c4462c67b2830220eea65bb92.sol analyzed (7 contracts with 100 detectors), 30 result(s) found

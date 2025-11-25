@@ -1,0 +1,44 @@
+'solc --version' running
+'solc /sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+MainHub.attack() (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#38-47) sends eth to arbitrary user
+	Dangerous calls:
+	- msg.sender.transfer(takenAmount * 95 / 100) (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#45)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+MainHub.airdrop() (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#49-65) performs a multiplication on the result of a division:
+	- (seed - ((seed / 1000) * 1000)) < code.airDropTracker_() (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+MainHub.airdrop() (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#49-65) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (seed - ((seed / 1000) * 1000)) < code.airDropTracker_() (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+AirdropHacker.code (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#75) should be constant 
+MainHub.code (../sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol#21) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x118d33a273c37c9a36a43a6ef71a7bec014a4d89.sol analyzed (4 contracts with 100 detectors), 7 result(s) found

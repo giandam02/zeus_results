@@ -1,0 +1,139 @@
+'solc --version' running
+'solc /sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:159:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function UserContract() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:36:3: Warning: Functions in interfaces should be declared external.
+  function CreateSwap(uint _amount_a, uint _amount_b, bool _sender_is_long, address _senderAdd) public payable;
+  ^-----------------------------------------------------------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:37:3: Warning: Functions in interfaces should be declared external.
+  function EnterSwap(uint _amount_a, uint _amount_b, bool _sender_is_long, address _senderAdd) public;
+  ^--------------------------------------------------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:38:3: Warning: Functions in interfaces should be declared external.
+  function createTokens() public;
+  ^-----------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:44:3: Warning: Functions in interfaces should be declared external.
+  function createToken(uint _supply, address _party, bool _long, uint _start_date) public returns (address created, uint token_ratio);
+  ^----------------------------------------------------------------------------------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:45:3: Warning: Functions in interfaces should be declared external.
+  function payToken(address _party, address _token_add) public;
+  ^-----------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:46:3: Warning: Functions in interfaces should be declared external.
+  function deployContract(uint _start_date) public payable returns (address created);
+  ^---------------------------------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:47:4: Warning: Functions in interfaces should be declared external.
+   function getBase() public view returns(address _base1, address base2);
+   ^--------------------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:48:3: Warning: Functions in interfaces should be declared external.
+  function getVariables() public view ... oken_a_addr, address token_b_addr);
+  ^-------------------------------------------------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:110:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(msg.sender, _to, _amount);
+      ^--------------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:132:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(_from, _to, _amount);
+      ^---------------------------^
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol:142:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _amount);
+    ^-------------------------------------^
+
+
+UserContract.Initiate(address,uint256,uint256,uint256,bool) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169-180) sends eth to arbitrary user
+	Dangerous calls:
+	- swap.CreateSwap.value(_premium)(_amounta,_amountb,_isLong,msg.sender) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#172)
+	- token.CreateToken.value(_amounta)() (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#177)
+UserContract.Enter(uint256,uint256,bool,address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182-195) sends eth to arbitrary user
+	Dangerous calls:
+	- token.CreateToken.value(_amountb)() (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#190)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+UserContract.setFactory(address)._factory_address (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#198) lacks a zero-check on :
+		- factory_address = _factory_address (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#200)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in UserContract.Enter(uint256,uint256,bool,address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182-195):
+	External calls:
+	- swap.EnterSwap(_amounta,_amountb,_isLong,msg.sender) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#185)
+	- (token_a_address,token_b_address) = factory.getBase() (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#188)
+	State variables written after the call(s):
+	- token = Wrapped_Ether(token_b_address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#189)
+Reentrancy in UserContract.Initiate(address,uint256,uint256,uint256,bool) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169-180):
+	External calls:
+	- swap.CreateSwap.value(_premium)(_amounta,_amountb,_isLong,msg.sender) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#172)
+	- (token_a_address,token_b_address) = factory.getBase() (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#175)
+	External calls sending eth:
+	- swap.CreateSwap.value(_premium)(_amounta,_amountb,_isLong,msg.sender) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#172)
+	State variables written after the call(s):
+	- token = Wrapped_Ether(token_a_address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#176)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Version constraint ^0.4.17 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.17 (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract TokenToTokenSwap_Interface (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#35-39) is not in CapWords
+Function TokenToTokenSwap_Interface.CreateSwap(uint256,uint256,bool,address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#36) is not in mixedCase
+Parameter TokenToTokenSwap_Interface.CreateSwap(uint256,uint256,bool,address)._amount_a (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#36) is not in mixedCase
+Parameter TokenToTokenSwap_Interface.CreateSwap(uint256,uint256,bool,address)._amount_b (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#36) is not in mixedCase
+Parameter TokenToTokenSwap_Interface.CreateSwap(uint256,uint256,bool,address)._sender_is_long (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#36) is not in mixedCase
+Function TokenToTokenSwap_Interface.EnterSwap(uint256,uint256,bool,address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#37) is not in mixedCase
+Parameter TokenToTokenSwap_Interface.EnterSwap(uint256,uint256,bool,address)._amount_a (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#37) is not in mixedCase
+Parameter TokenToTokenSwap_Interface.EnterSwap(uint256,uint256,bool,address)._amount_b (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#37) is not in mixedCase
+Parameter TokenToTokenSwap_Interface.EnterSwap(uint256,uint256,bool,address)._sender_is_long (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#37) is not in mixedCase
+Contract Factory_Interface (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#43-49) is not in CapWords
+Parameter Factory_Interface.createToken(uint256,address,bool,uint256)._start_date (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#44) is not in mixedCase
+Parameter Factory_Interface.payToken(address,address)._token_add (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#45) is not in mixedCase
+Parameter Factory_Interface.deployContract(uint256)._start_date (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#46) is not in mixedCase
+Contract Wrapped_Ether (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#54-148) is not in CapWords
+Function Wrapped_Ether.CreateToken() (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#78-82) is not in mixedCase
+Parameter Wrapped_Ether.withdraw(uint256)._value (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#89) is not in mixedCase
+Parameter Wrapped_Ether.balanceOf(address)._owner (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#96) is not in mixedCase
+Parameter Wrapped_Ether.transfer(address,uint256)._to (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#104) is not in mixedCase
+Parameter Wrapped_Ether.transfer(address,uint256)._amount (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#104) is not in mixedCase
+Parameter Wrapped_Ether.transferFrom(address,address,uint256)._from (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#124) is not in mixedCase
+Parameter Wrapped_Ether.transferFrom(address,address,uint256)._to (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#124) is not in mixedCase
+Parameter Wrapped_Ether.transferFrom(address,address,uint256)._amount (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#124) is not in mixedCase
+Parameter Wrapped_Ether.approve(address,uint256)._spender (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#140) is not in mixedCase
+Parameter Wrapped_Ether.approve(address,uint256)._amount (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#140) is not in mixedCase
+Parameter Wrapped_Ether.allowance(address,address)._owner (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#147) is not in mixedCase
+Parameter Wrapped_Ether.allowance(address,address)._spender (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#147) is not in mixedCase
+Variable Wrapped_Ether.total_supply (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#62) is not in mixedCase
+Function UserContract.Initiate(address,uint256,uint256,uint256,bool) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169-180) is not in mixedCase
+Parameter UserContract.Initiate(address,uint256,uint256,uint256,bool)._swapadd (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169) is not in mixedCase
+Parameter UserContract.Initiate(address,uint256,uint256,uint256,bool)._amounta (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169) is not in mixedCase
+Parameter UserContract.Initiate(address,uint256,uint256,uint256,bool)._amountb (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169) is not in mixedCase
+Parameter UserContract.Initiate(address,uint256,uint256,uint256,bool)._premium (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169) is not in mixedCase
+Parameter UserContract.Initiate(address,uint256,uint256,uint256,bool)._isLong (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#169) is not in mixedCase
+Function UserContract.Enter(uint256,uint256,bool,address) (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182-195) is not in mixedCase
+Parameter UserContract.Enter(uint256,uint256,bool,address)._amounta (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182) is not in mixedCase
+Parameter UserContract.Enter(uint256,uint256,bool,address)._amountb (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182) is not in mixedCase
+Parameter UserContract.Enter(uint256,uint256,bool,address)._isLong (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182) is not in mixedCase
+Parameter UserContract.Enter(uint256,uint256,bool,address)._swapadd (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#182) is not in mixedCase
+Parameter UserContract.setFactory(address)._factory_address (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#198) is not in mixedCase
+Variable UserContract.factory_address (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#156) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Wrapped_Ether.name (../sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol#61) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x233265020cc69214aea3edd4192b96d5232bf5ca.sol analyzed (5 contracts with 100 detectors), 48 result(s) found

@@ -1,0 +1,82 @@
+'solc --version' running
+'solc /sb/0xa1759677b63aa186b6e392540030724d141ede96.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#97-106) uses arbitrary from in transferFrom: require(bool)(token.transferFrom(from,to,value)) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#105)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Reentrancy in TokenVesting.release(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#234-244):
+	External calls:
+	- unreleased = releasableAmount(token) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#235)
+		- currentBalance = token.balanceOf(this) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#280)
+	State variables written after the call(s):
+	- released[token] = released[token].add(unreleased) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#239)
+	TokenVesting.released (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#198) can be used in cross function reentrancies:
+	- TokenVesting.releasableAmount(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#271-273)
+	- TokenVesting.release(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#234-244)
+	- TokenVesting.released (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#198)
+	- TokenVesting.vestedAmount(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#279-290)
+Reentrancy in TokenVesting.revoke(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#251-265):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#255)
+	- unreleased = releasableAmount(token) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#257)
+		- currentBalance = token.balanceOf(this) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#280)
+	State variables written after the call(s):
+	- revoked[token] = true (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#260)
+	TokenVesting.revoked (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#199) can be used in cross function reentrancies:
+	- TokenVesting.revoke(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#251-265)
+	- TokenVesting.revoked (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#199)
+	- TokenVesting.vestedAmount(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#279-290)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Reentrancy in TokenVesting.release(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#234-244):
+	External calls:
+	- unreleased = releasableAmount(token) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#235)
+		- currentBalance = token.balanceOf(this) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#280)
+	- token.safeTransfer(beneficiary,unreleased) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#241)
+	Event emitted after the call(s):
+	- Released(unreleased) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#243)
+Reentrancy in TokenVesting.revoke(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#251-265):
+	External calls:
+	- balance = token.balanceOf(this) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#255)
+	- unreleased = releasableAmount(token) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#257)
+		- currentBalance = token.balanceOf(this) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#280)
+	- token.safeTransfer(owner,refund) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#262)
+	Event emitted after the call(s):
+	- Revoked() (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#264)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+TokenVesting.release(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#234-244) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(unreleased > 0) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#237)
+TokenVesting.vestedAmount(ERC20Basic) (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#279-290) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < cliff (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#283)
+	- block.timestamp >= start.add(duration) || revoked[token] (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#285)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#3)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xa1759677b63aa186b6e392540030724d141ede96.sol#160) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xa1759677b63aa186b6e392540030724d141ede96.sol analyzed (6 contracts with 100 detectors), 10 result(s) found

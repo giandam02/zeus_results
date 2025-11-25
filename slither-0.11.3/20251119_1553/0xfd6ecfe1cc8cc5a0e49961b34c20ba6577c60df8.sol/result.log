@@ -1,0 +1,83 @@
+'solc --version' running
+'solc /sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:27:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Lockable() { Locked = false; }
+    ^-------------------------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:15:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance == 0);
+                ^----------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:45:9: Warning: Invoking events without "emit" prefix is deprecated.
+        OwnershipTransferPending(Owner, PendingOwner);
+        ^-------------------------------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:51:9: Warning: Invoking events without "emit" prefix is deprecated.
+        AcceptedOwnership(Owner);
+        ^----------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:68:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Initialized(msg.sender);
+        ^---------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:72:9: Warning: Invoking events without "emit" prefix is deprecated.
+        LockDate(lockDate, newDate);
+        ^-------------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:81:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Deposit(msg.sender, msg.value);
+            ^----------------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:90:17: Warning: Invoking events without "emit" prefix is deprecated.
+                Withdrawal(msg.sender, amount);
+                ^----------------------------^
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol:27:5: Warning: No visibility specified. Defaulting to "public". 
+    function Lockable() { Locked = false; }
+    ^-------------------------------------^
+
+
+Ownable.kill() (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#14-17) uses a dangerous strict equality:
+	- require(bool)(this.balance == 0) (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#15)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Transferable.transferOwnership(address)._new (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#43) lacks a zero-check on :
+		- PendingOwner = _new (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#44)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Vault.withdraw(uint256) (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#85-93) uses timestamp for comparisons
+	Dangerous comparisons:
+	- lockDate > 0 && now >= lockDate (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#86)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.17 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.17 (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#4)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable Ownable.Owner (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#7) is not in mixedCase
+Variable Lockable.Locked (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#21) is not in mixedCase
+Parameter Transferable.transferOwnership(address)._new (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#43) is not in mixedCase
+Variable Transferable.PendingOwner (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#33) is not in mixedCase
+Function Vault.SetLockDate(uint256) (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#71-74) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Vault.withdraw(uint256) (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#85-93):
+	External calls:
+	- msg.sender.transfer(amount) (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#89)
+	Event emitted after the call(s):
+	- Withdrawal(msg.sender,amount) (../sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol#90)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xfd6ecfe1cc8cc5a0e49961b34c20ba6577c60df8.sol analyzed (4 contracts with 100 detectors), 11 result(s) found

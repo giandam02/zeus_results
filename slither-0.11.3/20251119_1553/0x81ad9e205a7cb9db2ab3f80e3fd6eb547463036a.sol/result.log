@@ -1,0 +1,79 @@
+'solc --version' running
+'solc /sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Reentrancy in EtheremonBurnReward.burnForReward(uint64,uint256) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#92-107):
+	External calls:
+	- (obj.monsterId,obj.classId,obj.trainer,obj.exp,obj.createIndex,obj.lastClaimIndex,obj.createTime) = data.getMonsterObj(_monsterId) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#97)
+	- trade.isOnTrading(_monsterId) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#101)
+	- monsterNFT.burnMonster(_monsterId) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#104)
+	State variables written after the call(s):
+	- requests[_burnId] = _monsterId (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#106)
+	EtheremonBurnReward.requests (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#80) can be used in cross function reentrancies:
+	- EtheremonBurnReward.burnForReward(uint64,uint256) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#92-107)
+	- EtheremonBurnReward.getBurnInfo(uint256) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#109-111)
+	- EtheremonBurnReward.requests (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#80)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+EtheremonBurnReward.burnForReward(uint64,uint256).obj (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#96) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+BasicAccessControl.ChangeOwner(address) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#28-32) should emit an event for: 
+	- owner = _newOwner (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#30) 
+	- owner = _newOwner (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#30) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+EtheremonBurnReward.setContract(address,address,address)._monsterNFTContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#85) lacks a zero-check on :
+		- monsterNFTContract = _monsterNFTContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#86)
+EtheremonBurnReward.setContract(address,address,address)._dataContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#85) lacks a zero-check on :
+		- dataContract = _dataContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#87)
+EtheremonBurnReward.setContract(address,address,address)._tradeContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#85) lacks a zero-check on :
+		- tradeContract = _tradeContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#88)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BasicAccessControl.AddModerator(address) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#35-40) compares to a boolean constant:
+	-moderators[_newModerator] == false (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#36)
+BasicAccessControl.RemoveModerator(address) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#42-47) compares to a boolean constant:
+	-moderators[_oldModerator] == true (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#43)
+BasicAccessControl.onlyModerators() (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#18-21) compares to a boolean constant:
+	-require(bool)(msg.sender == owner || moderators[msg.sender] == true) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#19)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function BasicAccessControl.ChangeOwner(address) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#28-32) is not in mixedCase
+Parameter BasicAccessControl.ChangeOwner(address)._newOwner (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#28) is not in mixedCase
+Function BasicAccessControl.AddModerator(address) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#35-40) is not in mixedCase
+Parameter BasicAccessControl.AddModerator(address)._newModerator (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#35) is not in mixedCase
+Function BasicAccessControl.RemoveModerator(address) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#42-47) is not in mixedCase
+Parameter BasicAccessControl.RemoveModerator(address)._oldModerator (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#42) is not in mixedCase
+Function BasicAccessControl.UpdateMaintaining(bool) (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#49-51) is not in mixedCase
+Parameter BasicAccessControl.UpdateMaintaining(bool)._isMaintaining (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#49) is not in mixedCase
+Parameter EtheremonBurnReward.setContract(address,address,address)._monsterNFTContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#85) is not in mixedCase
+Parameter EtheremonBurnReward.setContract(address,address,address)._dataContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#85) is not in mixedCase
+Parameter EtheremonBurnReward.setContract(address,address,address)._tradeContract (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#85) is not in mixedCase
+Parameter EtheremonBurnReward.burnForReward(uint64,uint256)._monsterId (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#92) is not in mixedCase
+Parameter EtheremonBurnReward.burnForReward(uint64,uint256)._burnId (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#92) is not in mixedCase
+Parameter EtheremonBurnReward.getBurnInfo(uint256)._burnId (../sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol#109) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x81ad9e205a7cb9db2ab3f80e3fd6eb547463036a.sol analyzed (5 contracts with 100 detectors), 25 result(s) found

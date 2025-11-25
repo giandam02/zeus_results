@@ -1,0 +1,67 @@
+'solc --version' running
+'solc /sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:19:2: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+	function CyberToken() 
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:39:39: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+		if (balanceOf[msg.sender] < _value) throw;
+		                                    ^---^
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:33:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Transfer(msg.sender, _to, _value); 
+		^-------------------------------^
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:42:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Burn(_from, _value);
+		^-----------------^
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:19:2: Warning: No visibility specified. Defaulting to "public". 
+	function CyberToken() 
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:29:2: Warning: No visibility specified. Defaulting to "public". 
+	function transfer(address _to, uint256 _value) 
+ ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol:37:2: Warning: No visibility specified. Defaulting to "public". 
+	function burn(address _from, uint256 _value) returns (bool success)
+ ^ (Relevant source part starts here and spans across multiple lines).
+
+
+CyberToken (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#3-46) has incorrect ERC20 function interface:CyberToken.transfer(address,uint256) (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#29-34)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Deprecated standard detected THROW (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#39):
+	- Usage of "throw" should be replaced with "revert()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.10 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.10 (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter CyberToken.transfer(address,uint256)._to (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#29) is not in mixedCase
+Parameter CyberToken.transfer(address,uint256)._value (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#29) is not in mixedCase
+Parameter CyberToken.burn(address,uint256)._from (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#37) is not in mixedCase
+Parameter CyberToken.burn(address,uint256)._value (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#37) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+CyberToken.CyberToken() (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#19-26) uses literals with too many digits:
+	- totalSupply = 625000000000000000000 (../sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol#24)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xef81796941e13116b087a35c0602aa4e3a82c5cc.sol analyzed (1 contracts with 100 detectors), 9 result(s) found

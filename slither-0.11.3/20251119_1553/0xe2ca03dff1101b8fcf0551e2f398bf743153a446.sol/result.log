@@ -1,0 +1,99 @@
+'solc --version' running
+'solc /sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ERC721Enumerable (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#591-729) contract sets array length with a user-controlled value:
+	- _ownedTokens[to].push(tokenId) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#665)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Address.isContract(address) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#183-194) is declared view but contains assembly code
+AddressToken.bytecodeAt(address) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#920-935) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+AddressToken.deploy(uint256,bytes) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#907-912) ignores return value by AddressDeployer(_tokenId).deploy(_data) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#910)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+ERC721Metadata.constructor(string,string).name (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#766) shadows:
+	- ERC721Metadata.name() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#778-780) (function)
+	- IERC721Metadata.name() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#738) (function)
+ERC721Metadata.constructor(string,string).symbol (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#766) shadows:
+	- ERC721Metadata.symbol() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#786-788) (function)
+	- IERC721Metadata.symbol() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#739) (function)
+ERC721Full.constructor(string,string).name (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#836) shadows:
+	- ERC721Metadata.name() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#778-780) (function)
+	- IERC721Metadata.name() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#738) (function)
+ERC721Full.constructor(string,string).symbol (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#836) shadows:
+	- ERC721Metadata.symbol() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#786-788) (function)
+	- IERC721Metadata.symbol() (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#739) (function)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+AddressDeployer.transferOwnership(address) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#859-861) should emit an event for: 
+	- owner = _newOwner (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#860) 
+AddressDeployer.transferOwnershipAndNotify(IAddressDeployerOwner) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#863-866) should emit an event for: 
+	- owner = _newOwner (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#864) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+AddressDeployer.transferOwnership(address)._newOwner (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#859) lacks a zero-check on :
+		- owner = _newOwner (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#860)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Address.isContract(address) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#183-194) uses assembly
+	- INLINE ASM (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#192-193)
+AddressDeployer.deploy(bytes) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#868-876) uses assembly
+	- INLINE ASM (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#870-873)
+AddressToken.bytecodeAt(address) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#920-935) uses assembly
+	- INLINE ASM (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#922-935)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+ERC721Enumerable._burn(address,uint256) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#714-728) is never used and should be removed
+ERC721Metadata._setTokenURI(uint256,string) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#806-809) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Constant ERC165._InterfaceId_ERC165 (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#207) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter ERC721.safeTransferFrom(address,address,uint256,bytes)._data (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#440) is not in mixedCase
+Constant ERC721._InterfaceId_ERC721 (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#277) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Enumerable._InterfaceId_ERC721Enumerable (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#604) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721Metadata.InterfaceId_ERC721Metadata (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#755) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter AddressDeployer.transferOwnership(address)._newOwner (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#859) is not in mixedCase
+Parameter AddressDeployer.transferOwnershipAndNotify(IAddressDeployerOwner)._newOwner (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#863) is not in mixedCase
+Parameter AddressToken.ownershipTransferred(address)._byWhom (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#888) is not in mixedCase
+Parameter AddressToken.mint(address)._beneficiary (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#894) is not in mixedCase
+Parameter AddressToken.burn(uint256)._tokenId (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#900) is not in mixedCase
+Parameter AddressToken.deploy(uint256,bytes)._tokenId (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#907) is not in mixedCase
+Parameter AddressToken.deploy(uint256,bytes)._data (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#907) is not in mixedCase
+Parameter AddressToken.tokenURI(uint256)._tokenId (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#914) is not in mixedCase
+Parameter AddressToken.addressToURI(address)._addr (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#937) is not in mixedCase
+Parameter AddressToken.firstAddressFromDeployer(address)._deployer (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#960) is not in mixedCase
+Parameter Example.setValue(uint256)._value (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#968) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+onERC721Received(address,address,uint256,bytes) should be declared external:
+	- IERC721Receiver.onERC721Received(address,address,uint256,bytes) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#93-100)
+deploy(bytes) should be declared external:
+	- AddressDeployer.deploy(bytes) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#868-876)
+deploy(uint256,bytes) should be declared external:
+	- AddressToken.deploy(uint256,bytes) (../sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol#907-912)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xe2ca03dff1101b8fcf0551e2f398bf743153a446.sol analyzed (16 contracts with 100 detectors), 37 result(s) found

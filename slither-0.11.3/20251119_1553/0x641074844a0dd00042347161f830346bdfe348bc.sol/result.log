@@ -1,0 +1,78 @@
+'solc --version' running
+'solc /sb/0x641074844a0dd00042347161f830346bdfe348bc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:5:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Owned() { Owner = msg.sender; }
+    ^--------------------------------------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:26:13: Warning: Failure condition of 'send' ignored. Consider using 'transfer' instead.
+            msg.sender.send(amount);
+            ^---------------------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:30:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance == 0);
+                ^----------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:31:9: Warning: "suicide" has been deprecated in favour of "selfdestruct"
+        suicide(msg.sender);
+        ^-----------------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:5:5: Warning: No visibility specified. Defaulting to "public". 
+    function Owned() { Owner = msg.sender; }
+    ^--------------------------------------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:13:5: Warning: No visibility specified. Defaulting to "public". 
+    function init() { Owner = msg.sender; }
+    ^-------------------------------------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:15:5: Warning: No visibility specified. Defaulting to "public". 
+    function() payable { deposit(); }
+    ^-------------------------------^
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:17:5: Warning: No visibility specified. Defaulting to "public". 
+    function deposit() payable {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:23:5: Warning: No visibility specified. Defaulting to "public". 
+    function withdraw(uint amount) onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol:29:5: Warning: No visibility specified. Defaulting to "public". 
+    function kill() onlyOwner {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SharedBank.Owner (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#10) shadows:
+	- Owned.Owner (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#4)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+SharedBank.kill() (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#29-32) uses a dangerous strict equality:
+	- require(bool)(this.balance == 0) (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#30)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+SharedBank.withdraw(uint256) (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#23-27) ignores return value by msg.sender.send(amount) (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#26)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-send
+
+Deprecated standard detected suicide(address)(msg.sender) (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#31):
+	- Usage of "suicide()" should be replaced with "selfdestruct()"
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#deprecated-standards
+
+Version constraint ^0.4.10 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction.
+It is used by:
+	- ^0.4.10 (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable Owned.Owner (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#4) is not in mixedCase
+Variable SharedBank.Owner (../sb/0x641074844a0dd00042347161f830346bdfe348bc.sol#10) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0x641074844a0dd00042347161f830346bdfe348bc.sol analyzed (2 contracts with 100 detectors), 8 result(s) found

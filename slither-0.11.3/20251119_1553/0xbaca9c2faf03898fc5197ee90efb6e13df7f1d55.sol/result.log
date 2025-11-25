@@ -1,0 +1,546 @@
+'solc --version' running
+'solc /sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:582:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:785:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Raffle(uint _ticketPrice, address _rewardDistributor) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1060:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function DateBasedRaffle(uint _ticketPrice, uint _drawPeriod) Raffle(_ticketPrice, address(0)) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1100:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function ProgressiveRaffle(uint _tokenTicketPrice, uint _timePeriod, address tokenAddress) DateBasedRaffle(0, _timePeriod) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:260:56: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        oraclize_randomDS_setCommitment(self, queryId, keccak256(bytes8(_delay), args[1], sha256(args[0]), args[2]));
+                                                       ^----------------------------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:271:52: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        checkok = (keccak256(keyhash) == keccak256(sha256(context_name, queryId)));
+                                                   ^---------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:271:42: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        checkok = (keccak256(keyhash) == keccak256(sha256(context_name, queryId)));
+                                         ^--------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:271:42: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        checkok = (keccak256(keyhash) == keccak256(sha256(context_name, queryId)));
+                                         ^--------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:295:51: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if (self.oraclizeRandomDSArgs[queryId] == keccak256(commitmentSlice1, sessionPubkeyHash)) {
+                                                  ^--------------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:328:22: Warning: Decimal literal assigned to bytesXX variable will be left-aligned. Use an explicit conversion to silence this warning.
+        tosign2[0] = 1; //role
+                     ^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:602:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:711:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance >= payment);
+                ^----------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:728:17: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        require(this.balance >= payment);
+                ^----------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:738:9: Warning: Invoking events without "emit" prefix is deprecated.
+        WinnerWithdrew(winner, payment, block.number);
+        ^-------------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:859:7: Warning: Invoking events without "emit" prefix is deprecated.
+      RandomProofFailed(queryId, gameId, now);
+      ^-------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:877:30: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+    uint randomNumber = uint(keccak256(result)) % maxRange; 
+                             ^---------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:877:30: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+    uint randomNumber = uint(keccak256(result)) % maxRange; 
+                             ^---------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:894:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance > total);
+            ^----------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:953:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinnerSelected(winner.purchaser, gameId, jackpotTotals.winnerTotal, now);    
+    ^----------------------------------------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1068:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return this.balance - totalPendingPayments; 
+           ^----------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1073:12: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    return this.balance - totalPendingPayments;
+           ^----------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1117:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TicketPurchased(msg.sender, gameId, numTickets, ticketPrice.mul(numTickets), now);
+    ^-------------------------------------------------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1130:5: Warning: Invoking events without "emit" prefix is deprecated.
+    WinnerSelected(winner.purchaser, gameId, jackpotTotals.winnerTotal, now);    
+    ^----------------------------------------------------------------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1164:13: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+    require(this.balance > total);
+            ^----------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:868:23: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function __callback(bytes32 queryId, string result) public {
+                      ^-------------^
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol:1107:44: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function purchaseTicket(uint numTickets, address referrer) public payable costsExactly(0) {
+                                           ^--------------^
+
+
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#163-169) sends eth to arbitrary user
+	Dangerous calls:
+	- self.oraclize.query.value(price)(timestamp,datasource,arg) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#168)
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#175-181) sends eth to arbitrary user
+	Dangerous calls:
+	- self.oraclize.query_withGasLimit.value(price)(timestamp,datasource,arg,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#180)
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#187-193) sends eth to arbitrary user
+	Dangerous calls:
+	- self.oraclize.query2.value(price)(timestamp,datasource,arg1,arg2) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#192)
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#199-205) sends eth to arbitrary user
+	Dangerous calls:
+	- self.oraclize.query2_withGasLimit.value(price)(timestamp,datasource,arg1,arg2,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#204)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ProgressiveRaffle (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1094-1175) contract sets array length with a user-controlled value:
+	- ticketHolders.push(TicketHolder(msg.sender,uint16(numTickets),uint80(totalTickets.add(numTickets)))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1115)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Reentrancy in Raffle.chooseWinner() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#938-945):
+	External calls:
+	- executeRandomQuery() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#942)
+		- price = self.oraclize.getPrice(datasource,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#176)
+		- price = self.oraclize.getPrice(datasource,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#234)
+		- self.oraclize.randomDS_getSessionPubKeyHash() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#462)
+		- oraclizeData.oraclize_newRandomDSQuery(0,randomBytes,callbackGas) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#930)
+		- oraclizeData.oraclize_query(URL,json(https://qrng.anu.edu.au/API/jsonI.php?length=1&type=hex16&size=32).data[0],callbackGas) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#933)
+		- self.oraclize.query_withGasLimit.value(price)(timestamp,datasource,arg,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#180)
+		- self.oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#239)
+	External calls sending eth:
+	- executeRandomQuery() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#942)
+		- self.oraclize.query_withGasLimit.value(price)(timestamp,datasource,arg,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#180)
+		- self.oraclize.queryN_withGasLimit.value(price)(timestamp,datasource,args,gaslimit) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#239)
+	State variables written after the call(s):
+	- randomQueried = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#943)
+	Raffle.randomQueried (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#773) can be used in cross function reentrancies:
+	- Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+Reentrancy in ProgressiveRaffle.winnerSelected(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1125-1136):
+	External calls:
+	- approveTokenTransfers() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1134)
+		- balance = token.balanceOf(this) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#620)
+		- token.approve(rewardDistributor,balance) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#621)
+	External calls sending eth:
+	- transferJackpot(winner.purchaser,jackpotTotals.winnerTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1131)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+	- transferCascades(jackpotTotals.absoluteTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1132)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- gameId = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1001)
+	Raffle.gameId (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#766) can be used in cross function reentrancies:
+	- Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865)
+	- Raffle.gameId (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#766)
+	- ProgressiveRaffle.purchaseTicket(uint256,address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1107-1122)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+	- ProgressiveRaffle.winnerSelected(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1125-1136)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- ticketHolders.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1000)
+	Raffle.ticketHolders (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#771) can be used in cross function reentrancies:
+	- Raffle.deactivate() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#842-845)
+	- ProgressiveRaffle.forceRefund() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1160-1174)
+	- Raffle.getTotalTickets() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1036-1038)
+	- Raffle.getWinningTicketHolder(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#959-981)
+	- ProgressiveRaffle.purchaseTicket(uint256,address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1107-1122)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+ProgressiveRaffle.token (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1097) shadows:
+	- RewardApprover.token (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#610)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing
+
+OraclizeLib.getCodeSize(address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#455-459) is declared view but contains assembly code
+OraclizeLib.copyBytes(bytes,uint256,uint256,bytes,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#549-568) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Reentrancy in ProgressiveRaffle.forceRefund() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1160-1174):
+	External calls:
+	- assert(bool)(token.transfer(holder.purchaser,uint256(holder.count).mul(tokenTicketPrice).mul(10 ** uint256(token.decimals())))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1168-1170)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1173)
+		- ticketHolders.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1000)
+	Raffle.ticketHolders (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#771) can be used in cross function reentrancies:
+	- Raffle.deactivate() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#842-845)
+	- ProgressiveRaffle.forceRefund() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1160-1174)
+	- Raffle.getTotalTickets() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1036-1038)
+	- Raffle.getWinningTicketHolder(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#959-981)
+	- ProgressiveRaffle.purchaseTicket(uint256,address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1107-1122)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+	- Raffle.resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#996-1003)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Raffle.executeRandomQuery() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#928-935) ignores return value by oraclizeData.oraclize_newRandomDSQuery(0,randomBytes,callbackGas) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#930)
+Raffle.executeRandomQuery() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#928-935) ignores return value by oraclizeData.oraclize_query(URL,json(https://qrng.anu.edu.au/API/jsonI.php?length=1&type=hex16&size=32).data[0],callbackGas) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#933)
+RewardApprover.approveTokenTransfers() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#615-622) ignores return value by token.approve(rewardDistributor,balance) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#621)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Raffle.updateTicketPrice(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#829-833) should emit an event for: 
+	- ticketPrice = updatedPrice (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#832) 
+ProgressiveRaffle.updateTokenTicketPrice(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1139-1141) should emit an event for: 
+	- tokenTicketPrice = newTokenTicketPrice (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1140) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Modifier Priceable.costsExactly(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#71-75) does not always execute _; or revert
+Modifier Priceable.costs(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#77-81) does not always execute _; or revert
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-modifier
+
+Cascading.transferCascades(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#662-669) has external calls inside a loop: cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	Calls stack containing the loop:
+		Raffle.__callback(bytes32,string,bytes)
+		Raffle.__callback(bytes32,string)
+		ProgressiveRaffle.winnerSelected(uint256)
+Cascading.transferCascades(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#662-669) has external calls inside a loop: cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	Calls stack containing the loop:
+		Raffle.__callback(bytes32,string)
+		ProgressiveRaffle.winnerSelected(uint256)
+SafeWinner.transferPending(address,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#734-739) has external calls inside a loop: winner.transfer(payment) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#737)
+	Calls stack containing the loop:
+		SafeWinner.retryWinners()
+		SafeWinner.retryWinner(uint256)
+ProgressiveRaffle.forceRefund() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1160-1174) has external calls inside a loop: assert(bool)(token.transfer(holder.purchaser,uint256(holder.count).mul(tokenTicketPrice).mul(10 ** uint256(token.decimals())))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1168-1170)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865):
+	External calls:
+	- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#855)
+	State variables written after the call(s):
+	- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#860)
+Reentrancy in Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865):
+	External calls:
+	- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#855)
+	- __callback(queryId,result) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#864)
+		- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#869)
+		- self.oraclize.cbAddress() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#440)
+	External calls sending eth:
+	- __callback(queryId,result) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#864)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	State variables written after the call(s):
+	- __callback(queryId,result) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#864)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+Reentrancy in Raffle.__callback(bytes32,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#868-879):
+	External calls:
+	- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#869)
+	External calls sending eth:
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	State variables written after the call(s):
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- gameId = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1001)
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- pendingPayments[winner] = pendingPayments[winner].add(amount) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#700)
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- pendingWinners.push(winner) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#702)
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- raffleState = RaffleState.InActive (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#998)
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- ticketHolders.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1000)
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- totalPendingPayments = totalPendingPayments.add(amount) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#701)
+Reentrancy in ProgressiveRaffle.forceRefund() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1160-1174):
+	External calls:
+	- assert(bool)(token.transfer(holder.purchaser,uint256(holder.count).mul(tokenTicketPrice).mul(10 ** uint256(token.decimals())))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1168-1170)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1173)
+		- gameId = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1001)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1173)
+		- nextDrawTime = now.add(drawPeriod) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1085)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1173)
+		- raffleState = RaffleState.InActive (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#998)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1173)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+Reentrancy in ProgressiveRaffle.purchaseTicket(uint256,address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1107-1122):
+	External calls:
+	- assert(bool)(token.transferFrom(msg.sender,this,numTickets.mul(tokenTicketPrice).mul(10 ** uint256(token.decimals())))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1111)
+	State variables written after the call(s):
+	- ticketHolders.push(TicketHolder(msg.sender,uint16(numTickets),uint80(totalTickets.add(numTickets)))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1115)
+Reentrancy in ProgressiveRaffle.winnerSelected(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1125-1136):
+	External calls:
+	- approveTokenTransfers() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1134)
+		- balance = token.balanceOf(this) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#620)
+		- token.approve(rewardDistributor,balance) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#621)
+	External calls sending eth:
+	- transferJackpot(winner.purchaser,jackpotTotals.winnerTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1131)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+	- transferCascades(jackpotTotals.absoluteTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1132)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- nextDrawTime = now.add(drawPeriod) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1085)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- raffleState = RaffleState.InActive (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#998)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865):
+	External calls:
+	- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#855)
+	Event emitted after the call(s):
+	- RandomProofFailed(queryId,gameId,now) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#859)
+Reentrancy in Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865):
+	External calls:
+	- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#855)
+	- __callback(queryId,result) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#864)
+		- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#869)
+		- self.oraclize.cbAddress() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#440)
+	External calls sending eth:
+	- __callback(queryId,result) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#864)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	Event emitted after the call(s):
+	- WinnerSelected(winner.purchaser,gameId,jackpotTotals.winnerTotal,now) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#953)
+		- __callback(queryId,result) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#864)
+Reentrancy in Raffle.__callback(bytes32,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#868-879):
+	External calls:
+	- require(bool)(msg.sender == oraclizeData.oraclize_cbAddress()) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#869)
+	External calls sending eth:
+	- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	Event emitted after the call(s):
+	- WinnerSelected(winner.purchaser,gameId,jackpotTotals.winnerTotal,now) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#953)
+		- winnerSelected(randomNumber) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#878)
+Reentrancy in ProgressiveRaffle.purchaseTicket(uint256,address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1107-1122):
+	External calls:
+	- assert(bool)(token.transferFrom(msg.sender,this,numTickets.mul(tokenTicketPrice).mul(10 ** uint256(token.decimals())))) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1111)
+	Event emitted after the call(s):
+	- TicketPurchased(msg.sender,gameId,numTickets,ticketPrice.mul(numTickets),now) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1117)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+DateBasedRaffle.shouldChooseWinner() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1078-1082) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > nextDrawTime && jackpotTotals.winnerTotal > minJackpot (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1081)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+OraclizeLib.oraclize_newRandomDSQuery(OraclizeLib.OraclizeData,uint256,uint256,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#242-262) uses assembly
+	- INLINE ASM (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#249-255)
+OraclizeLib.verifySig(bytes32,bytes,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#381-408) uses assembly
+	- INLINE ASM (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#395-401)
+OraclizeLib.safer_ecrecover(bytes32,uint8,bytes32,bytes32) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#412-437) uses assembly
+	- INLINE ASM (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#423-436)
+OraclizeLib.getCodeSize(address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#455-459) uses assembly
+	- INLINE ASM (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#456-459)
+OraclizeLib.copyBytes(bytes,uint256,uint256,bytes,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#549-568) uses assembly
+	- INLINE ASM (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#559-563)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+OraclizeLib.oraclize_randomDS_proofVerify__main(OraclizeLib.OraclizeData,bytes,bytes32,bytes,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#264-315) compares to a boolean constant:
+	-checkok == false (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#305)
+OraclizeLib.oraclize_randomDS_proofVerify__main(OraclizeLib.OraclizeData,bytes,bytes32,bytes,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#264-315) compares to a boolean constant:
+	-checkok == false (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#281)
+OraclizeLib.oraclize_randomDS_proofVerify__main(OraclizeLib.OraclizeData,bytes,bytes32,bytes,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#264-315) compares to a boolean constant:
+	-checkok == false (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#272)
+OraclizeLib.oraclize_randomDS_proofVerify__main(OraclizeLib.OraclizeData,bytes,bytes32,bytes,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#264-315) compares to a boolean constant:
+	-self.oraclizeRandomDsSessionKeyHashVerified[sessionPubkeyHash] == false (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#310)
+OraclizeLib.oraclize_randomDS_proofVerify__sessionKeyValidity(bytes,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#317-351) compares to a boolean constant:
+	-sigok == false (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#334)
+OraclizeLib.oraclize_randomDS_proofVerify__returnCode(OraclizeLib.OraclizeData,bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#353-363) compares to a boolean constant:
+	-proofVerified == false (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#359)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+SafeWinner.transferPending(address,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#734-739) has costly operations inside a loop:
+	- totalPendingPayments = totalPendingPayments.sub(payment) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#735)
+	Calls stack containing the loop:
+		SafeWinner.retryWinners()
+		SafeWinner.retryWinner(uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Cascading.getTotalAfterCascades(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#682-685) is never used and should be removed
+Raffle.winnerSelected(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#948-957) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function OraclizeI.query_withGasLimit(uint256,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#57) is not in mixedCase
+Function OraclizeI.query2_withGasLimit(uint256,string,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#59) is not in mixedCase
+Function OraclizeI.queryN_withGasLimit(uint256,string,bytes,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#61) is not in mixedCase
+Function OraclizeI.randomDS_getSessionPubKeyHash() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#67) is not in mixedCase
+Function OraclizeLib.oraclize_setNetwork(OraclizeLib.OraclizeData) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#115-141) is not in mixedCase
+Function OraclizeLib.oraclize_setNetworkName(OraclizeLib.OraclizeData,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#143-145) is not in mixedCase
+Parameter OraclizeLib.oraclize_setNetworkName(OraclizeLib.OraclizeData,string)._network_name (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#143) is not in mixedCase
+Function OraclizeLib.oraclize_getNetworkName(OraclizeLib.OraclizeData) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#147-149) is not in mixedCase
+Function OraclizeLib.oraclize_getPrice(OraclizeLib.OraclizeData,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#151-153) is not in mixedCase
+Function OraclizeLib.oraclize_getPrice(OraclizeLib.OraclizeData,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#155-157) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#159-161) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#163-169) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#171-173) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#175-181) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#183-185) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#187-193) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#195-197) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#199-205) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string[]) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#207-209) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string[]) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#211-218) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string[],uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#220-222) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string[],uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#224-231) is not in mixedCase
+Function OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,bytes[],uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#233-240) is not in mixedCase
+Function OraclizeLib.oraclize_newRandomDSQuery(OraclizeLib.OraclizeData,uint256,uint256,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#242-262) is not in mixedCase
+Parameter OraclizeLib.oraclize_newRandomDSQuery(OraclizeLib.OraclizeData,uint256,uint256,uint256)._delay (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#242) is not in mixedCase
+Parameter OraclizeLib.oraclize_newRandomDSQuery(OraclizeLib.OraclizeData,uint256,uint256,uint256)._nbytes (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#242) is not in mixedCase
+Parameter OraclizeLib.oraclize_newRandomDSQuery(OraclizeLib.OraclizeData,uint256,uint256,uint256)._customGasLimit (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#242) is not in mixedCase
+Function OraclizeLib.oraclize_randomDS_proofVerify__main(OraclizeLib.OraclizeData,bytes,bytes32,bytes,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#264-315) is not in mixedCase
+Parameter OraclizeLib.oraclize_randomDS_proofVerify__main(OraclizeLib.OraclizeData,bytes,bytes32,bytes,string).context_name (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#264) is not in mixedCase
+Function OraclizeLib.oraclize_randomDS_proofVerify__sessionKeyValidity(bytes,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#317-351) is not in mixedCase
+Function OraclizeLib.oraclize_randomDS_proofVerify__returnCode(OraclizeLib.OraclizeData,bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#353-363) is not in mixedCase
+Parameter OraclizeLib.oraclize_randomDS_proofVerify__returnCode(OraclizeLib.OraclizeData,bytes32,string,bytes)._queryId (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#353) is not in mixedCase
+Parameter OraclizeLib.oraclize_randomDS_proofVerify__returnCode(OraclizeLib.OraclizeData,bytes32,string,bytes)._result (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#353) is not in mixedCase
+Parameter OraclizeLib.oraclize_randomDS_proofVerify__returnCode(OraclizeLib.OraclizeData,bytes32,string,bytes)._proof (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#353) is not in mixedCase
+Function OraclizeLib.oraclize_randomDS_setCommitment(OraclizeLib.OraclizeData,bytes32,bytes32) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#365-367) is not in mixedCase
+Function OraclizeLib.safer_ecrecover(bytes32,uint8,bytes32,bytes32) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#412-437) is not in mixedCase
+Function OraclizeLib.oraclize_cbAddress(OraclizeLib.OraclizeData) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#439-441) is not in mixedCase
+Function OraclizeLib.oraclize_setProof(OraclizeLib.OraclizeData,bytes1) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#443-445) is not in mixedCase
+Function OraclizeLib.oraclize_setCustomGasPrice(OraclizeLib.OraclizeData,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#447-449) is not in mixedCase
+Function OraclizeLib.oraclize_setConfig(OraclizeLib.OraclizeData,bytes32) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#451-453) is not in mixedCase
+Function OraclizeLib.oraclize_randomDS_getSessionPubKeyHash(OraclizeLib.OraclizeData) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#461-463) is not in mixedCase
+Function Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865) is not in mixedCase
+Function Raffle.__callback(bytes32,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#868-879) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Raffle.forceRefund() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#890-902):
+	External calls:
+	- holder.purchaser.transfer(uint256(holder.count).mul(ticketPrice)) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#898)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#901)
+		- gameId = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1001)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#901)
+		- raffleState = RaffleState.InActive (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#998)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#901)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#901)
+		- ticketHolders.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1000)
+Reentrancy in SafeWinner.retryWinners() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#717-723):
+	External calls:
+	- retryWinner(i) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#719)
+		- winner.transfer(payment) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#737)
+	State variables written after the call(s):
+	- pendingWinners.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#722)
+Reentrancy in Raffle.transferJackpot(address,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#984-993):
+	External calls:
+	- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+	State variables written after the call(s):
+	- addPendingWinner(winner,jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#989)
+		- pendingPayments[winner] = pendingPayments[winner].add(amount) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#700)
+	- addPendingWinner(winner,jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#989)
+		- pendingWinners.push(winner) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#702)
+	- addPendingWinner(winner,jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#989)
+		- totalPendingPayments = totalPendingPayments.add(amount) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#701)
+Reentrancy in SafeWinner.transferPending(address,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#734-739):
+	External calls:
+	- winner.transfer(payment) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#737)
+	Event emitted after the call(s):
+	- WinnerWithdrew(winner,payment,block.number) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#738)
+Reentrancy in Raffle.winnerSelected(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#948-957):
+	External calls:
+	- transferJackpot(winner.purchaser,jackpotTotals.winnerTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#954)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+	- transferCascades(jackpotTotals.absoluteTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#955)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#956)
+		- gameId = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1001)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#956)
+		- raffleState = RaffleState.InActive (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#998)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#956)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#956)
+		- ticketHolders.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1000)
+Reentrancy in ProgressiveRaffle.winnerSelected(uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1125-1136):
+	External calls:
+	- transferJackpot(winner.purchaser,jackpotTotals.winnerTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1131)
+		- sendSuccessful = winner.send(jackpot) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#987)
+	- transferCascades(jackpotTotals.absoluteTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1132)
+		- cascades[i].cascade.transfer(cascadeTotal) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#667)
+	State variables written after the call(s):
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- gameId = block.number (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1001)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- nextDrawTime = now.add(drawPeriod) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1085)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- raffleState = RaffleState.InActive (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#998)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- randomQueried = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1002)
+	- resetRaffle() (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1135)
+		- ticketHolders.length = 0 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#1000)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#163-169) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#165)
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#187-193) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#189)
+OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,uint256,string,string[]) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#211-218) uses literals with too many digits:
+	- price > 1000000000000000000 + tx.gasprice * 200000 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#213)
+Raffle.Raffle(uint256,address) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#785-795) uses literals with too many digits:
+	- callbackGas = 200000 (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#788)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Loop condition i < pendingWinners.length (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#718) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < cascades.length (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#663) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < ticketHolders.length (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#896) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+
+RewardApprover.rewardDistributor (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#611) should be constant 
+RewardApprover.token (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#610) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+query(uint256,string,string) should be declared external:
+	- OraclizeI.query(uint256,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#56)
+query_withGasLimit(uint256,string,string,uint256) should be declared external:
+	- OraclizeI.query_withGasLimit(uint256,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#57)
+query2(uint256,string,string,string) should be declared external:
+	- OraclizeI.query2(uint256,string,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#58)
+query2_withGasLimit(uint256,string,string,string,uint256) should be declared external:
+	- OraclizeI.query2_withGasLimit(uint256,string,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#59)
+queryN(uint256,string,bytes) should be declared external:
+	- OraclizeI.queryN(uint256,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#60)
+queryN_withGasLimit(uint256,string,bytes,uint256) should be declared external:
+	- OraclizeI.queryN_withGasLimit(uint256,string,bytes,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#61)
+getPrice(string) should be declared external:
+	- OraclizeI.getPrice(string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#62)
+getPrice(string,uint256) should be declared external:
+	- OraclizeI.getPrice(string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#63)
+oraclize_getPrice(OraclizeLib.OraclizeData,string) should be declared external:
+	- OraclizeLib.oraclize_getPrice(OraclizeLib.OraclizeData,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#151-153)
+oraclize_getPrice(OraclizeLib.OraclizeData,string,uint256) should be declared external:
+	- OraclizeLib.oraclize_getPrice(OraclizeLib.OraclizeData,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#155-157)
+oraclize_query(OraclizeLib.OraclizeData,string,string) should be declared external:
+	- OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#159-161)
+oraclize_query(OraclizeLib.OraclizeData,string,string,uint256) should be declared external:
+	- OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#171-173)
+oraclize_query(OraclizeLib.OraclizeData,string,string,string) should be declared external:
+	- OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string,string) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#183-185)
+oraclize_query(OraclizeLib.OraclizeData,string,string,string,uint256) should be declared external:
+	- OraclizeLib.oraclize_query(OraclizeLib.OraclizeData,string,string,string,uint256) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#195-197)
+__callback(bytes32,string,bytes) should be declared external:
+	- Raffle.__callback(bytes32,string,bytes) (../sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol#854-865)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xbaca9c2faf03898fc5197ee90efb6e13df7f1d55.sol analyzed (15 contracts with 100 detectors), 122 result(s) found

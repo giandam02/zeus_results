@@ -1,0 +1,65 @@
+'solc --version' running
+'solc /sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol:
+/sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol:40:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function ERC20Standard() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol:63:6: Warning: Invoking events without "emit" prefix is deprecated.
+	    Transfer(msg.sender, _recipient, _value);        
+	    ^--------------------------------------^
+/sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol:71:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+/sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol:76:3: Warning: Invoking events without "emit" prefix is deprecated.
+		Approval(msg.sender, _spender, _value);
+		^------------------------------------^
+
+
+ERC20Standard (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#29-105) has incorrect ERC20 function interface:ERC20Standard.transfer(address,uint256) (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#59-64)
+ERC20Standard (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#29-105) has incorrect ERC20 function interface:ERC20Standard.transferFrom(address,address,uint256) (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#66-72)
+ERC20Standard (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#29-105) has incorrect ERC20 function interface:ERC20Standard.approve(address,uint256) (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#74-77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+ERC20Standard.mint(uint256) (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#83-88) contains a tautology or contradiction:
+	- assert(bool)(amount >= 0) (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#84)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter ERC20Standard.balanceOf(address)._owner (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#55) is not in mixedCase
+Parameter ERC20Standard.transfer(address,uint256)._recipient (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#59) is not in mixedCase
+Parameter ERC20Standard.transfer(address,uint256)._value (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#59) is not in mixedCase
+Parameter ERC20Standard.transferFrom(address,address,uint256)._from (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#66) is not in mixedCase
+Parameter ERC20Standard.transferFrom(address,address,uint256)._to (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#66) is not in mixedCase
+Parameter ERC20Standard.transferFrom(address,address,uint256)._value (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#66) is not in mixedCase
+Parameter ERC20Standard.approve(address,uint256)._spender (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#74) is not in mixedCase
+Parameter ERC20Standard.approve(address,uint256)._value (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#74) is not in mixedCase
+Parameter ERC20Standard.allowance(address,address)._owner (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#79) is not in mixedCase
+Parameter ERC20Standard.allowance(address,address)._spender (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#79) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ERC20Standard.ERC20Standard() (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#40-48) uses literals with too many digits:
+	- totalSupply = 300000000 * (10 ** decimals) (../sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol#46)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xe3d424dffecc3759fcc997f5eba2a01a58585405.sol analyzed (1 contracts with 100 detectors), 17 result(s) found

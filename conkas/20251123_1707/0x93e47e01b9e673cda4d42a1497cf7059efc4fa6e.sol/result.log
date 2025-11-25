@@ -1,0 +1,51 @@
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+ANTLR runtime and generated code versions disagree: 4.9.2!=4.7.2
+Traceback (most recent call last):
+  File "conkas.py", line 143, in <module>
+    main()
+  File "conkas.py", line 89, in main
+    contracts = compile_files([filename])
+  File "/usr/local/lib/python3.8/dist-packages/solcx/main.py", line 118, in compile_files
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/utils/string.py", line 78, in inner
+    return force_obj_to_text(fn(*args, **kwargs))
+  File "/usr/local/lib/python3.8/dist-packages/solcx/wrapper.py", line 187, in solc_wrapper
+    raise SolcError(
+solcx.exceptions.SolcError: An error occurred during execution
+        > command: `/root/.solcx/solc-v0.6.11 --combined-json abi,asm,ast,bin,bin-runtime,devdoc,opcodes,userdoc /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol`
+        > return code: `1`
+        > stderr:
+
+        > stdout:
+        Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:35:47:
+   |
+35 |   function max64(uint64 a, uint64 b) internal constant returns (uint64) {
+   |                                               ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:38:47:
+   |
+38 |   function min64(uint64 a, uint64 b) internal constant returns (uint64) {
+   |                                               ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:41:50:
+   |
+41 |   function max256(uint256 a, uint256 b) internal constant returns (uint256) {
+   |                                                  ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:44:50:
+   |
+44 |   function min256(uint256 a, uint256 b) internal constant returns (uint256) {
+   |                                                  ^^^^^^^^
+
+Error: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.
+  --> /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol:96:58:
+   |
+96 |     function allowance(address _owner, address _spender) constant returns(uint256 remaining) {
+   |                                                          ^^^^^^^^
+
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> /sb/0x93e47e01b9e673cda4d42a1497cf7059efc4fa6e.sol

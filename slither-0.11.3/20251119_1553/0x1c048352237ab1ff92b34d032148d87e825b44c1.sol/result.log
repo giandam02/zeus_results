@@ -1,0 +1,113 @@
+'solc --version' running
+'solc /sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:16:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:179:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function LeRT_Bounty() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:125:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(msg.sender, _to, _value);
+      ^-------------------------------^
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:135:7: Warning: Invoking events without "emit" prefix is deprecated.
+      Transfer(_from, _to, _value);
+      ^--------------------------^
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:146:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:218:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Withdraw(msg.sender, amount_, remain);
+        ^-----------------------------------^
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:226:35: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+            balance = balance.add(eachWeek.get(user_));
+                                  ^-----------------^
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol:236:35: Warning: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+            balance = balance.add(eachWeek.get(user_));
+                                  ^-----------------^
+
+
+LeRT_Bounty._balanceOf(address).balance (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#233) is a local variable never initialized
+LeRT_Bounty.balanceOf(address).balance (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#223) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+owned.transferOwnership(address) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#25-27) should emit an event for: 
+	- owner = newOwner (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#26) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+owned.transferOwnership(address).newOwner (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#25) lacks a zero-check on :
+		- owner = newOwner (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#26)
+LeRT_Bounty.changeToken(address).token_ (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#196) lacks a zero-check on :
+		- token = token_ (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#197)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+LeRT_Bounty._balanceOf(address) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#231-239) has external calls inside a loop: balance = balance.add(eachWeek.get(user_)) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#236)
+	Calls stack containing the loop:
+		LeRT_Bounty.withdraw(uint256)
+LeRT_Bounty.balanceOf(address) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#221-229) has external calls inside a loop: balance = balance.add(eachWeek.get(user_)) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#226)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in LeRT_Bounty.withdraw(uint256) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#210-219):
+	External calls:
+	- tokens = _balanceOf(msg.sender) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#213)
+		- balance = balance.add(eachWeek.get(user_)) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#236)
+	State variables written after the call(s):
+	- sent[msg.sender] = sent[msg.sender].add(amount_) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#215)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in LeRT_Bounty.withdraw(uint256) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#210-219):
+	External calls:
+	- tokens = _balanceOf(msg.sender) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#213)
+		- balance = balance.add(eachWeek.get(user_)) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#236)
+	- require(bool)(Token(token).transfer(msg.sender,amount_)) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#217)
+	Event emitted after the call(s):
+	- Withdraw(msg.sender,amount_,remain) (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#218)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#11)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#13-28) is not in CapWords
+Parameter StandardToken.transfer(address,uint256)._to (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#121) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256)._value (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#121) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#130) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#130) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#130) is not in mixedCase
+Parameter StandardToken.balanceOf(address)._owner (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#140) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#144) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#144) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#150) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#150) is not in mixedCase
+Contract LeRT_Bounty (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#162-246) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+StandardToken (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#118-159) does not implement functions:
+	- Token.totalSupply() (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#81)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+StandardToken.totalSupply (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#158) should be constant 
+Token.decimals (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#114) should be constant 
+Token.name (../sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol#115) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x1c048352237ab1ff92b34d032148d87e825b44c1.sol analyzed (6 contracts with 100 detectors), 27 result(s) found

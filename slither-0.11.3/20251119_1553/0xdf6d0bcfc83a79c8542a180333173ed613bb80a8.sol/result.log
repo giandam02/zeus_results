@@ -1,0 +1,136 @@
+'solc --version' running
+'solc /sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+BasicToken.totalSupply_ (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#120) is never initialized. It is used in:
+	- BasicToken.totalSupply() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#125-127)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+CountTransferManager.configure(uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#702-704) should emit an event for: 
+	- maxHolderCount = _maxHolderCount (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#703) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in CountTransferManager.changeHolderCount(uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#717-720):
+	External calls:
+	- withPerm(ADMIN) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#717)
+		- isOwner = msg.sender == ISecurityToken(securityToken).owner() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#595)
+		- require(bool,string)(isOwner || isFactory || ISecurityToken(securityToken).checkPermission(msg.sender,address(this),_perm),Permission check failed) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#597)
+	State variables written after the call(s):
+	- maxHolderCount = _maxHolderCount (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#719)
+Reentrancy in ITransferManager.pause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#648-650):
+	External calls:
+	- onlyOwner() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#648)
+		- require(bool,string)(msg.sender == ISecurityToken(securityToken).owner(),Sender is not owner) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#602)
+	State variables written after the call(s):
+	- super._pause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#649)
+		- paused = true (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#34)
+Reentrancy in ITransferManager.unpause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#644-646):
+	External calls:
+	- onlyOwner() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#644)
+		- require(bool,string)(msg.sender == ISecurityToken(securityToken).owner(),Sender is not owner) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#602)
+	State variables written after the call(s):
+	- super._unpause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#645)
+		- paused = false (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#43)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in CountTransferManager.changeHolderCount(uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#717-720):
+	External calls:
+	- withPerm(ADMIN) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#717)
+		- isOwner = msg.sender == ISecurityToken(securityToken).owner() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#595)
+		- require(bool,string)(isOwner || isFactory || ISecurityToken(securityToken).checkPermission(msg.sender,address(this),_perm),Permission check failed) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#597)
+	Event emitted after the call(s):
+	- LogModifyHolderCount(maxHolderCount,_maxHolderCount) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#718)
+Reentrancy in ITransferManager.pause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#648-650):
+	External calls:
+	- onlyOwner() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#648)
+		- require(bool,string)(msg.sender == ISecurityToken(securityToken).owner(),Sender is not owner) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#602)
+	Event emitted after the call(s):
+	- Pause(now) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#35)
+		- super._pause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#649)
+Reentrancy in ITransferManager.unpause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#644-646):
+	External calls:
+	- onlyOwner() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#644)
+		- require(bool,string)(msg.sender == ISecurityToken(securityToken).owner(),Sender is not owner) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#602)
+	Event emitted after the call(s):
+	- Unpause(now) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#44)
+		- super._unpause() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#645)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+IModuleFactory.getSig(bytes) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#527-532) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#134) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#134) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#149) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#193) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#194) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#195) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#221) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#221) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#234) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#235) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#255) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#256) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#278) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#279) is not in mixedCase
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#386) is not in mixedCase
+Parameter IModuleFactory.getSig(bytes)._data (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#527) is not in mixedCase
+Parameter IModuleFactory.changeFactorySetupFee(uint256)._newSetupCost (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#538) is not in mixedCase
+Parameter IModuleFactory.changeFactoryUsageFee(uint256)._newUsageCost (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#547) is not in mixedCase
+Parameter IModuleFactory.changeFactorySubscriptionFee(uint256)._newSubscriptionCost (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#556) is not in mixedCase
+Parameter IModule.takeFee(uint256)._amount (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#624) is not in mixedCase
+Parameter CountTransferManager.verifyTransfer(address,address,uint256,bool)._to (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#684) is not in mixedCase
+Parameter CountTransferManager.configure(uint256)._maxHolderCount (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#702) is not in mixedCase
+Parameter CountTransferManager.changeHolderCount(uint256)._maxHolderCount (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#717) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ISecurityToken (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#404-465) does not implement functions:
+	- ISecurityToken.balanceOfAt(address,uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#451)
+	- IST20.burn(uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#335)
+	- ISecurityToken.checkPermission(address,address,bytes32) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#424)
+	- ISecurityToken.createCheckpoint() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#456)
+	- ISecurityToken.getInvestorsLength() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#463)
+	- ISecurityToken.getModule(uint8,uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#431)
+	- ISecurityToken.getModuleByName(uint8,bytes32) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#438)
+	- IST20.mint(address,uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#329)
+	- ISecurityToken.totalSupplyAt(uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#444)
+	- IST20.verifyTransfer(address,address,uint256) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#323)
+IModuleFactory (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#470-562) does not implement functions:
+	- IModuleFactory.deploy(bytes) (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#494)
+	- IModuleFactory.getDescription() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#509)
+	- IModuleFactory.getInstructions() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#519)
+	- IModuleFactory.getName() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#504)
+	- IModuleFactory.getTags() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#524)
+	- IModuleFactory.getTitle() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#514)
+	- IModuleFactory.getType() (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#499)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+BasicToken.totalSupply_ (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#120) should be constant 
+IST20.tokenDetails (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#320) should be constant 
+ISecurityToken.currentCheckpointId (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#413) should be constant 
+ISecurityToken.granularity (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#410) should be constant 
+ISecurityToken.investorCount (../sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol#416) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xdf6d0bcfc83a79c8542a180333173ed613bb80a8.sol analyzed (14 contracts with 100 detectors), 41 result(s) found

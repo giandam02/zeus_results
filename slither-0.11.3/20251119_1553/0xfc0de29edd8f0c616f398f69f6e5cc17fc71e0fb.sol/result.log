@@ -1,0 +1,71 @@
+'solc --version' running
+'solc /sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol:
+/sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol:13:3: Warning: Invoking events without "emit" prefix is deprecated.
+		NewPlayer(player, msg.value);
+		^--------------------------^
+/sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol:32:27: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            uint amount = this.balance;
+                          ^----------^
+/sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol:34:4: Warning: Invoking events without "emit" prefix is deprecated.
+			Winner(winner, amount);
+			^--------------------^
+
+
+ZweiGehenReinEinerKommtRaus.Bet() (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#10-36) sends eth to arbitrary user
+	Dangerous calls:
+	- winner.transfer(amount) (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+ZweiGehenReinEinerKommtRaus.Bet() (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#10-36) performs a multiplication on the result of a division:
+	- random / 2 * 2 == random (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#23)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+ZweiGehenReinEinerKommtRaus.Bet() (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#10-36) uses a dangerous strict equality:
+	- random / 2 * 2 == random (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#23)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+ZweiGehenReinEinerKommtRaus.Bet().player (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#11) lacks a zero-check on :
+		- player1 = player (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#17)
+ZweiGehenReinEinerKommtRaus.Bet().winner (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#22) lacks a zero-check on :
+		- winner.transfer(amount) (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+ZweiGehenReinEinerKommtRaus.Bet() (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#10-36) uses timestamp for comparisons
+	Dangerous comparisons:
+	- random / 2 * 2 == random (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#23)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Function ZweiGehenReinEinerKommtRaus.Bet() (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#10-36) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ZweiGehenReinEinerKommtRaus.Bet() (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#10-36):
+	External calls:
+	- winner.transfer(amount) (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#33)
+	Event emitted after the call(s):
+	- Winner(winner,amount) (../sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol#34)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xfc0de29edd8f0c616f398f69f6e5cc17fc71e0fb.sol analyzed (1 contracts with 100 detectors), 10 result(s) found

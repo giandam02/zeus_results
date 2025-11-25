@@ -1,0 +1,124 @@
+'solc --version' running
+'solc /sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol:
+/sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol:11:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() public { owner = msg.sender; }
+    ^---------------------------------------------^
+/sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol:29:28: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x000000000000000000000000000000000000dEaD'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+    address _deadAddress = 0x000000000000000000000000000000000000dead;
+                           ^----------------------------------------^
+
+
+PublicSaleManager.burnUnsold() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#71-76) ignores return value by ERC20(_tokenAddress).transfer(_deadAddress,ERC20(_tokenAddress).balanceOf(this) - _totalBonus) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#75)
+PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126) ignores return value by ERC20(_tokenAddress).transfer(msg.sender,purchaseAmount) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#118)
+PublicSaleManager.claimBonus() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#128-140) ignores return value by ERC20(_tokenAddress).transfer(msg.sender,_bonus[msg.sender]) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#137)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Reentrancy in PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126):
+	External calls:
+	- require(bool)(ERC20(_tokenAddress).balanceOf(this) >= _totalBonus + purchaseAmount + bonus) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#115)
+	- ERC20(_tokenAddress).transfer(msg.sender,purchaseAmount) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#118)
+	State variables written after the call(s):
+	- _contributedETH[msg.sender] += msg.value (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#119)
+	PublicSaleManager._contributedETH (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#26) can be used in cross function reentrancies:
+	- PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126)
+	- PublicSaleManager.checkContributedETH(address) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#150-152)
+	- PublicSaleManager.checkPersonalRemaining(address) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#154-162)
+	- _totalBonus += bonus (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#124)
+	PublicSaleManager._totalBonus (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#34) can be used in cross function reentrancies:
+	- PublicSaleManager.burnUnsold() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#71-76)
+	- PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126)
+	- _totalSold += (purchaseAmount + bonus) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#125)
+	PublicSaleManager._totalSold (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#33) can be used in cross function reentrancies:
+	- PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126)
+	- PublicSaleManager.checkTotalSold() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#146-148)
+Reentrancy in PublicSaleManager.claimBonus() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#128-140):
+	External calls:
+	- ERC20(_tokenAddress).transfer(msg.sender,_bonus[msg.sender]) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#137)
+	State variables written after the call(s):
+	- _bonus[msg.sender] = 0 (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#138)
+	PublicSaleManager._bonus (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#25) can be used in cross function reentrancies:
+	- PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126)
+	- PublicSaleManager.checkBonus(address) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#142-144)
+	- PublicSaleManager.claimBonus() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#128-140)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+PublicSaleManager.start(uint32) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#56-65) should emit an event for: 
+	- _conversionRate = conversionRate (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#64) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+PublicSaleManager.withdrawEther(address,uint256).toAddress (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#78) lacks a zero-check on :
+		- toAddress.transfer(amount) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#79)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126):
+	External calls:
+	- require(bool)(ERC20(_tokenAddress).balanceOf(this) >= _totalBonus + purchaseAmount + bonus) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#115)
+	- ERC20(_tokenAddress).transfer(msg.sender,purchaseAmount) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#118)
+	State variables written after the call(s):
+	- _bonus[msg.sender] += bonus (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#122)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+PublicSaleManager.start(uint32) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#56-65) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_startTime == 0) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#57)
+PublicSaleManager.burnUnsold() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#71-76) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now >= _startTime + (2678400)) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#72)
+PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now > _startTime) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#97)
+	- require(bool)(now < _startTime + (2678400)) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#98)
+PublicSaleManager.claimBonus() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#128-140) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > _startTime + (7776000) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#136)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126) compares to a boolean constant:
+	-require(bool)(_whiteList[msg.sender] == true || _earlyList[msg.sender] == true) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#86)
+PublicSaleManager.buyTokens() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#82-126) compares to a boolean constant:
+	-require(bool)(_is_stopped == false) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#83)
+PublicSaleManager.claimBonus() (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#128-140) compares to a boolean constant:
+	-require(bool)(_whiteList[msg.sender] == true || _earlyList[msg.sender] == true) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#130)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.16 (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract owned (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#10-18) is not in CapWords
+Variable PublicSaleManager._is_stopped (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#40) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+PublicSaleManager._deadAddress (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#29) should be constant 
+PublicSaleManager._higherPersonalCap (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#37) should be constant 
+PublicSaleManager._minimumAmount (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#38) should be constant 
+PublicSaleManager._regularPersonalCap (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#36) should be constant 
+PublicSaleManager._tokenAddress (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#28) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+addWhitelist(address[]) should be declared external:
+	- PublicSaleManager.addWhitelist(address[]) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#42-47)
+addEarlylist(address[]) should be declared external:
+	- PublicSaleManager.addEarlylist(address[]) (../sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol#49-54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x948eb63729f5b53c617fb8e4cd3fca8d9a7ec902.sol analyzed (3 contracts with 100 detectors), 26 result(s) found

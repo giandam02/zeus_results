@@ -1,0 +1,130 @@
+'solc --version' running
+'solc /sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:176:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:232:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function FRNCoinCrowdsale(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:37:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:81:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:97:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:120:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:132:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:196:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:301:5: Warning: Invoking events without "emit" prefix is deprecated.
+    TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+    ^-------------------------------------------------------^
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:117:3: Warning: No visibility specified. Defaulting to "public". 
+  function increaseApproval (address _spender, uint _addedValue)
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:124:3: Warning: No visibility specified. Defaulting to "public". 
+  function decreaseApproval (address _spender, uint _subtractedValue)
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:176:3: Warning: No visibility specified. Defaulting to "public". 
+  function Ownable() {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:232:3: Warning: No visibility specified. Defaulting to "public". 
+  function FRNCoinCrowdsale(
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:140:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:146:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:153:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol:158:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+FRNCoinCrowdsale.buyTokens(address) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#288-306) uses arbitrary from in transferFrom: token.transferFrom(tokenPoolAddress,beneficiary,tokens) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#300)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+FRNCoinCrowdsale.buyTokens(address) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#288-306) ignores return value by token.transferFrom(tokenPoolAddress,beneficiary,tokens) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#300)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+FRNCoinCrowdsale.updateRate(uint256) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#256-260) should emit an event for: 
+	- rate = _rate (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#258) 
+FRNCoinCrowdsale.updateEndTime(uint256) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#282-285) should emit an event for: 
+	- endTime = _endTime (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#283) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+
+Reentrancy in FRNCoinCrowdsale.buyTokens(address) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#288-306):
+	External calls:
+	- token.transferFrom(tokenPoolAddress,beneficiary,tokens) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#300)
+	Event emitted after the call(s):
+	- TokenPurchase(msg.sender,beneficiary,weiAmount,tokens) (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#301)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+FRNCoinCrowdsale.validPurchase() (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#315-318) uses timestamp for comparisons
+	Dangerous comparisons:
+	- ! hasEnded() && nonZeroPurchase (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#317)
+FRNCoinCrowdsale.hasEnded() (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#321-323) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now > endTime (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#322)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.11 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral.
+It is used by:
+	- ^0.4.11 (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#31) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#31) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#46) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#70) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#70) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#70) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#95) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#95) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#107) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#107) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#117) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#117) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#124) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#124) is not in mixedCase
+Parameter FRNCoinCrowdsale.updateRate(uint256)._rate (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#256) is not in mixedCase
+Parameter FRNCoinCrowdsale.updateWallet(address)._wallet (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#262) is not in mixedCase
+Parameter FRNCoinCrowdsale.updateTokenAddress(address)._tokenAddress (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#269) is not in mixedCase
+Parameter FRNCoinCrowdsale.updateTokenPoolAddress(address)._tokenHolder (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#276) is not in mixedCase
+Parameter FRNCoinCrowdsale.updateEndTime(uint256)._endTime (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#282) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+ERC20Basic.totalSupply (../sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol#4) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x6d744ff5cb5d6741c7c9887bd4bbfb815d743ccf.sol analyzed (7 contracts with 100 detectors), 29 result(s) found

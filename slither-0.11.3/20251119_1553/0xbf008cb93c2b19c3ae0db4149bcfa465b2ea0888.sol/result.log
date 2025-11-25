@@ -1,0 +1,101 @@
+'solc --version' running
+'solc /sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol:
+/sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol:71:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function GameTable() public { 
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol:5:5: Warning: Functions in interfaces should be declared external.
+    function transfer(address receiver, uint amount) public;
+    ^------------------------------------------------------^
+
+
+GameTable.safeWithdrawal(uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#173-209) performs a multiplication on the result of a division:
+	- ratio = ratio.div(games[gameid].options[winnerID].amount) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#195)
+	- returnWinAmount = games[gameid].options[winnerID].players[i].amount.mul(ratio) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#198)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+token (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#4-6) has incorrect ERC20 function interface:token.transfer(address,uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#5)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+GameTable.newOption(uint256,uint256,bytes32,bytes32) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#106-116) uses a dangerous strict equality:
+	- games[gameinx].runingStatus == 0 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#110)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+GameTable.contribute(uint256,uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#144-158) contains a tautology or contradiction:
+	- (gameinx < 0) || (gameinx > 999999999999999999999999999999999999) || (optioninx < 0) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#145)
+GameTable.safeWithdrawal(uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#173-209) contains a tautology or contradiction:
+	- (gameid < 0) || (gameid > 999999999999999999999999999999999999) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#175)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#tautology-or-contradiction
+
+GameTable.safeWithdrawal(uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#173-209) has external calls inside a loop: games[gameid].options[winnerID].players[i].addr.transfer(returnWinAmount) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#201)
+	Calls stack containing the loop:
+		GameTable.setWinner(uint256,bytes32,uint256,uint256,bytes32)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+GameTable.newOption(uint256,uint256,bytes32,bytes32) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#106-116) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now >= games[gameinx].startTime (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#109)
+	- games[gameinx].runingStatus == 0 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#110)
+GameTable.contribute(uint256,uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#144-158) uses timestamp for comparisons
+	Dangerous comparisons:
+	- optioninx >= games[gameinx].numOptions (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#146)
+	- now <= games[gameinx].startTime (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#147)
+	- now >= games[gameinx].endTime (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#148)
+	- games[gameinx].amount > 99999999999999999999999999999999999999999999999999999999 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#152)
+GameTable.setWinner(uint256,bytes32,uint256,uint256,bytes32) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#160-171) uses timestamp for comparisons
+	Dangerous comparisons:
+	- (now <= games[gameinx].openTime) || (games[gameinx].runingStatus > 1) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#162)
+	- gameName != games[gameinx].gameName (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#163)
+	- games[gameinx].options[optioninx].optionName != optionName (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#164)
+	- games[gameinx].options[optioninx].optionid != optionid (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#165)
+GameTable.safeWithdrawal(uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#173-209) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now <= games[gameid].openTime (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#176)
+	- games[gameid].runingStatus != 2 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#177)
+	- winnerID > 0 && winnerID < 9999 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#180)
+	- games[gameid].options[winnerID].amount < 100000000000 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#190)
+	- i < games[gameid].options[winnerID].numPlayers (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#197)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract token (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#4-6) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in GameTable.safeWithdrawal(uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#173-209):
+	External calls:
+	- games[gameid].options[winnerID].players[i].addr.transfer(returnWinAmount) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#201)
+	State variables written after the call(s):
+	- games[gameid].options[winnerID].players[i].profit = returnWinAmount (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#202)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+GameTable.contribute(uint256,uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#144-158) uses literals with too many digits:
+	- msg.value < 5000000000000000 || msg.value > 1000000000000000000000000000 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#151)
+GameTable.safeWithdrawal(uint256) (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#173-209) uses literals with too many digits:
+	- games[gameid].options[winnerID].amount < 100000000000 (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#190)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+GameTable.gameDeveloper (../sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol#68) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xbf008cb93c2b19c3ae0db4149bcfa465b2ea0888.sol analyzed (3 contracts with 100 detectors), 17 result(s) found

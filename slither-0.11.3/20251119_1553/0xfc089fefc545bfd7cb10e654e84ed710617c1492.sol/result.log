@@ -1,0 +1,133 @@
+'solc --version' running
+'solc /sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ETH_8 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#86-299) contract sets array length with a user-controlled value:
+	- user.deposits.push(Deposit({amount:amount,interest:getUserInterest(from),withdrawedRate:0})) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#285-289)
+ETH_8 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#86-299) contract sets array length with a user-controlled value:
+	- user.deposits.push(Deposit({amount:investment,interest:getUserInterest(from),withdrawedRate:0})) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#211-215)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Proxy._bytesToAddress(bytes) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#73-78) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+ETH_8.getDividends(address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#148-166) performs a multiplication on the result of a division:
+	- DepositDividendPayed(wallet,i,user.deposits[i].amount,user.deposits[i].amount.mul(user.deposits[i].withdrawedRate.div(ONE_HUNDRED_PERCENTS)),user.deposits[i].amount.mul(withdrawRate.div(ONE_HUNDRED_PERCENTS))) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#154-160)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+ETH_8.doInvest(address,uint256,address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#176-224) uses a dangerous strict equality:
+	- user.referrer == address(0) && user.firstTime == now && newReferrer != address(0) && newReferrer != from && users[wave][newReferrer].firstTime > 0 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#188-192)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+ETH_8.withdrawDividends(address).from (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#132) lacks a zero-check on :
+		- from.transfer(dividendsSum) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#143)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in Proxy.resetContribution() (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#80-83):
+	External calls:
+	- require(bool)(msg.sender == eth_8.owner()) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#81)
+	State variables written after the call(s):
+	- contribution = 0 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#82)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+ETH_8.withdrawDividends(address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#132-146) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(dividendsSum > 0) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#135)
+	- address(this).balance <= dividendsSum (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#137)
+ETH_8.doInvest(address,uint256,address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#176-224) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(investment >= MINIMUM_DEPOSIT) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#178)
+	- user.referrer == address(0) && user.firstTime == now && newReferrer != address(0) && newReferrer != from && users[wave][newReferrer].firstTime > 0 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#188-192)
+ETH_8.getUserInterest(address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#226-238) uses timestamp for comparisons
+	Dangerous comparisons:
+	- user.referralAmount < 1000000000000000000 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#228)
+	- user.referrer == address(0) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#229)
+	- user.referralAmount < 10000000000000000000 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#231)
+	- user.referralAmount < 20000000000000000000 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#233)
+ETH_8.min(uint256,uint256) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#240-243) uses timestamp for comparisons
+	Dangerous comparisons:
+	- a < b (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#241)
+ETH_8.depositForUser(address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#245-250) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < user.deposits.length (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#247)
+ETH_8.dividendsSumForUser(address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#252-260) uses timestamp for comparisons
+	Dangerous comparisons:
+	- i < user.deposits.length (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#254)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Proxy._bytesToAddress(bytes) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#73-78) uses assembly
+	- INLINE ASM (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#75-78)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SafeMath.mul(uint256,uint256)._a (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#8) is not in mixedCase
+Parameter SafeMath.mul(uint256,uint256)._b (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#8) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._a (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#24) is not in mixedCase
+Parameter SafeMath.div(uint256,uint256)._b (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#24) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._a (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#34) is not in mixedCase
+Parameter SafeMath.sub(uint256,uint256)._b (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#34) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._a (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#42) is not in mixedCase
+Parameter SafeMath.add(uint256,uint256)._b (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#42) is not in mixedCase
+Variable Proxy.eth_8 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#52) is not in mixedCase
+Contract ETH_8 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#86-299) is not in CapWords
+Variable ETH_8.DAILY_INTEREST (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#90) is not in mixedCase
+Variable ETH_8.MARKETING_AND_TEAM_FEE (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#91) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ETH_8.doInvest(address,uint256,address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#176-224):
+	External calls:
+	- user.referrer.transfer(refAmount) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#202)
+	State variables written after the call(s):
+	- investment = investment.add(getDividends(from)) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#206)
+		- totalDividend = totalDividend.add(sum) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#165)
+	- totalInvest = totalInvest.add(investment) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#208)
+	- investment = investment.add(getDividends(from)) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#206)
+		- user.deposits[i].withdrawedRate = user.deposits[i].withdrawedRate.add(withdrawRate) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#152)
+		- user.lastPayment = now (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#162)
+		- user.referBonus = 0 (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#164)
+	- user.deposits.push(Deposit({amount:investment,interest:getUserInterest(from),withdrawedRate:0})) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#211-215)
+	Event emitted after the call(s):
+	- DepositAdded(from,user.deposits.length,investment) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#216)
+	- DepositDividendPayed(wallet,i,user.deposits[i].amount,user.deposits[i].amount.mul(user.deposits[i].withdrawedRate.div(ONE_HUNDRED_PERCENTS)),user.deposits[i].amount.mul(withdrawRate.div(ONE_HUNDRED_PERCENTS))) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#154-160)
+		- investment = investment.add(getDividends(from)) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#206)
+Reentrancy in ETH_8.doInvest(address,uint256,address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#176-224):
+	External calls:
+	- user.referrer.transfer(refAmount) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#202)
+	- marketingAndTechnicalSupport.transfer(marketingAndTeamFee) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#220)
+	Event emitted after the call(s):
+	- BalanceChanged(address(this).balance) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#223)
+	- FeePayed(from,marketingAndTeamFee) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#221)
+Reentrancy in ETH_8.withdrawDividends(address) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#132-146):
+	External calls:
+	- from.transfer(dividendsSum) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#143)
+	Event emitted after the call(s):
+	- BalanceChanged(address(this).balance) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#145)
+	- UserDividendPayed(from,dividendsSum) (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#144)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+ETH_8.marketingAndTechnicalSupport (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#115) should be constant 
+ETH_8.owner (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#116) should be constant 
+ETH_8.referralPercents (../sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol#92) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xfc089fefc545bfd7cb10e654e84ed710617c1492.sol analyzed (3 contracts with 100 detectors), 34 result(s) found

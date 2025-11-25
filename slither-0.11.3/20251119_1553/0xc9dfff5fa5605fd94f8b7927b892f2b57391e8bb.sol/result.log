@@ -1,0 +1,44 @@
+'solc --version' running
+'solc /sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+State.setAssociatedContract(address)._associatedContract (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#193) lacks a zero-check on :
+		- associatedContract = _associatedContract (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#197)
+Owned.nominateNewOwner(address)._owner (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#113) lacks a zero-check on :
+		- nominatedOwner = _owner (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#117)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+FeePoolEternalStorage.importFeeWithdrawalData(address[],uint256[]) (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#440-450) has external calls inside a loop: this.setUIntValue(keccak256()(abi.encodePacked(LAST_FEE_WITHDRAWAL,accounts[i])),feePeriodIDs[i]) (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#448)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Version constraint 0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- 0.4.25 (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#32)
+solc-0.4.25 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Owned.nominateNewOwner(address)._owner (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#113) is not in mixedCase
+Parameter State.setAssociatedContract(address)._associatedContract (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#193) is not in mixedCase
+Variable EternalStorage.UIntStorage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#263) is not in mixedCase
+Variable EternalStorage.StringStorage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#264) is not in mixedCase
+Variable EternalStorage.AddressStorage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#265) is not in mixedCase
+Variable EternalStorage.BytesStorage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#266) is not in mixedCase
+Variable EternalStorage.Bytes32Storage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#267) is not in mixedCase
+Variable EternalStorage.BooleanStorage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#268) is not in mixedCase
+Variable EternalStorage.IntStorage (../sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol#269) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+/sb/0xc9dfff5fa5605fd94f8b7927b892f2b57391e8bb.sol analyzed (5 contracts with 100 detectors), 14 result(s) found

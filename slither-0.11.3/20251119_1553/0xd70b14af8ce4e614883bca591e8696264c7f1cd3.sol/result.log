@@ -1,0 +1,54 @@
+'solc --version' running
+'solc /sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#90) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#90) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#105) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#144) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#144) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#144) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#166) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#166) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#178) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#178) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#192) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#192) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#208) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#208) is not in mixedCase
+Variable EgoToken.INITIAL_SUPPLY (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#234) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+EgoToken.slitherConstructorVariables() (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#229-244) uses literals with too many digits:
+	- INITIAL_SUPPLY = 1000000000000000000 (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#234)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+EgoToken.INITIAL_SUPPLY (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#234) should be constant 
+EgoToken.decimals (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#233) should be constant 
+EgoToken.name (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#231) should be constant 
+EgoToken.symbol (../sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol#232) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xd70b14af8ce4e614883bca591e8696264c7f1cd3.sol analyzed (6 contracts with 100 detectors), 22 result(s) found

@@ -1,0 +1,119 @@
+'solc --version' running
+'solc /sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol:
+/sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol:50:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol:268:6: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+     function DayDayToken(address wallet) public 
+     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Contract locking ether found:
+	Contract DayDayToken (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#252-354) has payable functions:
+	 - DayDayToken.fallback() (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#261-263)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+DayDayToken.DayDayToken(address).wallet (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#268) lacks a zero-check on :
+		- ownerWallet = wallet (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#271)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+BasicToken.transfer(address,uint256) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#128-146) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timePassed < lockupParticipants[msg.sender].lockupTime (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#136)
+StandardToken.transferFrom(address,address,uint256) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#177-196) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timePassed < lockupParticipants[_from].lockupTime (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#186)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#128) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._amount (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#128) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#153) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#177) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#177) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._amount (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#177) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#208) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._amount (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#208) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#220) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#220) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#238) is not in mixedCase
+Parameter DayDayToken.lockTokensForFs(address,address).F1 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#291) is not in mixedCase
+Parameter DayDayToken.lockTokensForFs(address,address).F2 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#291) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A1 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A2 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A3 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#300) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A4 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#300) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A5 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#301) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A6 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#301) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A7 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#302) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A8 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#302) is not in mixedCase
+Parameter DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address).A9 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#303) is not in mixedCase
+Parameter DayDayToken.lockTokensForCs(address,address,address).C1 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#333) is not in mixedCase
+Parameter DayDayToken.lockTokensForCs(address,address,address).C2 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#333) is not in mixedCase
+Parameter DayDayToken.lockTokensForCs(address,address,address).C3 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#333) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+DayDayToken.DayDayToken(address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#268-281) uses literals with too many digits:
+	- totalSupply = 300000000000 (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#272)
+DayDayToken.lockTokensForFs(address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#291-298) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:62208000,lockupAmount:90000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#293)
+DayDayToken.lockTokensForFs(address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#291-298) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:62208000,lockupAmount:60000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#296)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:90000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#305)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:60000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#308)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:30000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#311)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:60000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#314)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:60000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#317)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:15000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#320)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:15000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#323)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:15000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#326)
+DayDayToken.lockTokensForAs(address,address,address,address,address,address,address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#299-331) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:15552000,lockupAmount:15000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#329)
+DayDayToken.lockTokensForCs(address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#333-343) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:7776000,lockupAmount:2500000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#335)
+DayDayToken.lockTokensForCs(address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#333-343) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:7776000,lockupAmount:1000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#338)
+DayDayToken.lockTokensForCs(address,address,address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#333-343) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:7776000,lockupAmount:1500000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#341)
+DayDayToken.lockTokensForTeamAndReserve(address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#345-352) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:31104000,lockupAmount:63000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#347)
+DayDayToken.lockTokensForTeamAndReserve(address) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#345-352) uses literals with too many digits:
+	- lockup = Lockup({lockupTime:62208000,lockupAmount:415000000 * 10 ** uint256(decimals)}) (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#350)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+DayDayToken.decimals (../sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol#255) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xe2dcd10f43cd9229f253e5147a793e6f64283f2b.sol analyzed (8 contracts with 100 detectors), 49 result(s) found

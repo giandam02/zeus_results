@@ -1,0 +1,386 @@
+'solc --version' running
+'solc /sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:120:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Ownable() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:406:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function NanoLoanEngine(Token _rcn) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:478:9: Warning: Use of the "var" keyword is deprecated.
+        var loan = Loan(Status.initial, _oracleContract, _borrower, 0x0, msg.sender, 0x0, _amount, 0, 0, 0, 0, _interestRate,
+        ^------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:175:9: Warning: Invoking events without "emit" prefix is deprecated.
+        NewSymbol(currency, ticker);
+        ^-------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:176:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        bytes32 currency = keccak256(ticker);
+                           ^---------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:176:28: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+        bytes32 currency = keccak256(ticker);
+                           ^---------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:393:16: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        return keccak256(loans[index].metadata);
+               ^------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:393:16: Warning: The provided argument of type string storage ref is not implicitly convertible to expected type bytes memory.
+        return keccak256(loans[index].metadata);
+               ^------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:481:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreatedLoan(index, _borrower, msg.sender);
+        ^---------------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:539:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ApprovedBy(index, msg.sender);
+        ^---------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:571:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(0x0, loan.lender, index);
+        ^-------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:592:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Lent(index, loan.lender, cosigner);
+        ^--------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:632:9: Warning: Invoking events without "emit" prefix is deprecated.
+        DestroyedBy(index, msg.sender);
+        ^----------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:638:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(loan.lender, 0x0, index);
+            ^-------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:668:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(loan.lender, to, index);
+        ^------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:719:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, to, index);
+        ^-----------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:731:9: Warning: Invoking events without "emit" prefix is deprecated.
+        ApprovalForAll(msg.sender, _operator, _approved);
+        ^----------------------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:884:9: Warning: Invoking events without "emit" prefix is deprecated.
+        PartialPayment(index, msg.sender, _from, toPay);
+        ^---------------------------------------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:889:13: Warning: Invoking events without "emit" prefix is deprecated.
+            TotalPayment(index);
+            ^-----------------^
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol:895:13: Warning: Invoking events without "emit" prefix is deprecated.
+            Transfer(loan.lender, 0x0, index);
+            ^-------------------------------^
+
+
+NanoLoanEngine (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#256-1021) has incorrect ERC721 function interface:ERC721.approve(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#89)
+NanoLoanEngine (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#256-1021) has incorrect ERC721 function interface:ERC721.setApprovalForAll(address,bool) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#92)
+NanoLoanEngine (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#256-1021) has incorrect ERC721 function interface:NanoLoanEngine.transferFrom(address,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#697-700)
+NanoLoanEngine (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#256-1021) has incorrect ERC721 function interface:NanoLoanEngine.approve(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#715-721)
+NanoLoanEngine (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#256-1021) has incorrect ERC721 function interface:NanoLoanEngine.setApprovalForAll(address,bool) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#729-733)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc721-interface
+
+NanoLoanEngine.calculateInterest(uint256,uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#774-782) uses a dangerous strict equality:
+	- amount == 0 (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#775)
+NanoLoanEngine.cosign(uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#607-615) uses a dangerous strict equality:
+	- require(bool)(loan.status == Status.lent && (loan.dueTime - loan.duesIn) == block.timestamp) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#609)
+NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906) uses a dangerous strict equality:
+	- getRawPendingAmount(index) == 0 (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#888)
+RpSafeMath.safeMult(uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#202-206) uses a dangerous strict equality:
+	- require(bool)((x == 0) || (z / x == y)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#204)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Reentrancy in NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#558-595):
+	External calls:
+	- transferValue = convertRate(loan.oracle,loan.currency,oracleData,loan.amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#580)
+		- (rate,decimals) = oracle.getRate(currency,data) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#922)
+	- require(bool)(rcn.transferFrom(msg.sender,loan.borrower,transferValue)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#581)
+	State variables written after the call(s):
+	- loan.cosigner = address(uint256(cosigner) + 2) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#587)
+	NanoLoanEngine.loans (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#442) can be used in cross function reentrancies:
+	- NanoLoanEngine.addInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#846-850)
+	- NanoLoanEngine.approve(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#715-721)
+	- NanoLoanEngine.approveLoan(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#535-541)
+	- NanoLoanEngine.cosign(uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#607-615)
+	- NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466-488)
+	- NanoLoanEngine.destroy(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#628-643)
+	- NanoLoanEngine.getAmount(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#496)
+	- NanoLoanEngine.getApprobation(uint256,address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#505)
+	- NanoLoanEngine.getApproved(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#508)
+	- NanoLoanEngine.getBorrower(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#493)
+	- NanoLoanEngine.getCancelableAt(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#504)
+	- NanoLoanEngine.getCosigner(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#494)
+	- NanoLoanEngine.getCreator(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#495)
+	- NanoLoanEngine.getCurrency(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#509)
+	- NanoLoanEngine.getDueTime(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#502)
+	- NanoLoanEngine.getDuesIn(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#503)
+	- NanoLoanEngine.getExpirationRequest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#510)
+	- NanoLoanEngine.getInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#511)
+	- NanoLoanEngine.getInterestRate(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#500)
+	- NanoLoanEngine.getInterestRatePunitory(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#501)
+	- NanoLoanEngine.getInterestTimestamp(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#498)
+	- NanoLoanEngine.getLenderBalance(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#507)
+	- NanoLoanEngine.getOracle(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#492)
+	- NanoLoanEngine.getPaid(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#499)
+	- NanoLoanEngine.getPunitoryInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#497)
+	- NanoLoanEngine.getRawPendingAmount(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#759-762)
+	- NanoLoanEngine.getStatus(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#506)
+	- NanoLoanEngine.getTotalLoans() (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#491)
+	- NanoLoanEngine.isApproved(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#520-523)
+	- NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#558-595)
+	- NanoLoanEngine.ownerOf(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#490)
+	- NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906)
+	- NanoLoanEngine.tokenMetadata(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#380-382)
+	- NanoLoanEngine.tokenMetadataHash(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#392-394)
+	- NanoLoanEngine.tokenOfOwnerByIndex(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#306-329)
+	- NanoLoanEngine.tokensOfOwner(address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#340-362)
+	- NanoLoanEngine.transfer(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#656-671)
+	- NanoLoanEngine.transferFrom(address,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#697-700)
+	- NanoLoanEngine.withdrawal(uint256,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#946-953)
+	- NanoLoanEngine.withdrawalList(uint256[],address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#996-1012)
+	- NanoLoanEngine.withdrawalRange(uint256,uint256,address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#967-983)
+Reentrancy in NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906):
+	External calls:
+	- transferValue = convertRate(loan.oracle,loan.currency,oracleData,toPay) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#898)
+		- (rate,decimals) = oracle.getRate(currency,data) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#922)
+	- require(bool)(rcn.transferFrom(msg.sender,this,transferValue)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#902)
+	State variables written after the call(s):
+	- loan.lenderBalance = safeAdd(transferValue,loan.lenderBalance) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#903)
+	NanoLoanEngine.loans (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#442) can be used in cross function reentrancies:
+	- NanoLoanEngine.addInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#846-850)
+	- NanoLoanEngine.approve(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#715-721)
+	- NanoLoanEngine.approveLoan(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#535-541)
+	- NanoLoanEngine.cosign(uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#607-615)
+	- NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466-488)
+	- NanoLoanEngine.destroy(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#628-643)
+	- NanoLoanEngine.getAmount(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#496)
+	- NanoLoanEngine.getApprobation(uint256,address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#505)
+	- NanoLoanEngine.getApproved(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#508)
+	- NanoLoanEngine.getBorrower(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#493)
+	- NanoLoanEngine.getCancelableAt(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#504)
+	- NanoLoanEngine.getCosigner(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#494)
+	- NanoLoanEngine.getCreator(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#495)
+	- NanoLoanEngine.getCurrency(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#509)
+	- NanoLoanEngine.getDueTime(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#502)
+	- NanoLoanEngine.getDuesIn(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#503)
+	- NanoLoanEngine.getExpirationRequest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#510)
+	- NanoLoanEngine.getInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#511)
+	- NanoLoanEngine.getInterestRate(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#500)
+	- NanoLoanEngine.getInterestRatePunitory(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#501)
+	- NanoLoanEngine.getInterestTimestamp(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#498)
+	- NanoLoanEngine.getLenderBalance(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#507)
+	- NanoLoanEngine.getOracle(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#492)
+	- NanoLoanEngine.getPaid(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#499)
+	- NanoLoanEngine.getPunitoryInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#497)
+	- NanoLoanEngine.getRawPendingAmount(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#759-762)
+	- NanoLoanEngine.getStatus(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#506)
+	- NanoLoanEngine.getTotalLoans() (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#491)
+	- NanoLoanEngine.isApproved(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#520-523)
+	- NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#558-595)
+	- NanoLoanEngine.ownerOf(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#490)
+	- NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906)
+	- NanoLoanEngine.tokenMetadata(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#380-382)
+	- NanoLoanEngine.tokenMetadataHash(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#392-394)
+	- NanoLoanEngine.tokenOfOwnerByIndex(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#306-329)
+	- NanoLoanEngine.tokensOfOwner(address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#340-362)
+	- NanoLoanEngine.transfer(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#656-671)
+	- NanoLoanEngine.transferFrom(address,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#697-700)
+	- NanoLoanEngine.withdrawal(uint256,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#946-953)
+	- NanoLoanEngine.withdrawalList(uint256[],address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#996-1012)
+	- NanoLoanEngine.withdrawalRange(uint256,uint256,address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#967-983)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+NanoLoanEngine.VERSION (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#260) shadows:
+	- Engine.VERSION (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#4)
+NanoLoanEngine.VERSION_NAME (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#261) shadows:
+	- Engine.VERSION_NAME (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#5)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+NanoLoanEngine.internalAddInterest(NanoLoanEngine.Loan,uint256).newTimestamp (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#797) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+NanoLoanEngine.ownerOf(uint256).owner (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#490) shadows:
+	- Ownable.owner (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#113) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Ownable.transferTo(address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#129-133) should emit an event for: 
+	- owner = _to (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#131) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Variable 'Oracle.addCurrency(string).currency (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#176)' in Oracle.addCurrency(string) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#174-179) potentially used before declaration: NewSymbol(currency,ticker) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#175)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906):
+	External calls:
+	- transferValue = convertRate(loan.oracle,loan.currency,oracleData,toPay) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#898)
+		- (rate,decimals) = oracle.getRate(currency,data) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#922)
+	State variables written after the call(s):
+	- lockTokens(rcn,transferValue) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#901)
+		- lockedTokens[token] = safeAdd(lockedTokens[token],amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#232)
+Reentrancy in NanoLoanEngine.withdrawal(uint256,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#946-953):
+	External calls:
+	- require(bool)(rcn.transfer(to,amount)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#950)
+	State variables written after the call(s):
+	- unlockTokens(rcn,amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#951)
+		- lockedTokens[token] = safeSubtract(lockedTokens[token],amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#239)
+Reentrancy in NanoLoanEngine.withdrawalList(uint256[],address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#996-1012):
+	External calls:
+	- require(bool)(rcn.transfer(to,totalWithdraw)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#1008)
+	State variables written after the call(s):
+	- unlockTokens(rcn,totalWithdraw) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#1009)
+		- lockedTokens[token] = safeSubtract(lockedTokens[token],amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#239)
+Reentrancy in NanoLoanEngine.withdrawalRange(uint256,uint256,address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#967-983):
+	External calls:
+	- require(bool)(rcn.transfer(to,totalWithdraw)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#979)
+	State variables written after the call(s):
+	- unlockTokens(rcn,totalWithdraw) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#980)
+		- lockedTokens[token] = safeSubtract(lockedTokens[token],amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#239)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#558-595):
+	External calls:
+	- transferValue = convertRate(loan.oracle,loan.currency,oracleData,loan.amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#580)
+		- (rate,decimals) = oracle.getRate(currency,data) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#922)
+	- require(bool)(rcn.transferFrom(msg.sender,loan.borrower,transferValue)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#581)
+	- require(bool)(cosigner.requestCosign(this,index,cosignerData,oracleData)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#588)
+	Event emitted after the call(s):
+	- Lent(index,loan.lender,cosigner) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#592)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466-488) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(_expirationRequest > block.timestamp) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#476)
+NanoLoanEngine.approveLoan(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#535-541) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status == Status.initial) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#537)
+NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#558-595) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status == Status.initial) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#561)
+	- require(bool)(block.timestamp <= loan.expirationRequest) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#563)
+	- loan.cancelableAt > 0 (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#575)
+	- require(bool)(rcn.transferFrom(msg.sender,loan.borrower,transferValue)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#581)
+	- require(bool)(loan.cosigner == address(cosigner)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#589)
+NanoLoanEngine.cosign(uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#607-615) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status == Status.lent && (loan.dueTime - loan.duesIn) == block.timestamp) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#609)
+	- require(bool)(loan.cosigner != address(0)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#610)
+	- require(bool)(loan.cosigner == address(uint256(msg.sender) + 2)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#611)
+	- require(bool)(rcn.transferFrom(loan.lender,msg.sender,cost)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#613)
+NanoLoanEngine.destroy(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#628-643) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status != Status.destroyed) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#630)
+	- require(bool)(msg.sender == loan.lender || (msg.sender == loan.borrower && loan.status == Status.initial)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#631)
+NanoLoanEngine.transfer(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#656-671) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status != Status.destroyed && loan.status != Status.paid) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#659)
+	- require(bool)(msg.sender == loan.lender || msg.sender == loan.approvedTransfer || operators[loan.lender][msg.sender]) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#660)
+NanoLoanEngine.transferFrom(address,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#697-700) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loans[index].lender == from) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#698)
+NanoLoanEngine.approve(address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#715-721) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(msg.sender == loan.lender) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#717)
+NanoLoanEngine.calculateInterest(uint256,uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#774-782) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amount == 0 (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#775)
+NanoLoanEngine.internalAddInterest(NanoLoanEngine.Loan,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#792-837) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timestamp > loan.interestTimestamp (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#793)
+	- endNonPunitory > loan.interestTimestamp (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#805)
+	- timestamp > loan.dueTime (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#819)
+	- newInterest != loan.interest || newPunitoryInterest != loan.punitoryInterest (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#831)
+NanoLoanEngine.addInterest(uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#846-850) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status == Status.lent) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#848)
+NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(loan.status == Status.lent) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#881)
+	- getRawPendingAmount(index) == 0 (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#888)
+	- require(bool)(transferValue > 0 || toPay < _amount) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#899)
+	- require(bool)(rcn.transferFrom(msg.sender,this,transferValue)) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#902)
+NanoLoanEngine.convertRate(Oracle,bytes32,bytes,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#915-927) uses timestamp for comparisons
+	Dangerous comparisons:
+	- oracle == address(0) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#916)
+	- require(bool)(decimals <= RCN_DECIMALS) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#924)
+NanoLoanEngine.withdrawal(uint256,address,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#946-953) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(msg.sender == loan.lender) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#948)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.19 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.19 (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Variable Engine.VERSION (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#4) is not in mixedCase
+Variable Engine.VERSION_NAME (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#5) is not in mixedCase
+Parameter Ownable.transferTo(address)._to (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#129) is not in mixedCase
+Parameter NanoLoanEngine.balanceOf(address)._owner (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#292) is not in mixedCase
+Parameter NanoLoanEngine.tokenOfOwnerByIndex(address,uint256)._owner (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#306) is not in mixedCase
+Parameter NanoLoanEngine.tokenOfOwnerByIndex(address,uint256)._index (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#306) is not in mixedCase
+Parameter NanoLoanEngine.tokensOfOwner(address)._owner (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#340) is not in mixedCase
+Parameter NanoLoanEngine.isApprovedForAll(address,address)._owner (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#369) is not in mixedCase
+Parameter NanoLoanEngine.isApprovedForAll(address,address)._operator (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#369) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._oracleContract (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._borrower (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._currency (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._amount (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._interestRate (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._interestRatePunitory (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#467) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._duesIn (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#467) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._cancelableAt (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#467) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._expirationRequest (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#467) is not in mixedCase
+Parameter NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string)._metadata (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#467) is not in mixedCase
+Parameter NanoLoanEngine.getApprobation(uint256,address)._address (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#505) is not in mixedCase
+Parameter NanoLoanEngine.takeOwnership(uint256)._index (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#682) is not in mixedCase
+Parameter NanoLoanEngine.setApprovalForAll(address,bool)._operator (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#729) is not in mixedCase
+Parameter NanoLoanEngine.setApprovalForAll(address,bool)._approved (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#729) is not in mixedCase
+Parameter NanoLoanEngine.pay(uint256,uint256,address,bytes)._amount (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878) is not in mixedCase
+Parameter NanoLoanEngine.pay(uint256,uint256,address,bytes)._from (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878) is not in mixedCase
+Parameter NanoLoanEngine.setDeprecated(bool)._deprecated (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#1017) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+NanoLoanEngine.calculateInterest(uint256,uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#774-782) uses literals with too many digits:
+	- interest = safeMult(safeMult(100000,amount),timeDelta) / interestRate (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#779)
+NanoLoanEngine.calculateInterest(uint256,uint256,uint256) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#774-782) uses literals with too many digits:
+	- realDelta = safeMult(interest,interestRate) / (amount * 100000) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#780)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Oracle (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#142-187) does not implement functions:
+	- Oracle.getRate(bytes32,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#165)
+	- Oracle.url() (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#157)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+Engine.VERSION (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#4) should be constant 
+Engine.VERSION_NAME (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#5) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+cost(address,uint256,bytes,bytes) should be declared external:
+	- Cosigner.cost(address,uint256,bytes,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#61)
+requestCosign(Engine,uint256,bytes,bytes) should be declared external:
+	- Cosigner.requestCosign(Engine,uint256,bytes,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#70)
+claim(address,uint256,bytes) should be declared external:
+	- Cosigner.claim(address,uint256,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#78)
+getRate(bytes32,bytes) should be declared external:
+	- Oracle.getRate(bytes32,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#165)
+addCurrency(string) should be declared external:
+	- Oracle.addCurrency(string) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#174-179)
+createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string) should be declared external:
+	- NanoLoanEngine.createLoan(Oracle,address,bytes32,uint256,uint256,uint256,uint256,uint256,uint256,string) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#466-488)
+lend(uint256,bytes,Cosigner,bytes) should be declared external:
+	- NanoLoanEngine.lend(uint256,bytes,Cosigner,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#558-595)
+pay(uint256,uint256,address,bytes) should be declared external:
+	- NanoLoanEngine.pay(uint256,uint256,address,bytes) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#878-906)
+withdrawalList(uint256[],address) should be declared external:
+	- NanoLoanEngine.withdrawalList(uint256[],address) (../sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol#996-1012)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xba5a17c1af87193b1c2bb1d8e28b1f9ca80332fc.sol analyzed (9 contracts with 100 detectors), 78 result(s) found

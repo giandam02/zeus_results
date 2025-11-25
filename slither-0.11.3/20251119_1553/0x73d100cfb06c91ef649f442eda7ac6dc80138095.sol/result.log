@@ -1,0 +1,80 @@
+'solc --version' running
+'solc /sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol:
+/sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol:14:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+
+
+SafeERC20.safeTransferFrom(ERC20,address,address,uint256) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#171-180) uses arbitrary from in transferFrom: assert(bool)(token.transferFrom(from,to,value)) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#179)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+
+Reentrancy in Distribution.distribute() (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#211-222):
+	External calls:
+	- token.safeTransfer(beneficiary,amount) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#216)
+	State variables written after the call(s):
+	- amount = 0 (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#220)
+	Distribution.amount (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#195) can be used in cross function reentrancies:
+	- Distribution.amount (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#195)
+	- Distribution.distribute() (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#211-222)
+	- Distribution.finished() (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#238-240)
+	- Distribution.setReceivers(address[],uint256) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#202-209)
+	- delete receivers (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#221)
+	Distribution.receivers (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#193) can be used in cross function reentrancies:
+	- Distribution.distribute() (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#211-222)
+	- Distribution.receivers (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#193)
+	- Distribution.setReceivers(address[],uint256) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#202-209)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Claimable.transferOwnership(address) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#67-69) should emit an event for: 
+	- pendingOwner = newOwner (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#68) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Claimable.transferOwnership(address).newOwner (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#67) lacks a zero-check on :
+		- pendingOwner = newOwner (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#68)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in Distribution.batchDistribute(address[],uint256) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#224-236):
+	External calls:
+	- token.safeTransfer(beneficiary,batchAmount) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#233)
+	Event emitted after the call(s):
+	- Distributed(beneficiary,batchAmount) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#234)
+Reentrancy in Distribution.distribute() (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#211-222):
+	External calls:
+	- token.safeTransfer(beneficiary,amount) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#216)
+	Event emitted after the call(s):
+	- Distributed(beneficiary,amount) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#217)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Version constraint ^0.4.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput.
+It is used by:
+	- ^0.4.13 (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Distribution.setReceivers(address[],uint256)._receivers (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#202) is not in mixedCase
+Parameter Distribution.setReceivers(address[],uint256)._amount (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#202) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+addAddressesToWhitelist(address[]) should be declared external:
+	- Whitelist.addAddressesToWhitelist(address[]) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#114-120)
+removeAddressesFromWhitelist(address[]) should be declared external:
+	- Whitelist.removeAddressesFromWhitelist(address[]) (../sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol#142-148)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x73d100cfb06c91ef649f442eda7ac6dc80138095.sol analyzed (8 contracts with 100 detectors), 12 result(s) found

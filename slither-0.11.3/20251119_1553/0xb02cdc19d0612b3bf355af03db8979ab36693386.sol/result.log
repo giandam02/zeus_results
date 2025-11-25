@@ -1,0 +1,52 @@
+'solc --version' running
+'solc /sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+Version constraint ^0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- ^0.4.16 (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract tokenRecipient (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#3) is not in CapWords
+Function Hacienda.TokenERC20(uint256,string,string) (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#31-40) is not in mixedCase
+Parameter Hacienda.transfer(address,uint256)._to (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#71) is not in mixedCase
+Parameter Hacienda.transfer(address,uint256)._value (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#71) is not in mixedCase
+Parameter Hacienda.transferFrom(address,address,uint256)._from (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#85) is not in mixedCase
+Parameter Hacienda.transferFrom(address,address,uint256)._to (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#85) is not in mixedCase
+Parameter Hacienda.transferFrom(address,address,uint256)._value (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#85) is not in mixedCase
+Parameter Hacienda.approve(address,uint256)._spender (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#100) is not in mixedCase
+Parameter Hacienda.approve(address,uint256)._value (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#100) is not in mixedCase
+Parameter Hacienda.approveAndCall(address,uint256,bytes)._spender (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#116) is not in mixedCase
+Parameter Hacienda.approveAndCall(address,uint256,bytes)._value (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#116) is not in mixedCase
+Parameter Hacienda.approveAndCall(address,uint256,bytes)._extraData (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#116) is not in mixedCase
+Parameter Hacienda.burn(uint256)._value (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#133) is not in mixedCase
+Parameter Hacienda.burnFrom(address,uint256)._from (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#149) is not in mixedCase
+Parameter Hacienda.burnFrom(address,uint256)._value (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#149) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Hacienda.decimals (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#9) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+TokenERC20(uint256,string,string) should be declared external:
+	- Hacienda.TokenERC20(uint256,string,string) (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#31-40)
+approveAndCall(address,uint256,bytes) should be declared external:
+	- Hacienda.approveAndCall(address,uint256,bytes) (../sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol#116-124)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xb02cdc19d0612b3bf355af03db8979ab36693386.sol analyzed (2 contracts with 100 detectors), 20 result(s) found

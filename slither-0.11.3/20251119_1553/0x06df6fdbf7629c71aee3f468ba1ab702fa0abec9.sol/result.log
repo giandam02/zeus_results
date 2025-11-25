@@ -1,0 +1,294 @@
+'solc --version' running
+'solc /sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:235:5: Warning: Use of the "var" keyword is deprecated.
+    var manager = ManagerInterface(bbodServiceRegistry.registry(1));
+    ^---------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:328:5: Warning: Use of the "var" keyword is deprecated.
+    var manager = ManagerInterface(bbodServiceRegistry.registry(1));
+    ^---------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:555:1: Warning: Use of the "var" keyword is deprecated.
+var outboundFlow = uint(_flows[flowIndex]);
+^--------------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:615:1: Warning: Use of the "var" keyword is deprecated.
+var flowValue = ((uint(_flows[flowIndex]) * gweiBBDPriceInWei)/gwei);
+^-----------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:661:1: Warning: Use of the "var" keyword is deprecated.
+var bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei);
+^------------------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:129:5: Warning: No visibility specified. Defaulting to "public". 
+    constructor(address _owner) {
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:380:1: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+address _serviceRegistryAddress) public {
+^-----------------------------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:581:1: Warning: Unused local variable.
+uint postBatchBalance = address(this).balance;
+^-------------------^
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol:211:3: Warning: Function state mutability can be restricted to pure
+  function createCustody(address) external {}
+  ^-----------------------------------------^
+
+
+Manager.withdrawFromManager(uint256,address) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#481-484) sends eth to arbitrary user
+	Dangerous calls:
+	- _recipient.transfer(_amount) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#483)
+Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591) sends eth to arbitrary user
+	Dangerous calls:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	- feeAccount.transfer(_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#575)
+	- insuranceAccount.transfer(leftovers) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#586)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+
+Reentrancy in Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591):
+	External calls:
+	- Insurance(insuranceAccount).useInsurance(_insurance) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#542)
+	- require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#551)
+	- require(bool)(getTotalBalanceFor(_custodies[flowIndex]) >= outboundFlow) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#560)
+		- bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	- custody.withdraw(uint256(- _flows[flowIndex]),address(this)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#568)
+	External calls sending eth:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	State variables written after the call(s):
+	- custodiesServedETH[lastSettlementStartedTimestamp][_custodies[flowIndex]] = true (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#571)
+	Manager.custodiesServedETH (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#363) can be used in cross function reentrancies:
+	- Manager.checkIfCustodiesServedETH(address[]) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#666-673)
+	- Manager.custodiesServedETH (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#363)
+	- Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+Custody.transferToken(address,address,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#257-263) ignores return value by token.transfer(_recipient,_amount) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#262)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) ignores return value by bbdToken.transfer(_custodies[flowIndex],uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#626)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) ignores return value by bbdToken.transfer(feeAccount,_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#638)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+Reentrancy in Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648):
+	External calls:
+	- preBatchBalance = bbdToken.balanceOf(address(this)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#605)
+	- require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#612)
+	- require(bool)((getTotalBalanceFor(_custodies[flowIndex]) / 2) >= flowValue) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#623)
+		- bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	- bbdToken.transfer(_custodies[flowIndex],uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#626)
+	- custody.transferToken(address(bbdToken),address(this),uint256(- (_flows[flowIndex]))) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#631)
+	State variables written after the call(s):
+	- custodiesServedBBD[lastSettlementStartedTimestamp][_custodies[flowIndex]] = true (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#634)
+	Manager.custodiesServedBBD (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#364) can be used in cross function reentrancies:
+	- Manager.checkIfCustodiesServedBBD(address[]) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#675-682)
+	- Manager.custodiesServedBBD (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#364)
+	- Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+BBODServiceRegistry.constructor(address)._owner (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#129) lacks a zero-check on :
+		- owner = _owner (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#130)
+Manager.constructor(address,address,address,address,address)._feeAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#379) lacks a zero-check on :
+		- feeAccount = _feeAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#383)
+Manager.constructor(address,address,address,address,address)._insuranceAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#379) lacks a zero-check on :
+		- insuranceAccount = _insuranceAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#384)
+Manager.setCustodyFactory(address)._custodyFactory (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#391) lacks a zero-check on :
+		- custodyFactory = _custodyFactory (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#392)
+Manager.withdrawFromManager(uint256,address)._recipient (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#481) lacks a zero-check on :
+		- _recipient.transfer(_amount) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#483)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591) has external calls inside a loop: require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#551)
+Manager.getTotalBalanceFor(address) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#659-664) has external calls inside a loop: bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	Calls stack containing the loop:
+		Manager.settleETHBatch(address[],int256[],uint256,uint256)
+Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591) has external calls inside a loop: _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591) has external calls inside a loop: custody.withdraw(uint256(- _flows[flowIndex]),address(this)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#568)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) has external calls inside a loop: require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#612)
+Manager.getTotalBalanceFor(address) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#659-664) has external calls inside a loop: bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	Calls stack containing the loop:
+		Manager.settleBBDBatch(address[],int256[],uint256)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) has external calls inside a loop: bbdToken.transfer(_custodies[flowIndex],uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#626)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) has external calls inside a loop: custody.transferToken(address(bbdToken),address(this),uint256(- (_flows[flowIndex]))) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#631)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in CustodyStorage.addCustody(address) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#297-301):
+	External calls:
+	- onlyManager() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#297)
+		- require(bool)(msg.sender == bbodServiceRegistry.registry(1)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#293)
+	State variables written after the call(s):
+	- custodiesArray.push(_custody) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#299)
+	- custodiesMap[_custody] = true (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#298)
+	- custodyCounter ++ (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#300)
+Reentrancy in CustodyStorage.removeCustody(address,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#303-320):
+	External calls:
+	- onlyManager() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#303)
+		- require(bool)(msg.sender == bbodServiceRegistry.registry(1)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#293)
+	State variables written after the call(s):
+	- custodiesArray[_arrayIndex] = custodiesArray[custodyCounter - 1] (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#316)
+	- custodiesMap[_custodyAddress] = false (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#308)
+	- custodiesMap[_custodyAddress] = false (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#314)
+	- custodyCounter -- (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#310)
+	- custodyCounter -- (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#317)
+Reentrancy in Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648):
+	External calls:
+	- preBatchBalance = bbdToken.balanceOf(address(this)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#605)
+	- require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#612)
+	- require(bool)((getTotalBalanceFor(_custodies[flowIndex]) / 2) >= flowValue) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#623)
+		- bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	- bbdToken.transfer(_custodies[flowIndex],uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#626)
+	- custody.transferToken(address(bbdToken),address(this),uint256(- (_flows[flowIndex]))) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#631)
+	- bbdToken.transfer(feeAccount,_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#638)
+	State variables written after the call(s):
+	- totalFeeFlows += ((_fee * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#640)
+Reentrancy in Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591):
+	External calls:
+	- Insurance(insuranceAccount).useInsurance(_insurance) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#542)
+	- require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#551)
+	- require(bool)(getTotalBalanceFor(_custodies[flowIndex]) >= outboundFlow) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#560)
+		- bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	- custody.withdraw(uint256(- _flows[flowIndex]),address(this)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#568)
+	External calls sending eth:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	- feeAccount.transfer(_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#575)
+	State variables written after the call(s):
+	- totalFeeFlows = totalFeeFlows + _fee (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#576)
+Reentrancy in Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591):
+	External calls:
+	- Insurance(insuranceAccount).useInsurance(_insurance) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#542)
+	- require(bool)(custodyStorage.custodiesMap(_custodies[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#551)
+	- require(bool)(getTotalBalanceFor(_custodies[flowIndex]) >= outboundFlow) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#560)
+		- bbdHoldingsInWei = ((bbdToken.balanceOf(_custody) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#661)
+	- custody.withdraw(uint256(- _flows[flowIndex]),address(this)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#568)
+	External calls sending eth:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	- feeAccount.transfer(_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#575)
+	- insuranceAccount.transfer(leftovers) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#586)
+	State variables written after the call(s):
+	- totalInsuranceFlows += leftovers (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#587)
+Reentrancy in Manager.startSettlementPreparation() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#509-525):
+	External calls:
+	- startingFeeBalance = feeAccount.balance + ((bbdToken.balanceOf(feeAccount) * gweiBBDPriceInWei) / gwei) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#521-522)
+	State variables written after the call(s):
+	- startingInsuranceBalance = insuranceAccount.balance (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#524)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in CustodyStorage.removeCustody(address,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#303-320):
+	External calls:
+	- onlyManager() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#303)
+		- require(bool)(msg.sender == bbodServiceRegistry.registry(1)) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#293)
+	Event emitted after the call(s):
+	- CustodyRemoved(_custodyAddress) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#309)
+	- CustodyRemoved(_custodyAddress) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#319)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+Manager.isExchangeAlive() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#432-434) uses timestamp for comparisons
+	Dangerous comparisons:
+	- now - heartBeat < maxTimeIntervalHB (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#433)
+Manager.setBBDPrice(uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#448-466) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(now - lastTimePriceSet > 82800) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#463)
+Manager.startSettlementPreparation() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#509-525) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(now > earliestNextSettlementTimestamp,A settlement can happen once per day) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#511)
+Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(custodiesServedETH[lastSettlementStartedTimestamp][_custodies[flowIndex]] == false) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#548)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(custodiesServedBBD[lastSettlementStartedTimestamp][_custodies[flowIndex]] == false) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#610)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591) compares to a boolean constant:
+	-require(bool)(custodiesServedETH[lastSettlementStartedTimestamp][_custodies[flowIndex]] == false) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#548)
+Manager.settleBBDBatch(address[],int256[],uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599-648) compares to a boolean constant:
+	-require(bool)(custodiesServedBBD[lastSettlementStartedTimestamp][_custodies[flowIndex]] == false) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#610)
+Manager.onlyOwner() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#408-411) compares to a boolean constant:
+	-require(bool,string)(ownerAccountsMap[msg.sender] == true,Only an owner can perform this action) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#409)
+Manager.onlyExchange() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#413-416) compares to a boolean constant:
+	-require(bool,string)(exchangeAccountsMap[msg.sender] == true,Only an exchange can perform this action) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#414)
+Manager.onlyExchangeOrOwner() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#418-422) compares to a boolean constant:
+	-require(bool)(exchangeAccountsMap[msg.sender] == true || ownerAccountsMap[msg.sender] == true) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#419-420)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Ownable.transferOwnership(address)._newOwner (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#50) is not in mixedCase
+Parameter Custody.withdraw(uint256,address)._amount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#253) is not in mixedCase
+Parameter Custody.withdraw(uint256,address)._recipient (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#253) is not in mixedCase
+Parameter Custody.transferToken(address,address,uint256)._erc20Address (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#257) is not in mixedCase
+Parameter Custody.transferToken(address,address,uint256)._recipient (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#257) is not in mixedCase
+Parameter Custody.transferToken(address,address,uint256)._amount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#257) is not in mixedCase
+Parameter CustodyStorage.addCustody(address)._custody (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#297) is not in mixedCase
+Parameter CustodyStorage.removeCustody(address,uint256)._custodyAddress (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#303) is not in mixedCase
+Parameter CustodyStorage.removeCustody(address,uint256)._arrayIndex (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#303) is not in mixedCase
+Parameter Insurance.useInsurance(uint256)._amount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#327) is not in mixedCase
+Parameter Manager.setCustodyFactory(address)._custodyFactory (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#391) is not in mixedCase
+Parameter Manager.addOwnerAccount(address)._exchangeAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#436) is not in mixedCase
+Parameter Manager.addExchangeAccount(address)._exchangeAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#440) is not in mixedCase
+Parameter Manager.rmExchangeAccount(address)._exchangeAccount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#444) is not in mixedCase
+Parameter Manager.setBBDPrice(uint256)._priceInWei (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#448) is not in mixedCase
+Parameter Manager.createCustody(address)._custody (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#468) is not in mixedCase
+Parameter Manager.removeCustody(address,uint256)._custodyAddress (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#473) is not in mixedCase
+Parameter Manager.removeCustody(address,uint256)._arrayIndex (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#473) is not in mixedCase
+Parameter Manager.withdrawFromManager(uint256,address)._amount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#481) is not in mixedCase
+Parameter Manager.withdrawFromManager(uint256,address)._recipient (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#481) is not in mixedCase
+Parameter Manager.withdrawFromCustody(uint256,address,address)._amount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#489) is not in mixedCase
+Parameter Manager.withdrawFromCustody(uint256,address,address)._custodyAddress (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#489) is not in mixedCase
+Parameter Manager.withdrawFromCustody(uint256,address,address)._recipient (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#489) is not in mixedCase
+Parameter Manager.withdrawTokensFromCustody(address,uint256,address,address)._tokenAddress (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#499) is not in mixedCase
+Parameter Manager.withdrawTokensFromCustody(address,uint256,address,address)._amount (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#499) is not in mixedCase
+Parameter Manager.withdrawTokensFromCustody(address,uint256,address,address)._custodyAddress (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#499) is not in mixedCase
+Parameter Manager.withdrawTokensFromCustody(address,uint256,address,address)._recipient (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#499) is not in mixedCase
+Parameter Manager.settleETHBatch(address[],int256[],uint256,uint256)._custodies (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534) is not in mixedCase
+Parameter Manager.settleETHBatch(address[],int256[],uint256,uint256)._flows (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534) is not in mixedCase
+Parameter Manager.settleETHBatch(address[],int256[],uint256,uint256)._fee (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534) is not in mixedCase
+Parameter Manager.settleETHBatch(address[],int256[],uint256,uint256)._insurance (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534) is not in mixedCase
+Parameter Manager.settleBBDBatch(address[],int256[],uint256)._custodies (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599) is not in mixedCase
+Parameter Manager.settleBBDBatch(address[],int256[],uint256)._flows (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599) is not in mixedCase
+Parameter Manager.settleBBDBatch(address[],int256[],uint256)._fee (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#599) is not in mixedCase
+Parameter Manager.getTotalBalanceFor(address)._custody (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#659) is not in mixedCase
+Parameter Manager.checkIfCustodiesServedETH(address[])._custodies (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#666) is not in mixedCase
+Parameter Manager.checkIfCustodiesServedBBD(address[])._custodies (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#675) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591):
+	External calls:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	State variables written after the call(s):
+	- custodiesServedETH[lastSettlementStartedTimestamp][_custodies[flowIndex]] = true (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#571)
+Reentrancy in Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591):
+	External calls:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	- feeAccount.transfer(_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#575)
+	State variables written after the call(s):
+	- totalFeeFlows = totalFeeFlows + _fee (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#576)
+Reentrancy in Manager.settleETHBatch(address[],int256[],uint256,uint256) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#534-591):
+	External calls:
+	- _custodies[flowIndex].transfer(uint256(_flows[flowIndex])) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#563)
+	- feeAccount.transfer(_fee) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#575)
+	- insuranceAccount.transfer(leftovers) (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#586)
+	State variables written after the call(s):
+	- totalInsuranceFlows += leftovers (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#587)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Manager.slitherConstructorConstantVariables() (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#336-684) uses literals with too many digits:
+	- gwei = 1000000000 (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#374)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Manager.maxTimeIntervalHB (../sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol#376) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x06df6fdbf7629c71aee3f468ba1ab702fa0abec9.sol analyzed (11 contracts with 100 detectors), 81 result(s) found

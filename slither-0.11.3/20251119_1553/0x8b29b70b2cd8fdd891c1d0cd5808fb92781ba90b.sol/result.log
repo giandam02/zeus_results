@@ -1,0 +1,127 @@
+'solc --version' running
+'solc /sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:139:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onReinvestment(_customerAddress, _dividends, _tokens);
+        ^---------------------------------------------------^
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:170:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onWithdraw(_customerAddress, _dividends);
+        ^--------------------------------------^
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:199:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenSell(_customerAddress, _tokens, _taxedEthereum);
+        ^----------------------------------------------------^
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:221:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_customerAddress, _toAddress, _amountOfTokens);
+        ^-----------------------------------------------------^
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:239:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol:466:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenPurchase(_customerAddress, _incomingEthereum, _amountOfTokens, _referredBy);
+        ^--------------------------------------------------------------------------------^
+
+
+Jiggs.sell(uint256) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#174-200) performs a multiplication on the result of a division:
+	- _dividends = SafeMath.div(SafeMath.mul(_ethereum,exitFee_),100) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#181)
+	- profitPerShare_ = SafeMath.add(profitPerShare_,(_dividends * magnitude) / tokenSupply_) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#195)
+Jiggs.purchaseTokens(uint256,address) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#390-469) performs a multiplication on the result of a division:
+	- _undividedDividends = SafeMath.div(SafeMath.mul(_incomingEthereum,entryFee_),100) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#396)
+	- _referralBonus = SafeMath.div(SafeMath.mul(_undividedDividends,refferalFee_),100) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#397)
+Jiggs.purchaseTokens(uint256,address) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#390-469) performs a multiplication on the result of a division:
+	- _fee = _fee - (_fee - (_amountOfTokens * (_dividends * magnitude / (tokenSupply_)))) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#450)
+Jiggs.tokensToEthereum_(uint256) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#511-533) performs a multiplication on the result of a division:
+	- _etherReceived = (SafeMath.sub((((tokenPriceInitial_ + (tokenPriceIncremental_ * (_tokenSupply / 1e18))) - tokenPriceIncremental_) * (tokens_ - 1e18)),(tokenPriceIncremental_ * ((tokens_ ** 2 - tokens_) / 1e18)) / 2) / 1e18) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#519-531)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Jiggs.withdraw()._customerAddress (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#156) lacks a zero-check on :
+		- _customerAddress.transfer(_dividends) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#167)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Jiggs.purchaseTokens(uint256,address) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#390-469) compares to a boolean constant:
+	-isUser[_customerAddress] == false (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#435)
+Jiggs.purchaseTokens(uint256,address) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#390-469) compares to a boolean constant:
+	-isUser[_customerAddress] == false (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#424)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+
+Version constraint ^0.4.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.20 (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Event Jiggs.onTokenPurchase(address,uint256,uint256,address) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#33-38) is not in CapWords
+Event Jiggs.onTokenSell(address,uint256,uint256) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#40-44) is not in CapWords
+Event Jiggs.onReinvestment(address,uint256,uint256) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#46-50) is not in CapWords
+Event Jiggs.onWithdraw(address,uint256) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#52-55) is not in CapWords
+Parameter Jiggs.buy(address)._referredBy (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#103) is not in mixedCase
+Parameter Jiggs.sell(uint256)._amountOfTokens (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#174) is not in mixedCase
+Parameter Jiggs.transfer(address,uint256)._toAddress (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#204) is not in mixedCase
+Parameter Jiggs.transfer(address,uint256)._amountOfTokens (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#204) is not in mixedCase
+Parameter Jiggs.referralsOf(address)._customerAddress (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#265) is not in mixedCase
+Parameter Jiggs.myDividends(bool)._includeReferralBonus (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#287) is not in mixedCase
+Parameter Jiggs.balanceOf(address)._customerAddress (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#299) is not in mixedCase
+Parameter Jiggs.dividendsOf(address)._customerAddress (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#310) is not in mixedCase
+Parameter Jiggs.calculateTokensReceived(uint256)._ethereumToSpend (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#359) is not in mixedCase
+Parameter Jiggs.calculateEthereumReceived(uint256)._tokensToSell (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#374) is not in mixedCase
+Parameter Jiggs.purchaseTokens(uint256,address)._incomingEthereum (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#390) is not in mixedCase
+Parameter Jiggs.purchaseTokens(uint256,address)._referredBy (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#390) is not in mixedCase
+Parameter Jiggs.ethereumToTokens_(uint256)._ethereum (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#476) is not in mixedCase
+Parameter Jiggs.tokensToEthereum_(uint256)._tokens (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#511) is not in mixedCase
+Constant Jiggs.entryFee_ (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#70) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant Jiggs.refferalFee_ (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#71) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant Jiggs.exitFee_ (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#72) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant Jiggs.tokenPriceInitial_ (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#73) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant Jiggs.tokenPriceIncremental_ (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#74) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant Jiggs.magnitude (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#75) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in Jiggs.transfer(address,uint256) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#204-226):
+	External calls:
+	- withdraw() (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#210)
+		- _customerAddress.transfer(_dividends) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#167)
+	State variables written after the call(s):
+	- payoutsTo_[_customerAddress] -= int256(profitPerShare_ * _amountOfTokens) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#217)
+	- payoutsTo_[_toAddress] += int256(profitPerShare_ * _amountOfTokens) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#218)
+	- tokenBalanceLedger_[_customerAddress] = SafeMath.sub(tokenBalanceLedger_[_customerAddress],_amountOfTokens) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#213)
+	- tokenBalanceLedger_[_toAddress] = SafeMath.add(tokenBalanceLedger_[_toAddress],_amountOfTokens) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#214)
+	Event emitted after the call(s):
+	- Transfer(_customerAddress,_toAddress,_amountOfTokens) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#221)
+Reentrancy in Jiggs.withdraw() (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#154-171):
+	External calls:
+	- _customerAddress.transfer(_dividends) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#167)
+	Event emitted after the call(s):
+	- onWithdraw(_customerAddress,_dividends) (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#170)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Jiggs.slitherConstructorConstantVariables() (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#12-546) uses literals with too many digits:
+	- tokenPriceInitial_ = 1000000000 (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#73)
+Jiggs.slitherConstructorConstantVariables() (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#12-546) uses literals with too many digits:
+	- tokenPriceIncremental_ = 700000000 (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#74)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Jiggs.ambassadorAccumulatedQuota_ (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#92) is never used in Jiggs (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#12-546)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+Jiggs.name (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#67) should be constant 
+Jiggs.stakingRequirement (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#78) should be constant 
+Jiggs.symbol (../sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol#68) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x8b29b70b2cd8fdd891c1d0cd5808fb92781ba90b.sol analyzed (2 contracts with 100 detectors), 41 result(s) found

@@ -1,0 +1,44 @@
+'solc --version' running
+'solc /sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+MUTOCoin.owner (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#4) is never initialized. It is used in:
+	- MUTOCoin.killcontract() (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#33-36)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+MUTOCoin (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#3-38) has incorrect ERC20 function interface:MUTOCoin.transfer(address,uint256) (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#20-31)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-erc20-interface
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter MUTOCoin.transfer(address,uint256)._to (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#20) is not in mixedCase
+Parameter MUTOCoin.transfer(address,uint256)._value (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#20) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+MUTOCoin.constructor() (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#16-18) uses literals with too many digits:
+	- balanceOf[msg.sender] = 200000000000000000 (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#17)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+MUTOCoin.owner (../sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol#4) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0xe8430a65dec837d87c4f6c0184a7eb56860815e5.sol analyzed (1 contracts with 100 detectors), 8 result(s) found

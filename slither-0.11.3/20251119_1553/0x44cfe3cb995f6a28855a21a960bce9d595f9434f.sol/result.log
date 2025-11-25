@@ -1,0 +1,118 @@
+'solc --version' running
+'solc /sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol:
+/sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol:925:5: Warning: No visibility specified. Defaulting to "public". 
+    function() payable{
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+GeneralEthereumToken (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#698-935) contract sets array length with a user-controlled value:
+	- ownedTokens[_to].push(_tokenId) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#866)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+AddressUtils.isContract(address) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#77-88) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+Ownable.transferOwnership(address) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#660-662) should emit an event for: 
+	- pendingOwner = newOwner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#661) 
+Ownable.setManager(address) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#679-682) should emit an event for: 
+	- manager = _manager (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#681) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Ownable.transferOwnership(address).newOwner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#660) lacks a zero-check on :
+		- pendingOwner = newOwner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#661)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+AddressUtils.isContract(address) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#77-88) uses assembly
+	- INLINE ASM (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#86-87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+GeneralEthereumToken._setTokenURI(uint256,string) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#852-855) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter SupportsInterfaceWithLookup.supportsInterface(bytes4)._interfaceId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#256) is not in mixedCase
+Parameter ERC721BasicToken.balanceOf(address)._owner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#359) is not in mixedCase
+Parameter ERC721BasicToken.ownerOf(uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#370) is not in mixedCase
+Parameter ERC721BasicToken.exists(uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#382) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#396) is not in mixedCase
+Parameter ERC721BasicToken.approve(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#396) is not in mixedCase
+Parameter ERC721BasicToken.getApproved(uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#412) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#423) is not in mixedCase
+Parameter ERC721BasicToken.setApprovalForAll(address,bool)._approved (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#423) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._owner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#436) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedForAll(address,address)._operator (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#436) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._from (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#449) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#449) is not in mixedCase
+Parameter ERC721BasicToken.transferFrom(address,address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#449) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._from (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#474) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#474) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#474) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._from (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#492) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#492) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#492) is not in mixedCase
+Parameter ERC721BasicToken.safeTransferFrom(address,address,uint256,bytes)._data (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#492) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._spender (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#507) is not in mixedCase
+Parameter ERC721BasicToken.isApprovedOrOwner(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#508) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._owner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#545) is not in mixedCase
+Parameter ERC721BasicToken.clearApproval(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#545) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#559) is not in mixedCase
+Parameter ERC721BasicToken.addTokenTo(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#559) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._from (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#571) is not in mixedCase
+Parameter ERC721BasicToken.removeTokenFrom(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#571) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._from (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#588) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#589) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#590) is not in mixedCase
+Parameter ERC721BasicToken.checkAndCallSafeTransfer(address,address,uint256,bytes)._data (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#591) is not in mixedCase
+Constant ERC721BasicToken.InterfaceId_ERC721 (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#280) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant ERC721BasicToken.InterfaceId_ERC721Exists (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#295) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter Ownable.setManager(address)._manager (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#679) is not in mixedCase
+Parameter GeneralEthereumToken.mint(address)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#774) is not in mixedCase
+Parameter GeneralEthereumToken.arrayOfTokensByAddress(address)._holder (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#797) is not in mixedCase
+Parameter GeneralEthereumToken.tokenURI(uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#807) is not in mixedCase
+Parameter GeneralEthereumToken.tokenOfOwnerByIndex(address,uint256)._owner (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#819) is not in mixedCase
+Parameter GeneralEthereumToken.tokenOfOwnerByIndex(address,uint256)._index (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#819) is not in mixedCase
+Parameter GeneralEthereumToken.tokenByIndex(uint256)._index (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#840) is not in mixedCase
+Parameter GeneralEthereumToken.addTokenTo(address,uint256)._to (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#863) is not in mixedCase
+Parameter GeneralEthereumToken.addTokenTo(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#863) is not in mixedCase
+Parameter GeneralEthereumToken.removeTokenFrom(address,uint256)._from (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#876) is not in mixedCase
+Parameter GeneralEthereumToken.removeTokenFrom(address,uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#876) is not in mixedCase
+Parameter GeneralEthereumToken.addTokenData(uint256,string,string)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#910) is not in mixedCase
+Parameter GeneralEthereumToken.addTokenData(uint256,string,string)._information (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#910) is not in mixedCase
+Parameter GeneralEthereumToken.addTokenData(uint256,string,string)._URL (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#910) is not in mixedCase
+Parameter GeneralEthereumToken.getTokenData(uint256)._tokenId (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#919) is not in mixedCase
+Constant GeneralEthereumToken.InterfaceId_ERC721Enumerable (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#701) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant GeneralEthereumToken.InterfaceId_ERC721Metadata (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#710) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+GeneralEthereumToken.name_ (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#720) should be constant 
+GeneralEthereumToken.symbol_ (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#724) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+onERC721Received(address,uint256,bytes) should be declared external:
+	- ERC721Holder.onERC721Received(address,uint256,bytes) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#217-219)
+	- ERC721Receiver.onERC721Received(address,uint256,bytes) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#122)
+addTokenData(uint256,string,string) should be declared external:
+	- GeneralEthereumToken.addTokenData(uint256,string,string) (../sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol#910-917)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0x44cfe3cb995f6a28855a21a960bce9d595f9434f.sol analyzed (13 contracts with 100 detectors), 65 result(s) found

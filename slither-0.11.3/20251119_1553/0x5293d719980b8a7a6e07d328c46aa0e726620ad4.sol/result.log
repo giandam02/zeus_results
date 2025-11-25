@@ -1,0 +1,189 @@
+'solc --version' running
+'solc /sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol:
+/sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol:221:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function EthTeamContract(
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Reentrancy in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401):
+	External calls:
+	- op.totalSupply() > 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#355)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#364)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#367)
+	- op.totalSupply() > 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#373)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#381)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#384)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#391)
+	External calls sending eth:
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#359)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#363)
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#377)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#380)
+	State variables written after the call(s):
+	- endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#396)
+		- gameOpponent = address(0) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#408)
+	EthTeamContract.gameOpponent (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#215) can be used in cross function reentrancies:
+	- EthTeamContract.EthTeamContract(string,string,address,uint64,uint64,address) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#221-234)
+	- EthTeamContract.beginGame(address,uint64) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#317-325)
+	- EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401)
+	- EthTeamContract.endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#407-411)
+	- EthTeamContract.gameOpponent (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#215)
+	- EthTeamContract.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#420-426)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+
+EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) uses a dangerous strict equality:
+	- amount == opAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#383)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+EthTeamContract.EthTeamContract(string,string,address,uint64,uint64,address)._gameOpponent (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#222) lacks a zero-check on :
+		- gameOpponent = _gameOpponent (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#229)
+EthTeamContract.EthTeamContract(string,string,address,uint64,uint64,address)._feeOwner (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#222) lacks a zero-check on :
+		- feeOwner = _feeOwner (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#232)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Variable 'EthTeamContract.endGame(address,uint8).lostAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#353)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: lostAmount = amount.sub(opAmount).div(2) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#372)
+Variable 'EthTeamContract.endGame(address,uint8).lostAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#353)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: feeAmount = lostAmount.div(20) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#375)
+Variable 'EthTeamContract.endGame(address,uint8).feeAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#357)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: feeAmount = lostAmount.div(20) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#375)
+Variable 'EthTeamContract.endGame(address,uint8).lostAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#353)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: lostAmount = lostAmount.sub(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#376)
+Variable 'EthTeamContract.endGame(address,uint8).feeAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#357)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: lostAmount = lostAmount.sub(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#376)
+Variable 'EthTeamContract.endGame(address,uint8).feeAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#357)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#377)
+Variable 'EthTeamContract.endGame(address,uint8).lostAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#353)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+Variable 'EthTeamContract.endGame(address,uint8).lostAmount (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#353)' in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401) potentially used before declaration: feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#380)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#pre-declaration-usage-of-local-variables
+
+Reentrancy in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401):
+	External calls:
+	- op.totalSupply() > 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#355)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#364)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#367)
+	- op.totalSupply() > 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#373)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#381)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#384)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#391)
+	External calls sending eth:
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#359)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#363)
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#377)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#380)
+	State variables written after the call(s):
+	- endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#396)
+		- gameTime = 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#409)
+	- price = address(this).balance.div(totalSupply_) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#398)
+	- endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#396)
+		- status = 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#410)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+Reentrancy in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401):
+	External calls:
+	- op.totalSupply() > 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#355)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#364)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#367)
+	- op.totalSupply() > 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#373)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#381)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#384)
+	- op.transferFundAndEndGame() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#391)
+	External calls sending eth:
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#359)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#363)
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#377)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#380)
+	Event emitted after the call(s):
+	- EndGame(address(this),_gameOpponent,_gameResult) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#400)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+EthTeamContract.fallback() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#265-273) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(status == 0 && price > 0 && gameTime > block.timestamp) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#267)
+EthTeamContract.finish() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#305-308) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(block.timestamp >= finishTime) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#306)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Version constraint ^0.4.21 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.21 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter StandardToken.balanceOf(address)._owner (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#113) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#123) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#123) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256)._to (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#132) is not in mixedCase
+Parameter StandardToken.transfer(address,uint256)._value (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#132) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#149) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#149) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#149) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#171) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#171) is not in mixedCase
+Parameter EthTeamContract.transfer(address,uint256)._to (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#245) is not in mixedCase
+Parameter EthTeamContract.transfer(address,uint256)._value (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#245) is not in mixedCase
+Parameter EthTeamContract.changeStatus(uint8)._status (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#282) is not in mixedCase
+Parameter EthTeamContract.changeFeeOwner(address)._feeOwner (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#293) is not in mixedCase
+Parameter EthTeamContract.beginGame(address,uint64)._gameOpponent (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#317) is not in mixedCase
+Parameter EthTeamContract.beginGame(address,uint64)._gameTime (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#317) is not in mixedCase
+Parameter EthTeamContract.endGame(address,uint8)._gameOpponent (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344) is not in mixedCase
+Parameter EthTeamContract.endGame(address,uint8)._gameResult (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in EthTeamContract.endGame(address,uint8) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#344-401):
+	External calls:
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#359)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#363)
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#377)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#380)
+	External calls sending eth:
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#359)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#360)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#363)
+	- feeOwner.transfer(feeAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#377)
+	- op.transferFundAndEndGame.value(lostAmount)() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#378)
+	- feeOwner.transfer(lostAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#380)
+	State variables written after the call(s):
+	- endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#396)
+		- gameOpponent = address(0) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#408)
+	- endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#396)
+		- gameTime = 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#409)
+	- price = address(this).balance.div(totalSupply_) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#398)
+	- endGameInternal() (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#396)
+		- status = 0 (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#410)
+	Event emitted after the call(s):
+	- EndGame(address(this),_gameOpponent,_gameResult) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#400)
+Reentrancy in EthTeamContract.transfer(address,uint256) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#245-258):
+	External calls:
+	- msg.sender.transfer(weiAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#254)
+	Event emitted after the call(s):
+	- Sell(_to,msg.sender,_value,weiAmount) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#256)
+	- Transfer(msg.sender,_to,_value) (../sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol#255)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0x5293d719980b8a7a6e07d328c46aa0e726620ad4.sol analyzed (4 contracts with 100 detectors), 38 result(s) found

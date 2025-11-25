@@ -1,0 +1,71 @@
+'solc --version' running
+'solc /sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+TRITZIUM.refundTokens(address,address,uint256) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#355-361) ignores return value by token.transfer(_refund,_value) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#359)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+TRITZIUM.setOwner(address)._newOwner (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#315) lacks a zero-check on :
+		- owner = _newOwner (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#318)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Reentrancy in TRITZIUM.refundTokens(address,address,uint256) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#355-361):
+	External calls:
+	- token.transfer(_refund,_value) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#359)
+	Event emitted after the call(s):
+	- RefundTokens(_token,_refund,_value) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#360)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+
+SafeMath.mul(uint256,uint256) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#19-26) is never used and should be removed
+SafeMath.safeDiv(uint256,uint256) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#28-33) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+
+Version constraint ^0.4.25 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x.
+It is used by:
+	- ^0.4.25 (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter AbstractToken.balanceOf(address)._owner (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#87) is not in mixedCase
+Parameter AbstractToken.transfer(address,uint256)._to (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#100) is not in mixedCase
+Parameter AbstractToken.transfer(address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#100) is not in mixedCase
+Parameter AbstractToken.transferFrom(address,address,uint256)._from (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#122) is not in mixedCase
+Parameter AbstractToken.transferFrom(address,address,uint256)._to (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#122) is not in mixedCase
+Parameter AbstractToken.transferFrom(address,address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#122) is not in mixedCase
+Parameter AbstractToken.approve(address,uint256)._spender (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#143) is not in mixedCase
+Parameter AbstractToken.approve(address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#143) is not in mixedCase
+Parameter AbstractToken.allowance(address,address)._owner (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#160) is not in mixedCase
+Parameter AbstractToken.allowance(address,address)._spender (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#160) is not in mixedCase
+Parameter TRITZIUM.transfer(address,uint256)._to (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#241) is not in mixedCase
+Parameter TRITZIUM.transfer(address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#241) is not in mixedCase
+Parameter TRITZIUM.transferFrom(address,address,uint256)._from (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#256) is not in mixedCase
+Parameter TRITZIUM.transferFrom(address,address,uint256)._to (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#256) is not in mixedCase
+Parameter TRITZIUM.transferFrom(address,address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#256) is not in mixedCase
+Parameter TRITZIUM.approve(address,uint256)._spender (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#275) is not in mixedCase
+Parameter TRITZIUM.approve(address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#275) is not in mixedCase
+Parameter TRITZIUM.createTokens(uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#288) is not in mixedCase
+Parameter TRITZIUM.setOwner(address)._newOwner (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#315) is not in mixedCase
+Parameter TRITZIUM.refundTokens(address,address,uint256)._token (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#355) is not in mixedCase
+Parameter TRITZIUM.refundTokens(address,address,uint256)._refund (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#355) is not in mixedCase
+Parameter TRITZIUM.refundTokens(address,address,uint256)._value (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#355) is not in mixedCase
+Parameter TRITZIUM.freezeAccount(address,bool)._target (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#367) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+TRITZIUM.slitherConstructorConstantVariables() (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#183-398) uses literals with too many digits:
+	- MAX_TOKEN_COUNT = 500000000 * (10 ** 10) (../sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol#190)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+/sb/0xfa2063239f816ff75138f65bd79ef599280114a2.sol analyzed (4 contracts with 100 detectors), 31 result(s) found

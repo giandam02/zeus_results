@@ -1,0 +1,224 @@
+'solc --version' running
+'solc /sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol:
+/sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol:236:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol:95:57: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        return (_admin == owner || hasAttribute(_admin, keccak256(WRITE_PERMISSION ^ _attribute)));
+                                                        ^--------------------------------------^
+/sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol:95:57: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        return (_admin == owner || hasAttribute(_admin, keccak256(WRITE_PERMISSION ^ _attribute)));
+                                                        ^--------------------------------------^
+
+
+Registry (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#42-216) contract sets array length with a user-controlled value:
+	- subscribers[_attribute].push(_syncer) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#112)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#array-length-assignment
+
+Registry.reclaimToken(ERC20,address) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#179-182) ignores return value by token.transfer(_to,balance) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#181)
+ReclaimerToken.reclaimToken(ERC20,address) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#496-499) ignores return value by token.transfer(_to,balance) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#498)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+
+GasRefundToken.minimumGasPriceForRefund() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#806-812) is declared view but contains assembly code
+GasRefundToken.remainingGasRefundPool() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#853-857) is declared view but contains assembly code
+GasRefundToken.gasRefundPool(uint256) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#859-863) is declared view but contains assembly code
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#constant-functions-using-assembly-code
+
+DelegateERC20.delegateAllowance(address,address).owner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1165) shadows:
+	- ProxyStorage.owner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#394) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+
+Registry.transferOwnership(address) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#204-206) should emit an event for: 
+	- pendingOwner = newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#205) 
+Claimable.transferOwnership(address) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#282-284) should emit an event for: 
+	- pendingOwner = newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#283) 
+HasOwner.transferOwnership(address) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#468-470) should emit an event for: 
+	- pendingOwner = newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#469) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+Registry.reclaimEther(address)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#175) lacks a zero-check on :
+		- _to.transfer(address(this).balance) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#176)
+Registry.transferOwnership(address).newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#204) lacks a zero-check on :
+		- pendingOwner = newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#205)
+Claimable.transferOwnership(address).newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#282) lacks a zero-check on :
+		- pendingOwner = newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#283)
+HasOwner.transferOwnership(address).newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#468) lacks a zero-check on :
+		- pendingOwner = newOwner (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#469)
+ReclaimerToken.reclaimEther(address)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#488) lacks a zero-check on :
+		- _to.transfer(address(this).balance) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#489)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+
+Registry.setAttribute(address,bytes32,uint256,bytes32) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#99-109) has external calls inside a loop: targets[index].syncAttributeValue(_who,_attribute,_value) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#107)
+Registry.setAttributeValue(address,bytes32,uint256) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#128-137) has external calls inside a loop: targets[index].syncAttributeValue(_who,_attribute,_value) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#135)
+Registry.syncAttribute(bytes32,uint256,address[]) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#163-173) has external calls inside a loop: target.syncAttributeValue(who,_attribute,attributes[who][_attribute].value) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#170)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Reentrancy in GasRefundToken.setMinimumGasPriceForFutureRefunds(uint256) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#867-870):
+	External calls:
+	- require(bool)(registry.hasAttribute(msg.sender,CAN_SET_FUTURE_REFUND_MIN_GAS_PRICE)) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#868)
+	State variables written after the call(s):
+	- minimumGasPriceForFutureRefunds = _minimumGasPriceForFutureRefunds (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#869)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+
+GasRefundToken.sponsorGas2() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#726-759) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#747-759)
+GasRefundToken.gasRefund39() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#765-776) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#766-776)
+GasRefundToken.sponsorGas() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#778-804) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#781-804)
+GasRefundToken.minimumGasPriceForRefund() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#806-812) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#807-812)
+GasRefundToken.gasRefund30() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#818-831) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#819-831)
+GasRefundToken.gasRefund15() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#837-848) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#838-848)
+GasRefundToken.remainingGasRefundPool() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#853-857) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#854-857)
+GasRefundToken.gasRefundPool(uint256) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#859-863) uses assembly
+	- INLINE ASM (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#860-863)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+CompliantDepositTokenWithHook._transferFromAllArgs(address,address,uint256,address) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#945-995) has a high cyclomatic complexity (12).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+
+Version constraint ^0.4.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.23 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter Registry.confirmWrite(bytes32,address)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#94) is not in mixedCase
+Parameter Registry.confirmWrite(bytes32,address)._admin (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#94) is not in mixedCase
+Parameter Registry.setAttribute(address,bytes32,uint256,bytes32)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#99) is not in mixedCase
+Parameter Registry.setAttribute(address,bytes32,uint256,bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#99) is not in mixedCase
+Parameter Registry.setAttribute(address,bytes32,uint256,bytes32)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#99) is not in mixedCase
+Parameter Registry.setAttribute(address,bytes32,uint256,bytes32)._notes (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#99) is not in mixedCase
+Parameter Registry.subscribe(bytes32,RegistryClone)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#111) is not in mixedCase
+Parameter Registry.subscribe(bytes32,RegistryClone)._syncer (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#111) is not in mixedCase
+Parameter Registry.unsubscribe(bytes32,uint256)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#116) is not in mixedCase
+Parameter Registry.unsubscribe(bytes32,uint256)._index (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#116) is not in mixedCase
+Parameter Registry.subscriberCount(bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#124) is not in mixedCase
+Parameter Registry.setAttributeValue(address,bytes32,uint256)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#128) is not in mixedCase
+Parameter Registry.setAttributeValue(address,bytes32,uint256)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#128) is not in mixedCase
+Parameter Registry.setAttributeValue(address,bytes32,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#128) is not in mixedCase
+Parameter Registry.hasAttribute(address,bytes32)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#140) is not in mixedCase
+Parameter Registry.hasAttribute(address,bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#140) is not in mixedCase
+Parameter Registry.getAttribute(address,bytes32)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#146) is not in mixedCase
+Parameter Registry.getAttribute(address,bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#146) is not in mixedCase
+Parameter Registry.getAttributeValue(address,bytes32)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#151) is not in mixedCase
+Parameter Registry.getAttributeValue(address,bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#151) is not in mixedCase
+Parameter Registry.getAttributeAdminAddr(address,bytes32)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#155) is not in mixedCase
+Parameter Registry.getAttributeAdminAddr(address,bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#155) is not in mixedCase
+Parameter Registry.getAttributeTimestamp(address,bytes32)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#159) is not in mixedCase
+Parameter Registry.getAttributeTimestamp(address,bytes32)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#159) is not in mixedCase
+Parameter Registry.syncAttribute(bytes32,uint256,address[])._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#163) is not in mixedCase
+Parameter Registry.syncAttribute(bytes32,uint256,address[])._startIndex (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#163) is not in mixedCase
+Parameter Registry.syncAttribute(bytes32,uint256,address[])._addresses (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#163) is not in mixedCase
+Parameter Registry.reclaimEther(address)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#175) is not in mixedCase
+Parameter Registry.reclaimToken(ERC20,address)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#179) is not in mixedCase
+Parameter BalanceSheet.addBalance(address,uint256)._addr (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#352) is not in mixedCase
+Parameter BalanceSheet.addBalance(address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#352) is not in mixedCase
+Parameter BalanceSheet.subBalance(address,uint256)._addr (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#356) is not in mixedCase
+Parameter BalanceSheet.subBalance(address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#356) is not in mixedCase
+Parameter BalanceSheet.setBalance(address,uint256)._addr (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#360) is not in mixedCase
+Parameter BalanceSheet.setBalance(address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#360) is not in mixedCase
+Parameter AllowanceSheet.addAllowance(address,address,uint256)._tokenHolder (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#373) is not in mixedCase
+Parameter AllowanceSheet.addAllowance(address,address,uint256)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#373) is not in mixedCase
+Parameter AllowanceSheet.addAllowance(address,address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#373) is not in mixedCase
+Parameter AllowanceSheet.subAllowance(address,address,uint256)._tokenHolder (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#377) is not in mixedCase
+Parameter AllowanceSheet.subAllowance(address,address,uint256)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#377) is not in mixedCase
+Parameter AllowanceSheet.subAllowance(address,address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#377) is not in mixedCase
+Parameter AllowanceSheet.setAllowance(address,address,uint256)._tokenHolder (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#381) is not in mixedCase
+Parameter AllowanceSheet.setAllowance(address,address,uint256)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#381) is not in mixedCase
+Parameter AllowanceSheet.setAllowance(address,address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#381) is not in mixedCase
+Variable ProxyStorage.balances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#399) is not in mixedCase
+Variable ProxyStorage.allowances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#400) is not in mixedCase
+Variable ProxyStorage.paused_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#404) is not in mixedCase
+Variable ProxyStorage.globalPause_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#405) is not in mixedCase
+Variable ProxyStorage.name_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#412) is not in mixedCase
+Variable ProxyStorage.symbol_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#413) is not in mixedCase
+Variable ProxyStorage.gasRefundPool_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#415) is not in mixedCase
+Variable ProxyStorage.redemptionAddressCount_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#416) is not in mixedCase
+Parameter ReclaimerToken.reclaimEther(address)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#488) is not in mixedCase
+Parameter ReclaimerToken.reclaimToken(ERC20,address)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#496) is not in mixedCase
+Parameter ReclaimerToken.reclaimContract(Ownable)._ownable (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#504) is not in mixedCase
+Parameter ModularBasicToken.balanceOf(address)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#529) is not in mixedCase
+Parameter ModularStandardToken.approve(address,uint256)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#576) is not in mixedCase
+Parameter ModularStandardToken.approve(address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#576) is not in mixedCase
+Parameter ModularStandardToken.increaseApproval(address,uint256)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#596) is not in mixedCase
+Parameter ModularStandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#596) is not in mixedCase
+Parameter ModularStandardToken.decreaseApproval(address,uint256)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#616) is not in mixedCase
+Parameter ModularStandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#616) is not in mixedCase
+Parameter ModularStandardToken.allowance(address,address)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#633) is not in mixedCase
+Parameter ModularStandardToken.allowance(address,address)._spender (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#633) is not in mixedCase
+Parameter ModularBurnableToken.burn(uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#666) is not in mixedCase
+Parameter BurnableTokenWithBounds.setBurnBounds(uint256,uint256)._min (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#703) is not in mixedCase
+Parameter BurnableTokenWithBounds.setBurnBounds(uint256,uint256)._max (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#703) is not in mixedCase
+Parameter GasRefundToken.setMinimumGasPriceForFutureRefunds(uint256)._minimumGasPriceForFutureRefunds (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#867) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.transfer(address,uint256)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#889) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.transfer(address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#889) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.transferFrom(address,address,uint256)._from (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#900) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.transferFrom(address,address,uint256)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#900) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.transferFrom(address,address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#900) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.mint(address,uint256)._to (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1032) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.mint(address,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1032) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.setRegistry(Registry)._registry (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1060) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.syncAttributeValue(address,bytes32,uint256)._who (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1070) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.syncAttributeValue(address,bytes32,uint256)._attribute (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1070) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.syncAttributeValue(address,bytes32,uint256)._value (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1070) is not in mixedCase
+Parameter CompliantDepositTokenWithHook.wipeBlacklistedAccount(address)._account (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1080) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+DelegateERC20.slitherConstructorConstantVariables() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188) uses literals with too many digits:
+	- REDEMPTION_ADDRESS_COUNT = 0x100000 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#879)
+SGDC.initialize() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1207-1213) uses literals with too many digits:
+	- burnMax = 20000000 * 10 ** uint256(DECIMALS) (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1212)
+SGDC.slitherConstructorConstantVariables() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1196-1235) uses literals with too many digits:
+	- REDEMPTION_ADDRESS_COUNT = 0x100000 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#879)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188) does not implement functions:
+	- CompliantDepositTokenWithHook.canBurn() (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#882)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unimplemented-functions
+
+ProxyStorage.initialized (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#397) is never used in DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188)
+ProxyStorage.balances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#399) is never used in DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188)
+ProxyStorage.allowances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#400) is never used in DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188)
+ProxyStorage.name_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#412) is never used in DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188)
+ProxyStorage.symbol_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#413) is never used in DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188)
+ProxyStorage.gasRefundPool_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#415) is never used in DelegateERC20 (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1143-1188)
+ProxyStorage.balances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#399) is never used in SGDC (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1196-1235)
+ProxyStorage.allowances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#400) is never used in SGDC (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1196-1235)
+ProxyStorage.name_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#412) is never used in SGDC (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1196-1235)
+ProxyStorage.symbol_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#413) is never used in SGDC (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1196-1235)
+ProxyStorage.gasRefundPool_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#415) is never used in SGDC (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#1196-1235)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+
+ProxyStorage.allowances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#400) should be constant 
+ProxyStorage.balances_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#399) should be constant 
+ProxyStorage.globalPause_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#405) should be constant 
+ProxyStorage.initialized (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#397) should be constant 
+ProxyStorage.name_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#412) should be constant 
+ProxyStorage.paused_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#404) should be constant 
+ProxyStorage.redemptionAddressCount_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#416) should be constant 
+ProxyStorage.symbol_Deprecated (../sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol#413) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x7fc5ed4a2da6b217b3802c2015ee28da555a7c77.sol analyzed (21 contracts with 100 detectors), 133 result(s) found

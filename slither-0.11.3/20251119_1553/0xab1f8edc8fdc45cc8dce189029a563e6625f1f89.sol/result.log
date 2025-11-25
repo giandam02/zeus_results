@@ -1,0 +1,80 @@
+'solc --version' running
+'solc /sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+VortexProjectToken.totalSupply (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#79) shadows:
+	- ERC20Basic.totalSupply (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variable-shadowing-from-abstract-contracts
+
+VortexProjectToken.transferOwnership(address) (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#111-115) should emit an event for: 
+	- owner = newOwner (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#113) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+
+VortexProjectToken.doAirdrop(address,uint256) (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#133-149) has costly operations inside a loop:
+	- totalDistributed = totalDistributed.add(_amount) (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#140)
+	Calls stack containing the loop:
+		VortexProjectToken.adminClaimAirdropMultiple(address[],uint256)
+VortexProjectToken.doAirdrop(address,uint256) (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#133-149) has costly operations inside a loop:
+	- distributionFinished = true (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#143)
+	Calls stack containing the loop:
+		VortexProjectToken.adminClaimAirdropMultiple(address[],uint256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter VortexProjectToken.distr(address,uint256)._to (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#124) is not in mixedCase
+Parameter VortexProjectToken.distr(address,uint256)._amount (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#124) is not in mixedCase
+Parameter VortexProjectToken.doAirdrop(address,uint256)._participant (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#133) is not in mixedCase
+Parameter VortexProjectToken.doAirdrop(address,uint256)._amount (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#133) is not in mixedCase
+Parameter VortexProjectToken.adminClaimAirdrop(address,uint256)._participant (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#151) is not in mixedCase
+Parameter VortexProjectToken.adminClaimAirdrop(address,uint256)._amount (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#151) is not in mixedCase
+Parameter VortexProjectToken.adminClaimAirdropMultiple(address[],uint256)._addresses (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#155) is not in mixedCase
+Parameter VortexProjectToken.adminClaimAirdropMultiple(address[],uint256)._amount (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#155) is not in mixedCase
+Parameter VortexProjectToken.updateTokensPerEth(uint256)._tokensPerEth (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#159) is not in mixedCase
+Parameter VortexProjectToken.balanceOf(address)._owner (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#187) is not in mixedCase
+Parameter VortexProjectToken.transfer(address,uint256)._to (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#197) is not in mixedCase
+Parameter VortexProjectToken.transfer(address,uint256)._amount (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#197) is not in mixedCase
+Parameter VortexProjectToken.transferFrom(address,address,uint256)._from (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#208) is not in mixedCase
+Parameter VortexProjectToken.transferFrom(address,address,uint256)._to (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#208) is not in mixedCase
+Parameter VortexProjectToken.transferFrom(address,address,uint256)._amount (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#208) is not in mixedCase
+Parameter VortexProjectToken.approve(address,uint256)._spender (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#221) is not in mixedCase
+Parameter VortexProjectToken.approve(address,uint256)._value (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#221) is not in mixedCase
+Parameter VortexProjectToken.allowance(address,address)._owner (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#229) is not in mixedCase
+Parameter VortexProjectToken.allowance(address,address)._spender (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#229) is not in mixedCase
+Parameter VortexProjectToken.burn(uint256)._value (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#245) is not in mixedCase
+Parameter VortexProjectToken.withdrawAltcoinTokens(address)._tokenContract (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#255) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+VortexProjectToken.slitherConstructorVariables() (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#67-261) uses literals with too many digits:
+	- totalSupply = 10000000000e8 (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#79)
+VortexProjectToken.slitherConstructorVariables() (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#67-261) uses literals with too many digits:
+	- tokensPerEth = 30000000e8 (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#81)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+ERC20Basic.totalSupply (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#54) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+
+adminClaimAirdropMultiple(address[],uint256) should be declared external:
+	- VortexProjectToken.adminClaimAirdropMultiple(address[],uint256) (../sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol#155-157)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#public-function-that-could-be-declared-external
+/sb/0xab1f8edc8fdc45cc8dce189029a563e6625f1f89.sol analyzed (5 contracts with 100 detectors), 31 result(s) found

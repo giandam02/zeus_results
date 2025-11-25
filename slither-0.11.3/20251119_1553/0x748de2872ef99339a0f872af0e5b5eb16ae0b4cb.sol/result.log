@@ -1,0 +1,126 @@
+'solc --version' running
+'solc /sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+Compilation warnings/errors on /sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:54:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function Ownable() public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:296:3: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+  function CappedToken(uint256 _cap) public {
+  ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:420:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Token()
+    ^ (Relevant source part starts here and spans across multiple lines).
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:72:5: Warning: Invoking events without "emit" prefix is deprecated.
+    OwnershipTransferred(owner, newOwner);
+    ^-----------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:132:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:174:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:190:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:216:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:237:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+    ^-----------------------------------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:272:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Mint(_to, _amount);
+    ^----------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:273:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(address(0), _to, _amount);
+    ^--------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:283:5: Warning: Invoking events without "emit" prefix is deprecated.
+    MintFinished();
+    ^------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:337:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Burn(burner, _value);
+    ^------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:375:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Pause();
+    ^-----^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:383:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Unpause();
+    ^-------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:429:17: Warning: Invoking events without "emit" prefix is deprecated.
+                Transfer(address(0), msg.sender, premintAmount);
+                ^---------------------------------------------^
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol:434:17: Warning: This looks like an address but has an invalid checksum. If this is not used as an address, please prepend '00'. Correct checksummed address: '0x18e4477567f572c63413822215640f6251E57902'. For more information please see https://solidity.readthedocs.io/en/develop/types.html#address-literals
+        address(0x18e4477567f572c63413822215640f6251e57902).transfer(8000000000000000 wei);
+                ^----------------------------------------^
+
+
+BasicToken.totalSupply_ (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#111) is never initialized. It is used in:
+	- BasicToken.totalSupply() (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#116-118)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+Version constraint ^0.4.18 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData
+	- NestedArrayFunctionCallDecoder.
+It is used by:
+	- ^0.4.18 (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#1)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Parameter BasicToken.transfer(address,uint256)._to (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#125) is not in mixedCase
+Parameter BasicToken.transfer(address,uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#125) is not in mixedCase
+Parameter BasicToken.balanceOf(address)._owner (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#141) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._from (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#166) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._to (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#166) is not in mixedCase
+Parameter StandardToken.transferFrom(address,address,uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#166) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#188) is not in mixedCase
+Parameter StandardToken.approve(address,uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#188) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._owner (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#200) is not in mixedCase
+Parameter StandardToken.allowance(address,address)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#200) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#214) is not in mixedCase
+Parameter StandardToken.increaseApproval(address,uint256)._addedValue (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#214) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#230) is not in mixedCase
+Parameter StandardToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#230) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._to (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#269) is not in mixedCase
+Parameter MintableToken.mint(address,uint256)._amount (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#269) is not in mixedCase
+Parameter CappedToken.mint(address,uint256)._to (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#307) is not in mixedCase
+Parameter CappedToken.mint(address,uint256)._amount (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#307) is not in mixedCase
+Parameter BurnableToken.burn(uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#329) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._to (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#393) is not in mixedCase
+Parameter PausableToken.transfer(address,uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#393) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._from (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#397) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._to (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#397) is not in mixedCase
+Parameter PausableToken.transferFrom(address,address,uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#397) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#401) is not in mixedCase
+Parameter PausableToken.approve(address,uint256)._value (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#401) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#405) is not in mixedCase
+Parameter PausableToken.increaseApproval(address,uint256)._addedValue (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#405) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._spender (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#409) is not in mixedCase
+Parameter PausableToken.decreaseApproval(address,uint256)._subtractedValue (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#409) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Token.Token() (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#420-436) uses literals with too many digits:
+	- premintAmount = 1000000 * 10 ** uint256(decimals) (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#426)
+Token.Token() (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#420-436) uses literals with too many digits:
+	- address(0x0FCB1E60D071A61d73a9197CeA882bF2003faE17).transfer(2000000000000000) (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#433)
+Token.Token() (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#420-436) uses literals with too many digits:
+	- address(0x18e4477567f572c63413822215640f6251e57902).transfer(8000000000000000) (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#434)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+BasicToken.totalSupply_ (../sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol#111) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+/sb/0x748de2872ef99339a0f872af0e5b5eb16ae0b4cb.sol analyzed (12 contracts with 100 detectors), 37 result(s) found

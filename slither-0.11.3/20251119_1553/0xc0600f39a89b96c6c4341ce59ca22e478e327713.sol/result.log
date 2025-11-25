@@ -1,0 +1,51 @@
+'solc --version' running
+'solc /sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes,compact-format --allow-paths .,/sb' running
+
+ethx.fallback() (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#88-109) performs a multiplication on the result of a division:
+	- amount = invested[sender] * getPercent(sender) / 10000 * (block.number - atBlock[sender]) / 5900 (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#97)
+ethx.showUnpayedPercent(address) (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#128-131) performs a multiplication on the result of a division:
+	- amount = invested[_deposit] * getPercent(_deposit) / 10000 * (block.number - atBlock[_deposit]) / 5900 (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#129)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+
+Version constraint ^0.4.24 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ABIEncoderV2PackedStorage_0.4.x
+	- ExpExponentCleanup
+	- EventStructWrongData.
+It is used by:
+	- ^0.4.24 (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#41)
+solc-0.4.26 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+
+Contract ethx (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#43-135) is not in CapWords
+Parameter ethx.getPercent(address)._investor (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#64) is not in mixedCase
+Parameter ethx.showDeposit(address)._deposit (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#114) is not in mixedCase
+Parameter ethx.showLastChange(address)._deposit (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#121) is not in mixedCase
+Parameter ethx.showUnpayedPercent(address)._deposit (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#128) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+Reentrancy in ethx.fallback() (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#88-109):
+	External calls:
+	- owner1.transfer(invest / 10) (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#94)
+	- sender.transfer(amount) (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#100)
+	State variables written after the call(s):
+	- atBlock[sender] = block.number (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#104)
+	- invested[sender] += invest (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#105)
+	Event emitted after the call(s):
+	- Invested(sender,invest) (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#107)
+	- Withdraw(sender,amount) (../sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol#101)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+/sb/0xc0600f39a89b96c6c4341ce59ca22e478e327713.sol analyzed (1 contracts with 100 detectors), 10 result(s) found
