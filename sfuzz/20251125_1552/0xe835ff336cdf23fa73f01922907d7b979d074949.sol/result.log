@@ -1,0 +1,178 @@
+Extract contract SafeMath from /sb/0xe835ff336cdf23fa73f01922907d7b979d074949.sol
+Extract contract Veegotoken from /sb/0xe835ff336cdf23fa73f01922907d7b979d074949.sol
+Extracted 2 contract(s) from /sb/0xe835ff336cdf23fa73f01922907d7b979d074949.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SafeMath.sol:98:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Veegotoken (uint256 _value, uint256 _minReq) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:47:5: Warning: Functions in interfaces should be declared external.
+    function distr(address _to, uint256 _value) public returns (bool);
+    ^----------------------------------------------------------------^
+contracts/SafeMath.sol:48:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() constant public returns (uint256 supply);
+    ^--------------------------------------------------------------^
+contracts/SafeMath.sol:49:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner) constant public returns (uint256 balance);
+    ^---------------------------------------------------------------------------^
+contracts/SafeMath.sol:130:9: Warning: Invoking events without "emit" prefix is deprecated.
+        DistrFinished();
+        ^-------------^
+contracts/SafeMath.sol:138:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Distr(_to, _amount);
+        ^-----------------^
+contracts/SafeMath.sol:139:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0), _to, _amount);
+        ^--------------------------------^
+contracts/SafeMath.sol:235:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _amount);
+        ^--------------------------------^
+contracts/SafeMath.sol:248:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _amount);
+        ^---------------------------^
+contracts/SafeMath.sol:256:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+contracts/SafeMath.sol:271:32: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint256 etherBalance = this.balance;
+                               ^----------^
+contracts/SafeMath.sol:284:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(burner, _value);
+        ^------------------^
+contracts/Veegotoken.sol:98:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Veegotoken (uint256 _value, uint256 _minReq) public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Veegotoken.sol:47:5: Warning: Functions in interfaces should be declared external.
+    function distr(address _to, uint256 _value) public returns (bool);
+    ^----------------------------------------------------------------^
+contracts/Veegotoken.sol:48:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() constant public returns (uint256 supply);
+    ^--------------------------------------------------------------^
+contracts/Veegotoken.sol:49:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner) constant public returns (uint256 balance);
+    ^---------------------------------------------------------------------------^
+contracts/Veegotoken.sol:130:9: Warning: Invoking events without "emit" prefix is deprecated.
+        DistrFinished();
+        ^-------------^
+contracts/Veegotoken.sol:138:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Distr(_to, _amount);
+        ^-----------------^
+contracts/Veegotoken.sol:139:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(address(0), _to, _amount);
+        ^--------------------------------^
+contracts/Veegotoken.sol:235:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(msg.sender, _to, _amount);
+        ^--------------------------------^
+contracts/Veegotoken.sol:248:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _amount);
+        ^---------------------------^
+contracts/Veegotoken.sol:256:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Approval(msg.sender, _spender, _value);
+        ^------------------------------------^
+contracts/Veegotoken.sol:271:32: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        uint256 etherBalance = this.balance;
+                               ^----------^
+contracts/Veegotoken.sol:284:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Burn(burner, _value);
+        ^------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz SafeMath
+** Write stats: 0.001994
+** Write stats: 5.00009
+** Write stats: 10.0006
+** Write stats: 15.3446
+** Write stats: 20.0002
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0003
+** Write stats: 75.1856
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 90.0002
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 125
+** Write stats: 130
+** Write stats: 135
+** Write stats: 140
+** Write stats: 155
+** Write stats: 160
+** Write stats: 165
+** Write stats: 170
+** Write stats: 175
+** Write stats: 180
+** Write stats: 185
+** Write stats: 190
+** Write stats: 195
+** Write stats: 200
+** Write stats: 205
+** Write stats: 210
+** Write stats: 215
+** Write stats: 220
+** Write stats: 225
+** Write stats: 230
+** Write stats: 235
+** Write stats: 240
+** Write stats: 245
+** Write stats: 250
+** Write stats: 255
+** Write stats: 260
+** Write stats: 265
+** Write stats: 270
+** Write stats: 275
+** Write stats: 280
+** Write stats: 285
+** Write stats: 305
+** Write stats: 310
+** Write stats: 315
+** Write stats: 320
+** Write stats: 325
+** Write stats: 330
+** Write stats: 335
+** Write stats: 340
+** Write stats: 345
+** Write stats: 350
+** Write stats: 355
+** Write stats: 360.001
+** Write stats: 365
+** Write stats: 370
+** Write stats: 375
+** Write stats: 380
+** Write stats: 385
+** Write stats: 390
+** Write stats: 395
+** Write stats: 400
+** Write stats: 405
+** Write stats: 410
+** Write stats: 415
+** Write stats: 420
+** Write stats: 425
+** Write stats: 430
+** Write stats: 435
+** Write stats: 440
+** Write stats: 445
+** Write stats: 448.001
+>> Fuzz Veegotoken
+** Write stats: 0.034721
+** Write stats: 5.01619
+** Write stats: 14.3709

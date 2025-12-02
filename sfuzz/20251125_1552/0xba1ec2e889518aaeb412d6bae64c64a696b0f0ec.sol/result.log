@@ -1,0 +1,237 @@
+Extract contract SafeMath from /sb/0xba1ec2e889518aaeb412d6bae64c64a696b0f0ec.sol
+Extract contract Whales from /sb/0xba1ec2e889518aaeb412d6bae64c64a696b0f0ec.sol
+Extracted 2 contract(s) from /sb/0xba1ec2e889518aaeb412d6bae64c64a696b0f0ec.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/SafeMath.sol:152:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Whales()
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:210:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onReinvestment(_customerAddress, _dividends, _tokens);
+        ^---------------------------------------------------^
+contracts/SafeMath.sol:250:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onWithdraw(_customerAddress, _dividends);
+        ^--------------------------------------^
+contracts/SafeMath.sol:284:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenSell(_customerAddress, _tokens, _taxedEthereum);
+        ^----------------------------------------------------^
+contracts/SafeMath.sol:329:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_customerAddress, _toAddress, _taxedTokens);
+        ^--------------------------------------------------^
+contracts/SafeMath.sol:406:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+contracts/SafeMath.sol:608:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenPurchase(_customerAddress, _incomingEthereum, _amountOfTokens, _referredBy);
+        ^--------------------------------------------------------------------------------^
+contracts/Whales.sol:152:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function Whales()
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/Whales.sol:210:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onReinvestment(_customerAddress, _dividends, _tokens);
+        ^---------------------------------------------------^
+contracts/Whales.sol:250:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onWithdraw(_customerAddress, _dividends);
+        ^--------------------------------------^
+contracts/Whales.sol:284:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenSell(_customerAddress, _tokens, _taxedEthereum);
+        ^----------------------------------------------------^
+contracts/Whales.sol:329:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_customerAddress, _toAddress, _taxedTokens);
+        ^--------------------------------------------------^
+contracts/Whales.sol:406:16: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        return this.balance;
+               ^----------^
+contracts/Whales.sol:608:9: Warning: Invoking events without "emit" prefix is deprecated.
+        onTokenPurchase(_customerAddress, _incomingEthereum, _amountOfTokens, _referredBy);
+        ^--------------------------------------------------------------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz SafeMath
+** Write stats: 0.003131
+** Write stats: 5.00013
+** Write stats: 10.0002
+** Write stats: 15.0001
+** Write stats: 20.0002
+** Write stats: 25.0005
+** Write stats: 30.0004
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0001
+** Write stats: 50.0002
+** Write stats: 55.0001
+** Write stats: 60.0001
+** Write stats: 65.0001
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 80.0001
+** Write stats: 85.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 125
+** Write stats: 130
+** Write stats: 135
+** Write stats: 140
+** Write stats: 145
+** Write stats: 150
+** Write stats: 155
+** Write stats: 165.758
+** Write stats: 170
+** Write stats: 175
+** Write stats: 180
+** Write stats: 185
+** Write stats: 190
+** Write stats: 195
+** Write stats: 200
+** Write stats: 205
+** Write stats: 210
+** Write stats: 215
+** Write stats: 220
+** Write stats: 225
+** Write stats: 230
+** Write stats: 235
+** Write stats: 240
+** Write stats: 245
+** Write stats: 250
+** Write stats: 255
+** Write stats: 260
+** Write stats: 265
+** Write stats: 270
+** Write stats: 275
+** Write stats: 280
+** Write stats: 285
+** Write stats: 290
+** Write stats: 310.176
+** Write stats: 315
+** Write stats: 320
+** Write stats: 325
+** Write stats: 330
+** Write stats: 335
+** Write stats: 340
+** Write stats: 345
+** Write stats: 350
+** Write stats: 355
+** Write stats: 360
+** Write stats: 365
+** Write stats: 370
+** Write stats: 375
+** Write stats: 380
+** Write stats: 385
+** Write stats: 390
+** Write stats: 395
+** Write stats: 400
+** Write stats: 405
+** Write stats: 410
+** Write stats: 415
+** Write stats: 420
+** Write stats: 425
+** Write stats: 430
+** Write stats: 435
+** Write stats: 440
+** Write stats: 445
+** Write stats: 448.001
+>> Fuzz Whales
+** Write stats: 0.030757
+** Write stats: 5.00177
+** Write stats: 10.0026
+** Write stats: 15.0025
+** Write stats: 20.0006
+** Write stats: 25.002
+** Write stats: 30.0011
+** Write stats: 35.0073
+** Write stats: 40.0127
+** Write stats: 45.0027
+** Write stats: 50.0005
+** Write stats: 55.0311
+** Write stats: 60.0071
+** Write stats: 65.0261
+** Write stats: 70.0048
+** Write stats: 75.0013
+** Write stats: 80.0116
+** Write stats: 85.0064
+** Write stats: 90.0314
+** Write stats: 95.0217
+** Write stats: 100.044
+** Write stats: 105.049
+** Write stats: 110.005
+** Write stats: 115.002
+** Write stats: 120.011
+** Write stats: 125.16
+** Write stats: 130.014
+** Write stats: 135.042
+** Write stats: 140.019
+** Write stats: 145.031
+** Write stats: 150.026
+** Write stats: 155.013
+** Write stats: 160.048
+** Write stats: 165.047
+** Write stats: 170.044
+** Write stats: 175.005
+** Write stats: 180.009
+** Write stats: 185.006
+** Write stats: 190.098
+** Write stats: 195.097
+** Write stats: 200.023
+** Write stats: 205.072
+** Write stats: 210.082
+** Write stats: 215.048
+** Write stats: 220.009
+** Write stats: 225.021
+** Write stats: 230.031
+** Write stats: 235.001
+** Write stats: 240.007
+** Write stats: 245.048
+** Write stats: 250.042
+** Write stats: 255.001
+** Write stats: 260.042
+** Write stats: 265.006
+** Write stats: 270.044
+** Write stats: 275.023
+** Write stats: 280.035
+** Write stats: 285.047
+** Write stats: 290.002
+** Write stats: 295.003
+** Write stats: 300.054
+** Write stats: 305.013
+** Write stats: 310.012
+** Write stats: 315.029
+** Write stats: 320.035
+** Write stats: 325.028
+** Write stats: 330.028
+** Write stats: 335.023
+** Write stats: 340.011
+** Write stats: 345.045
+** Write stats: 350.04
+** Write stats: 355.05
+** Write stats: 360.002
+** Write stats: 365.025
+** Write stats: 370.011
+** Write stats: 375.03
+** Write stats: 380.043
+** Write stats: 385.027
+** Write stats: 390.012
+** Write stats: 395.022
+** Write stats: 400.032
+** Write stats: 405.021
+** Write stats: 410.049
+** Write stats: 415.026
+** Write stats: 420.043
+** Write stats: 425.032
+** Write stats: 430.028
+** Write stats: 435.038
+** Write stats: 440.041
+** Write stats: 445.016
+** Write stats: 448.137

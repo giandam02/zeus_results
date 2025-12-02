@@ -1,0 +1,283 @@
+Extract contract ElPetro from /sb/0x50f3801515a3a378aaa1e5db30d71ad17bd66a1f.sol
+Extracted 1 contract(s) from /sb/0x50f3801515a3a378aaa1e5db30d71ad17bd66a1f.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ElPetro.sol:39:15: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+              throw;
+              ^---^
+contracts/ElPetro.sol:44:7: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+      function ElPetro() {
+      ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:5:46: Warning: This declaration shadows an existing declaration.
+    function totalSupply() constant returns (uint256 totalSupply) ;
+                                             ^-----------------^
+contracts/ElPetro.sol:5:5: The shadowed declaration is here:
+    function totalSupply() constant returns (uint256 totalSupply) ;
+    ^-------------------------------------------------------------^
+
+contracts/ElPetro.sol:49:48: Warning: This declaration shadows an existing declaration.
+      function totalSupply() constant returns (uint256 totalSupply) {
+                                               ^-----------------^
+contracts/ElPetro.sol:49:7: The shadowed declaration is here:
+      function totalSupply() constant returns (uint256 totalSupply) {
+      ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/ElPetro.sol:5:5: Warning: Functions in interfaces should be declared external.
+    function totalSupply() constant returns (uint256 totalSupply) ;
+    ^-------------------------------------------------------------^
+contracts/ElPetro.sol:7:5: Warning: Functions in interfaces should be declared external.
+    function balanceOf(address _owner) constant returns (uint256 balance);
+    ^--------------------------------------------------------------------^
+contracts/ElPetro.sol:9:5: Warning: Functions in interfaces should be declared external.
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+contracts/ElPetro.sol:11:5: Warning: Functions in interfaces should be declared external.
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+contracts/ElPetro.sol:13:5: Warning: Functions in interfaces should be declared external.
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+contracts/ElPetro.sol:15:5: Warning: Functions in interfaces should be declared external.
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+    ^----------------------------------------------------------------------------------------^
+contracts/ElPetro.sol:63:15: Warning: Invoking events without "emit" prefix is deprecated.
+              Transfer(msg.sender, _to, _amount);
+              ^--------------------------------^
+contracts/ElPetro.sol:82:14: Warning: Invoking events without "emit" prefix is deprecated.
+             Transfer(_from, _to, _amount);
+             ^---------------------------^
+contracts/ElPetro.sol:91:10: Warning: Invoking events without "emit" prefix is deprecated.
+         Approval(msg.sender, _spender, _amount);
+         ^-------------------------------------^
+contracts/ElPetro.sol:5:5: Warning: No visibility specified. Defaulting to "public". In interfaces it defaults to external.
+    function totalSupply() constant returns (uint256 totalSupply) ;
+    ^-------------------------------------------------------------^
+contracts/ElPetro.sol:7:5: Warning: No visibility specified. Defaulting to "public". In interfaces it defaults to external.
+    function balanceOf(address _owner) constant returns (uint256 balance);
+    ^--------------------------------------------------------------------^
+contracts/ElPetro.sol:9:5: Warning: No visibility specified. Defaulting to "public". In interfaces it defaults to external.
+    function transfer(address _to, uint256 _value) returns (bool success);
+    ^--------------------------------------------------------------------^
+contracts/ElPetro.sol:11:5: Warning: No visibility specified. Defaulting to "public". In interfaces it defaults to external.
+    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
+    ^---------------------------------------------------------------------------------------^
+contracts/ElPetro.sol:13:5: Warning: No visibility specified. Defaulting to "public". In interfaces it defaults to external.
+    function approve(address _spender, uint256 _value) returns (bool success);
+    ^------------------------------------------------------------------------^
+contracts/ElPetro.sol:15:5: Warning: No visibility specified. Defaulting to "public". In interfaces it defaults to external.
+    function allowance(address _owner, address _spender) constant returns (uint256 remaining);
+    ^----------------------------------------------------------------------------------------^
+contracts/ElPetro.sol:44:7: Warning: No visibility specified. Defaulting to "public". 
+      function ElPetro() {
+      ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:49:7: Warning: No visibility specified. Defaulting to "public". 
+      function totalSupply() constant returns (uint256 totalSupply) {
+      ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:53:7: Warning: No visibility specified. Defaulting to "public". 
+      function balanceOf(address _owner) constant returns (uint256 balance) {
+      ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:57:7: Warning: No visibility specified. Defaulting to "public". 
+      function transfer(address _to, uint256 _amount) returns (bool success) {
+      ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:70:7: Warning: No visibility specified. Defaulting to "public". 
+      function transferFrom(
+      ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:89:6: Warning: No visibility specified. Defaulting to "public". 
+     function approve(address _spender, uint256 _amount) returns (bool success) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+contracts/ElPetro.sol:95:6: Warning: No visibility specified. Defaulting to "public". 
+     function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+     ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz ElPetro
+** Write stats: 0.006868
+** Write stats: 5.00074
+** Write stats: 10.0028
+** Write stats: 15.003
+** Write stats: 20.0004
+** Write stats: 25.0003
+** Write stats: 30.0052
+** Write stats: 35.0064
+** Write stats: 40.0058
+** Write stats: 45.0057
+** Write stats: 50.0061
+** Write stats: 55.0082
+** Write stats: 60.0097
+** Write stats: 65.0106
+** Write stats: 70.0065
+** Write stats: 75.0048
+** Write stats: 80.0012
+** Write stats: 85.0114
+** Write stats: 90.0122
+** Write stats: 95.0055
+** Write stats: 100.013
+** Write stats: 105.003
+** Write stats: 110.011
+** Write stats: 115.009
+** Write stats: 120.01
+** Write stats: 125.01
+** Write stats: 130.001
+** Write stats: 135.003
+** Write stats: 140.012
+** Write stats: 145.009
+** Write stats: 150.009
+** Write stats: 155.016
+** Write stats: 160.011
+** Write stats: 165.006
+** Write stats: 170.004
+** Write stats: 175.019
+** Write stats: 180.017
+** Write stats: 185.014
+** Write stats: 190.016
+** Write stats: 195.023
+** Write stats: 200.005
+** Write stats: 205.016
+** Write stats: 210.017
+** Write stats: 215.014
+** Write stats: 220.016
+** Write stats: 225.006
+** Write stats: 230.016
+** Write stats: 235.008
+** Write stats: 240
+** Write stats: 245.021
+** Write stats: 250.009
+** Write stats: 255.016
+** Write stats: 260.007
+** Write stats: 265.016
+** Write stats: 270.005
+** Write stats: 275.02
+** Write stats: 280.013
+** Write stats: 285.021
+** Write stats: 290.01
+** Write stats: 295.012
+** Write stats: 300.013
+** Write stats: 305.016
+** Write stats: 310.009
+** Write stats: 315.018
+** Write stats: 320.021
+** Write stats: 325.004
+** Write stats: 330.002
+** Write stats: 335.015
+** Write stats: 340.016
+** Write stats: 345.004
+** Write stats: 350.013
+** Write stats: 355.018
+** Write stats: 360.015
+** Write stats: 365.006
+** Write stats: 370.01
+** Write stats: 375.012
+** Write stats: 380.003
+** Write stats: 385.009
+** Write stats: 390.008
+** Write stats: 395.016
+** Write stats: 400.006
+** Write stats: 405.019
+** Write stats: 410.015
+** Write stats: 415.016
+** Write stats: 420.007
+** Write stats: 425.003
+** Write stats: 430.017
+** Write stats: 435.002
+** Write stats: 440.017
+** Write stats: 445.018
+** Write stats: 450.018
+** Write stats: 455.012
+** Write stats: 460.009
+** Write stats: 465.019
+** Write stats: 470.008
+** Write stats: 475.021
+** Write stats: 480.02
+** Write stats: 485.022
+** Write stats: 490.02
+** Write stats: 495.008
+** Write stats: 500.019
+** Write stats: 505.005
+** Write stats: 510.017
+** Write stats: 515.015
+** Write stats: 520.002
+** Write stats: 525.006
+** Write stats: 530.005
+** Write stats: 535.012
+** Write stats: 540.002
+** Write stats: 545.017
+** Write stats: 550.002
+** Write stats: 555.009
+** Write stats: 560.003
+** Write stats: 565.004
+** Write stats: 570.013
+** Write stats: 575.009
+** Write stats: 580.007
+** Write stats: 585.005
+** Write stats: 590.02
+** Write stats: 595.023
+** Write stats: 600
+** Write stats: 605.004
+** Write stats: 610.009
+** Write stats: 615.003
+** Write stats: 620.009
+** Write stats: 625.016
+** Write stats: 630.021
+** Write stats: 635.01
+** Write stats: 640.007
+** Write stats: 645.015
+** Write stats: 650.015
+** Write stats: 655.017
+** Write stats: 660.002
+** Write stats: 665.008
+** Write stats: 670.019
+** Write stats: 675.015
+** Write stats: 680.004
+** Write stats: 685
+** Write stats: 690.02
+** Write stats: 695.013
+** Write stats: 700.014
+** Write stats: 705.021
+** Write stats: 710.014
+** Write stats: 715.001
+** Write stats: 720.011
+** Write stats: 725.022
+** Write stats: 730.012
+** Write stats: 735.019
+** Write stats: 740.005
+** Write stats: 745.013
+** Write stats: 750.018
+** Write stats: 755.011
+** Write stats: 760.017
+** Write stats: 765.008
+** Write stats: 770.005
+** Write stats: 775.022
+** Write stats: 780.018
+** Write stats: 785.006
+** Write stats: 790.021
+** Write stats: 795.01
+** Write stats: 800.007
+** Write stats: 805.005
+** Write stats: 810.022
+** Write stats: 815.001
+** Write stats: 820.007
+** Write stats: 825
+** Write stats: 830.021
+** Write stats: 835.015
+** Write stats: 840.004
+** Write stats: 845.013
+** Write stats: 850.001
+** Write stats: 855.006
+** Write stats: 860.018
+** Write stats: 865.017
+** Write stats: 870.02
+** Write stats: 875.007
+** Write stats: 880.004
+** Write stats: 885.019
+** Write stats: 890.018
+** Write stats: 895.01
+** Write stats: 898.023

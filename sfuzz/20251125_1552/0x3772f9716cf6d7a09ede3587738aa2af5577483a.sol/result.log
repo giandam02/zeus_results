@@ -1,0 +1,1647 @@
+Extract contract ExchangeRates from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract ExternStateToken from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract FeePool from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract LimitedSetup from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract Owned from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract Proxy from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract Proxyable from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract ReentrancyPreventer from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract SafeDecimalMath from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract SafeMath from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract SelfDestructible from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract State from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract Synth from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract Synthetix from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract SynthetixEscrow from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract SynthetixState from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract TokenFallbackCaller from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extract contract TokenState from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+Extracted 18 contract(s) from /sb/0x3772f9716cf6d7a09ede3587738aa2af5577483a.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/ReentrancyPreventer.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/ReentrancyPreventer.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/ReentrancyPreventer.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/ReentrancyPreventer.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ReentrancyPreventer.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ReentrancyPreventer.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ReentrancyPreventer.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ReentrancyPreventer.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ReentrancyPreventer.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ReentrancyPreventer.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ReentrancyPreventer.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ReentrancyPreventer.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ReentrancyPreventer.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/ReentrancyPreventer.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/ReentrancyPreventer.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ReentrancyPreventer.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/ReentrancyPreventer.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ReentrancyPreventer.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ReentrancyPreventer.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/ReentrancyPreventer.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/ReentrancyPreventer.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/ReentrancyPreventer.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ReentrancyPreventer.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ReentrancyPreventer.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ReentrancyPreventer.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/LimitedSetup.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/LimitedSetup.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/LimitedSetup.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/LimitedSetup.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/LimitedSetup.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/LimitedSetup.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/LimitedSetup.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/LimitedSetup.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/LimitedSetup.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/LimitedSetup.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/LimitedSetup.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/LimitedSetup.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/LimitedSetup.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/LimitedSetup.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/LimitedSetup.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/LimitedSetup.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/LimitedSetup.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/LimitedSetup.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/LimitedSetup.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/LimitedSetup.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/LimitedSetup.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/LimitedSetup.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/LimitedSetup.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/LimitedSetup.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/LimitedSetup.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/TokenState.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/TokenState.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/TokenState.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/TokenState.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenState.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenState.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenState.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenState.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenState.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenState.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenState.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenState.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenState.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/TokenState.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/TokenState.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/TokenState.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/TokenState.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/TokenState.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/TokenState.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/TokenState.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/TokenState.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/TokenState.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenState.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenState.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenState.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/SafeMath.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/SafeMath.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/SafeMath.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/SafeMath.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeMath.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeMath.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeMath.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeMath.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeMath.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeMath.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SafeMath.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SafeMath.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SafeMath.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/SafeMath.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SafeMath.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SafeMath.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/SafeMath.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/SafeMath.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/SafeMath.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeMath.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeMath.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/FeePool.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/FeePool.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/FeePool.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/FeePool.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/FeePool.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/FeePool.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/FeePool.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/FeePool.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/FeePool.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/FeePool.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/FeePool.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/FeePool.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/FeePool.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/FeePool.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/FeePool.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/FeePool.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/FeePool.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/FeePool.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/FeePool.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/FeePool.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/FeePool.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/FeePool.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/FeePool.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/FeePool.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/FeePool.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/Proxyable.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/Proxyable.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Proxyable.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/Proxyable.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxyable.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxyable.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxyable.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxyable.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxyable.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxyable.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxyable.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxyable.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxyable.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Proxyable.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Proxyable.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Proxyable.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/Proxyable.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Proxyable.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Proxyable.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/Proxyable.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/Proxyable.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/Proxyable.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxyable.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxyable.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxyable.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/State.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/State.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/State.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/State.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/State.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/State.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/State.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/State.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/State.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/State.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/State.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/State.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/State.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/State.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/State.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/State.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/State.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/State.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/State.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/State.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/State.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/State.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/State.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/State.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/State.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/SelfDestructible.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/SelfDestructible.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/SelfDestructible.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/SelfDestructible.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SelfDestructible.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SelfDestructible.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SelfDestructible.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SelfDestructible.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SelfDestructible.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SelfDestructible.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SelfDestructible.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SelfDestructible.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SelfDestructible.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SelfDestructible.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SelfDestructible.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SelfDestructible.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/SelfDestructible.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SelfDestructible.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SelfDestructible.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/SelfDestructible.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/SelfDestructible.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/SelfDestructible.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SelfDestructible.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SelfDestructible.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SelfDestructible.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/ExchangeRates.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/ExchangeRates.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/ExchangeRates.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/ExchangeRates.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExchangeRates.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExchangeRates.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExchangeRates.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExchangeRates.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExchangeRates.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExchangeRates.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExchangeRates.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExchangeRates.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExchangeRates.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/ExchangeRates.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/ExchangeRates.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ExchangeRates.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/ExchangeRates.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ExchangeRates.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ExchangeRates.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/ExchangeRates.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/ExchangeRates.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/ExchangeRates.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExchangeRates.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExchangeRates.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExchangeRates.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/SafeDecimalMath.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/SafeDecimalMath.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/SafeDecimalMath.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/SafeDecimalMath.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeDecimalMath.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeDecimalMath.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeDecimalMath.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeDecimalMath.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeDecimalMath.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeDecimalMath.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeDecimalMath.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeDecimalMath.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeDecimalMath.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SafeDecimalMath.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SafeDecimalMath.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SafeDecimalMath.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/SafeDecimalMath.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SafeDecimalMath.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SafeDecimalMath.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/SafeDecimalMath.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/SafeDecimalMath.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/SafeDecimalMath.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeDecimalMath.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SafeDecimalMath.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SafeDecimalMath.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/Owned.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/Owned.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Owned.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/Owned.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Owned.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Owned.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Owned.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Owned.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Owned.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Owned.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Owned.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Owned.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Owned.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/Owned.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Owned.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Owned.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/Owned.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/Owned.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/Owned.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Owned.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Owned.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Owned.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/SynthetixEscrow.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/SynthetixEscrow.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/SynthetixEscrow.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/SynthetixEscrow.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixEscrow.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixEscrow.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixEscrow.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixEscrow.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixEscrow.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixEscrow.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixEscrow.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixEscrow.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixEscrow.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SynthetixEscrow.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SynthetixEscrow.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SynthetixEscrow.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/SynthetixEscrow.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SynthetixEscrow.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SynthetixEscrow.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/SynthetixEscrow.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/SynthetixEscrow.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/SynthetixEscrow.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixEscrow.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixEscrow.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixEscrow.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/Proxy.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/Proxy.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Proxy.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/Proxy.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxy.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxy.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxy.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxy.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxy.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxy.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxy.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxy.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxy.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Proxy.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Proxy.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Proxy.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/Proxy.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Proxy.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Proxy.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/Proxy.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/Proxy.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/Proxy.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Proxy.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Proxy.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Proxy.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/SynthetixState.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/SynthetixState.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/SynthetixState.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/SynthetixState.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixState.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixState.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixState.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixState.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixState.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixState.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixState.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixState.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixState.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SynthetixState.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/SynthetixState.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SynthetixState.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/SynthetixState.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SynthetixState.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/SynthetixState.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/SynthetixState.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/SynthetixState.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/SynthetixState.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/SynthetixState.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/SynthetixState.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/SynthetixState.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/TokenFallbackCaller.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/TokenFallbackCaller.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/TokenFallbackCaller.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/TokenFallbackCaller.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenFallbackCaller.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenFallbackCaller.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenFallbackCaller.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenFallbackCaller.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenFallbackCaller.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenFallbackCaller.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenFallbackCaller.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenFallbackCaller.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenFallbackCaller.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/TokenFallbackCaller.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/TokenFallbackCaller.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/TokenFallbackCaller.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/TokenFallbackCaller.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/TokenFallbackCaller.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/TokenFallbackCaller.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/TokenFallbackCaller.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/TokenFallbackCaller.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/TokenFallbackCaller.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/TokenFallbackCaller.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/TokenFallbackCaller.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/TokenFallbackCaller.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/Synthetix.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/Synthetix.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Synthetix.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/Synthetix.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synthetix.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synthetix.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synthetix.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synthetix.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synthetix.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synthetix.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synthetix.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synthetix.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synthetix.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Synthetix.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Synthetix.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Synthetix.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/Synthetix.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Synthetix.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Synthetix.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/Synthetix.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/Synthetix.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/Synthetix.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synthetix.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synthetix.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synthetix.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/Synth.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/Synth.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/Synth.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/Synth.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synth.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synth.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synth.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synth.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synth.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synth.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synth.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synth.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synth.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Synth.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/Synth.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Synth.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/Synth.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Synth.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/Synth.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/Synth.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/Synth.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/Synth.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/Synth.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/Synth.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/Synth.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+contracts/ExternStateToken.sol:3521:9: Warning: This declaration shadows an existing declaration.
+        bytes4[] memory availableCurrencyKeys = new bytes4[](availableSynths.length);
+        ^-----------------------------------^
+contracts/ExternStateToken.sol:3516:5: The shadowed declaration is here:
+    function availableCurrencyKeys()
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+contracts/ExternStateToken.sol:996:13: Warning: Return value of low-level calls not used.
+            recipient.call(abi.encodeWithSignature("tokenFallback(address,uint256,bytes)", sender, amount, data));
+            ^---------------------------------------------------------------------------------------------------^
+contracts/ExternStateToken.sol:1034:1: Warning: Base constructor arguments given twice.
+contract ExternStateToken is SelfDestructible, Proxyable, TokenFallbackCaller {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExternStateToken.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExternStateToken.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExternStateToken.sol:1231:1: Warning: Base constructor arguments given twice.
+contract Synth is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExternStateToken.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExternStateToken.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExternStateToken.sol:1585:1: Warning: Base constructor arguments given twice.
+contract FeePool is Proxyable, SelfDestructible {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExternStateToken.sol:265:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExternStateToken.sol:352:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExternStateToken.sol:1596:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_TRANSFER_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/ExternStateToken.sol:1602:50: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant public MAX_EXCHANGE_FEE_RATE = SafeDecimalMath.unit() / 10;
+                                                 ^-------------------------^
+contracts/ExternStateToken.sol:1644:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_PERCENT = (20 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ExternStateToken.sol:1645:41: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant TWENTY_FIVE_PERCENT = (25 * SafeDecimalMath.unit()) / 100;
+                                        ^---------------------------------^
+contracts/ExternStateToken.sol:1646:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant THIRTY_PERCENT = (30 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ExternStateToken.sol:1647:36: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FOURTY_PERCENT = (40 * SafeDecimalMath.unit()) / 100;
+                                   ^---------------------------------^
+contracts/ExternStateToken.sol:1648:35: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant FIFTY_PERCENT = (50 * SafeDecimalMath.unit()) / 100;
+                                  ^---------------------------------^
+contracts/ExternStateToken.sol:1649:42: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SEVENTY_FIVE_PERCENT = (75 * SafeDecimalMath.unit()) / 100;
+                                         ^---------------------------------^
+contracts/ExternStateToken.sol:2626:40: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant MAX_ISSUANCE_RATIO = SafeDecimalMath.unit();
+                                       ^--------------------^
+contracts/ExternStateToken.sol:3310:1: Warning: Base constructor arguments given twice.
+contract Synthetix is ExternStateToken {
+^ (Relevant source part starts here and spans across multiple lines).
+contracts/ExternStateToken.sol:352:9: First constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+contracts/ExternStateToken.sol:265:9: Second constructor call is here: 
+        Owned(_owner)
+        ^-----------^
+
+contracts/ExternStateToken.sol:3323:38: Warning: Initial value for constant variable has to be compile-time constant. This will fail to compile with the next breaking version change.
+    uint constant SYNTHETIX_SUPPLY = 1e8 * SafeDecimalMath.unit();
+                                     ^--------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz ReentrancyPreventer
+** Write stats: 0.00291
+** Write stats: 5.00006
+** Write stats: 10.031
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 48.0004
+>> Fuzz LimitedSetup
+** Write stats: 0.002459
+** Write stats: 5.00007
+** Write stats: 10.0019
+** Write stats: 15.0006
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 48.0021
+>> Fuzz TokenState
+** Write stats: 0.008855
+** Write stats: 5.00025
+** Write stats: 10.0002
+** Write stats: 15.0003
+** Write stats: 20.0006
+** Write stats: 25.0003
+** Write stats: 30.013
+** Write stats: 35.0007
+** Write stats: 40.0002
+** Write stats: 45.0006
+** Write stats: 48.0177
+>> Fuzz SafeMath
+** Write stats: 0.002022
+** Write stats: 5.00006
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0002
+** Write stats: 30.0002
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 48.0003
+>> Fuzz FeePool
+./fuzzMe: line 26:    59 Segmentation fault      (core dumped) ./fuzzer --file contracts/FeePool.sol.json --name FeePool --assets assets/ --duration 48 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+>> Fuzz Proxyable
+** Write stats: 0.0062
+** Write stats: 5.00626
+** Write stats: 10.0005
+** Write stats: 15.0006
+** Write stats: 20.0155
+** Write stats: 25.0003
+** Write stats: 30.0005
+** Write stats: 35.0003
+** Write stats: 40.0007
+** Write stats: 45.0003
+** Write stats: 48.0398
+>> Fuzz State
+** Write stats: 0.005584
+** Write stats: 5.00359
+** Write stats: 10.0002
+** Write stats: 15.0038
+** Write stats: 20.0004
+** Write stats: 25.0004
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0003
+** Write stats: 45.0001
+** Write stats: 48.0067
+>> Fuzz SelfDestructible
+** Write stats: 0.005481
+** Write stats: 5.00029
+** Write stats: 10.0002
+** Write stats: 15.0045
+** Write stats: 20.0002
+** Write stats: 25.0008
+** Write stats: 30.0005
+** Write stats: 35.0007
+** Write stats: 40.0005
+** Write stats: 45.0007
+** Write stats: 48.0007
+>> Fuzz ExchangeRates
+./fuzzMe: line 30:    63 Segmentation fault      (core dumped) ./fuzzer --file contracts/ExchangeRates.sol.json --name ExchangeRates --assets assets/ --duration 48 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+>> Fuzz SafeDecimalMath
+** Write stats: 0.002474
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.323
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 48.0002
+>> Fuzz Owned
+** Write stats: 0.004403
+** Write stats: 5.00008
+** Write stats: 10.0002
+** Write stats: 15.0003
+** Write stats: 20.0003
+** Write stats: 25.0002
+** Write stats: 30.0003
+** Write stats: 35.0001
+** Write stats: 40.0003
+** Write stats: 45.0002
+** Write stats: 48.0169
+>> Fuzz SynthetixEscrow
+** Write stats: 0.012238
+** Write stats: 5.01016
+** Write stats: 10.0072
+** Write stats: 15.0149
+** Write stats: 20.0162
+** Write stats: 25.0264
+** Write stats: 30.0027
+** Write stats: 35.0209
+** Write stats: 40.0189
+** Write stats: 45.0181
+** Write stats: 48.3293
+>> Fuzz Proxy
+** Write stats: 0.009989
+** Write stats: 5.00024
+** Write stats: 10.0002
+** Write stats: 15.0002
+** Write stats: 20.0001
+** Write stats: 25.0007
+** Write stats: 30.0004
+** Write stats: 35.0177
+** Write stats: 40.0001
+** Write stats: 45.0002
+** Write stats: 48.0256
+>> Fuzz SynthetixState
+./fuzzMe: line 35:    68 Segmentation fault      (core dumped) ./fuzzer --file contracts/SynthetixState.sol.json --name SynthetixState --assets assets/ --duration 48 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+>> Fuzz TokenFallbackCaller
+** Write stats: 0.001752
+** Write stats: 5.00007
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0001
+** Write stats: 45.0001
+** Write stats: 48.0005
+>> Fuzz Synthetix
+./fuzzMe: line 37:    70 Segmentation fault      (core dumped) ./fuzzer --file contracts/Synthetix.sol.json --name Synthetix --assets assets/ --duration 48 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+>> Fuzz Synth
+** Write stats: 0.040032
+** Write stats: 5.00092
+** Write stats: 10.0011
+** Write stats: 15.0005
+** Write stats: 20.0005
+** Write stats: 25.0004
+** Write stats: 30.0013
+** Write stats: 35.0004
+** Write stats: 40.001
+** Write stats: 45.0018
+** Write stats: 48.02
+>> Fuzz ExternStateToken
+** Write stats: 0.013552
+** Write stats: 5.00032
+** Write stats: 10.0002
+** Write stats: 15.0003
+** Write stats: 20.0015
+** Write stats: 25.0006
+** Write stats: 30.0007
+** Write stats: 35.0003
+** Write stats: 40.0002
+** Write stats: 45.0004
+** Write stats: 48.0101

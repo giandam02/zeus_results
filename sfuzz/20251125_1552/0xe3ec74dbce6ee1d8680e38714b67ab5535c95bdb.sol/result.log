@@ -1,0 +1,220 @@
+Extract contract try_it from /sb/0xe3ec74dbce6ee1d8680e38714b67ab5535c95bdb.sol
+Extracted 1 contract(s) from /sb/0xe3ec74dbce6ee1d8680e38714b67ab5535c95bdb.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/try_it.sol:9:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if(responseHash == keccak256(_response) && msg.value > 1 ether)
+                           ^------------------^
+contracts/try_it.sol:9:28: Warning: The provided argument of type string calldata is not implicitly convertible to expected type bytes memory.
+        if(responseHash == keccak256(_response) && msg.value > 1 ether)
+                           ^------------------^
+contracts/try_it.sol:11:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+            msg.sender.transfer(this.balance);
+                                ^----------^
+contracts/try_it.sol:24:12: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+        if(keccak256(_questionerPin)==questionerPin) 
+           ^-----------------------^
+contracts/try_it.sol:24:12: Warning: The provided argument of type bytes32 is not implicitly convertible to expected type bytes memory.
+        if(keccak256(_questionerPin)==questionerPin) 
+           ^-----------------------^
+contracts/try_it.sol:26:28: Warning: This function only accepts a single "bytes" argument. Please use "abi.encodePacked(...)" or a similar function to encode the data.
+            responseHash = keccak256(_response);
+                           ^------------------^
+contracts/try_it.sol:26:28: Warning: The provided argument of type string memory is not implicitly convertible to expected type bytes memory.
+            responseHash = keccak256(_response);
+                           ^------------------^
+contracts/try_it.sol:35:29: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        msg.sender.transfer(this.balance);
+                            ^----------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz try_it
+** Write stats: 0.009253
+** Write stats: 5.00015
+** Write stats: 10.0005
+** Write stats: 15.0002
+** Write stats: 20.0003
+** Write stats: 25.0002
+** Write stats: 30.0002
+** Write stats: 35.0005
+** Write stats: 40.0002
+** Write stats: 45.0192
+** Write stats: 50.0002
+** Write stats: 55.0005
+** Write stats: 60.0009
+** Write stats: 65.0004
+** Write stats: 70.0015
+** Write stats: 75.0004
+** Write stats: 80.0004
+** Write stats: 85.0138
+** Write stats: 90.0054
+** Write stats: 95.018
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110.001
+** Write stats: 115.001
+** Write stats: 120.002
+** Write stats: 125.001
+** Write stats: 130.008
+** Write stats: 135.03
+** Write stats: 140.001
+** Write stats: 145
+** Write stats: 150
+** Write stats: 155.015
+** Write stats: 160.001
+** Write stats: 165.05
+** Write stats: 170.037
+** Write stats: 175
+** Write stats: 180.051
+** Write stats: 185.001
+** Write stats: 190.029
+** Write stats: 195
+** Write stats: 200.022
+** Write stats: 205
+** Write stats: 210.027
+** Write stats: 215.001
+** Write stats: 220
+** Write stats: 225
+** Write stats: 230.019
+** Write stats: 235
+** Write stats: 240
+** Write stats: 245.044
+** Write stats: 250.014
+** Write stats: 255
+** Write stats: 260
+** Write stats: 265
+** Write stats: 270.039
+** Write stats: 275.001
+** Write stats: 280.023
+** Write stats: 285.054
+** Write stats: 290.04
+** Write stats: 295.044
+** Write stats: 300
+** Write stats: 305.023
+** Write stats: 310.001
+** Write stats: 315.001
+** Write stats: 320
+** Write stats: 325
+** Write stats: 330.027
+** Write stats: 335.001
+** Write stats: 340
+** Write stats: 345
+** Write stats: 350.018
+** Write stats: 355.006
+** Write stats: 360.011
+** Write stats: 365
+** Write stats: 370
+** Write stats: 375
+** Write stats: 380
+** Write stats: 385.051
+** Write stats: 390.057
+** Write stats: 395.012
+** Write stats: 400.001
+** Write stats: 405.002
+** Write stats: 410.059
+** Write stats: 415
+** Write stats: 420.022
+** Write stats: 425
+** Write stats: 430.002
+** Write stats: 435.119
+** Write stats: 440.002
+** Write stats: 445.093
+** Write stats: 450.06
+** Write stats: 455
+** Write stats: 460
+** Write stats: 465
+** Write stats: 470
+** Write stats: 475
+** Write stats: 480.046
+** Write stats: 485.053
+** Write stats: 490.014
+** Write stats: 495.061
+** Write stats: 500
+** Write stats: 505
+** Write stats: 510.032
+** Write stats: 520
+** Write stats: 525.051
+** Write stats: 530.008
+** Write stats: 535
+** Write stats: 540.001
+** Write stats: 545.043
+** Write stats: 550.017
+** Write stats: 555
+** Write stats: 560.02
+** Write stats: 565
+** Write stats: 570.015
+** Write stats: 575.001
+** Write stats: 580.15
+** Write stats: 585.029
+** Write stats: 590.056
+** Write stats: 595.019
+** Write stats: 600.001
+** Write stats: 605.001
+** Write stats: 610
+** Write stats: 615
+** Write stats: 620.001
+** Write stats: 625.003
+** Write stats: 630.155
+** Write stats: 635.001
+** Write stats: 640.022
+** Write stats: 645.001
+** Write stats: 650.108
+** Write stats: 655.001
+** Write stats: 660.001
+** Write stats: 665.068
+** Write stats: 670
+** Write stats: 675.147
+** Write stats: 680.054
+** Write stats: 685.033
+** Write stats: 690.026
+** Write stats: 695.001
+** Write stats: 700.001
+** Write stats: 705.001
+** Write stats: 710.036
+** Write stats: 715.017
+** Write stats: 720.011
+** Write stats: 725.001
+** Write stats: 730.034
+** Write stats: 735.016
+** Write stats: 740.057
+** Write stats: 745.002
+** Write stats: 750
+** Write stats: 755.006
+** Write stats: 760
+** Write stats: 765.001
+** Write stats: 770.062
+** Write stats: 775
+** Write stats: 780.104
+** Write stats: 785.031
+** Write stats: 790.047
+** Write stats: 795.023
+** Write stats: 800.03
+** Write stats: 805.004
+** Write stats: 810.018
+** Write stats: 815.07
+** Write stats: 820.001
+** Write stats: 825.002
+** Write stats: 830.043
+** Write stats: 835.032
+** Write stats: 840.008
+** Write stats: 845
+** Write stats: 850.036
+** Write stats: 855.009
+** Write stats: 860.001
+** Write stats: 865.032
+** Write stats: 870.019
+** Write stats: 875
+** Write stats: 880
+** Write stats: 885
+** Write stats: 890.033
+** Write stats: 895.051
+** Write stats: 898.081

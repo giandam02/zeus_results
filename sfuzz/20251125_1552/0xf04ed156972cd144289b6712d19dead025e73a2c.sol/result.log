@@ -1,0 +1,215 @@
+Extract contract FUS from /sb/0xf04ed156972cd144289b6712d19dead025e73a2c.sol
+Extract contract owned from /sb/0xf04ed156972cd144289b6712d19dead025e73a2c.sol
+Extracted 2 contract(s) from /sb/0xf04ed156972cd144289b6712d19dead025e73a2c.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/FUS.sol:6:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/FUS.sol:35:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function FUS() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/FUS.sol:46:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+contracts/owned.sol:6:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function owned() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:35:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function FUS() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/owned.sol:46:9: Warning: Invoking events without "emit" prefix is deprecated.
+        Transfer(_from, _to, _value);
+        ^--------------------------^
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz FUS
+** Write stats: 0.011778
+** Write stats: 5.00203
+** Write stats: 10.0047
+** Write stats: 15.0021
+** Write stats: 20.0031
+** Write stats: 25.0071
+** Write stats: 30.0078
+** Write stats: 35.0005
+** Write stats: 40.0073
+** Write stats: 45.0088
+** Write stats: 50.0092
+** Write stats: 55.0029
+** Write stats: 60.0084
+** Write stats: 65.0037
+** Write stats: 70.0033
+** Write stats: 75.0056
+** Write stats: 80.0111
+** Write stats: 85.0087
+** Write stats: 90.0041
+** Write stats: 95.0034
+** Write stats: 100.003
+** Write stats: 105.001
+** Write stats: 110.007
+** Write stats: 115.004
+** Write stats: 120.004
+** Write stats: 125.005
+** Write stats: 130.005
+** Write stats: 135.002
+** Write stats: 140.004
+** Write stats: 145.013
+** Write stats: 150.018
+** Write stats: 155
+** Write stats: 160.004
+** Write stats: 165.009
+** Write stats: 170.01
+** Write stats: 175.021
+** Write stats: 180.007
+** Write stats: 185.02
+** Write stats: 190.018
+** Write stats: 195.01
+** Write stats: 200.014
+** Write stats: 205.012
+** Write stats: 210.021
+** Write stats: 215.021
+** Write stats: 220.007
+** Write stats: 225.022
+** Write stats: 230.058
+** Write stats: 235.02
+** Write stats: 240.019
+** Write stats: 245.008
+** Write stats: 250.017
+** Write stats: 255.011
+** Write stats: 260.016
+** Write stats: 265.004
+** Write stats: 270.014
+** Write stats: 275.026
+** Write stats: 280.003
+** Write stats: 285.015
+** Write stats: 290.018
+** Write stats: 295.008
+** Write stats: 300.019
+** Write stats: 305.005
+** Write stats: 310.005
+** Write stats: 315.013
+** Write stats: 320.017
+** Write stats: 325.01
+** Write stats: 330.022
+** Write stats: 335.01
+** Write stats: 340.016
+** Write stats: 345.003
+** Write stats: 350.017
+** Write stats: 355.01
+** Write stats: 360.019
+** Write stats: 365.021
+** Write stats: 370.008
+** Write stats: 375.017
+** Write stats: 380.015
+** Write stats: 385.024
+** Write stats: 390.001
+** Write stats: 395.014
+** Write stats: 400.017
+** Write stats: 405.027
+** Write stats: 410.03
+** Write stats: 415.012
+** Write stats: 420.012
+** Write stats: 425.035
+** Write stats: 430.032
+** Write stats: 435.023
+** Write stats: 440.03
+** Write stats: 445.034
+** Write stats: 448.06
+>> Fuzz owned
+** Write stats: 0.002552
+** Write stats: 5.00016
+** Write stats: 10.0095
+** Write stats: 15.0002
+** Write stats: 20.0078
+** Write stats: 25.0002
+** Write stats: 30.0002
+** Write stats: 35.3993
+** Write stats: 40.0002
+** Write stats: 45.0005
+** Write stats: 50.0002
+** Write stats: 55.0003
+** Write stats: 60.0001
+** Write stats: 65.0002
+** Write stats: 70.0001
+** Write stats: 75.0001
+** Write stats: 85.0001
+** Write stats: 90.0002
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 125
+** Write stats: 130.009
+** Write stats: 135
+** Write stats: 140.015
+** Write stats: 145
+** Write stats: 150
+** Write stats: 155
+** Write stats: 160
+** Write stats: 165
+** Write stats: 175
+** Write stats: 180
+** Write stats: 185
+** Write stats: 190
+** Write stats: 195.019
+** Write stats: 200
+** Write stats: 205
+** Write stats: 210
+** Write stats: 215.007
+** Write stats: 220
+** Write stats: 225
+** Write stats: 230
+** Write stats: 235.007
+** Write stats: 240.011
+** Write stats: 245
+** Write stats: 250
+** Write stats: 255
+** Write stats: 260
+** Write stats: 265
+** Write stats: 270
+** Write stats: 275
+** Write stats: 280
+** Write stats: 285
+** Write stats: 290
+** Write stats: 295
+** Write stats: 300.011
+** Write stats: 305
+** Write stats: 310
+** Write stats: 315
+** Write stats: 320
+** Write stats: 325
+** Write stats: 330
+** Write stats: 335.021
+** Write stats: 340
+** Write stats: 345
+** Write stats: 350.006
+** Write stats: 355.008
+** Write stats: 365.011
+** Write stats: 370
+** Write stats: 375
+** Write stats: 380.018
+** Write stats: 385.016
+** Write stats: 390
+** Write stats: 395
+** Write stats: 400
+** Write stats: 405.015
+** Write stats: 410
+** Write stats: 415
+** Write stats: 420
+** Write stats: 425.016
+** Write stats: 430
+** Write stats: 435
+** Write stats: 440
+** Write stats: 445
+** Write stats: 448.007

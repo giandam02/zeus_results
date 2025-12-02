@@ -1,0 +1,648 @@
+Extract contract BasicToken from /sb/0x6750c97aa8a1b388ed560a06aefd64d457455ba7.sol
+Extract contract SafeMath from /sb/0x6750c97aa8a1b388ed560a06aefd64d457455ba7.sol
+Extract contract StandardToken from /sb/0x6750c97aa8a1b388ed560a06aefd64d457455ba7.sol
+Extract contract TIXGeneration from /sb/0x6750c97aa8a1b388ed560a06aefd64d457455ba7.sol
+Extracted 4 contract(s) from /sb/0x6750c97aa8a1b388ed560a06aefd64d457455ba7.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+contracts/TIXGeneration.sol:109:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/TIXGeneration.sol:131:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/TIXGeneration.sol:187:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!isFinalized) throw;
+                          ^---^
+contracts/TIXGeneration.sol:195:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (isFinalized) throw;
+                         ^---^
+contracts/TIXGeneration.sol:223:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:295:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/TIXGeneration.sol:317:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+contracts/TIXGeneration.sol:334:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != ethFundDeposit) throw; // locks finalize to the ultimate ETH owner
+                                          ^---^
+contracts/TIXGeneration.sol:335:66: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now <= endTime && totalSupply != tokenGenerationCap) throw;
+                                                                 ^---^
+contracts/TIXGeneration.sol:338:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                               ^---^
+contracts/TIXGeneration.sol:64:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/TIXGeneration.sol:117:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/TIXGeneration.sol:134:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/TIXGeneration.sol:252:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFundDeposit, tixFund);         // logs TIX for Blocktix
+        ^--------------------------------^
+contracts/TIXGeneration.sol:253:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFoundersDeposit, tixFounders); // logs TIX for Founders
+        ^----------------------------------------^
+contracts/TIXGeneration.sol:254:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPromoDeposit, tixPromo);       // logs TIX for Promotion
+        ^----------------------------------^
+contracts/TIXGeneration.sol:255:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPresaleDeposit, tixPresale);   // logs TIX for Presale
+        ^--------------------------------------^
+contracts/TIXGeneration.sol:324:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(msg.sender, tokens); // logs token creation
+        ^---------------------------^
+contracts/TIXGeneration.sol:338:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                ^----------^
+contracts/TIXGeneration.sol:11:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/TIXGeneration.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/TIXGeneration.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:72:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/TIXGeneration.sol:84:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/TIXGeneration.sol:85:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/TIXGeneration.sol:108:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:125:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:143:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:223:5: Warning: No visibility specified. Defaulting to "public". 
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:266:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:278:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:342:5: Warning: No visibility specified. Defaulting to "public". 
+    function()
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:27:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:34:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/TIXGeneration.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:109:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/SafeMath.sol:131:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/SafeMath.sol:187:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!isFinalized) throw;
+                          ^---^
+contracts/SafeMath.sol:195:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (isFinalized) throw;
+                         ^---^
+contracts/SafeMath.sol:223:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:295:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/SafeMath.sol:317:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+contracts/SafeMath.sol:334:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != ethFundDeposit) throw; // locks finalize to the ultimate ETH owner
+                                          ^---^
+contracts/SafeMath.sol:335:66: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now <= endTime && totalSupply != tokenGenerationCap) throw;
+                                                                 ^---^
+contracts/SafeMath.sol:338:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                               ^---^
+contracts/SafeMath.sol:64:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/SafeMath.sol:117:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/SafeMath.sol:134:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/SafeMath.sol:252:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFundDeposit, tixFund);         // logs TIX for Blocktix
+        ^--------------------------------^
+contracts/SafeMath.sol:253:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFoundersDeposit, tixFounders); // logs TIX for Founders
+        ^----------------------------------------^
+contracts/SafeMath.sol:254:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPromoDeposit, tixPromo);       // logs TIX for Promotion
+        ^----------------------------------^
+contracts/SafeMath.sol:255:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPresaleDeposit, tixPresale);   // logs TIX for Presale
+        ^--------------------------------------^
+contracts/SafeMath.sol:324:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(msg.sender, tokens); // logs token creation
+        ^---------------------------^
+contracts/SafeMath.sol:338:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                ^----------^
+contracts/SafeMath.sol:11:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/SafeMath.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/SafeMath.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:72:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/SafeMath.sol:84:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/SafeMath.sol:85:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/SafeMath.sol:108:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:125:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:143:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:223:5: Warning: No visibility specified. Defaulting to "public". 
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:266:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:278:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:342:5: Warning: No visibility specified. Defaulting to "public". 
+    function()
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:27:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:34:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/SafeMath.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:109:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/StandardToken.sol:131:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/StandardToken.sol:187:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!isFinalized) throw;
+                          ^---^
+contracts/StandardToken.sol:195:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (isFinalized) throw;
+                         ^---^
+contracts/StandardToken.sol:223:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:295:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/StandardToken.sol:317:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+contracts/StandardToken.sol:334:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != ethFundDeposit) throw; // locks finalize to the ultimate ETH owner
+                                          ^---^
+contracts/StandardToken.sol:335:66: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now <= endTime && totalSupply != tokenGenerationCap) throw;
+                                                                 ^---^
+contracts/StandardToken.sol:338:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                               ^---^
+contracts/StandardToken.sol:64:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/StandardToken.sol:117:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/StandardToken.sol:134:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/StandardToken.sol:252:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFundDeposit, tixFund);         // logs TIX for Blocktix
+        ^--------------------------------^
+contracts/StandardToken.sol:253:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFoundersDeposit, tixFounders); // logs TIX for Founders
+        ^----------------------------------------^
+contracts/StandardToken.sol:254:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPromoDeposit, tixPromo);       // logs TIX for Promotion
+        ^----------------------------------^
+contracts/StandardToken.sol:255:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPresaleDeposit, tixPresale);   // logs TIX for Presale
+        ^--------------------------------------^
+contracts/StandardToken.sol:324:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(msg.sender, tokens); // logs token creation
+        ^---------------------------^
+contracts/StandardToken.sol:338:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                ^----------^
+contracts/StandardToken.sol:11:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/StandardToken.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/StandardToken.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:72:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/StandardToken.sol:84:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/StandardToken.sol:85:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/StandardToken.sol:108:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:125:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:143:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:223:5: Warning: No visibility specified. Defaulting to "public". 
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:266:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:278:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:342:5: Warning: No visibility specified. Defaulting to "public". 
+    function()
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:27:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:34:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/StandardToken.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:109:5: Warning: Use of the "var" keyword is deprecated.
+    var _allowance = allowed[_from][msg.sender];
+    ^------------^
+contracts/BasicToken.sol:131:64: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;
+                                                               ^---^
+contracts/BasicToken.sol:187:27: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (!isFinalized) throw;
+                          ^---^
+contracts/BasicToken.sol:195:26: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (isFinalized) throw;
+                         ^---^
+contracts/BasicToken.sol:223:5: Warning: Defining constructors as functions with the same name as the contract is deprecated. Use "constructor(...) { ... }" instead.
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:295:13: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+            throw;
+            ^---^
+contracts/BasicToken.sol:317:17: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+                throw;
+                ^---^
+contracts/BasicToken.sol:334:43: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (msg.sender != ethFundDeposit) throw; // locks finalize to the ultimate ETH owner
+                                          ^---^
+contracts/BasicToken.sol:335:66: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if (now <= endTime && totalSupply != tokenGenerationCap) throw;
+                                                                 ^---^
+contracts/BasicToken.sol:338:48: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                               ^---^
+contracts/BasicToken.sol:64:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(msg.sender, _to, _value);
+    ^-------------------------------^
+contracts/BasicToken.sol:117:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Transfer(_from, _to, _value);
+    ^--------------------------^
+contracts/BasicToken.sol:134:5: Warning: Invoking events without "emit" prefix is deprecated.
+    Approval(msg.sender, _spender, _value);
+    ^------------------------------------^
+contracts/BasicToken.sol:252:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFundDeposit, tixFund);         // logs TIX for Blocktix
+        ^--------------------------------^
+contracts/BasicToken.sol:253:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixFoundersDeposit, tixFounders); // logs TIX for Founders
+        ^----------------------------------------^
+contracts/BasicToken.sol:254:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPromoDeposit, tixPromo);       // logs TIX for Promotion
+        ^----------------------------------^
+contracts/BasicToken.sol:255:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(tixPresaleDeposit, tixPresale);   // logs TIX for Presale
+        ^--------------------------------------^
+contracts/BasicToken.sol:324:9: Warning: Invoking events without "emit" prefix is deprecated.
+        CreateTIX(msg.sender, tokens); // logs token creation
+        ^---------------------------^
+contracts/BasicToken.sol:338:33: Warning: Using contract member "balance" inherited from the address type is deprecated. Convert the contract to "address" type to access the member, for example use "address(contract).balance" instead.
+        if(!ethFundDeposit.send(this.balance)) throw;  // send the eth to Blocktix
+                                ^----------^
+contracts/BasicToken.sol:11:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address who) constant returns (uint256);
+  ^---------------------------------------------------------^
+contracts/BasicToken.sol:12:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address to, uint256 value);
+  ^-------------------------------------------^
+contracts/BasicToken.sol:61:3: Warning: No visibility specified. Defaulting to "public". 
+  function transfer(address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:72:3: Warning: No visibility specified. Defaulting to "public". 
+  function balanceOf(address _owner) constant returns (uint256 balance) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:83:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address owner, address spender) constant returns (uint256);
+  ^----------------------------------------------------------------------------^
+contracts/BasicToken.sol:84:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address from, address to, uint256 value);
+  ^-------------------------------------------------------------^
+contracts/BasicToken.sol:85:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address spender, uint256 value);
+  ^-----------------------------------------------^
+contracts/BasicToken.sol:108:3: Warning: No visibility specified. Defaulting to "public". 
+  function transferFrom(address _from, address _to, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:125:3: Warning: No visibility specified. Defaulting to "public". 
+  function approve(address _spender, uint256 _value) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:143:3: Warning: No visibility specified. Defaulting to "public". 
+  function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:223:5: Warning: No visibility specified. Defaulting to "public". 
+    function TIXGeneration(
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:266:5: Warning: No visibility specified. Defaulting to "public". 
+    function transfer(address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:278:5: Warning: No visibility specified. Defaulting to "public". 
+    function transferFrom(address _from, address _to, uint _value) whenFinalized {
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:342:5: Warning: No visibility specified. Defaulting to "public". 
+    function()
+    ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function mul(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:27:3: Warning: Function state mutability can be restricted to pure
+  function div(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:34:3: Warning: Function state mutability can be restricted to pure
+  function sub(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+contracts/BasicToken.sol:39:3: Warning: Function state mutability can be restricted to pure
+  function add(uint256 a, uint256 b) internal returns (uint256) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/NormalAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+assets/ReentrancyAttacker.sol:8:7: Warning: Return value of low-level calls not used.
+      msg.sender.call(bytes4(255));
+      ^--------------------------^
+assets/ReentrancyAttacker.sol:5:3: Warning: No visibility specified. Defaulting to "public". 
+  function() payable {
+  ^ (Relevant source part starts here and spans across multiple lines).
+>> Fuzz TIXGeneration
+** Write stats: 0.018655
+** Write stats: 5.00336
+** Write stats: 10.0029
+** Write stats: 15.002
+** Write stats: 20.0038
+** Write stats: 25.004
+** Write stats: 30.0035
+** Write stats: 35.0019
+** Write stats: 40.0045
+** Write stats: 45.0051
+** Write stats: 50.0041
+** Write stats: 55.0052
+** Write stats: 60.0028
+** Write stats: 65.0053
+** Write stats: 70.0018
+** Write stats: 75.0043
+** Write stats: 80.0029
+** Write stats: 85.0022
+** Write stats: 90.0102
+** Write stats: 95.0061
+** Write stats: 100.009
+** Write stats: 105.009
+** Write stats: 110.01
+** Write stats: 115.006
+** Write stats: 120.003
+** Write stats: 125.006
+** Write stats: 130.007
+** Write stats: 135.002
+** Write stats: 140.007
+** Write stats: 145.008
+** Write stats: 150.008
+** Write stats: 155.008
+** Write stats: 160.011
+** Write stats: 165.003
+** Write stats: 170.009
+** Write stats: 175.007
+** Write stats: 180.013
+** Write stats: 185.009
+** Write stats: 190.009
+** Write stats: 195
+** Write stats: 200.009
+** Write stats: 205.011
+** Write stats: 210.001
+** Write stats: 215.006
+** Write stats: 220.015
+** Write stats: 223.049
+>> Fuzz SafeMath
+** Write stats: 0.001855
+** Write stats: 5.00006
+** Write stats: 10.0001
+** Write stats: 15.0001
+** Write stats: 20.0001
+** Write stats: 25.0001
+** Write stats: 30.0001
+** Write stats: 35.0001
+** Write stats: 40.0002
+** Write stats: 45.0001
+** Write stats: 50.0001
+** Write stats: 55.0005
+** Write stats: 65.0001
+** Write stats: 70
+** Write stats: 75.0001
+** Write stats: 80.0002
+** Write stats: 85.0001
+** Write stats: 90.0001
+** Write stats: 95.0001
+** Write stats: 100
+** Write stats: 105
+** Write stats: 110
+** Write stats: 115
+** Write stats: 120
+** Write stats: 125
+** Write stats: 135.383
+** Write stats: 140
+** Write stats: 145
+** Write stats: 150
+** Write stats: 155
+** Write stats: 160
+** Write stats: 165
+** Write stats: 170
+** Write stats: 175
+** Write stats: 180
+** Write stats: 185
+** Write stats: 190
+** Write stats: 195
+** Write stats: 200
+** Write stats: 205
+** Write stats: 210
+** Write stats: 215
+** Write stats: 220
+** Write stats: 223.001
+>> Fuzz StandardToken
+** Write stats: 0.006231
+** Write stats: 5.00394
+** Write stats: 10.0012
+** Write stats: 15.0026
+** Write stats: 20.0009
+** Write stats: 25.0023
+** Write stats: 30.0062
+** Write stats: 35.0011
+** Write stats: 40.0041
+** Write stats: 45.0031
+** Write stats: 50.0058
+** Write stats: 55.0043
+** Write stats: 60.0044
+** Write stats: 65.0095
+** Write stats: 70.0001
+** Write stats: 75.0075
+** Write stats: 80.0044
+** Write stats: 85.0084
+** Write stats: 90.0008
+** Write stats: 95.0046
+** Write stats: 100.006
+** Write stats: 105.004
+** Write stats: 110.015
+** Write stats: 115.012
+** Write stats: 120.003
+** Write stats: 125.01
+** Write stats: 130.016
+** Write stats: 135.002
+** Write stats: 140
+** Write stats: 145.001
+** Write stats: 150.011
+** Write stats: 155.005
+** Write stats: 160.01
+** Write stats: 165.015
+** Write stats: 170.018
+** Write stats: 175.012
+** Write stats: 180.013
+** Write stats: 185.01
+** Write stats: 190.005
+** Write stats: 195.021
+** Write stats: 200.014
+** Write stats: 205.006
+** Write stats: 210.023
+** Write stats: 215.011
+** Write stats: 220.02
+** Write stats: 223.043
+>> Fuzz BasicToken
+** Write stats: 0.002921
+** Write stats: 5.00193
+** Write stats: 10.0027
+** Write stats: 15.0004
+** Write stats: 20.0029
+** Write stats: 25.0004
+** Write stats: 30.0001
+** Write stats: 35.0044
+** Write stats: 40.003
+** Write stats: 45.0002
+** Write stats: 50.0019
+** Write stats: 55.0008
+** Write stats: 60.0021
+** Write stats: 65.0047
+** Write stats: 70.0038
+** Write stats: 75.0032
+** Write stats: 80.0048
+** Write stats: 85.0043
+** Write stats: 90.0013
+** Write stats: 95.0016
+** Write stats: 100.004
+** Write stats: 105.002
+** Write stats: 110.003
+** Write stats: 115.005
+** Write stats: 120.002
+** Write stats: 125.002
+** Write stats: 130.003
+** Write stats: 135.002
+** Write stats: 140.003
+** Write stats: 145.002
+** Write stats: 150.007
+** Write stats: 155.004
+** Write stats: 160.005
+** Write stats: 165.001
+** Write stats: 170.005
+** Write stats: 175.001
+** Write stats: 180.005
+** Write stats: 185.003
+** Write stats: 190.001
+** Write stats: 195.001
+** Write stats: 200.001
+** Write stats: 205.003
+** Write stats: 210.004
+** Write stats: 215.001
+** Write stats: 220.005
+** Write stats: 223.009

@@ -1,0 +1,119 @@
+Extract contract AuctioneerManaged from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DSAuth from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DSAuthEvents from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DSMath from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DSNote from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DSThing from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DSValue from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DutchExchange from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DxMath from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract DxUpgrade from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract EthOracle from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract EtherToken from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract GnosisMath from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract GnosisStandardToken from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract KyberDxMarketMaker from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract Medianizer from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract PermissionGroups from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract PriceFeed from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract PriceOracleInterface from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract Proxied from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract Proxy from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract SafeTransfer from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract StandardTokenData from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract TokenFRT from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract TokenOWL from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract TokenWhitelist from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extract contract Withdrawable from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+Extracted 27 contract(s) from /sb/0xdf0b5bbf51f94c3e3cea3446d28a5bd1c84c5271.sol
+[0;32m> Created "fuzzMe"[0m
+[0;32m> To fuzz contracts:[0m
+  chmod +x fuzzMe
+  ./fuzzMe
+assets/NormalAttacker.sol:3:1: Error: Source file requires different compiler version (current compiler is 0.5.2+commit.1df8f40c.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+contract NormalAttacker {
+^------^
+assets/ReentrancyAttacker.sol:3:1: Error: Source file requires different compiler version (current compiler is 0.5.2+commit.1df8f40c.Linux.g++ - note that nightly builds are considered to be strictly less than the released version
+contract ReentrancyAttacker {
+^------^
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 31:    73 Aborted                 (core dumped) ./fuzzer --file contracts/GnosisMath.sol.json --name GnosisMath --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 32:    74 Aborted                 (core dumped) ./fuzzer --file contracts/PriceOracleInterface.sol.json --name PriceOracleInterface --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 33:    75 Aborted                 (core dumped) ./fuzzer --file contracts/Proxied.sol.json --name Proxied --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 34:    76 Aborted                 (core dumped) ./fuzzer --file contracts/GnosisStandardToken.sol.json --name GnosisStandardToken --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 35:    77 Aborted                 (core dumped) ./fuzzer --file contracts/DSAuth.sol.json --name DSAuth --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 36:    78 Aborted                 (core dumped) ./fuzzer --file contracts/DSValue.sol.json --name DSValue --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 37:    79 Aborted                 (core dumped) ./fuzzer --file contracts/KyberDxMarketMaker.sol.json --name KyberDxMarketMaker --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 38:    80 Aborted                 (core dumped) ./fuzzer --file contracts/TokenFRT.sol.json --name TokenFRT --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 39:    81 Aborted                 (core dumped) ./fuzzer --file contracts/DSMath.sol.json --name DSMath --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 40:    82 Aborted                 (core dumped) ./fuzzer --file contracts/TokenOWL.sol.json --name TokenOWL --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 41:    83 Aborted                 (core dumped) ./fuzzer --file contracts/EthOracle.sol.json --name EthOracle --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 42:    84 Aborted                 (core dumped) ./fuzzer --file contracts/Withdrawable.sol.json --name Withdrawable --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 43:    85 Aborted                 (core dumped) ./fuzzer --file contracts/PermissionGroups.sol.json --name PermissionGroups --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 44:    86 Aborted                 (core dumped) ./fuzzer --file contracts/PriceFeed.sol.json --name PriceFeed --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 45:    87 Aborted                 (core dumped) ./fuzzer --file contracts/DxMath.sol.json --name DxMath --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 46:    88 Aborted                 (core dumped) ./fuzzer --file contracts/Medianizer.sol.json --name Medianizer --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 47:    89 Aborted                 (core dumped) ./fuzzer --file contracts/Proxy.sol.json --name Proxy --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 48:    90 Aborted                 (core dumped) ./fuzzer --file contracts/StandardTokenData.sol.json --name StandardTokenData --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 49:    91 Aborted                 (core dumped) ./fuzzer --file contracts/TokenWhitelist.sol.json --name TokenWhitelist --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 50:    92 Aborted                 (core dumped) ./fuzzer --file contracts/DSAuthEvents.sol.json --name DSAuthEvents --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 51:    93 Aborted                 (core dumped) ./fuzzer --file contracts/EtherToken.sol.json --name EtherToken --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 52:    94 Aborted                 (core dumped) ./fuzzer --file contracts/DSNote.sol.json --name DSNote --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 53:    95 Aborted                 (core dumped) ./fuzzer --file contracts/DutchExchange.sol.json --name DutchExchange --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 54:    96 Aborted                 (core dumped) ./fuzzer --file contracts/AuctioneerManaged.sol.json --name AuctioneerManaged --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 55:    97 Aborted                 (core dumped) ./fuzzer --file contracts/DxUpgrade.sol.json --name DxUpgrade --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 56:    98 Aborted                 (core dumped) ./fuzzer --file contracts/SafeTransfer.sol.json --name SafeTransfer --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
+terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::json_parser::json_parser_error> >'
+  what():  assets/NormalAttacker.sol.json(1): expected value
+./fuzzMe: line 57:    99 Aborted                 (core dumped) ./fuzzer --file contracts/DSThing.sol.json --name DSThing --assets assets/ --duration 31 --mode 1 --reporter 1 --log 0 --attacker ReentrancyAttacker
